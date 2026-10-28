@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ML Methods for Intraday Stock Trading — Hamid Faghidi</title>
+<meta name="description" content="Project 5: machine-learning methods for intraday stock trading. Momentum, logistic regression, XGBoost and an MLP tested on SPY with a true out-of-sample split, ranked by net profit, with a benchmark against published research.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+.phase{display:grid;grid-template-columns:minmax(0,1fr) 120px 44px;gap:12px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}
+.phase:last-child{border-bottom:0}
+.phase .n{color:var(--muted);font-variant-numeric:tabular-nums;text-align:right}
+.sbar{display:flex;height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.sbar i{display:block;height:100%}.sbar .d{background:var(--accent)}.sbar .p{background:var(--warn)}
+.legend{display:flex;gap:16px;font-size:13px;color:var(--muted);margin:4px 0 10px;flex-wrap:wrap}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:var(--c)}
+.rankwrap{max-height:520px;overflow:auto}
+@media (max-width:600px){.phase{grid-template-columns:minmax(0,1fr) 80px 40px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../">Hamid Faghidi</a>
+  <nav><a href="../#categories">Projects</a><a href="./">AI Trading</a></nav>
+</div></header>
+
+<main class="wrap">
+  <div class="crumbs" style="padding-top:20px"><a href="../">Home</a><span class="sep">/</span><a href="./">AI Trading</a><span class="sep">/</span><span>Project 5</span></div>
+  <section class="hero" style="padding-top:28px">
+    <div class="eyebrow">Project 5 &middot; Quantitative research &middot; Machine learning</div>
+    <h1>Project 5: ML Methods for Intraday Stock Trading</h1>
+    <p class="lede">A research-first project to find which machine-learning methods can trade U.S. stocks intraday at a profit. So far: a charter, a 12-phase roadmap, and a pilot that tests four model families on SPY. The goal is the model with the <strong>highest net profit</strong>, then the <strong>highest win rate</strong>, with a <strong>reasonable number of trades</strong>.</p>
+    <p style="margin-top:14px"><span class="tag warn">Status: pilot done &middot; no edge yet</span> <span class="tag muted">Started Aug 24, 2026</span> <span class="tag muted">Last updated Oct 28, 2026</span></p>
+    <nav class="toc" aria-label="On this page"><a href="#results">Results</a><a href="#overfit">Overfitting</a><a href="#benchmark">Benchmark</a><a href="#approach">Approach</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
+  </section>
+
+  <section aria-label="At a glance">
+    <div class="statstrip">
+      <div class="primary"><div class="k">Best net P&amp;L</div><div class="v">+$310</div><div class="s">Logistic regression, only 23 trades</div></div>
+      <div><div class="k">Best with real volume</div><div class="v">−$38,940</div><div class="s">XGBoost, 3,042 trades</div></div>
+      <div><div class="k">Test period</div><div class="v">2018–21</div><div class="s">trained on 2008–2017</div></div>
+      <div><div class="k">Models tested</div><div class="v">4</div><div class="s">rule, linear, trees, neural net</div></div>
+      <div><div class="k">Profitable with &gt;100 trades</div><div class="v">0</div><div class="s">after 2 bps costs</div></div>
+      <div><div class="k">Roadmap</div><div class="v">Phase 4</div><div class="s">piloted on SPY only</div></div>
+    </div>
+  </section>
+
+  <section id="results">
+    <h2>Results</h2>
+    <p style="color:var(--muted);margin:-6px 0 14px">Ranked by the project's priorities: <strong style="color:var(--ink)">1. net profit</strong>, then 2. win rate, then 3. a reasonable number of trades.</p>
+    <div class="card">
+      <div class="chart-title"><h3>Net P&amp;L by model, out-of-sample 2018–2021</h3><div class="legend-inline"><span style="--c:var(--gain)">Profit</span><span style="--c:var(--loss)">Loss</span></div></div>
+      <p class="chart-note">SPY 5-minute bars, 15-minute horizon, 2 bps round-trip costs. Illustrative: $100,000 per trade, summed, not compounded.</p>
+      <div id="pnl"></div>
+      <div class="table-scroll" style="margin-top:14px"><table>
+        <thead><tr><th>Rank</th><th>Model</th><th>Net P&amp;L</th><th>Mean net / trade</th><th>Win rate</th><th>Trades</th><th>Sharpe</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><strong>Logistic regression</strong> <span class="tag warn">too few trades</span></td><td class="num"><strong>+$310</strong></td><td class="num">+1.36 bps</td><td class="num">47.8%</td><td class="num">23</td><td class="num">+0.32</td></tr>
+          <tr><td>2</td><td>XGBoost (200 trees, depth 3)</td><td class="num">−$38,940</td><td class="num">−1.28 bps</td><td class="num">43.4%</td><td class="num">3,042</td><td class="num">−3.32</td></tr>
+          <tr><td>3</td><td>MLP (256-128-64)</td><td class="num">−$74,400</td><td class="num">−1.32 bps</td><td class="num">43.2%</td><td class="num">5,644</td><td class="num">−4.38</td></tr>
+          <tr><td>4</td><td>Naive 15-minute momentum <span class="tag muted">baseline</span></td><td class="num">−$389,460</td><td class="num">−2.25 bps</td><td class="num">40.6%</td><td class="num">17,312</td><td class="num">−15.82</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <h3>Year by year: mean net bps per trade (trades)</h3>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Model</th><th>2018</th><th>2019</th><th>2020</th><th>2021*</th></tr></thead>
+          <tbody><tr><td>Naive momentum</td><td class="num">−2.03 <span style="color:var(--muted)">(5,149)</span></td><td class="num">−2.41 <span style="color:var(--muted)">(5,146)</span></td><td class="num">−2.46 <span style="color:var(--muted)">(5,235)</span></td><td class="num">−1.80 <span style="color:var(--muted)">(1,782)</span></td></tr><tr><td>Logistic regression</td><td class="num">−6.67 <span style="color:var(--muted)">(8)</span></td><td class="num">−1.03 <span style="color:var(--muted)">(6)</span></td><td class="num">+12.41 <span style="color:var(--muted)">(7)</span></td><td class="num">+2.01 <span style="color:var(--muted)">(2)</span></td></tr><tr><td>XGBoost</td><td class="num">−2.67 <span style="color:var(--muted)">(865)</span></td><td class="num">−1.37 <span style="color:var(--muted)">(941)</span></td><td class="num">−0.11 <span style="color:var(--muted)">(911)</span></td><td class="num">−0.61 <span style="color:var(--muted)">(325)</span></td></tr><tr><td>MLP</td><td class="num">−1.67 <span style="color:var(--muted)">(1,659)</span></td><td class="num">−1.75 <span style="color:var(--muted)">(1,516)</span></td><td class="num">−0.67 <span style="color:var(--muted)">(1,875)</span></td><td class="num">−1.27 <span style="color:var(--muted)">(594)</span></td></tr></tbody>
+        </table></div>
+        <p style="font-size:13px;color:var(--muted);margin:10px 0 0">*2021 runs to May 6. Logistic regression's positive total comes from 7 trades in 2020.</p>
+      </div>
+      <div class="card">
+        <h3>What the results mean</h3>
+        <ul>
+          <li><strong>No model has an edge yet.</strong> The only profitable model traded 23 times in 3.4 years, far too few to trust.</li>
+          <li>Before costs, every model was close to zero. A 2 bps round trip is enough to make them all lose.</li>
+          <li>Four different model families failed in the same way, which points to the setup (one very liquid ETF) rather than the algorithm.</li>
+          <li>Published profitable intraday ML ranks <em>many</em> stocks against each other. That's the project's real design and the next step.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="overfit">
+    <h2>In-sample vs out-of-sample</h2>
+    <div class="card">
+      <div class="chart-title"><h3>Mean net return per trade, training decade vs test years</h3><div class="legend-inline"><span style="--c:var(--gain)">Gain</span><span style="--c:var(--loss)">Loss</span></div></div>
+      <p class="chart-note">XGBoost and the MLP looked profitable on the data they were trained on (Sharpe 5.23 and 2.52), then lost money on 2018–2021. That is overfitting, and it's why only out-of-sample results count.</p>
+      <div id="ins"></div>
+    </div>
+  </section>
+
+  <section id="benchmark">
+    <h2>Benchmark</h2>
+    <p style="color:var(--muted);margin:-6px 0 14px">Published research and open-source benchmarks for machine-learning stock prediction.</p>
+    <div class="card">
+      <div class="table-scroll"><table>
+        <thead><tr><th>Capability</th><th>This project</th><th>Krauss et al. (2017)</th><th>Ghosh et al. (2021)</th><th>Liu &amp; Stentoft (2023)</th><th>Microsoft Qlib</th></tr></thead>
+        <tbody>
+          <tr><td>Type</td><td>Research pilot</td><td>Academic paper</td><td>Academic paper</td><td>Academic paper</td><td>Open-source platform</td></tr>
+          <tr><td>Universe</td><td><span class="no">✗</span> SPY only</td><td><span class="yes">✓</span> S&amp;P 500 stocks</td><td><span class="yes">✓</span> S&amp;P 500 stocks</td><td><span class="yes">✓</span> US stocks, sectors, market</td><td><span class="yes">✓</span> CSI 300 stocks</td></tr>
+          <tr><td>Strategy</td><td>Time one ETF</td><td>Long top / short bottom</td><td>Long top / short bottom, intraday</td><td>Long-short portfolios</td><td>Daily stock ranking</td></tr>
+          <tr><td>Models</td><td>Momentum, logistic, XGBoost, MLP</td><td>Deep net, boosted trees, random forest</td><td>LSTM, random forest</td><td>Linear, forests, boosting, neural nets</td><td>LightGBM, XGBoost, MLP, LSTM, Transformer, ensembles</td></tr>
+          <tr><td>Strict out-of-sample</td><td><span class="yes">✓</span> Fixed split, no test tuning</td><td><span class="yes">✓</span> Rolling 1992–2015</td><td><span class="yes">✓</span> Rolling 1993–2018</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span> 20 seeds</td></tr>
+          <tr><td>Costs</td><td><span class="yes">✓</span> 2 bps round trip</td><td><span class="no">✗</span> Before costs</td><td><span class="yes">✓</span> After costs</td><td><span class="yes">✓</span> After costs</td><td><span class="part">◐</span> Not stated</td></tr>
+          <tr><td>Reported result</td><td>Best +$310 on 23 trades; others negative</td><td>&gt; 0.45% / day before costs; declining</td><td>LSTM 0.44% / day after costs (Sharpe 4.3)</td><td>Sharpe ≈ 4 after costs</td><td>LightGBM 9.0% / yr; DoubleEnsemble 11.6%</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">✓ yes &middot; ◐ partial or unclear &middot; ✗ no. Based on public papers and docs as of Oct 2026 (sources below). Results come from different markets, periods and costs, so they aren't directly comparable. Published edges have weakened over time.</p>
+    </div>
+    <div class="grid g3" style="margin-top:16px">
+      <div class="card"><h3>Where we're ahead</h3><p>A strict, leak-free train/test split with no tuning on test data, costs in every result, and overfitting reported openly.</p></div>
+      <div class="card"><h3>Where we're behind</h3><p>One ETF instead of hundreds of stocks, 6 features instead of 100+, no random forest or LSTM yet, and data ending in 2021.</p></div>
+      <div class="card"><h3>Biggest lesson</h3><p>Every profitable published result <em>ranks many stocks</em> and trades the top vs the bottom. Building that is now the first roadmap item.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Goals &amp; objectives</h2>
+    <div class="grid g3">
+      <div class="card"><h3>1. Maximum profit</h3><p>The top priority: the highest net profit after costs, on years the model was never trained on.</p></div>
+      <div class="card"><h3>2. Higher win rate</h3><p>Among models with similar profit, prefer the one that wins more often.</p></div>
+      <div class="card"><h3>3. Reasonable trade count</h3><p>Enough trades for the result to be trustworthy, so a handful of lucky trades can't win.</p></div>
+    </div>
+  </section>
+
+  <section id="approach">
+    <h2>Approach</h2>
+    <div class="card" style="border-left:4px solid var(--accent)">
+      <div class="eyebrow" style="margin-bottom:8px">Guiding principle</div>
+      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0">Research design (clean data, strict validation, realistic costs) matters more than which algorithm is used. No single ML model has a proven 20-year track record.</p>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <h3>Pilot protocol</h3>
+        <div class="table-scroll"><table>
+          <tbody>
+            <tr><td>Data</td><td>SPY 5-minute bars, 2008–2021</td></tr>
+            <tr><td>Target</td><td>Next 15-minute return; one decision per 15 minutes</td></tr>
+            <tr><td>Features</td><td>5/15/30/60-minute momentum, 30-minute volatility, relative volume</td></tr>
+            <tr><td>Train / test</td><td>Fit once on 2008–2017; test once on 2018–May 2021</td></tr>
+            <tr><td>Costs</td><td>2 bps round trip; no trade on low-confidence signals</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="card">
+        <h3>Target design (from the charter)</h3>
+        <ol class="steps">
+          <li><strong>Universe</strong>: S&amp;P 500 stocks, point-in-time, plus sector ETFs, VIX and futures as context.</li>
+          <li><strong>Signal</strong>: rank stocks by expected 15-minute return vs SPY.</li>
+          <li><strong>Models</strong>: gradient-boosted trees and MLP first; deep models only if they add value.</li>
+          <li><strong>Portfolio</strong>: long the top decile, short the bottom, sector- and beta-neutral.</li>
+          <li><strong>Validation</strong>: walk-forward, purged cross-validation, one final untouched test, then paper trading.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="roadmap">
+    <h2>Status &amp; roadmap</h2>
+    <div class="card">
+      <h3>Progress by phase (13 phases incl. new Phase 12)</h3>
+      <div class="legend"><span style="--c:var(--accent)">Done</span><span style="--c:var(--warn)">Partial / piloted on SPY</span><span style="--c:var(--line)">Not started</span></div>
+      <div id="phases"></div>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <h3>Added from the benchmark review (Phase 12)</h3>
+        <ol class="steps">
+          <li><strong>Profit-first selection rule</strong> with a minimum trade count.</li>
+          <li><strong>Cross-sectional long-short pilot</strong> on S&amp;P 500 stocks.</li>
+          <li><strong>Reproduce a public benchmark</strong> (Qlib + LightGBM).</li>
+          <li><strong>Add random forest, LightGBM and LSTM</strong>.</li>
+          <li><strong>Cross-stock lagged-return features</strong>.</li>
+          <li><strong>IC, rank IC and multi-seed</strong> reporting.</li>
+          <li><strong>Liquidity tiers</strong>: test less-liquid stocks separately.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>Main challenges</h3>
+        <ul>
+          <li><span class="tag bad">Data</span> Point-in-time S&amp;P 500 intraday data isn't sourced yet; it's the gate to the real design.</li>
+          <li><span class="tag warn">Edge decay</span> Published intraday edges have shrunk as ML spread through the market.</li>
+          <li><span class="tag warn">Recency</span> Data ends in May 2021; 2021–2026 still has to be added.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="disclosure">
+    <h2>Disclosures</h2>
+    <div class="card"><p style="margin:0">All results are hypothetical backtests on historical data, using a flat $100,000 per trade with no compounding and a 2 bps cost assumption. They aren't a validated strategy, and past results don't predict future returns. Nothing on this page is investment advice.</p></div>
+  </section>
+
+  <section>
+    <h2>Sources</h2>
+    <div class="card"><ul style="margin:0">
+      <li><a href="https://ideas.repec.org/a/eee/ejores/v259y2017i2p689-702.html">Krauss, Do &amp; Huck (2017): deep nets, boosted trees and random forests on the S&amp;P 500</a></li>
+      <li><a href="https://arxiv.org/pdf/2004.10178">Ghosh, Neufeld &amp; Sahoo (2021): LSTM and random forests for intraday trading</a></li>
+      <li><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4496917">Liu &amp; Stentoft (2023): Intraday Stock Predictability Everywhere</a></li>
+      <li><a href="https://ideas.repec.org/p/nbr/nberwo/23933.html">Chinco, Clark-Joseph &amp; Ye (2019): Sparse Signals in the Cross-Section of Returns</a></li>
+      <li><a href="https://github.com/microsoft/qlib/blob/main/examples/benchmarks/README.md">Microsoft Qlib benchmark results</a></li>
+    </ul></div>
+  </section>
+
+  <a class="back" href="./">&larr; Back to AI Trading</a>
+  <section><h2 style="text-align:center">Browse categories</h2><nav class="catnav" aria-label="Project categories"><a class="c-ai on" href="../ai-trading/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 38 L17 26 L25 32 L41 13"/><path d="M33 13h8v8"/><path d="M6 42h36"/></svg></span>AI Trading</a><a class="c-home" href="../home-projects/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 22 L24 8 L41 22"/><path d="M12 19v21h24V19"/><path d="M21 40V29h6v11"/></svg></span>Home Projects</a><a class="c-biz" href="../business/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="15" width="34" height="24" rx="3"/><path d="M18 15v-4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"/><path d="M7 26h34"/><path d="M22 26v4h4v-4"/></svg></span>Business Projects</a><a class="c-gen" href="../general/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="3"/><rect x="27" y="8" width="13" height="13" rx="3"/><rect x="8" y="27" width="13" height="13" rx="3"/><circle cx="33.5" cy="33.5" r="6.5"/></svg></span>General Projects</a></nav></section>
+</main>
+<footer><div class="wrap">&copy; 2026 Hamid Faghidi &middot; Trading results are hypothetical backtests. Nothing on this site is investment advice.</div></footer>
+<script src="../charts.js"></script>
+<script>
+(function(){
+var PNL=[{"label": "Logistic regression", "value": 310, "tip": "Logistic regression: +$310 on 23 trades"}, {"label": "XGBoost", "value": -38940, "tip": "XGBoost: −$38,940 on 3,042 trades"}, {"label": "MLP", "value": -74400, "tip": "MLP: −$74,400 on 5,644 trades"}, {"label": "Naive momentum", "value": -389460, "tip": "Naive momentum: −$389,460 on 17,312 trades"}],INS=[{"label": "Momentum \u00b7 train", "value": -2.28}, {"label": "Momentum \u00b7 test", "value": -2.25}, {"label": "Logistic \u00b7 train", "value": -0.6}, {"label": "Logistic \u00b7 test", "value": 1.36}, {"label": "XGBoost \u00b7 train", "value": 1.15}, {"label": "XGBoost \u00b7 test", "value": -1.28}, {"label": "MLP \u00b7 train", "value": 0.42}, {"label": "MLP \u00b7 test", "value": -1.32}];
+function money(v){var a=Math.abs(v);return (v>0?'+':v<0?'−':'')+'$'+(a>=1000?Math.round(a/1000)+'k':a);}
+function bp(v){return (v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1);}
+function draw(){
+ barChart(document.getElementById('pnl'),PNL,{height:220,fmt:money});
+ barChart(document.getElementById('ins'),INS.map(function(d){return{label:d.label,value:d.value,tip:d.label+': '+bp(d.value)+' bps / trade'}}),{height:240,rotate:true,fmt:bp});}
+draw();var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,150)});
+var phases=[["0 \u00b7 Research & literature validation", 0, 1, 0], ["1 \u00b7 Data infrastructure (S&P 500, point-in-time)", 0, 0, 1], ["2 \u00b7 Feature engineering", 0, 0, 1], ["3 \u00b7 Baseline & benchmark models", 0, 1, 0], ["4 \u00b7 Core ML: gradient boosting & MLP", 0, 1, 0], ["5 \u00b7 DeepLOB & Transformer (conditional)", 0, 0, 1], ["6 \u00b7 Validation hardening", 0, 0, 1], ["7 \u00b7 Portfolio construction & costs", 0, 0, 1], ["8 \u00b7 Ensemble & regime meta-model", 0, 0, 1], ["9 \u00b7 Final out-of-sample test", 0, 0, 1], ["10 \u00b7 Paper trading", 0, 0, 1], ["11 \u00b7 Production readiness", 0, 0, 1], ["12 \u00b7 Benchmark-review additions (new)", 0, 0, 7]];var host=document.getElementById('phases');
+phases.forEach(function(p){var tot=p[1]+p[2]+p[3];var r=document.createElement('div');r.className='phase';r.innerHTML='<div>'+p[0]+'</div><div class="sbar"><i class="d" style="width:'+(100*p[1]/tot)+'%"></i><i class="p" style="width:'+(100*p[2]/tot)+'%"></i></div><div class="n">'+(p[1]?'Done':p[2]?'Partial':'—')+'</div>';host.appendChild(r);});
+})();
+</script>
+</body>
+</html>
