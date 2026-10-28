@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CNQ Zone Strategy — Hamid Faghidi</title>
+<meta name="description" content="Project 3: turning a discretionary CNQ 5-minute zone strategy into testable rules and backtesting it through seven versions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+.vrow{display:grid;grid-template-columns:56px minmax(0,1fr) 64px;gap:12px;align-items:center;padding:6px 0;font-size:14px}
+.vrow .lab{font-weight:600}
+.vrow .val{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+.vrow.best .lab,.vrow.best .val{color:var(--ink);font-weight:700}
+.hbar{height:14px;border-radius:4px;background:var(--line);overflow:hidden}
+.hbar i{display:block;height:100%;background:var(--accent);opacity:.55}
+.vrow.best .hbar i{opacity:1}
+.target{position:relative}
+.target::after{content:"";position:absolute;top:-4px;bottom:-4px;left:var(--t);border-left:2px dashed var(--warn)}
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.flow div{background:var(--accent-soft);border-radius:10px;padding:12px;font-size:14px}
+.flow b{display:block;color:var(--accent);font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../">Hamid Faghidi</a>
+  <nav><a href="../#projects">All projects</a></nav>
+</div></header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">Project 3 &middot; Trading strategy research &middot; Backtesting</div>
+    <h1>Project 3: CNQ 5-Minute Zone Strategy</h1>
+    <p class="lede">Turning my own discretionary day-trading strategy for CNQ into precise, machine-testable rules, then backtesting, refining and validating it version by version, with no look-ahead bias, before any automation.</p>
+    <p style="margin-top:14px"><span class="tag good">Phase 1: research &amp; validation</span> <span class="tag muted">Current version: V7.1</span> <span class="tag muted">Last updated Oct 28, 2026</span></p>
+  </section>
+
+  <section>
+    <h2>Major indicators</h2>
+    <div class="grid g4">
+      <div class="card kpi"><div class="v">72.9%</div><div class="l">Win rate, V7.1 (Jul 1 – Aug 14; target &gt; 60%)</div></div>
+      <div class="card kpi"><div class="v">3.81</div><div class="l">Profit factor, V7.1</div></div>
+      <div class="card kpi"><div class="v">+2.69</div><div class="l">Net $/share over 6.4 weeks (+0.42/week; target 1.0/week)</div></div>
+      <div class="card kpi"><div class="v">75</div><div class="l">Trades in the full test range</div></div>
+      <div class="card kpi"><div class="v">8</div><div class="l">Strategy versions tested (V1 → V7.1)</div></div>
+      <div class="card kpi"><div class="v">14</div><div class="l">Real annotated trades used to align the rules</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Status &amp; progress</h2>
+    <div class="card">
+      <div class="timeline" aria-label="Project stages">
+        <div class="stage done">Rules formalized</div>
+        <div class="stage done">Baseline backtest</div>
+        <div class="stage done">Refine (V2–V7.1)</div>
+        <div class="stage now">Out-of-sample validation</div>
+        <div class="stage">Live automation</div>
+      </div>
+      <p style="margin-top:18px;margin-bottom:0">Eight versions have been tested on the full Jul 1 – Aug 14 range. V7.1 is the recommended configuration. It clears the win-rate target, but net profit is still below the weekly target, and two July weeks remain below 60% win rate. More weeks of data are needed before moving to automation.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Results by version</h2>
+    <div class="grid g2">
+      <div class="card">
+        <h3>Win rate (full range, Jul 1 – Aug 14)</h3>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:10px">Dashed line: 60% target. Scratch trades excluded.</p>
+        <div id="wr"></div>
+      </div>
+      <div class="card">
+        <h3>Net profit, $/share (full range)</h3>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:10px">Total over 6.4 weeks, before commissions.</p>
+        <div id="net"></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="table-scroll"><table>
+        <thead><tr><th>Version</th><th>What changed</th><th>Trades</th><th>Win rate</th><th>Profit factor</th><th>Net</th></tr></thead>
+        <tbody>
+          <tr><td>V1</td><td>Baseline: rules as first formalized</td><td class="num">72</td><td class="num">33.3%</td><td class="num">1.10</td><td class="num">+0.25</td></tr>
+          <tr><td>V2</td><td>Default exit becomes "next zone + weak price action"</td><td class="num">81</td><td class="num">40.9%</td><td class="num">1.09</td><td class="num">+0.20</td></tr>
+          <tr><td>V3</td><td>Opening-range zone (first 3 candles) added</td><td class="num">107</td><td class="num">45.0%</td><td class="num">1.42</td><td class="num">+1.28</td></tr>
+          <tr><td>V4</td><td>Max 2 entries per zone per day</td><td class="num">87</td><td class="num">48.8%</td><td class="num">1.71</td><td class="num">+1.60</td></tr>
+          <tr><td>V5</td><td>Exit when there's no more <em>strong</em> signal</td><td class="num">88</td><td class="num">59.0%</td><td class="num">1.55</td><td class="num">+1.27</td></tr>
+          <tr><td>V6</td><td>Opening-range zone used for exits only</td><td class="num">72</td><td class="num">58.5%</td><td class="num">1.59</td><td class="num">+1.19</td></tr>
+          <tr><td>V7</td><td>Tuned parameters (on Jul 27 – Aug 14)</td><td class="num">85</td><td class="num">68.4%</td><td class="num">2.72</td><td class="num">+2.50</td></tr>
+          <tr><td><strong>V7.1</strong></td><td><strong>Reject open-zone wick bounces that don't reclaim the open</strong></td><td class="num"><strong>75</strong></td><td class="num"><strong>72.9%</strong></td><td class="num"><strong>3.81</strong></td><td class="num"><strong>+2.69</strong></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Goals &amp; objectives</h2>
+    <div class="grid g3">
+      <div class="card"><h3>Make the strategy testable</h3><p>Convert discretionary judgment ("strong green bar at a zone") into exact rules, with an audit record explaining every trade taken and every setup rejected.</p></div>
+      <div class="card"><h3>Find what really works</h3><p>Identify which individual rules create profit, and improve them without look-ahead bias or curve-fitting.</p></div>
+      <div class="card"><h3>Validate, then automate</h3><p>Positive expectancy after costs, win rate above 60%, acceptable drawdown and stable weekly results before building a live system.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The strategy</h2>
+    <div class="flow">
+      <div><b>Zones</b>Day's open, prior-day high/low/close, and intraday levels confirmed by a second pullback</div>
+      <div><b>Entry</b>Touch an established zone and confirm on the same candle: a strong green bar or a long lower wick</div>
+      <div><b>Risk</b>Stop −0.10, floor +0.20 (−0.15 / +0.30 on wide days); stop to breakeven after a green close</div>
+      <div><b>Exit</b>Next zone reached with no more strong signal; hard stop; end of day</div>
+      <div><b>Never</b>Buy the first print of a new low, trade after the cutoff, or use future candles</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Research findings</h2>
+    <div class="grid g2">
+      <div class="card">
+        <h3>What the data showed</h3>
+        <ul>
+          <li>My own annotated trades always exited at "next zone + no more strong signal", never at a fixed target. Making that the default exit was the biggest structural change.</li>
+          <li>Re-trading the same level many times in one session was mostly losses and scratches. Capping entries at 2 per zone per day helped (V4).</li>
+          <li>The opening-range zone works as an exit checkpoint but not as an entry trigger (V6).</li>
+          <li>V7's out-of-sample weakness came from one specific bad setup: a wick "bounce" off the day's open that still closes below the open (44% win rate). Rejecting it improved every metric (V7.1).</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>What was rejected as curve-fitting</h3>
+        <ul>
+          <li>Widening the wide-day stop looked like a big win (93% win rate) until it turned out to be fitting the exact low of a single historical trade.</li>
+          <li>Moving the entry cutoff to exactly 14:35 added one winner just before one loser. That's noise, not edge.</li>
+          <li>Four different "let winners run" exits all failed. The tight exit is protecting profit on this stock and timeframe.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="grid g2">
+      <div class="card">
+        <h2>Data used</h2>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Dataset</th><th>Coverage</th></tr></thead>
+          <tbody>
+            <tr><td>CNQ 5-minute bars</td><td>May 20 – Aug 14, 2026, regular session (ET)</td></tr>
+            <tr><td>Backtest range</td><td>Jul 1 – Aug 14 (32 trading days, ~6.4 weeks)</td></tr>
+            <tr><td>Tuning window (V7)</td><td>Jul 27 – Aug 14; Jul 1–24 kept out of sample</td></tr>
+            <tr><td>Annotated chart screenshots</td><td>11 images, 14 real trades (Jul 31 – Aug 18)</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="card">
+        <h2>Current methods</h2>
+        <ol class="steps">
+          <li><strong>No look-ahead</strong>: every decision uses only candles and zones that existed at that moment.</li>
+          <li><strong>One unified backtester</strong> reproduces every version V1–V7.1 on any date range, and gives the same numbers when re-run.</li>
+          <li><strong>Week-by-week review</strong> across the full range, so tuning-window results can't hide out-of-sample weakness.</li>
+          <li><strong>Root-cause analysis</strong>: slicing trades by confirmation type, zone and position relative to the open.</li>
+          <li><strong>Research log</strong>: every rule change is recorded with its hypothesis, result and accept/reject decision.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="grid g2">
+      <div class="card">
+        <h2>Next steps</h2>
+        <ol class="steps">
+          <li>Add new weeks of CNQ data and re-run the week-by-week check on V7.1.</li>
+          <li>Settle the open entry-window conflict (12:55 vs. 13:55 ET cutoff).</li>
+          <li>Give "second pullback" a precise numeric definition.</li>
+          <li>Test the opening-range zone against a placebo zone.</li>
+          <li>Once results hold across more weeks, start Phase 2: paper trading and automation.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h2>Main challenges</h2>
+        <ul>
+          <li><span class="tag warn">Profit target</span> Net +0.42/week vs. a 1.0/week goal. Every lever that closed the gap turned out to be curve-fitting.</li>
+          <li><span class="tag warn">Regime</span> Choppy weeks (Jul 6–17) stay below 60% win rate for every version.</li>
+          <li><span class="tag warn">Small sample</span> Only about 6 weeks of backtest range so far.</li>
+          <li><span class="tag muted">Definitions</span> Some discretionary ideas, like "strong" and "second pullback", still use provisional thresholds.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Lessons learned</h2>
+    <div class="grid g2">
+      <div class="card"><p style="margin:0">My most common discretionary mistake was entering on the first touch of a new low before the zone was confirmed. The rules now forbid it explicitly.</p></div>
+      <div class="card"><p style="margin:0">A big jump in results from one parameter is a warning sign. Check trade by trade whether it's a real edge or a single lucky candle.</p></div>
+      <div class="card"><p style="margin:0">Save the backtester code with the project. Versions 1–4 had to be rebuilt from prose when the code was lost.</p></div>
+      <div class="card"><p style="margin:0">Real annotated trades are the best calibration source. They changed the exit rule more than any parameter sweep did.</p></div>
+    </div>
+  </section>
+
+  <p class="note" style="margin-top:20px">The full project, including the strategy rules, all test reports, trade ledgers, backtester code, data and session record, is kept in a private GitHub repository. Backtest results are research findings, not trading or investment advice.</p>
+
+  <a class="back" href="../">&larr; Back to all projects</a>
+</main>
+
+<footer><div class="wrap">&copy; 2026 Hamid Faghidi &middot; Research only. Nothing on this page is investment advice.</div></footer>
+
+<script>
+var v=[["V1",33.3,0.250],["V2",40.9,0.199],["V3",45.0,1.279],["V4",48.8,1.595],["V5",59.0,1.274],["V6",58.5,1.194],["V7",68.4,2.495],["V7.1",72.9,2.690]];
+function rows(id,idx,max,fmt,target){var el=document.getElementById(id);v.forEach(function(r){var d=document.createElement('div');d.className='vrow'+(r[0]==='V7.1'?' best':'');
+var l=document.createElement('div');l.className='lab';l.textContent=r[0];
+var b=document.createElement('div');b.className='hbar'+(target?' target':'');if(target)b.style.setProperty('--t',(target/max*100)+'%');
+var i=document.createElement('i');i.style.width=(r[idx]/max*100)+'%';b.appendChild(i);
+var n=document.createElement('div');n.className='val';n.textContent=fmt(r[idx]);
+d.appendChild(l);d.appendChild(b);d.appendChild(n);el.appendChild(d);});}
+rows('wr',1,100,function(x){return x.toFixed(1)+'%'},60);
+rows('net',2,3,function(x){return '+'+x.toFixed(2)});
+</script>
+</body>
+</html>
