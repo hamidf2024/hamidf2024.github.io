@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Trading Agent: RL + Zones — Hamid Faghidi</title>
+<meta name="description" content="Project 2: testing whether zone-aware, price-action and regime-conditioned reinforcement learning beats raw-bar RL on S&amp;P 500 5-minute data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+.sbar{display:flex;height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.sbar i{display:block;height:100%}
+.sbar .d{background:var(--accent)}
+.sbar .p{background:var(--warn)}
+.phase{display:grid;grid-template-columns:minmax(0,1fr) 120px 44px;gap:12px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}
+.phase:last-child{border-bottom:0}
+.phase .n{color:var(--muted);font-variant-numeric:tabular-nums;text-align:right}
+.legend{display:flex;gap:16px;font-size:13px;color:var(--muted);margin:4px 0 10px}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:var(--c)}
+.hyp{font-family:var(--serif);font-size:20px;line-height:1.45;margin:0}
+@media (max-width:600px){.phase{grid-template-columns:minmax(0,1fr) 80px 40px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../">Hamid Faghidi</a>
+  <nav><a href="../#projects">All projects</a></nav>
+</div></header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">Project 2 &middot; Quantitative research &middot; Reinforcement learning</div>
+    <h1>Project 2: AI Trading Agent — RL + Zones</h1>
+    <p class="lede">A scientific test of whether a reinforcement-learning trader that understands price zones, price action and market regime generalizes better than one trained on raw price bars, using S&amp;P 500 (SPY) 5-minute data from 2015–2021.</p>
+    <p style="margin-top:14px"><span class="tag warn">Status: active &middot; early stage</span> <span class="tag muted">Started Aug 15, 2026</span> <span class="tag muted">Last updated Oct 28, 2026</span></p>
+  </section>
+
+  <section>
+    <div class="card" style="border-left:4px solid var(--accent)">
+      <div class="eyebrow" style="margin-bottom:8px">Central hypothesis</div>
+      <p class="hyp">A zone-aware, price-action-driven, regime-conditioned RL system with specialized entry and an unrestricted exit policy may generalize better than an RL system trained directly on raw bars.</p>
+      <p style="color:var(--muted);font-size:14px;margin:12px 0 0">It is treated as a hypothesis to be tested, not an assumption. The goal is not to maximize backtest profit but to determine whether a robust, generalizable edge exists at all.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Major indicators</h2>
+    <div class="grid g4">
+      <div class="card kpi"><div class="v">5<span style="font-size:20px;color:var(--muted)"> / 64</span></div><div class="l">Roadmap steps done (plus 3 partial, 2 in progress)</div></div>
+      <div class="card kpi"><div class="v">39/39</div><div class="l">Automated tests passing</div></div>
+      <div class="card kpi"><div class="v">124,269</div><div class="l">Leakage-audited feature rows built from SPY 5-min data</div></div>
+      <div class="card kpi"><div class="v">6</div><div class="l">Non-RL baselines every model must beat</div></div>
+      <div class="card kpi"><div class="v">2</div><div class="l">PPO control runs so far</div></div>
+      <div class="card kpi"><div class="v">−0.62</div><div class="l">Sharpe ratio of the diagnostic run (44 trades, −0.41% return)</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Status &amp; progress</h2>
+    <div class="card">
+      <h3>Progress by phase (63-step roadmap, 18 phases)</h3>
+      <div class="legend"><span style="--c:var(--accent)">Done</span><span style="--c:var(--warn)">Partial / in progress</span><span style="--c:var(--line)">Not started</span></div>
+      <div id="phases"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Goals &amp; objectives</h2>
+    <div class="grid g3">
+      <div class="card"><h3>Test the hypothesis fairly</h3><p>Compare zone/price-action/regime RL against a raw-bar RL control under an identical protocol, step by step (roadmap Steps 19–26).</p></div>
+      <div class="card"><h3>Separate entry from exit</h3><p>Find out whether entry or exit is the bottleneck, then test specialized entry and position-management agents against a single monolithic policy.</p></div>
+      <div class="card"><h3>Prove it survives scrutiny</h3><p>Walk-forward validation, purging and embargo, cost and delay stress, falsification tests, cross-asset checks and a locked final out-of-sample set before any paper trading.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Research findings</h2>
+    <div class="grid g2">
+      <div class="card">
+        <h3>What was established</h3>
+        <ul>
+          <li>A review of the predecessor RL project identified what to reuse and what had already been disproven. Its environment, risk manager, backtester, metrics, leakage registry, baselines and splits were ported unchanged.</li>
+          <li>The new PyTorch pipeline reproduces the predecessor's known failure modes and fixes, which is good evidence the port is behaviorally correct.</li>
+          <li>One real bug was found and fixed: Sharpe and Sortino returned ~10<sup>16</sup> on a constant return series because of an exact-zero check on floating-point noise.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Control-run results (Ablation A, raw bars)</h3>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Run</th><th>Setup</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>Full canonical</td><td>72-month train, test Jan 2021, 2 PPO iterations</td><td><span class="tag bad">Collapsed</span> constant flat policy, 0 trades</td></tr>
+            <tr><td>Diagnostic</td><td>2019 Jan–Nov train, Dec test, dense reward, 6 iterations</td><td><span class="tag warn">Non-degenerate</span> 44 trades, Sharpe −0.62, return −0.41%</td></tr>
+          </tbody>
+        </table></div>
+        <p style="font-size:13px;color:var(--muted);margin:10px 0 0">Neither run is a positive result. The diagnostic run shows the pipeline works; a clean full-scale run is still needed.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="grid g2">
+      <div class="card">
+        <h2>Data used</h2>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Dataset</th><th>Coverage</th></tr></thead>
+          <tbody>
+            <tr><td>SPY 5-minute bars</td><td>2008–2021, plus per-year files 2015–2021</td></tr>
+            <tr><td>SPY 30-min, 1h, 4h, daily</td><td>2008–2021 (multi-timeframe context)</td></tr>
+            <tr><td>Recent SPY 5-minute</td><td>Latest 60 days, 6 parts</td></tr>
+            <tr><td>Splits</td><td>Chronological walk-forward; research out-of-sample window Jan–Apr 2021</td></tr>
+          </tbody>
+        </table></div>
+        <p style="font-size:13px;color:var(--muted);margin:12px 0 0">19 CSV files, about 26 MB. Every run records a SHA-256 hash of the data as its data version.</p>
+      </div>
+      <div class="card">
+        <h2>Current methods</h2>
+        <ol class="steps">
+          <li><strong>Simulator first</strong>: a Gymnasium-style trading environment with an external risk layer (stops, max trades/day, forced end-of-day flat) and realistic costs and slippage.</li>
+          <li><strong>Leakage control</strong>: every feature has a causal-availability definition, and tests mutate future bars to prove past features don't change.</li>
+          <li><strong>Baselines</strong>: 6 simple non-RL strategies run through the same execution engine.</li>
+          <li><strong>RL agent</strong>: PyTorch PPO (clipped surrogate + GAE), one trading day per episode.</li>
+          <li><strong>Tracking</strong>: every run is logged with parameters, seeds, code and data versions.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="grid g2">
+      <div class="card">
+        <h2>Next steps</h2>
+        <ol class="steps">
+          <li>Close the raw-bar control run with a checkpointed full-scale (72-month) PPO run using dense reward.</li>
+          <li>Decide whether to build DDQN first (roadmap Step 15) or document PPO-first as a deviation.</li>
+          <li>Write the formal research specification (Step 1) and simulator validation report (Step 3).</li>
+          <li>Add an adversarial leakage-injection test (Step 11).</li>
+          <li>Build and validate the zone engine (Steps 4–5) before spending compute on zone-aware RL.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h2>Main challenges</h2>
+        <ul>
+          <li><span class="tag bad">Blocker</span> Policy collapse at full scale: too few iterations and sparse reward make PPO default to "do nothing".</li>
+          <li><span class="tag warn">Compute</span> Each PPO iteration takes about 3 minutes on this data, so full runs need checkpointed resumes.</li>
+          <li><span class="tag warn">Reproducibility</span> The diagnostic run wasn't logged to the tracker and must be re-run with logging.</li>
+          <li><span class="tag muted">Process</span> Early infrastructure was built out of roadmap order and is being reconciled step by step.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Lessons learned</h2>
+    <div class="grid g2">
+      <div class="card"><p style="margin:0">Run a small, fast diagnostic before any full-scale training run. It surfaces the same failure modes far more cheaply.</p></div>
+      <div class="card"><p style="margin:0">Log every run at the moment it's run, including quick diagnostics. A result that exists only in a report can't be reproduced.</p></div>
+      <div class="card"><p style="margin:0">Pair every safety check, like leakage detection, with an adversarial test that deliberately triggers the failure it exists to catch.</p></div>
+      <div class="card"><p style="margin:0">Reviewing the predecessor project first turned a confusing new failure (policy collapse) into a known, quickly diagnosed one.</p></div>
+    </div>
+  </section>
+
+  <p class="note" style="margin-top:20px">Full project files, including the charter, the step reports, the test protocol and the complete session record, are kept in a private GitHub repository. Results are research findings, not trading or investment advice.</p>
+
+  <a class="back" href="../">&larr; Back to all projects</a>
+</main>
+
+<footer><div class="wrap">&copy; 2026 Hamid Faghidi &middot; Research only. Nothing on this page is investment advice.</div></footer>
+
+<script>
+var phases=[["Freeze the research specification",1,0,1],["Build the simulator before RL",2,1,1],["Build the zone engine",2,0,0],["Build the price-action representation",2,0,0],["Build the regime model",2,0,0],["Create the event dataset",2,0,1],["Establish non-RL baselines",1,1,0],["First RL benchmark & experiment matrix",14,2,2],["Separate entry and exit agents",4,0,0],["Multi-agent (specialist) RL",3,0,0],["Data / experience sampling",1,0,0],["Reward function experiments",1,0,0],["Evaluation protocol (walk-forward, CPCV, final OOS)",6,0,0],["Statistical significance",2,0,0],["Ablation testing (complete matrix)",1,0,0],["Robustness & falsification tests",11,0,0],["Cross-asset generalization",2,0,0],["Paper trading & go/no-go",6,0,0]];
+var el=document.getElementById('phases');
+phases.forEach(function(p){var d=document.createElement('div');d.className='phase';
+var t=document.createElement('div');t.textContent=p[0];
+var b=document.createElement('div');b.className='sbar';b.title=p[2]+' done, '+p[3]+' partial or in progress, of '+p[1];
+var i1=document.createElement('i');i1.className='d';i1.style.width=(p[2]/p[1]*100)+'%';
+var i2=document.createElement('i');i2.className='p';i2.style.width=(p[3]/p[1]*100)+'%';
+b.appendChild(i1);b.appendChild(i2);
+var n=document.createElement('div');n.className='n';n.textContent=(p[2]+p[3])+'/'+p[1];
+d.appendChild(t);d.appendChild(b);d.appendChild(n);el.appendChild(d);});
+</script>
+</body>
+</html>
