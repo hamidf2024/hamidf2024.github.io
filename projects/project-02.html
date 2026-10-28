@@ -32,7 +32,7 @@
   <section class="hero">
     <div class="eyebrow">Project 2 &middot; Quantitative research &middot; Reinforcement learning</div>
     <h1>Project 2: AI Trading Agent — RL + Zones</h1>
-    <p class="lede">A scientific test of whether a reinforcement-learning trader that understands price zones, price action and market regime generalizes better than one trained on raw price bars, using S&amp;P 500 (SPY) 5-minute data from 2015–2021.</p>
+    <p class="lede">Building a reinforcement-learning trader for S&amp;P 500 (SPY) 5-minute bars that combines price zones, price action and market regime. The goal is the trading model with the <strong>highest profit</strong>, then the <strong>highest win rate</strong>, with a <strong>reasonable number of trades</strong>.</p>
     <p style="margin-top:14px"><span class="tag warn">Status: active &middot; early stage</span> <span class="tag muted">Started Aug 15, 2026</span> <span class="tag muted">Last updated Oct 28, 2026</span></p>
   </section>
 
@@ -40,19 +40,60 @@
     <div class="card" style="border-left:4px solid var(--accent)">
       <div class="eyebrow" style="margin-bottom:8px">Central hypothesis</div>
       <p class="hyp">A zone-aware, price-action-driven, regime-conditioned RL system with specialized entry and an unrestricted exit policy may generalize better than an RL system trained directly on raw bars.</p>
-      <p style="color:var(--muted);font-size:14px;margin:12px 0 0">It is treated as a hypothesis to be tested, not an assumption. The goal is not to maximize backtest profit but to determine whether a robust, generalizable edge exists at all.</p>
+      <p style="color:var(--muted);font-size:14px;margin:12px 0 0">This is the approach being tested to reach the goal: maximum profit, then win rate, then a reasonable number of trades. Profit only counts if it holds on data the model was never trained on.</p>
     </div>
   </section>
 
   <section>
     <h2>Major indicators</h2>
     <div class="grid g4">
+      <div class="card kpi"><div class="v">+0.71%</div><div class="l">Best profit so far: ORB breakout baseline, Jan 2021 test month</div></div>
+      <div class="card kpi"><div class="v">0.00%</div><div class="l">RL agent profit, full-scale run (0 trades; model not yet trading)</div></div>
       <div class="card kpi"><div class="v">5<span style="font-size:20px;color:var(--muted)"> / 64</span></div><div class="l">Roadmap steps done (plus 3 partial, 2 in progress)</div></div>
       <div class="card kpi"><div class="v">39/39</div><div class="l">Automated tests passing</div></div>
       <div class="card kpi"><div class="v">124,269</div><div class="l">Leakage-audited feature rows built from SPY 5-min data</div></div>
-      <div class="card kpi"><div class="v">6</div><div class="l">Non-RL baselines every model must beat</div></div>
-      <div class="card kpi"><div class="v">2</div><div class="l">PPO control runs so far</div></div>
-      <div class="card kpi"><div class="v">−0.62</div><div class="l">Sharpe ratio of the diagnostic run (44 trades, −0.41% return)</div></div>
+      <div class="card kpi"><div class="v">6</div><div class="l">Non-RL baselines every model must beat on profit</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Results</h2>
+    <p style="color:var(--muted);margin:-6px 0 14px">Ranked by the project's priorities: <strong style="color:var(--ink)">1. net profit</strong>, then 2. win rate, then 3. a reasonable number of trades.</p>
+    <div class="card">
+      <h3>Held-out test month: January 2021 (trained on 2015–2020)</h3>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:10px">Every model runs through the same simulator, costs and risk rules, so the comparison is fair.</p>
+      <div id="p2res"></div>
+      <div class="table-scroll" style="margin-top:14px"><table>
+        <thead><tr><th>Rank</th><th>Model</th><th>Net profit</th><th>Win rate</th><th>Trades</th><th>Profit factor</th><th>Max drawdown</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><strong>ORB breakout</strong> (baseline)</td><td class="num"><strong>+0.71%</strong></td><td class="num">14.1%</td><td class="num">78</td><td class="num">0.72</td><td class="num">−1.70%</td></tr>
+          <tr><td>2</td><td>RL agent, PPO on raw bars</td><td class="num">0.00%</td><td class="num">—</td><td class="num">0</td><td class="num">—</td><td class="num">0.00%</td></tr>
+          <tr><td>3</td><td>SMA crossover (baseline)</td><td class="num">−0.30%</td><td class="num">50.0%</td><td class="num">46</td><td class="num">0.94</td><td class="num">−3.15%</td></tr>
+          <tr><td>4</td><td>Momentum, 5-min (baseline)</td><td class="num">−0.30%</td><td class="num">41.3%</td><td class="num">46</td><td class="num">0.87</td><td class="num">−2.90%</td></tr>
+          <tr><td>5</td><td>Random (baseline)</td><td class="num">−0.60%</td><td class="num">34.1%</td><td class="num">343</td><td class="num">0.44</td><td class="num">−1.62%</td></tr>
+          <tr><td>6</td><td>VWAP reversion (baseline)</td><td class="num">−1.30%</td><td class="num">43.5%</td><td class="num">46</td><td class="num">0.68</td><td class="num">−2.93%</td></tr>
+          <tr><td>7</td><td>Buy and hold (baseline)</td><td class="num">−1.30%</td><td class="num">34.1%</td><td class="num">44</td><td class="num">0.74</td><td class="num">−2.33%</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <h3>Diagnostic RL run: December 2019 (trained Jan–Nov 2019)</h3>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Model</th><th>Net profit</th><th>Trades</th><th>Sharpe</th></tr></thead>
+          <tbody><tr><td>RL agent, PPO, dense reward, 6 iterations</td><td class="num">−0.41%</td><td class="num">44</td><td class="num">−0.62</td></tr></tbody>
+        </table></div>
+        <p style="font-size:13px;color:var(--muted);margin:10px 0 0">Win rate wasn't recorded for this run. Baselines weren't run on this month.</p>
+      </div>
+      <div class="card">
+        <h3>What the results mean</h3>
+        <ul>
+          <li>No model has a meaningful profit yet. The best, ORB breakout, made +0.71% in one month, with a low 14% win rate.</li>
+          <li>At full scale the RL agent learned to not trade at all, so it scored 0%. With more training it does trade (44 trades) but loses slightly.</li>
+          <li>The zone, price-action and regime features, which this project is built to test, haven't been added yet. These are baseline numbers to beat.</li>
+          <li>One test month is too small a sample. Profit has to hold across many out-of-sample months to count.</li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -68,9 +109,9 @@
   <section>
     <h2>Goals &amp; objectives</h2>
     <div class="grid g3">
-      <div class="card"><h3>Test the hypothesis fairly</h3><p>Compare zone/price-action/regime RL against a raw-bar RL control under an identical protocol, step by step (roadmap Steps 19–26).</p></div>
-      <div class="card"><h3>Separate entry from exit</h3><p>Find out whether entry or exit is the bottleneck, then test specialized entry and position-management agents against a single monolithic policy.</p></div>
-      <div class="card"><h3>Prove it survives scrutiny</h3><p>Walk-forward validation, purging and embargo, cost and delay stress, falsification tests, cross-asset checks and a locked final out-of-sample set before any paper trading.</p></div>
+      <div class="card"><h3>1. Maximum profit</h3><p>The top priority: find the model with the highest net profit after costs, measured on out-of-sample months it wasn't trained on.</p></div>
+      <div class="card"><h3>2. Higher win rate</h3><p>Among models with similar profit, prefer the one that wins more often.</p></div>
+      <div class="card"><h3>3. Reasonable trade count</h3><p>Enough trades for the result to be trustworthy and practical, without overtrading.</p></div>
     </div>
   </section>
 
@@ -179,6 +220,16 @@ var i2=document.createElement('i');i2.className='p';i2.style.width=(p[3]/p[1]*10
 b.appendChild(i1);b.appendChild(i2);
 var n=document.createElement('div');n.className='n';n.textContent=(p[2]+p[3])+'/'+p[1];
 d.appendChild(t);d.appendChild(b);d.appendChild(n);el.appendChild(d);});
+var res=[["ORB breakout",0.71],["RL agent (PPO)",0.0],["SMA crossover",-0.30],["Momentum",-0.30],["Random",-0.60],["VWAP reversion",-1.30],["Buy and hold",-1.30]];
+var re=document.getElementById('p2res');
+res.forEach(function(r){var d=document.createElement('div');d.style.cssText='display:grid;grid-template-columns:130px 1fr 1fr 60px;align-items:center;gap:0;padding:4px 0;font-size:14px';
+var l=document.createElement('div');l.textContent=r[0];if(r[0]==='ORB breakout')l.style.fontWeight='700';
+var neg=document.createElement('div');neg.style.cssText='display:flex;justify-content:flex-end;border-right:2px solid var(--muted)';
+var pos=document.createElement('div');
+var bar=document.createElement('i');bar.style.cssText='display:block;height:14px;border-radius:3px;width:'+(Math.abs(r[1])/1.4*100)+'%;background:'+(r[1]>=0?'var(--accent)':'var(--bad)')+';opacity:.85';
+(r[1]>=0?pos:neg).appendChild(bar);
+var n=document.createElement('div');n.style.cssText='text-align:right;font-variant-numeric:tabular-nums';n.textContent=(r[1]>0?'+':'')+r[1].toFixed(2)+'%';
+d.appendChild(l);d.appendChild(neg);d.appendChild(pos);d.appendChild(n);re.appendChild(d);});
 </script>
 </body>
 </html>
