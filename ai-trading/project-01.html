@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Trading Agent: Reinforcement Learning — Hamid Faghidi</title>
+<meta name="description" content="Project 1: 24 reinforcement-learning methods and 6 baselines tested head-to-head on S&amp;P 500 5-minute intraday trading under one protocol, ranked by net profit, with a benchmark against competing platforms and research.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+.phase{display:grid;grid-template-columns:minmax(0,1fr) 120px 44px;gap:12px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}
+.phase:last-child{border-bottom:0}
+.phase .n{color:var(--muted);font-variant-numeric:tabular-nums;text-align:right}
+.sbar{display:flex;height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.sbar i{display:block;height:100%}.sbar .d{background:var(--accent)}.sbar .p{background:var(--warn)}
+.legend{display:flex;gap:16px;font-size:13px;color:var(--muted);margin:4px 0 10px;flex-wrap:wrap}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:var(--c)}
+.rankwrap{max-height:520px;overflow:auto}
+@media (max-width:600px){.phase{grid-template-columns:minmax(0,1fr) 80px 40px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../">Hamid Faghidi</a>
+  <nav><a href="../#categories">Projects</a><a href="./">AI Trading</a></nav>
+</div></header>
+
+<main class="wrap">
+  <div class="crumbs" style="padding-top:20px"><a href="../">Home</a><span class="sep">/</span><a href="./">AI Trading</a><span class="sep">/</span><span>Project 1</span></div>
+  <section class="hero" style="padding-top:28px">
+    <div class="eyebrow">Project 1 &middot; Quantitative research &middot; Reinforcement learning</div>
+    <h1>Project 1: AI Trading Agent — Reinforcement Learning</h1>
+    <p class="lede">A head-to-head test of reinforcement-learning methods for S&amp;P 500 (SPY) intraday trading on 5-minute bars. Every method uses the same data, costs, risk rules and out-of-sample months. The goal is the model with the <strong>highest net profit</strong>, then the <strong>highest win rate</strong>, with a <strong>reasonable number of trades</strong>.</p>
+    <p style="margin-top:14px"><span class="tag good">Status: Phases 1–5 of 11 complete</span> <span class="tag muted">Started Aug 13, 2026</span> <span class="tag muted">Last updated Oct 28, 2026</span></p>
+    <nav class="toc" aria-label="On this page"><a href="#results">Results</a><a href="#costs">Costs</a><a href="#benchmark">Benchmark</a><a href="#approach">Approach</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
+  </section>
+
+  <section aria-label="At a glance">
+    <div class="statstrip">
+      <div class="primary"><div class="k">Best net profit</div><div class="v">+0.61%</div><div class="s">per month, Risk-aware PPO</div></div>
+      <div><div class="k">Runner-up</div><div class="v">+0.53%</div><div class="s">PPO, 45.2% win rate</div></div>
+      <div><div class="k">Buy and hold</div><div class="v">−0.72%</div><div class="s">per month, same months</div></div>
+      <div><div class="k">Methods tested</div><div class="v">30</div><div class="s">24 RL variants + 6 baselines</div></div>
+      <div><div class="k">Profitable RL variants</div><div class="v">7 / 24</div><div class="s">after costs</div></div>
+      <div><div class="k">Roadmap</div><div class="v">17 / 40</div><div class="s">items done</div></div>
+    </div>
+  </section>
+
+  <section id="results">
+    <h2>Results</h2>
+    <p style="color:var(--muted);margin:-6px 0 14px">Ranked by the project's priorities: <strong style="color:var(--ink)">1. net profit</strong>, then 2. win rate, then 3. a reasonable number of trades.</p>
+    <div class="card">
+      <div class="chart-title"><h3>Net profit per month, all 30 methods</h3><div class="legend-inline"><span style="--c:var(--gain)">Profit</span><span style="--c:var(--loss)">Loss</span></div></div>
+      <p class="chart-note">Out-of-sample Jan–Apr 2021, trained on 2015–2020, 2 seeds per method, after $1/side + 1 bp slippage. Hover a bar for details.</p>
+      <div id="rank"></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>Full ranking</h3>
+      <div class="table-scroll rankwrap"><table>
+        <thead><tr><th>Rank</th><th>Method</th><th>Family</th><th>Net profit / month</th><th>Win rate</th><th>Trades / month</th><th>Sharpe</th><th>Profitable months</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><strong>Risk−aware PPO</strong></td><td>Risk−sensitive RL</td><td class="num"><strong>+0.61%</strong></td><td class="num">35.6%</td><td class="num">36</td><td class="num">+0.57</td><td class="num">75%</td></tr>
+          <tr><td>2</td><td><strong>PPO</strong></td><td>Classic RL</td><td class="num"><strong>+0.53%</strong></td><td class="num">45.2%</td><td class="num">51</td><td class="num">+0.63</td><td class="num">75%</td></tr>
+          <tr><td>3</td><td>QR−DQN + CVaR 0.5</td><td>Risk−sensitive RL</td><td class="num">+0.35%</td><td class="num">45.3%</td><td class="num">27</td><td class="num">+0.42</td><td class="num">100%</td></tr>
+          <tr><td>4</td><td>Distributional TD3</td><td>Continuous−control RL</td><td class="num">+0.23%</td><td class="num">40.1%</td><td class="num">55</td><td class="num">+0.27</td><td class="num">75%</td></tr>
+          <tr><td>5</td><td>DeepScalper−inspired</td><td>Intraday−specialised RL</td><td class="num">+0.10%</td><td class="num">37.5%</td><td class="num">54</td><td class="num">+0.14</td><td class="num">50%</td></tr>
+          <tr><td>6</td><td>IQN + CVaR 0.3</td><td>Risk−sensitive RL</td><td class="num">+0.09%</td><td class="num">44.8%</td><td class="num">45</td><td class="num">+0.02</td><td class="num">50%</td></tr>
+          <tr><td>7</td><td>C51 + CVaR 0.7</td><td>Risk−sensitive RL</td><td class="num">+0.07%</td><td class="num">41.6%</td><td class="num">52</td><td class="num">−0.02</td><td class="num">50%</td></tr>
+          <tr><td>8</td><td>SAC <span class="tag warn">rarely traded</span></td><td>Continuous−control RL</td><td class="num">+0.00%</td><td class="num">40.0%</td><td class="num">1</td><td class="num">+0.00</td><td class="num">0%</td></tr>
+          <tr><td>9</td><td>Distributional DDQN</td><td>Distributional RL</td><td class="num">−0.00%</td><td class="num">50.6%</td><td class="num">84</td><td class="num">−0.04</td><td class="num">50%</td></tr>
+          <tr><td>10</td><td>QR−DQN + CVaR 0.7</td><td>Risk−sensitive RL</td><td class="num">−0.00%</td><td class="num">57.5%</td><td class="num">36</td><td class="num">−0.01</td><td class="num">50%</td></tr>
+          <tr><td>11</td><td>Dueling Double DQN (D3QN)</td><td>Classic RL</td><td class="num">−0.01%</td><td class="num">49.4%</td><td class="num">45</td><td class="num">+0.03</td><td class="num">50%</td></tr>
+          <tr><td>12</td><td>QR−DQN + CVaR 0.3</td><td>Risk−sensitive RL</td><td class="num">−0.02%</td><td class="num">46.8%</td><td class="num">14</td><td class="num">−0.04</td><td class="num">0%</td></tr>
+          <tr><td>13</td><td>C51 + CVaR 0.3</td><td>Risk−sensitive RL</td><td class="num">−0.03%</td><td class="num">43.6%</td><td class="num">20</td><td class="num">−0.46</td><td class="num">50%</td></tr>
+          <tr><td>14</td><td>IQN + CVaR 0.5</td><td>Risk−sensitive RL</td><td class="num">−0.05%</td><td class="num">38.7%</td><td class="num">72</td><td class="num">−0.05</td><td class="num">25%</td></tr>
+          <tr><td>15</td><td>IQN</td><td>Distributional RL</td><td class="num">−0.08%</td><td class="num">53.6%</td><td class="num">53</td><td class="num">−0.08</td><td class="num">50%</td></tr>
+          <tr><td>16</td><td>DQN</td><td>Classic RL</td><td class="num">−0.09%</td><td class="num">52.0%</td><td class="num">55</td><td class="num">−0.10</td><td class="num">25%</td></tr>
+          <tr><td>17</td><td>QR−DQN</td><td>Distributional RL</td><td class="num">−0.11%</td><td class="num">52.2%</td><td class="num">43</td><td class="num">−0.03</td><td class="num">75%</td></tr>
+          <tr><td>18</td><td>ET−DQN−inspired</td><td>Intraday−specialised RL</td><td class="num">−0.18%</td><td class="num">45.3%</td><td class="num">69</td><td class="num">−0.27</td><td class="num">25%</td></tr>
+          <tr><td>19</td><td>C51 + CVaR 0.5</td><td>Risk−sensitive RL</td><td class="num">−0.20%</td><td class="num">57.1%</td><td class="num">39</td><td class="num">−0.50</td><td class="num">0%</td></tr>
+          <tr><td>20</td><td>DDPG</td><td>Continuous−control RL</td><td class="num">−0.24%</td><td class="num">41.1%</td><td class="num">55</td><td class="num">−0.13</td><td class="num">50%</td></tr>
+          <tr><td>21</td><td>Double DQN</td><td>Classic RL</td><td class="num">−0.26%</td><td class="num">49.2%</td><td class="num">52</td><td class="num">−0.20</td><td class="num">0%</td></tr>
+          <tr><td>22</td><td>IQN + CVaR 0.7</td><td>Risk−sensitive RL</td><td class="num">−0.29%</td><td class="num">36.0%</td><td class="num">79</td><td class="num">−0.16</td><td class="num">25%</td></tr>
+          <tr><td>23</td><td>VWAP reversion <span class="tag muted">baseline</span></td><td>Non−RL baseline</td><td class="num">−0.45%</td><td class="num">43.5%</td><td class="num">48</td><td class="num">−0.24</td><td class="num">—</td></tr>
+          <tr><td>24</td><td>Opening−range breakout <span class="tag muted">baseline</span></td><td>Non−RL baseline</td><td class="num">−0.45%</td><td class="num">16.3%</td><td class="num">91</td><td class="num">−0.26</td><td class="num">—</td></tr>
+          <tr><td>25</td><td>TD3</td><td>Continuous−control RL</td><td class="num">−0.55%</td><td class="num">41.1%</td><td class="num">54</td><td class="num">−0.44</td><td class="num">0%</td></tr>
+          <tr><td>26</td><td>C51</td><td>Distributional RL</td><td class="num">−0.59%</td><td class="num">55.4%</td><td class="num">89</td><td class="num">−0.53</td><td class="num">25%</td></tr>
+          <tr><td>27</td><td>Momentum (5−min) <span class="tag muted">baseline</span></td><td>Non−RL baseline</td><td class="num">−0.70%</td><td class="num">38.6%</td><td class="num">48</td><td class="num">−0.34</td><td class="num">—</td></tr>
+          <tr><td>28</td><td>Buy and hold <span class="tag muted">baseline</span></td><td>Non−RL baseline</td><td class="num">−0.72%</td><td class="num">41.6%</td><td class="num">48</td><td class="num">−0.50</td><td class="num">—</td></tr>
+          <tr><td>29</td><td>SMA crossover <span class="tag muted">baseline</span></td><td>Non−RL baseline</td><td class="num">−0.78%</td><td class="num">43.2%</td><td class="num">48</td><td class="num">−0.55</td><td class="num">—</td></tr>
+          <tr><td>30</td><td>Random <span class="tag muted">baseline</span></td><td>Non−RL baseline</td><td class="num">−0.83%</td><td class="num">32.0%</td><td class="num">370</td><td class="num">−1.07</td><td class="num">—</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Net profit / month is the average of the four test months, each averaged over 2 seeds. Trades / month are per run. SAC barely traded: 7 of its 8 runs made no trades.</p>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <h3>Month by month: leaders vs buy and hold</h3>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Method</th><th>Jan 2021</th><th>Feb</th><th>Mar</th><th>Apr</th></tr></thead>
+          <tbody><tr><td>Risk-aware PPO</td><td class="num">+1.28%</td><td class="num">+1.20%</td><td class="num">−0.09%</td><td class="num">+0.06%</td></tr><tr><td>PPO</td><td class="num">+1.19%</td><td class="num">+1.03%</td><td class="num">−0.26%</td><td class="num">+0.16%</td></tr><tr><td>QR-DQN + CVaR 0.5</td><td class="num">+1.00%</td><td class="num">+0.30%</td><td class="num">+0.05%</td><td class="num">+0.06%</td></tr><tr><td>Distributional TD3</td><td class="num">+0.29%</td><td class="num">+0.40%</td><td class="num">+0.35%</td><td class="num">−0.12%</td></tr><tr><td>Buy and hold</td><td class="num">−1.30%</td><td class="num">−1.34%</td><td class="num">+0.05%</td><td class="num">−0.27%</td></tr></tbody>
+        </table></div>
+        <p style="font-size:13px;color:var(--muted);margin:10px 0 0">Both PPO variants earned most of their profit in January and February, the two months when buy and hold lost the most.</p>
+      </div>
+      <div class="card">
+        <h3>What the results mean</h3>
+        <ul>
+          <li><strong>PPO-based agents lead.</strong> Risk-aware PPO made the most (+0.61% / month) with fewer trades; plain PPO wins more often (45.2%).</li>
+          <li>Only 7 of 24 RL variants were profitable. Every non-RL baseline lost money, so the bar in early 2021 was low.</li>
+          <li><strong>No edge is statistically proven yet.</strong> The project's bootstrap test can't tell PPO's result from chance (p = 0.39–0.77). Four test months is too few.</li>
+          <li>Training budgets were small and fixed for fairness, so these are floors, not each method's best.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="costs">
+    <h2>Cost sensitivity</h2>
+    <div class="card">
+      <h3>Methods still profitable at 4× trading costs</h3>
+      <p class="chart-note">Commission and slippage multiplied by 1×, 2× and 4×; seed-0 models, net profit per month over the same four months.</p>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Method</th><th>1× costs</th><th>2× costs</th><th>4× costs</th></tr></thead>
+        <tbody><tr><td>Risk-aware PPO</td><td class="num">+0.77%</td><td class="num">+0.72%</td><td class="num">+0.56%</td></tr><tr><td>Distributional TD3</td><td class="num">+0.79%</td><td class="num">+0.69%</td><td class="num">+0.36%</td></tr><tr><td>C51 + CVaR 0.7</td><td class="num">+0.49%</td><td class="num">+0.54%</td><td class="num">+0.31%</td></tr><tr><td>QR-DQN + CVaR 0.5</td><td class="num">+0.27%</td><td class="num">+0.26%</td><td class="num">+0.18%</td></tr><tr><td>PPO</td><td class="num">+0.60%</td><td class="num">+0.45%</td><td class="num">+0.15%</td></tr><tr><td>IQN</td><td class="num">+0.22%</td><td class="num">+0.19%</td><td class="num">+0.04%</td></tr></tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Risk-aware PPO and Distributional TD3 hold up best. Rankings below the top few change as costs rise, which matches recent research on cost models (see Benchmark).</p>
+    </div>
+  </section>
+
+  <section id="benchmark">
+    <h2>Benchmark</h2>
+    <p style="color:var(--muted);margin:-6px 0 14px">Open-source platforms, benchmark studies and published research testing RL for trading.</p>
+    <div class="card">
+      <div class="table-scroll"><table>
+        <thead><tr><th>Capability</th><th>This project</th><th>FinRL / FinRL Contests</th><th>TradeMaster (NTU)</th><th>Market-impact study (2026)</th><th>DQN/DDQN intraday study (2026)</th></tr></thead>
+        <tbody>
+          <tr><td>Type</td><td>Research benchmark</td><td>Open-source framework + contests</td><td>Open-source platform</td><td>Academic paper</td><td>Academic paper</td></tr>
+          <tr><td>Methods compared</td><td><span class="yes">✓</span> 24 RL variants + 6 baselines</td><td><span class="part">◐</span> 5–6 agents + ensembles</td><td><span class="yes">✓</span> ~15 algorithms</td><td><span class="part">◐</span> 5 agents</td><td><span class="part">◐</span> 3 agents</td></tr>
+          <tr><td>Market / timeframe</td><td>SPY, 5-minute intraday</td><td>Dow 30 daily; crypto second-level</td><td>Stocks, crypto; several</td><td>NASDAQ-100 daily</td><td>NIFTY 50, 1-minute</td></tr>
+          <tr><td>One shared protocol</td><td><span class="yes">✓</span> Single protocol file</td><td><span class="yes">✓</span> Standard tasks</td><td><span class="yes">✓</span> Standard environments</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><td>Costs modeled</td><td><span class="yes">✓</span> $1/side + 1 bp, 1–4× tested</td><td><span class="yes">✓</span> ~10 bps/side</td><td><span class="part">◐</span> Varies by task</td><td><span class="yes">✓</span> Flat fee + market impact</td><td><span class="no">✗</span> None</td></tr>
+          <tr><td>Out-of-sample length</td><td><span class="no">✗</span> 4 months</td><td><span class="yes">✓</span> Years</td><td><span class="part">◐</span> Varies</td><td><span class="yes">✓</span> 1 year (2025)</td><td><span class="yes">✓</span> 1 year (2022)</td></tr>
+          <tr><td>Seeds / overfitting checks</td><td><span class="part">◐</span> 2 seeds + bootstrap</td><td><span class="part">◐</span> Ensembles for stability</td><td><span class="yes">✓</span> 6-axis evaluation toolkit</td><td><span class="part">◐</span> Tuned with Optuna</td><td><span class="no">✗</span> Not reported</td></tr>
+          <tr><td>Paper / live trading</td><td><span class="no">✗</span> Planned</td><td><span class="yes">✓</span> Alpaca paper (FinRL-X)</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
+          <tr><td>Reported result</td><td>Best +0.61% / month net</td><td>Sharpe ≈ 0.9–1.1 (FinRL-X, 2018–2025)</td><td>Not reproduced here</td><td>PPO ≈ 20% / yr, falling to ≈ 15% with impact costs</td><td>DDQN win rate up to 70.8%, before costs</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">✓ yes &middot; ◐ partial or unclear &middot; ✗ no. Based on public papers and docs as of Oct 2026 (sources below). Results come from different markets, periods and cost assumptions, so they aren't directly comparable.</p>
+    </div>
+    <div class="grid g3" style="margin-top:16px">
+      <div class="card"><h3>Where we're ahead</h3><p>More RL methods compared under one identical protocol than most platforms or papers, with realistic costs and cost-sensitivity checks.</p></div>
+      <div class="card"><h3>Where we're behind</h3><p>Only 4 test months and 2 seeds, small fixed training budgets, hand-written agents, and no paper trading yet.</p></div>
+      <div class="card"><h3>Biggest lesson</h3><p>Research shows seed luck and the cost model can reorder the winners. Longer test data and more seeds come first, before any profit claim.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Goals &amp; objectives</h2>
+    <div class="grid g3">
+      <div class="card"><h3>1. Maximum profit</h3><p>The top priority: the highest net profit after costs, on months the model was never trained on.</p></div>
+      <div class="card"><h3>2. Higher win rate</h3><p>Among models with similar profit, prefer the one that wins more often.</p></div>
+      <div class="card"><h3>3. Reasonable trade count</h3><p>Enough trades for the result to be trustworthy and practical, without overtrading.</p></div>
+    </div>
+  </section>
+
+  <section id="approach">
+    <h2>Approach</h2>
+    <div class="grid g2">
+      <div class="card">
+        <h3>One protocol for every method</h3>
+        <div class="table-scroll"><table>
+          <tbody>
+            <tr><td>Data</td><td>SPY 5-minute bars, 2015–2021 (2008–2021 available)</td></tr>
+            <tr><td>Training</td><td>72-month base, expanding one month per step</td></tr>
+            <tr><td>Out-of-sample test</td><td>Jan, Feb, Mar, Apr 2021</td></tr>
+            <tr><td>Costs</td><td>$1 per side + 1 bp slippage, next-bar fills</td></tr>
+            <tr><td>Risk rules</td><td>0.5% stop, 1% target, 2% daily loss cap, ≤20 trades/day, flat before close</td></tr>
+            <tr><td>Seeds</td><td>2 per method (8 runs each)</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="card">
+        <h3>Method families tested</h3>
+        <ol class="steps">
+          <li><strong>Classic RL</strong>: PPO, DQN, Double DQN, Dueling Double DQN.</li>
+          <li><strong>Distributional RL</strong>: C51, QR-DQN, IQN, Distributional DDQN.</li>
+          <li><strong>Risk-sensitive RL</strong>: CVaR versions at 3 confidence levels, Risk-aware PPO.</li>
+          <li><strong>Intraday-specialised</strong>: ET-DQN- and DeepScalper-inspired agents.</li>
+          <li><strong>Continuous control</strong>: DDPG, TD3, SAC, Distributional TD3.</li>
+        </ol>
+        <p style="font-size:13px;color:var(--muted);margin:10px 0 0">All agents are written from scratch and gradient-checked. A leakage registry audits every feature for look-ahead bias.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="roadmap">
+    <h2>Status &amp; roadmap</h2>
+    <div class="card">
+      <h3>Progress by phase (11 phases, 40 items)</h3>
+      <div class="legend"><span style="--c:var(--accent)">Done</span><span style="--c:var(--warn)">Partial</span><span style="--c:var(--line)">Not started</span></div>
+      <div id="phases"></div>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <h3>Added from the benchmark review (items 33–40)</h3>
+        <ol class="steps" style="counter-reset:s 32">
+          <li><strong>Profit-first selection rule</strong> in every report.</li>
+          <li><strong>10+ seeds</strong> for the top 5, with overfitting checks.</li>
+          <li><strong>Full training budgets</strong> and tuning for the top 5.</li>
+          <li><strong>Library cross-check</strong>; add Rainbow DQN and A2C.</li>
+          <li><strong>More test data</strong>: May 2021 – 2026.</li>
+          <li><strong>Realistic costs</strong>: spread + market impact.</li>
+          <li><strong>Reliability report</strong>: stress months, other ETFs.</li>
+          <li><strong>Paper trading</strong> for the winner.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>Main challenges</h3>
+        <ul>
+          <li><span class="tag bad">Evidence</span> Four test months can't prove an edge; more out-of-sample data is the first priority.</li>
+          <li><span class="tag warn">Compute</span> A 3-minute cap per run forced 1-epoch training; several agents collapsed to "do nothing".</li>
+          <li><span class="tag warn">Data</span> Intraday bars are a community source, cross-checked against known SPY returns.</li>
+        </ul>
+        <p style="font-size:13px;color:var(--muted);margin:10px 0 0">Project 2 builds on this work: same data and protocol, adding zones, price action and regime.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="disclosure">
+    <h2>Disclosures</h2>
+    <div class="card"><p style="margin:0">All results are hypothetical backtests on historical data. They include modeled commission and slippage, but not every real-world effect (partial fills, outages, market impact). Past results don't predict future returns, and no edge here is statistically proven. Nothing on this page is investment advice.</p></div>
+  </section>
+
+  <section>
+    <h2>Sources</h2>
+    <div class="card"><ul style="margin:0">
+      <li><a href="https://arxiv.org/html/2603.21330v1">FinRL-X: AI-native modular infrastructure for quantitative trading</a></li>
+      <li><a href="https://arxiv.org/html/2504.02281v4">FinRL Contests: benchmarking financial RL agents (2023–2025)</a></li>
+      <li><a href="https://trademaster.readthedocs.io/en/latest/introduction.html">TradeMaster documentation (NTU)</a></li>
+      <li><a href="https://ar5iv.labs.arxiv.org/html/2302.00586">PRUDEX-Compass: systematic evaluation of RL in financial markets</a></li>
+      <li><a href="https://www.emergentmind.com/papers/2603.29086">Riera Abbade &amp; Costa (2026): realistic market impact modeling for RL trading</a></li>
+      <li><a href="https://link.springer.com/article/10.1007/s44163-026-01138-x">Borkar &amp; Jadhav (2026): Q-learning, DQN and DDQN for intraday trading</a></li>
+      <li><a href="https://www.sciencedirect.com/science/article/pii/S2405918826000309">Grądzki (2026): Unstable Gains, multiplicity-aware evaluation of financial deep RL</a></li>
+      <li><a href="https://arxiv.org/abs/2209.05559v1">Gort et al. (2022): addressing backtest overfitting in DRL trading</a></li>
+    </ul></div>
+  </section>
+
+  <a class="back" href="./">&larr; Back to AI Trading</a>
+  <section><h2 style="text-align:center">Browse categories</h2><nav class="catnav" aria-label="Project categories"><a class="c-ai on" href="../ai-trading/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 38 L17 26 L25 32 L41 13"/><path d="M33 13h8v8"/><path d="M6 42h36"/></svg></span>AI Trading</a><a class="c-home" href="../home-projects/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 22 L24 8 L41 22"/><path d="M12 19v21h24V19"/><path d="M21 40V29h6v11"/></svg></span>Home Projects</a><a class="c-biz" href="../business/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="15" width="34" height="24" rx="3"/><path d="M18 15v-4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"/><path d="M7 26h34"/><path d="M22 26v4h4v-4"/></svg></span>Business Projects</a><a class="c-gen" href="../general/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="3"/><rect x="27" y="8" width="13" height="13" rx="3"/><rect x="8" y="27" width="13" height="13" rx="3"/><circle cx="33.5" cy="33.5" r="6.5"/></svg></span>General Projects</a></nav></section>
+</main>
+<footer><div class="wrap">&copy; 2026 Hamid Faghidi &middot; Trading results are hypothetical backtests. Nothing on this site is investment advice.</div></footer>
+<script src="../charts.js"></script>
+<script>
+(function(){
+var R=[{"label": "Risk-aware PPO", "value": 0.611, "base": false}, {"label": "PPO", "value": 0.528, "base": false}, {"label": "QR-DQN + CVaR 0.5", "value": 0.354, "base": false}, {"label": "Distributional TD3", "value": 0.229, "base": false}, {"label": "DeepScalper", "value": 0.095, "base": false}, {"label": "IQN + CVaR 0.3", "value": 0.093, "base": false}, {"label": "C51 + CVaR 0.7", "value": 0.07, "base": false}, {"label": "SAC", "value": 0.0, "base": false}, {"label": "Distributional DDQN", "value": -0.002, "base": false}, {"label": "QR-DQN + CVaR 0.7", "value": -0.003, "base": false}, {"label": "D3QN", "value": -0.008, "base": false}, {"label": "QR-DQN + CVaR 0.3", "value": -0.025, "base": false}, {"label": "C51 + CVaR 0.3", "value": -0.028, "base": false}, {"label": "IQN + CVaR 0.5", "value": -0.05, "base": false}, {"label": "IQN", "value": -0.084, "base": false}, {"label": "DQN", "value": -0.091, "base": false}, {"label": "QR-DQN", "value": -0.113, "base": false}, {"label": "ET-DQN", "value": -0.175, "base": false}, {"label": "C51 + CVaR 0.5", "value": -0.197, "base": false}, {"label": "DDPG", "value": -0.244, "base": false}, {"label": "Double DQN", "value": -0.263, "base": false}, {"label": "IQN + CVaR 0.7", "value": -0.287, "base": false}, {"label": "VWAP reversion", "value": -0.447, "base": true}, {"label": "ORB breakout", "value": -0.45, "base": true}, {"label": "TD3", "value": -0.549, "base": false}, {"label": "C51", "value": -0.586, "base": false}, {"label": "Momentum (5-min)", "value": -0.704, "base": true}, {"label": "Buy and hold", "value": -0.717, "base": true}, {"label": "SMA crossover", "value": -0.775, "base": true}, {"label": "Random", "value": -0.829, "base": true}];
+function sg(v){return (v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(2)+'%';}
+function draw(){barChart(document.getElementById('rank'),R.map(function(d,i){return{label:d.label,value:d.value,tip:'#'+(i+1)+' '+d.label+(d.base?' (baseline)':'')+': '+sg(d.value)+' / month'}}),{height:300,rotate:true,fmt:function(v){return sg(v)}});}
+draw();var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,150)});
+var phases=[["Classic RL (PPO, DQN, DDQN, D3QN)", 4, 0, 0], ["Distributional RL (C51, QR-DQN, IQN, Dist. DDQN)", 4, 0, 0], ["Risk-sensitive RL (CVaR variants, Risk-aware PPO)", 3, 0, 0], ["Intraday-specialised (ET-DQN, DeepScalper)", 2, 0, 0], ["Continuous control (DDPG, TD3, SAC, Dist. TD3)", 4, 0, 0], ["Hierarchical RL", 0, 0, 3], ["Offline RL (CQL, IQL, TD3+BC, Decision Transformer)", 0, 0, 4], ["Representation (LSTM-PPO, Transformer)", 0, 1, 1], ["Ensembles (+ A2C)", 0, 0, 5], ["Execution-layer RL", 0, 0, 1], ["Competitive-review additions (new)", 0, 0, 8]];var host=document.getElementById('phases');
+phases.forEach(function(p){var tot=p[1]+p[2]+p[3];var r=document.createElement('div');r.className='phase';r.innerHTML='<div>'+p[0]+'</div><div class="sbar"><i class="d" style="width:'+(100*p[1]/tot)+'%"></i><i class="p" style="width:'+(100*p[2]/tot)+'%"></i></div><div class="n">'+p[1]+'/'+tot+'</div>';host.appendChild(r);});
+})();
+</script>
+</body>
+</html>
