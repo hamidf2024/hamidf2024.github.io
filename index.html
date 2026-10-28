@@ -4,49 +4,73 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Hamid Faghidi — Projects</title>
-<meta name="description" content="Visual reports on Hamid Faghidi's research and projects.">
+<meta name="description" content="Hamid Faghidi's research projects in trading strategy development and real-estate research, with transparent, tested results.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<style>
+.mini{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:auto}
+.mini div{background:var(--bg);border-radius:8px;padding:7px 8px;min-width:0}
+.mini b{display:block;font-family:var(--serif);font-size:17px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.mini span{display:block;font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.std h3{display:flex;gap:8px;align-items:baseline}
+.std h3 i{font-style:normal;color:var(--accent);font-family:var(--serif)}
+</style>
 </head>
 <body>
 <header class="top"><div class="wrap">
   <a class="brand" href="./">Hamid Faghidi</a>
-  <nav><a href="#projects">Projects</a><a href="#about">About</a></nav>
+  <nav><a href="#projects">Projects</a><a href="#standards">How I test</a><a href="#about">About</a></nav>
 </div></header>
 
 <main class="wrap">
   <section class="hero">
     <div class="eyebrow">Project portfolio</div>
-    <h1>Research and projects, reported visually.</h1>
-    <p class="lede">Each project page covers the research behind it, its goals, the data and methods used, the key indicators, and where it stands now, including progress, next steps and challenges.</p>
+    <h1>Trading research, tested in the open.</h1>
+    <p class="lede">I build and test trading models, from reinforcement-learning agents to rule-based day-trading strategies. Each project shows its results, how it compares with competing tools and research, and what comes next. Models are ranked by <strong>net profit first</strong>, then win rate, then a reasonable number of trades.</p>
+  </section>
+
+  <section aria-label="Portfolio at a glance">
+    <h2>At a glance</h2>
+    <div class="card">
+      <div class="table-scroll"><table class="portfolio">
+        <thead><tr><th>Project</th><th>Focus</th><th>Best model</th><th>Net profit</th><th>Win rate</th><th>Trades</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><a href="projects/project-03.html"><strong>03</strong> CNQ Zone Strategy</a></td><td>Rule-based day trading, CNQ 5-min</td><td>V7.1</td><td class="num">+2.69 $/sh gross<br><span style="color:var(--muted)">+1.19 after 2¢ costs</span></td><td class="num">72.9%</td><td class="num">75</td><td><span class="tag good">Validating</span></td></tr>
+          <tr><td><a href="projects/project-02.html"><strong>02</strong> RL + Zones</a></td><td>Reinforcement learning, SPY 5-min</td><td>ORB baseline</td><td class="num">+0.71% (1 month)</td><td class="num">14.1%</td><td class="num">78</td><td><span class="tag warn">Early stage</span></td></tr>
+          <tr><td><strong>01</strong> AI Trading Agent (RL)</td><td>30+ RL methods, S&amp;P 500 intraday</td><td>—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="tag muted">Not started</span></td></tr>
+          <tr><td><a href="projects/project-01.html"><strong>00</strong> Off-market property</a></td><td>Pre-foreclosure research, Sacramento &amp; Austin</td><td>—</td><td class="num">n/a</td><td class="num">n/a</td><td class="num">16 leads</td><td><span class="tag warn">Verifying</span></td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Trading results are hypothetical backtests over different periods and markets. See each project for details and disclosures.</p>
+    </div>
   </section>
 
   <section id="projects">
     <h2>Projects</h2>
     <div class="grid g3">
-      <a class="card project-card" href="projects/project-01.html">
-        <div class="num">00</div>
-        <h3>Project 0: Off-market property research</h3>
-        <p style="color:var(--muted);margin:0">Finding pre-foreclosure houses in Sacramento County, CA and Austin, TX before they reach the open market.</p>
-        <div><span class="tag warn">Research &middot; verification stage</span></div>
+      <a class="card project-card" href="projects/project-03.html">
+        <div class="num">03</div>
+        <h3>Project 3: CNQ 5-Minute Zone Strategy</h3>
+        <p style="color:var(--muted);margin:0">My discretionary day-trading strategy turned into testable rules, backtested through eight versions and compared with LuxAlgo, TrendSpider and Trade Ideas.</p>
+        <div class="mini"><div><span>Net</span><b>+2.69</b></div><div><span>Win</span><b>72.9%</b></div><div><span>Trades</span><b>75</b></div></div>
+      </a>
+      <a class="card project-card" href="projects/project-02.html">
+        <div class="num">02</div>
+        <h3>Project 2: AI Trading Agent — RL + Zones</h3>
+        <p style="color:var(--muted);margin:0">A reinforcement-learning trader for SPY 5-minute bars, compared with FinRL, published intraday RL research and the ORB study.</p>
+        <div class="mini"><div><span>Best</span><b>+0.71%</b></div><div><span>RL</span><b>0.00%</b></div><div><span>Steps</span><b>5/73</b></div></div>
       </a>
       <div class="card project-card placeholder">
         <div class="num">01</div>
         <h3>Project 1: AI Trading Agent (RL)</h3>
         <p style="margin:0">Developing and testing 30+ RL methods for S&amp;P 500 intraday trading. Report coming soon.</p>
       </div>
-      <a class="card project-card" href="projects/project-02.html">
-        <div class="num">02</div>
-        <h3>Project 2: AI Trading Agent — RL + Zones</h3>
-        <p style="color:var(--muted);margin:0">Testing whether zone-, price-action- and regime-aware RL beats raw-bar RL on S&amp;P 500 5-minute data.</p>
-        <div><span class="tag warn">Active &middot; early stage</span></div>
-      </a>
-      <a class="card project-card" href="projects/project-03.html">
-        <div class="num">03</div>
-        <h3>Project 3: CNQ 5-Minute Zone Strategy</h3>
-        <p style="color:var(--muted);margin:0">A discretionary day-trading strategy turned into testable rules and backtested through eight versions.</p>
-        <div><span class="tag good">V7.1 &middot; 72.9% win rate</span></div>
+      <a class="card project-card" href="projects/project-01.html">
+        <div class="num">00</div>
+        <h3>Project 0: Off-market property research</h3>
+        <p style="color:var(--muted);margin:0">Finding pre-foreclosure houses in Sacramento County, CA and Austin, TX before they reach the open market.</p>
+        <div><span class="tag warn">Research &middot; verification stage</span></div>
       </a>
       <div class="card project-card placeholder">
         <div class="num">04</div>
@@ -56,12 +80,25 @@
     </div>
   </section>
 
+  <section id="standards">
+    <h2>How I test</h2>
+    <p style="color:var(--muted);margin:-6px 0 14px">Many trading tools publish only their best trades or a single backtest. Every project here follows the same standards instead.</p>
+    <div class="grid g3 std">
+      <div class="card"><h3><i>1</i>Profit after costs</h3><p>Results are ranked by net profit after commissions, spread and slippage, then win rate, then trade count. Where costs aren't modeled yet, the page says so and shows the impact.</p></div>
+      <div class="card"><h3><i>2</i>Out-of-sample only</h3><p>A model counts only if it holds on data it was never trained or tuned on. In-sample results are labeled as such.</p></div>
+      <div class="card"><h3><i>3</i>No look-ahead</h3><p>Every decision uses only information available at that moment. This is checked with automated tests, not assumed.</p></div>
+      <div class="card"><h3><i>4</i>Beat simple baselines</h3><p>Every model is compared with simple strategies and with published competitors under the same rules.</p></div>
+      <div class="card"><h3><i>5</i>Report everything</h3><p>Full trade logs, all versions tried, and rejected ideas. Curve-fit results are called out, not hidden.</p></div>
+      <div class="card"><h3><i>6</i>Clear disclosures</h3><p>Backtests are hypothetical. Every trading page says what is and isn't included.</p></div>
+    </div>
+  </section>
+
   <section id="about">
     <h2>About</h2>
-    <div class="card"><p style="margin:0">This site collects my projects in one place. Each report is updated as the work moves forward, and its "last updated" date shows how current it is.</p></div>
+    <div class="card"><p style="margin:0">This site collects my projects in one place. Each report is updated as the work moves forward, and its "last updated" date shows how current it is. Full project files are kept in private GitHub repositories.</p></div>
   </section>
 </main>
 
-<footer><div class="wrap">&copy; 2026 Hamid Faghidi</div></footer>
+<footer><div class="wrap">&copy; 2026 Hamid Faghidi &middot; Trading results are hypothetical backtests. Nothing on this site is investment advice.</div></footer>
 </body>
 </html>
