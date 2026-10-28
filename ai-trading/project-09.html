@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Option Trading — Hamid Faghidi</title>
+<meta name="description" content="Project 9: machine-learning research for options trading. 20 models, 20 success factors and 5 frameworks reviewed, a 10-layer system design, and a benchmark against published research and option platforms.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+.phase{display:grid;grid-template-columns:minmax(0,1fr) 120px 44px;gap:12px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}
+.phase:last-child{border-bottom:0}
+.phase .n{color:var(--muted);font-variant-numeric:tabular-nums;text-align:right}
+.sbar{display:flex;height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.sbar i{display:block;height:100%}.sbar .d{background:var(--accent)}.sbar .p{background:var(--warn)}
+.legend{display:flex;gap:16px;font-size:13px;color:var(--muted);margin:4px 0 10px;flex-wrap:wrap}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:var(--c)}
+.arch{background:#fff;border-radius:10px;padding:10px;text-align:center}
+.arch img{max-width:100%;height:auto;max-height:640px}
+@media (max-width:600px){.phase{grid-template-columns:minmax(0,1fr) 80px 40px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../">Hamid Faghidi</a>
+  <nav><a href="../#categories">Projects</a><a href="./">AI Trading</a></nav>
+</div></header>
+
+<main class="wrap">
+  <div class="crumbs" style="padding-top:20px"><a href="../">Home</a><span class="sep">/</span><a href="./">AI Trading</a><span class="sep">/</span><span>Project 9</span></div>
+  <section class="hero" style="padding-top:28px">
+    <div class="eyebrow">Project 9 &middot; Quantitative research &middot; Options &middot; Machine learning</div>
+    <h1>Project 9: AI Option Trading</h1>
+    <p class="lede">A research-first project to find which machine-learning models and frameworks can trade listed options at a profit after real costs. So far: a reviewed study of 20 models, 20 success factors and 5 frameworks, and a 10-layer system design. The goal is the model with the <strong>highest net profit</strong>, then the <strong>highest win rate</strong>, with a <strong>reasonable number of trades</strong>.</p>
+    <p style="margin-top:14px"><span class="tag warn">Status: research &amp; design &middot; no backtests yet</span> <span class="tag muted">Started Sep 27, 2026</span> <span class="tag muted">Last updated Oct 28, 2026</span></p>
+    <nav class="toc" aria-label="On this page"><a href="#findings">Findings</a><a href="#frameworks">Frameworks</a><a href="#benchmark">Benchmark</a><a href="#approach">Approach</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
+  </section>
+
+  <section aria-label="At a glance">
+    <div class="statstrip">
+      <div class="primary"><div class="k">Stage</div><div class="v">Research</div><div class="s">design done, nothing built yet</div></div>
+      <div><div class="k">Models reviewed</div><div class="v">20</div><div class="s">6 core families chosen</div></div>
+      <div><div class="k">Frameworks</div><div class="v">5</div><div class="s">3 to build, 2 as benchmarks</div></div>
+      <div><div class="k">Primary horizon</div><div class="v">Daily+</div><div class="s">daily and 1 week – 3 months</div></div>
+      <div><div class="k">Backtests</div><div class="v">0</div><div class="s">no data or code yet</div></div>
+      <div><div class="k">Roadmap</div><div class="v">1 / 19</div><div class="s">research phase done</div></div>
+    </div>
+  </section>
+
+  <section id="findings">
+    <h2>What the research found</h2>
+    <div class="card" style="border-left:4px solid var(--accent)">
+      <div class="eyebrow" style="margin-bottom:8px">Main conclusion</div>
+      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0">No single model wins in options. The best model is the one with a stable edge <em>after costs</em> on data it never saw, not the one with the lowest prediction error.</p>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <h3>Six core model families</h3>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Model</th><th>Best role</th><th>Daily</th><th>Medium</th></tr></thead>
+          <tbody>
+            <tr><td><strong>XGBoost / LightGBM</strong></td><td>IV and RV forecasts, trade selection</td><td class="num">5</td><td class="num">5</td></tr>
+            <tr><td><strong>LSTM</strong></td><td>Volatility sequences</td><td class="num">5</td><td class="num">5</td></tr>
+            <tr><td><strong>Transformer / TFT</strong></td><td>Many features, several horizons</td><td class="num">5</td><td class="num">5</td></tr>
+            <tr><td><strong>GNN</strong></td><td>Whole option chain / IV surface</td><td class="num">4.5</td><td class="num">5</td></tr>
+            <tr><td><strong>PPO / deep hedging</strong></td><td>Sizing, hedging, exits</td><td class="num">4.5</td><td class="num">4</td></tr>
+            <tr><td><strong>Elastic Net</strong> <span class="tag muted">control</span></td><td>Simple benchmark</td><td class="num">5</td><td class="num">4</td></tr>
+          </tbody>
+        </table></div>
+        <p style="font-size:13px;color:var(--muted);margin:10px 0 0">Ratings out of 5 are qualitative opinions from the research chat, not test results. The other 14 models stay as secondary benchmarks.</p>
+      </div>
+      <div class="card">
+        <h3>What matters most (rated 10/10)</h3>
+        <ul>
+          <li><strong>Data quality</strong>, including clean bid/ask quotes.</li>
+          <li><strong>No leakage</strong>: expiring contracts, IV derived from prices and stale quotes all leak future information.</li>
+          <li><strong>The right target</strong>: IV change, IV–RV gap or probability of a profitable trade, not the next option price.</li>
+          <li><strong>Real costs</strong>: a +0.20% forecast is worthless at a 0.35% cost.</li>
+          <li><strong>Out-of-sample testing</strong>: walk-forward in time, never random splits, with 2008, 2020 and 2022 tested separately.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="frameworks">
+    <h2>Five frameworks</h2>
+    <div class="card">
+      <div class="chart-title"><h3>Profit rating by framework (qualitative, out of 5)</h3></div>
+      <p class="chart-note">Ranked by the owner's first priority, profit. Ratings come from the research review, not from backtests.</p>
+      <div id="fw"></div>
+      <div class="table-scroll" style="margin-top:14px"><table>
+        <thead><tr><th>#</th><th>Framework</th><th>Main goal</th><th>Profit</th><th>Risk control</th><th>Intraday</th><th>Daily</th><th>Medium</th><th>Long</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><strong>Adaptive ML volatility + relative value</strong></td><td>Net risk-adjusted alpha</td><td class="num">5</td><td class="num">4.5</td><td class="num">4.5</td><td class="num">5</td><td class="num">5</td><td class="num">4</td></tr>
+          <tr><td>3</td><td><strong>ML + deep hedging / RL</strong></td><td>Net P&amp;L after costs and risk</td><td class="num">5</td><td class="num">5</td><td class="num">4</td><td class="num">5</td><td class="num">5</td><td class="num">4.5</td></tr>
+          <tr><td>2</td><td><strong>Regime-switching ML</strong></td><td>Consistency across regimes</td><td class="num">4.5</td><td class="num">5</td><td class="num">4.5</td><td class="num">5</td><td class="num">5</td><td class="num">5</td></tr>
+          <tr><td>4</td><td>Institutional volatility risk premium <span class="tag muted">benchmark</span></td><td>Steady premium harvesting</td><td class="num">4</td><td class="num">4.5</td><td class="num">3</td><td class="num">4.5</td><td class="num">5</td><td class="num">5</td></tr>
+          <tr><td>5</td><td>Institutional option overlay <span class="tag muted">benchmark</span></td><td>Portfolio outcome</td><td class="num">3</td><td class="num">5</td><td class="num">2</td><td class="num">4</td><td class="num">4.5</td><td class="num">5</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <section id="benchmark">
+    <h2>Benchmark</h2>
+    <p style="color:var(--muted);margin:-6px 0 14px">Published research, an institutional index and option platforms this project competes with.</p>
+    <div class="card">
+      <div class="table-scroll"><table>
+        <thead><tr><th>Capability</th><th>This project</th><th>Bali et al. (2023)</th><th>Tan et al. (2024)</th><th>Cboe PUT index</th><th>ORATS / Option Alpha</th></tr></thead>
+        <tbody>
+          <tr><td>Type</td><td>Research design</td><td>Academic paper (RFS)</td><td>Academic paper</td><td>Institutional index</td><td>Retail / pro platforms</td></tr>
+          <tr><td>Uses ML</td><td><span class="yes">✓</span> 6 core families planned</td><td><span class="yes">✓</span> Nonlinear ML beats linear</td><td><span class="yes">✓</span> LSTM, linear, MLP, CNN</td><td><span class="no">✗</span> Fixed rule</td><td><span class="no">✗</span> Rule-based</td></tr>
+          <tr><td>Universe</td><td><span class="part">◐</span> Not chosen</td><td><span class="yes">✓</span> US equity options, 12M+ obs.</td><td><span class="yes">✓</span> S&amp;P 100 options</td><td>S&amp;P 500 puts</td><td><span class="yes">✓</span> 5,000+ symbols (ORATS)</td></tr>
+          <tr><td>History tested</td><td><span class="no">✗</span> None yet</td><td><span class="yes">✓</span> 1996–2020</td><td><span class="yes">✓</span> 2010–2023</td><td><span class="yes">✓</span> Since 1986</td><td><span class="yes">✓</span> Since 2007 (ORATS)</td></tr>
+          <tr><td>Costs</td><td><span class="part">◐</span> Cost-gate rule designed</td><td><span class="yes">✓</span> Conservative costs</td><td><span class="yes">✓</span> 0–50 bps tested</td><td><span class="no">✗</span> Gross index</td><td><span class="part">◐</span> User-set</td></tr>
+          <tr><td>Reported result</td><td>None yet</td><td>Profitable long-short after costs</td><td>LSTM Sharpe 1.33 (0 bps) → 0.39 (50 bps)</td><td>10.1%/yr vs 9.8% S&amp;P 500, lower volatility (1986–2015)</td><td>Backtest &amp; automation tools</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">✓ yes &middot; ◐ partial &middot; ✗ no. Based on public papers and vendor pages as of Oct 2026 (sources below). Results come from different markets, periods and costs, so they aren't directly comparable.</p>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="chart-title"><h3>Costs decide the winner: Sharpe ratio at different trading costs</h3></div>
+      <p class="chart-note">Tan, Roberts &amp; Zohren (2024), S&amp;P 100 straddles, 2010–2023. The deep model beats the best rule up to 20 bps and falls behind at 50 bps, unless trained with a turnover penalty.</p>
+      <div id="cost"></div>
+    </div>
+    <div class="grid g3" style="margin-top:16px">
+      <div class="card"><h3>Where we're ahead</h3><p>A wider design than any single paper: forecasts, regimes, strategy choice, sizing, a cost gate and risk limits, with institutional benchmarks built in.</p></div>
+      <div class="card"><h3>Where we're behind</h3><p>No data, code or backtest yet. Every competitor has at least a decade of tested history.</p></div>
+      <div class="card"><h3>Biggest lesson</h3><p>The published profits come from <em>simple, cross-sectional</em> designs tested net of costs. Reproduce one of those first, then add layers only if they add profit.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Goals &amp; objectives</h2>
+    <div class="grid g3">
+      <div class="card"><h3>1. Maximum profit</h3><p>The top priority: the highest net profit after all trading and hedging costs, on data the model never saw.</p></div>
+      <div class="card"><h3>2. Higher win rate</h3><p>Among models with similar profit, prefer the one that wins more often.</p></div>
+      <div class="card"><h3>3. Reasonable trade count</h3><p>Enough trades to trust the result. Drawdown, tail-loss and margin limits act as pass/fail gates.</p></div>
+    </div>
+  </section>
+
+  <section id="approach">
+    <h2>Approach</h2>
+    <div class="grid g2">
+      <div class="card">
+        <h3>Recommended system: 10 layers</h3>
+        <div class="arch"><img src="img/p9-architecture.png" alt="Recommended ML options system: data, features, forecasts, regime engine, strategy selector, sizing and hedging, cost gate, risk limits, execution and monitoring" loading="lazy" width="576" height="608"></div>
+        <p style="font-size:13px;color:var(--muted);margin:10px 0 0">Signals flow top to bottom. Any trade whose expected edge doesn't clear total costs stops at the cost gate.</p>
+      </div>
+      <div class="card">
+        <h3>Validation plan</h3>
+        <ol class="steps">
+          <li><strong>Statistical</strong>: does it predict IV, RV and returns?</li>
+          <li><strong>Economic</strong>: net profit, win rate, drawdown.</li>
+          <li><strong>Execution</strong>: still profitable after spread, slippage, commission and impact?</li>
+          <li><strong>Crisis</strong>: 2008, 2020 and 2022 tested separately.</li>
+          <li><strong>Walk-forward</strong>: train 2010–2018, validate 2019–2020, test 2021, then roll forward a year.</li>
+          <li><strong>Paper trading</strong> before any capital.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="roadmap">
+    <h2>Status &amp; roadmap</h2>
+    <div class="card">
+      <h3>Progress by phase (incl. new Phase 9)</h3>
+      <div class="legend"><span style="--c:var(--accent)">Done</span><span style="--c:var(--warn)">Partial</span><span style="--c:var(--line)">Not started</span></div>
+      <div id="phases"></div>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <h3>Added from the benchmark review (Phase 9)</h3>
+        <ol class="steps">
+          <li><strong>Profit-first selection rule</strong> with a minimum trade count.</li>
+          <li><strong>Choose a data vendor</strong> and lock a point-in-time dataset.</li>
+          <li><strong>Rule benchmark</strong>: the Goyal–Saretto IV–RV straddle sort.</li>
+          <li><strong>Reproduce Bali et al.</strong>: ML on delta-hedged option returns.</li>
+          <li><strong>Reproduce Tan et al.</strong> with a turnover penalty, at 0–50 bps.</li>
+          <li>IV baseline, Cboe PUT/BXM comparison, deep hedging later, multiple-testing control, paper trading.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>Main challenges</h3>
+        <ul>
+          <li><span class="tag bad">Data</span> Option quotes with clean bid/ask history cost money; the vendor isn't chosen yet.</li>
+          <li><span class="tag warn">Costs</span> Option spreads are wide, and published edges shrink fast as costs rise.</li>
+          <li><span class="tag warn">Overfitting</span> A 20 strategies × 20 models grid needs multiple-testing corrections before any result counts.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="disclosure">
+    <h2>Disclosures</h2>
+    <div class="card"><p style="margin:0">This project is at the research stage and has no backtest or trading results. Ratings are qualitative opinions from the research review. Figures from other studies are the authors' own and aren't comparable with each other. Options can lose more than expected. Nothing on this page is investment advice.</p></div>
+  </section>
+
+  <section>
+    <h2>Sources</h2>
+    <div class="card"><ul style="margin:0">
+      <li><a href="https://academic.oup.com/rfs/article/36/9/3548/7056660">Bali, Beckmeyer, Mörke &amp; Weigert (2023): Option Return Predictability with Machine Learning and Big Data</a></li>
+      <li><a href="https://arxiv.org/html/2407.21791v1">Tan, Roberts &amp; Zohren (2024): Deep Learning for Options Trading</a></li>
+      <li><a href="https://www.cis.upenn.edu/~mkearns/finread/CrossOptions.pdf">Goyal &amp; Saretto (2009): Cross-Section of Option Returns and Volatility</a></li>
+      <li><a href="https://www.federalreserve.gov/econres/feds/capturing-heterogeneity-machine-learning-approaches-to-implied-volatility-forecasting.htm">Kim &amp; Oh (2026): ML approaches to implied volatility forecasting (Federal Reserve)</a></li>
+      <li><a href="https://ideas.repec.org/a/taf/quantf/v19y2019i8p1271-1291.html">Buehler et al. (2019): Deep Hedging</a></li>
+      <li><a href="https://www.cxoadvisory.com/equity-options/performance-of-cboe-putwrite-indexes">Performance of the Cboe PutWrite indexes</a></li>
+      <li><a href="https://orats.com/blog/best-options-backtesting-platforms-in-2024">ORATS: options backtesting platforms compared</a> &middot; <a href="https://optionalpha.com/backtester">Option Alpha backtester</a></li>
+    </ul></div>
+  </section>
+
+  <a class="back" href="./">&larr; Back to AI Trading</a>
+  <section><h2 style="text-align:center">Browse categories</h2><nav class="catnav" aria-label="Project categories"><a class="c-ai on" href="../ai-trading/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 38 L17 26 L25 32 L41 13"/><path d="M33 13h8v8"/><path d="M6 42h36"/></svg></span>AI Trading</a><a class="c-home" href="../home-projects/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 22 L24 8 L41 22"/><path d="M12 19v21h24V19"/><path d="M21 40V29h6v11"/></svg></span>Home Projects</a><a class="c-biz" href="../business/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="15" width="34" height="24" rx="3"/><path d="M18 15v-4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"/><path d="M7 26h34"/><path d="M22 26v4h4v-4"/></svg></span>Business Projects</a><a class="c-gen" href="../general/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="3"/><rect x="27" y="8" width="13" height="13" rx="3"/><rect x="8" y="27" width="13" height="13" rx="3"/><circle cx="33.5" cy="33.5" r="6.5"/></svg></span>General Projects</a></nav></section>
+</main>
+<footer><div class="wrap">&copy; 2026 Hamid Faghidi &middot; Trading results are hypothetical backtests. Nothing on this site is investment advice.</div></footer>
+<script src="../charts.js"></script>
+<script>
+(function(){
+var FW=[{"label":"Adaptive ML","value":5},{"label":"ML + deep hedging","value":5},{"label":"Regime ML","value":4.5},{"label":"Inst. VRP","value":4},{"label":"Inst. overlay","value":3}];
+var COST=[{"label":"LSTM · 0 bps","value":1.329},{"label":"Best rule · 0 bps","value":0.762},{"label":"LSTM · 20 bps","value":0.952},{"label":"Best rule · 20 bps","value":0.663},{"label":"LSTM · 50 bps","value":0.388},{"label":"Best rule · 50 bps","value":0.514},{"label":"LSTM + turnover penalty · 50 bps","value":0.689}];
+function f1(v){return (+v).toFixed(1);}function f2(v){return (+v).toFixed(2);}
+function draw(){
+ barChart(document.getElementById('fw'),FW.map(function(d){return{label:d.label,value:d.value,tip:d.label+': '+d.value+' / 5'}}),{height:240,rotate:window.innerWidth<600,fmt:f1});
+ barChart(document.getElementById('cost'),COST.map(function(d){return{label:d.label,value:d.value,tip:d.label+': Sharpe '+f2(d.value)}}),{height:260,rotate:true,fmt:f1});}
+draw();var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,150)});
+var phases=[["0 · Research review (models, factors, frameworks)",1,0,0],["1 · Verify key papers",0,1,0],["2 · Strategy × model grid",0,0,1],["3 · Data vendor & dataset",0,0,1],["4 · Targets & regime thresholds",0,0,1],["5 · Baselines (Elastic Net, VRP, overlay)",0,0,1],["6 · XGBoost / LightGBM, then LSTM",0,0,1],["7 · Regime engine, Transformer/GNN, RL",0,0,1],["8 · Multiple-testing checks & paper trading",0,0,1],["9 · Benchmark-review additions (new)",0,0,10]];var host=document.getElementById('phases');
+phases.forEach(function(p){var tot=p[1]+p[2]+p[3];var r=document.createElement('div');r.className='phase';r.innerHTML='<div>'+p[0]+'</div><div class="sbar"><i class="d" style="width:'+(100*p[1]/tot)+'%"></i><i class="p" style="width:'+(100*p[2]/tot)+'%"></i></div><div class="n">'+(p[1]?'Done':p[2]?'Partial':'—')+'</div>';host.appendChild(r);});
+})();
+</script>
+</body>
+</html>
