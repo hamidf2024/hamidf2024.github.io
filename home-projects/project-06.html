@@ -28,8 +28,9 @@
     <div class="eyebrow">Project 6 &middot; Real estate &middot; Research platform</div>
     <h1>Project 6: Home Dashboard</h1>
     <p class="lede">An 11-page research platform for buying investment homes in <strong>Sacramento CA, Austin/Round Rock TX and Phoenix AZ</strong>. Each layer answers one question about a property: does it clear the buy bar, what it would earn, what it's worth, what the law allows, what the rehab costs, how risky it is, and who should manage it. A hub ties them together into a per-address dossier.</p>
-    <p style="margin-top:14px"><span class="tag good">Status: 10 of 10 layers live</span> <span class="tag muted">Started Aug 26, 2026</span> <span class="tag muted">Last updated Oct 28, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#layers">Layers</a><a href="#example">Example</a><a href="#benchmark">Benchmark</a><a href="#approach">Approach</a><a href="#next">Next</a><a href="#disclosure">Disclosures</a></nav>
+    <p style="margin-top:16px"><a class="tag good" style="text-decoration:none;font-size:14px;padding:8px 14px" href="p6/layer0.html">Open the dashboard (all 11 layers) &rarr;</a></p>
+    <p style="margin-top:10px"><span class="tag good">Status: 10 of 10 layers live</span> <span class="tag muted">Started Aug 26, 2026</span> <span class="tag muted">Last updated Oct 28, 2026</span></p>
+    <nav class="toc" aria-label="On this page"><a href="p6/layer0.html">Open the dashboard</a><a href="#layers">Layers</a><a href="#example">Example</a><a href="#benchmark">Benchmark</a><a href="#approach">Approach</a><a href="#next">Next</a><a href="#disclosure">Disclosures</a></nav>
   </section>
 
   <section aria-label="At a glance">
@@ -51,6 +52,7 @@
       <div id="rec"></div>
     </div>
     <div class="card" style="margin-top:16px">
+      <p style="color:var(--muted);font-size:13px;margin:0 0 6px">Click any layer to open its full page (read-only snapshot, Oct 28, 2026).</p>
       <div id="layer-list"></div>
     </div>
   </section>
@@ -184,7 +186,7 @@ function draw(){barChart(document.getElementById('rec'),REC.map(function(d){retu
 draw();var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,150)});
 var L=[[0,"Platform Hub","Index of all layers plus a per-address dossier","v4"],[1,"Investment Screening","Buy-bar screening across CA/TX/AZ, hot-market evaluator, best ZIPs, price forecasts","v74"],[2,"STR (Airbnb) Comps","Occupancy and nightly rates from live calendars","v37"],[3,"Sold Comps","Defensible market value from verified closed sales","v18"],[4,"Long-Term Rent Comps","Realistic long-term rent and gross yield","v23"],[5,"Realtor Sourcing","Agents scored on an 8-factor off-market rubric","v14"],[6,"Off-Market Finder","100 sourcing channels and live leads in 3 metros","v6"],[7,"STR, ADU & LTR Regulations","What the local law actually allows, scored","v10"],[8,"Renovation Cost Estimator","Line-item rehab budgets vs. finished comps","v11"],[9,"Risk Assessment","Seven natural hazards, crime and property-specific risks","v7"],[10,"Rental Management Companies","Managers scored on 9 factors with license checks","v3"]];
 var host=document.getElementById('layer-list');
-L.forEach(function(l){var r=document.createElement('div');r.className='layer';var a=document.createElement('div');a.className='n';a.textContent=l[0];var b=document.createElement('div');var s=document.createElement('strong');s.textContent=l[1];var p=document.createElement('p');p.textContent=l[2];b.appendChild(s);b.appendChild(p);var c=document.createElement('div');c.className='v';c.textContent=l[3];r.appendChild(a);r.appendChild(b);r.appendChild(c);host.appendChild(r);});
+L.forEach(function(l){var r=document.createElement('div');r.className='layer';var a=document.createElement('div');a.className='n';a.textContent=l[0];var b=document.createElement('div');var s=document.createElement('a');s.href='p6/layer'+l[0]+'.html';s.style.fontWeight='600';s.textContent=l[1];var p=document.createElement('p');p.textContent=l[2];b.appendChild(s);b.appendChild(p);var c=document.createElement('div');c.className='v';c.textContent=l[3];r.appendChild(a);r.appendChild(b);r.appendChild(c);host.appendChild(r);});
 })();
 </script>
 </body>

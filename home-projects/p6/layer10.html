@@ -1,0 +1,672 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<style>.p6-snap{position:sticky;top:0;z-index:1000;background:#2a2f3a;color:#fff;font:13px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:8px 16px;display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center}.p6-snap a{color:#cfe3ff}.address-check,#criteria-toggle,#dossier-check,#agent-search,.zip-city-check,.dossier-check{display:none!important}</style>
+<div class="p6-snap" role="note"><span><strong>Home Dashboard</strong> · read-only snapshot published Oct 28, 2026</span><a href="../project-06.html">← Project 6 overview</a><a href="layer0.html">Hub (Layer 0)</a><span style="opacity:.75">Request forms are hidden: they only work inside Claude. Figures are dated research snapshots, not advice.</span></div>
+
+<meta name="robots" content="noindex"><title>Rental Management Companies</title>
+<meta name="color-scheme" content="light only">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"></noscript>
+
+<style>
+  :root {
+    --paper: #FFFFFF;
+    --paper-raised: #FAFBFA;
+    --ink: #171A19;
+    --ink-soft: #3D4342;
+    --ink-faint: #78807E;
+    --line: #DCE3E1;
+    --line-soft: #EEF2F1;
+    --harbor: #1D6E76;
+    --harbor-strong: #124A50;
+    --harbor-tint: #DFEEEF;
+    --steel: #55636B;
+    --steel-tint: #E9EEF0;
+    --sage: #2E7D4F;
+    --sage-tint: #D9EAD3;
+    --amber: #B5760B;
+    --amber-tint: #FBF0DB;
+    --red: #B23A2F;
+    --red-tint: #F8E4E1;
+    --gold: #9C7A1E;
+    --gold-tint: #F5EFD9;
+    --shadow: 0 12px 32px -16px rgba(23,25,35,0.18);
+    --radius-s: 6px;
+    --radius-m: 10px;
+    --radius-l: 16px;
+    --focus: 0 0 0 3px rgba(29,110,118,0.30);
+  }
+  * { box-sizing: border-box; }
+  html { color-scheme: light; background: #FFFFFF; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper) !important;
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+  h1, h2, h3 { font-family: "Fraunces", Georgia, serif; font-weight: 600; text-wrap: balance; margin: 0; }
+  a { color: var(--harbor); }
+  button { font-family: inherit; }
+  input { font-family: inherit; }
+  ::selection { background: var(--harbor-tint); }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+
+  .shell { max-width: 1320px; margin: 0 auto; padding: 0 20px 64px; }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+    gap: 18px; padding: 32px 0 22px; border-bottom: 1px solid var(--line);
+  }
+  .wordmark-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .wordmark { font-size: 30px; letter-spacing: -0.01em; }
+  .wordmark em { font-style: normal; color: var(--harbor-strong); border-bottom: 2px solid var(--harbor); }
+  .tagline { color: var(--ink-soft); font-size: 14.5px; margin-top: 4px; max-width: 68ch; }
+  .backlink { font-size: 13px; color: var(--ink-faint); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; margin-bottom: 6px; }
+  .backlink:hover { color: var(--harbor); }
+  .badges { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600;
+    padding: 6px 11px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--paper-raised); color: var(--ink-soft); white-space: nowrap;
+  }
+  .badge.accent { background: var(--harbor-tint); color: var(--harbor-strong); border-color: transparent; }
+
+  /* ---------- Market tab bar ---------- */
+  .market-tab-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 22px 0 0; }
+  .market-tab-btn {
+    font-family: inherit; font-size: 13.5px; font-weight: 600; color: var(--ink-faint);
+    background: var(--paper-raised); border: 1px solid var(--line); border-radius: 999px;
+    padding: 8px 16px; cursor: pointer; display: inline-flex; align-items: center; gap: 7px;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .market-tab-btn:hover { color: var(--ink); border-color: var(--ink-faint); }
+  .market-tab-btn.active { background: var(--harbor); color: #fff; border-color: var(--harbor); }
+  .market-tab-btn .market-tab-count {
+    font-size: 11px; font-weight: 700; opacity: 0.75; background: rgba(0,0,0,0.08);
+    border-radius: 999px; padding: 1px 7px;
+  }
+  .market-tab-btn.active .market-tab-count { background: rgba(255,255,255,0.22); }
+  .market-tab-sub { font-size: 12.5px; color: var(--ink-faint); margin-left: 2px; }
+  .market-empty {
+    margin-top: 22px; padding: 40px 20px; text-align: center; color: var(--ink-faint);
+    font-size: 13.5px; border: 1px dashed var(--line); border-radius: var(--radius-l);
+  }
+
+  /* ---------- Nav rail ---------- */
+  .layout { display: grid; grid-template-columns: 220px 1fr; gap: 32px; padding-top: 26px; align-items: start; }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+  .rail { position: sticky; top: 20px; display: flex; flex-direction: column; gap: 4px; }
+  .rail-item {
+    display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: var(--radius-s);
+    font-size: 13.5px; color: var(--ink-faint); border: 1px solid transparent;
+  }
+  .rail-item .num {
+    width: 20px; height: 20px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; background: var(--steel-tint); color: var(--ink-faint); flex-shrink: 0;
+  }
+  .rail-item.active { background: var(--harbor-tint); color: var(--harbor-strong); border-color: transparent; font-weight: 600; }
+  .rail-item.active .num { background: var(--harbor); color: #fff; }
+  .rail-item.done .num { background: var(--sage); color: #fff; }
+  .rail-item.done { color: var(--ink-soft); }
+  .rail-item a { color: inherit; text-decoration: none; display: flex; align-items: center; gap: 10px; width: 100%; }
+
+  .main { min-width: 0; }
+
+  .page-meta-box { border-left: 3px solid var(--harbor); background: var(--paper-raised); border-radius: var(--radius-s); padding: 12px 16px 13px; margin: 0 0 20px; }
+  .page-meta-box .pmb-label { display: block; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--harbor-strong); margin-bottom: 7px; font-family: "IBM Plex Sans", sans-serif; }
+  .page-meta-box ul { margin: 0; padding-left: 18px; }
+  .page-meta-box li { font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; margin: 3px 0; }
+  .page-meta-box li b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Intro / methodology ---------- */
+  .intro-card {
+    background: var(--paper-raised); border: 1px solid var(--line); border-radius: var(--radius-l);
+    padding: 22px 24px; margin-bottom: 20px;
+  }
+  .intro-card h2 { font-size: 19px; margin-bottom: 8px; }
+  .intro-card p { color: var(--ink-soft); font-size: 14px; margin: 0 0 10px; max-width: 98ch; }
+  .intro-card p:last-child { margin-bottom: 0; }
+  .caveat-box {
+    margin-top: 14px; padding: 12px 14px; border-radius: var(--radius-m);
+    background: var(--amber-tint); border: 1px solid transparent; font-size: 13px; color: #6B4E0C;
+  }
+  .caveat-box strong { color: #4F3A08; }
+  details.methodology { margin-top: 14px; }
+  details.methodology summary {
+    cursor: pointer; font-size: 13px; font-weight: 600; color: var(--harbor); list-style: none; display: inline-flex; align-items: center; gap: 6px;
+  }
+  details.methodology summary::-webkit-details-marker { display: none; }
+  details.methodology summary::before { content: "▸"; font-size: 11px; transition: transform 0.15s; }
+  details.methodology[open] summary::before { transform: rotate(90deg); }
+
+  /* ---------- Rubric table ---------- */
+  .rubric-table-wrap { margin-top: 12px; overflow-x: auto; border: 1px solid var(--line-soft); border-radius: var(--radius-m); }
+  table.rubric-table { width: 100%; border-collapse: collapse; min-width: 520px; font-size: 12.5px; }
+  table.rubric-table thead th { text-align: left; font-size: 10.5px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-faint); background: var(--paper-raised); padding: 10px 11px; border-bottom: 1px solid var(--line); }
+  table.rubric-table tbody td { padding: 10px 11px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  table.rubric-table tbody tr:last-child td { border-bottom: none; }
+  table.rubric-table .weight-chip { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 12px; background: var(--harbor-tint); color: var(--harbor-strong); }
+  .dre-note { margin-top: 12px; padding: 12px 14px; border-radius: var(--radius-m); background: var(--steel-tint); font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; }
+  .dre-note b { color: var(--ink); }
+
+  /* ---------- Subject blocks ---------- */
+  .subject-block { margin-top: 6px; }
+  .subject-block:first-child { margin-top: 0; }
+  .subject-kicker {
+    margin: 44px 0 14px; font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--ink-faint); padding-top: 22px; border-top: 1px dashed var(--line);
+  }
+  .subject-block:first-child .subject-kicker { display: none; }
+
+  .subject-card {
+    border: 1px solid var(--line); border-radius: var(--radius-l); background: var(--paper); padding: 22px 24px;
+  }
+  .subject-card h2 { font-size: 21px; }
+  .subject-card p.note { color: var(--ink-faint); font-size: 12.5px; margin: 8px 0 0; max-width: 98ch; line-height: 1.55; }
+  .subject-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .subject-meta span {
+    font-size: 11.5px; font-weight: 600; color: var(--ink-soft); background: var(--paper-raised);
+    border: 1px solid var(--line-soft); padding: 4px 10px; border-radius: 999px;
+  }
+
+  /* ---------- Section headers ---------- */
+  .domain-section { margin-top: 40px; }
+  .domain-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; padding-bottom: 12px; border-bottom: 2px solid var(--ink); }
+  .domain-head .domain-icon { font-size: 22px; }
+  .domain-head h2 { font-size: 22px; }
+  .domain-head .domain-sub { font-size: 13px; color: var(--ink-faint); font-weight: 400; }
+
+  /* ---------- Company cards ---------- */
+  .company-list { display: flex; flex-direction: column; gap: 14px; margin-top: 16px; }
+  .company-card { border: 1px solid var(--line); border-radius: var(--radius-l); background: var(--paper); padding: 18px 22px; }
+  .company-card.rank-1 { border-color: var(--harbor); box-shadow: 0 0 0 1px var(--harbor); }
+  .company-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+  .company-name-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .company-rank {
+    width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; background: var(--steel-tint); color: var(--ink-soft); flex-shrink: 0;
+  }
+  .company-card.rank-1 .company-rank { background: var(--harbor); color: #fff; }
+  .company-name { font-family: "Fraunces", serif; font-weight: 600; font-size: 17px; }
+  .company-website { font-size: 12px; color: var(--harbor); text-decoration: none; }
+  .score-pill { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 700; padding: 4px 11px; border-radius: 999px; white-space: nowrap; flex-shrink: 0; }
+  .score-top { background: var(--sage-tint); color: #1E5C38; }
+  .score-strong { background: var(--amber-tint); color: #6B4E0C; }
+  .score-fair { background: var(--steel-tint); color: var(--ink-soft); }
+  .company-tagline { font-size: 13px; color: var(--ink-soft); margin-top: 8px; max-width: 92ch; line-height: 1.5; }
+  .company-meta-row { font-size: 12px; color: var(--ink-faint); margin-top: 8px; }
+
+  .fee-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; margin-top: 14px; }
+  .fee-item { background: var(--paper-raised); border: 1px solid var(--line-soft); border-radius: var(--radius-s); padding: 9px 11px; }
+  .fee-item .fee-label { font-size: 10.5px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink-faint); }
+  .fee-item .fee-value { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; font-weight: 600; color: var(--harbor-strong); margin-top: 3px; line-height: 1.4; }
+  .fee-at-rent { margin-top: 10px; font-size: 12.5px; font-weight: 600; color: var(--ink); background: var(--harbor-tint); border-radius: var(--radius-s); padding: 8px 11px; }
+
+  .info-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+  @media (max-width: 700px) { .info-cols { grid-template-columns: 1fr; } }
+  .info-box { background: var(--paper-raised); border: 1px solid var(--line-soft); border-radius: var(--radius-m); padding: 11px 13px; }
+  .info-box h4 { font-size: 11px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-faint); margin: 0 0 6px; }
+  .info-box p { margin: 0 0 4px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; }
+  .info-box p:last-child { margin-bottom: 0; }
+  .verify-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; margin-left: 6px; }
+  .verify-yes { background: var(--sage-tint); color: #1E5C38; }
+  .verify-no { background: var(--amber-tint); color: #6B4E0C; }
+
+  .swot-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+  @media (max-width: 700px) { .swot-cols { grid-template-columns: 1fr; } }
+  .swot-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .swot-list li { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; padding-left: 18px; position: relative; }
+  .swot-list.strengths li::before { content: "✓"; position: absolute; left: 0; color: var(--sage); font-weight: 700; }
+  .swot-list.concerns li::before { content: "!"; position: absolute; left: 2px; color: var(--amber); font-weight: 700; }
+  .swot-cols h4 { font-size: 11px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-faint); margin: 0 0 8px; }
+
+  .company-sources { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 4px 14px; }
+  .company-sources a { font-size: 12px; color: var(--ink-soft); text-decoration: none; border-bottom: 1px dotted var(--ink-faint); }
+  .company-sources a:hover { color: var(--harbor); border-color: var(--harbor); }
+
+  /* ---------- Headline box ---------- */
+  .headline-box { margin-top: 34px; padding: 18px 20px; border-radius: var(--radius-l); background: var(--harbor-tint); border: 1px solid transparent; }
+  .headline-box h3 { font-size: 15.5px; color: var(--harbor-strong); }
+  .headline-box p { margin: 8px 0 0; font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; max-width: 98ch; }
+
+  /* ---------- Check another property ---------- */
+  .address-check {
+    margin-top: 44px; padding: 20px 22px; border: 1px solid var(--line); border-radius: var(--radius-l); background: var(--paper-raised);
+  }
+  .address-check-head h3 { font-size: 16px; }
+  .address-check-head p { margin: 4px 0 0; color: var(--ink-faint); font-size: 12.5px; max-width: 70ch; }
+  .address-check-form { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .address-check-form input {
+    flex: 1; min-width: 220px; padding: 10px 12px; border-radius: var(--radius-s); border: 1px solid var(--line);
+    font-size: 13.5px; background: var(--paper);
+  }
+  .address-check-form input:focus { outline: none; box-shadow: var(--focus); border-color: var(--harbor); }
+  .address-check-form button {
+    padding: 10px 18px; border-radius: var(--radius-s); border: none; background: var(--harbor); color: #fff;
+    font-size: 13.5px; font-weight: 600; cursor: pointer;
+  }
+  .address-check-form button:hover { background: var(--harbor-strong); }
+  .address-check-status { margin-top: 10px; font-size: 12.5px; color: var(--harbor-strong); background: var(--harbor-tint); border-radius: var(--radius-s); padding: 8px 10px; }
+  .address-check-list { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .address-check-list li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; font-size: 12.5px; padding: 7px 10px; border-radius: var(--radius-s); background: var(--paper); border: 1px solid var(--line-soft); }
+  .address-check-list li.empty { color: var(--ink-faint); background: none; border: none; padding: 4px 2px; }
+  .address-check-list .addr { font-weight: 600; }
+  .address-check-list .status { color: var(--ink-soft); }
+  .address-check-list li.queued .status { color: var(--harbor-strong); }
+  .address-check-list li.added .status { color: var(--sage); }
+  .address-check-list li.error .status, .address-check-list li.notfound .status { color: #A6473B; }
+
+  footer.page-foot { margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--line-soft); color: var(--ink-faint); font-size: 12.5px; }
+
+  .toast {
+    position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); background: var(--ink); color: #fff;
+    padding: 10px 18px; border-radius: 999px; font-size: 13px; box-shadow: var(--shadow); z-index: 50; opacity: 0;
+    pointer-events: none; transition: opacity 0.2s, transform 0.2s;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+</style>
+
+<div class="shell">
+  <div class="topbar">
+    <div>
+      <a class="backlink" href="layer9.html">&larr; Layer 9 — Risk Assessment</a>
+      <div class="wordmark-row">
+        <span class="wordmark">Home Dashboard <em>&nbsp;Rental Management Companies&nbsp;</em></span>
+      </div>
+      <p class="tagline">Best property-management companies for a specific address, scored on a transparent weighted rubric — fee structure, licensing, maintenance response, reviews and more — with each company's own published pricing and an independent CA DRE license check where one could be found.</p>
+    </div>
+    <div class="badges">
+      <span class="badge accent" id="badge-properties">1 property covered</span>
+      <span class="badge" id="badge-companies">0 companies scored</span>
+    </div>
+  </div>
+
+  <div class="layout">
+    <nav class="rail">
+      <div class="rail-item done"><a href="layer1.html"><span class="num">1</span> Investment Ledger</a></div>
+      <div class="rail-item done"><a href="layer2.html"><span class="num">2</span> STR Comps</a></div>
+      <div class="rail-item done"><a href="layer3.html"><span class="num">3</span> Sold Comps</a></div>
+      <div class="rail-item done"><a href="layer4.html"><span class="num">4</span> Long-Term Rent Comps</a></div>
+      <div class="rail-item done"><a href="layer5.html"><span class="num">5</span> Realtor Sourcing</a></div>
+      <div class="rail-item done"><a href="layer6.html"><span class="num">6</span> Off-Market Finder</a></div>
+      <div class="rail-item done"><a href="layer7.html"><span class="num">7</span> STR &amp; ADU Regulations</a></div>
+      <div class="rail-item done"><a href="layer8.html"><span class="num">8</span> Renovation Cost Estimator</a></div>
+      <div class="rail-item done"><a href="layer9.html"><span class="num">9</span> Risk Assessment</a></div>
+      <div class="rail-item active"><span class="num">10</span> Rental Management Companies</div>
+    </nav>
+
+    <main class="main">
+      <div class="page-meta-box">
+        <span class="pmb-label">At a glance</span>
+        <ul>
+          <li><b>Goal:</b> know which rental-management companies actually serve a specific address, scored on the same weighted rubric — so a manager isn't picked off a star rating alone or a fee percentage that was never published.</li>
+          <li><b>Summary:</b> 4 scored properties (6316 Hillsdale Blvd and 437 Forni Rd, CA; 1505 Sagebrush Dr, TX; 9958 S Margo Dr, AZ), 19 companies total scored against a 9-factor weighted rubric (specialization, fee transparency, maintenance response, leasing performance, screening, reporting, reviews, licensing, contract flexibility).</li>
+          <li><b>Inputs:</b> none to start — pick a market tab, or use "Check another property" at the bottom to queue a new address.</li>
+          <li><b>Outputs:</b> a ranked company list per property, each with its published fee schedule, star rating and review count, an independently-checked license status where one could be found, strengths/concerns, and a synthesized headline per property.</li>
+        </ul>
+      </div>
+
+      <div class="intro-card">
+        <h2>How this page works</h2>
+        <p>For each address, this page scores the rental-management companies that actually serve that ZIP or city against a <strong>9-factor weighted rubric</strong> — specialization, fee transparency, maintenance response, leasing performance, tenant screening, reporting/technology, reviews, licensing/complaint history, and contract flexibility. Every company's fee schedule, star rating, and licensing status is sourced directly from that company's own site, a review platform, the Better Business Bureau, or the CA Department of Real Estate's public license lookup — never estimated.</p>
+        <p>Built from a ChatGPT research thread Tony ran and shared for the 6316 Hillsdale Blvd property, cross-checked and substantially extended this session with independent BBB and CA DRE license lookups, plus an entirely independent research pass for 437 Forni Rd, which the shared thread didn't cover. A "check another property" box at the bottom queues the next one.</p>
+        <div class="caveat-box">
+          <strong>Read this before picking a company off the ranking alone:</strong> these scores are a starting shortlist, not a hiring decision. Fee percentages, review counts and BBB ratings all change; several companies here don't publish a management-fee percentage at all and need a direct call. Every honest research thread on this topic — including Tony's own — reaches the same conclusion: get a written rental-analysis proposal from at least two or three companies on this list before signing anything.
+        </div>
+        <details class="methodology">
+          <summary>The rating rubric (click to expand)</summary>
+          <div class="rubric-table-wrap">
+            <table class="rubric-table">
+              <thead><tr><th>Factor</th><th>Weight</th><th>What it measures</th></tr></thead>
+              <tbody id="rubric-rows"></tbody>
+            </table>
+          </div>
+          <div class="dre-note" id="dre-note"></div>
+        </details>
+      </div>
+
+      <div class="market-tab-bar" id="market-tab-bar" role="tablist" aria-label="Filter properties by market"></div>
+
+      <div id="subjects-container"></div>
+
+      <div class="address-check" id="address-check">
+        <div class="address-check-head">
+          <h3>Check another property</h3>
+          <p id="address-check-desc">Type a full address to queue it here — then tell Claude in chat, and it'll research and score the rental-management companies serving that ZIP or city.</p>
+        </div>
+        <form class="address-check-form" id="address-check-form">
+          <label for="address-check-input" class="visually-hidden">Address to check</label>
+          <input id="address-check-input" type="text" placeholder="e.g. 123 Main St, Elk Grove, CA" autocomplete="off" required maxlength="80">
+          <button type="submit">Queue it</button>
+        </form>
+        <div class="address-check-status" id="address-check-status" hidden></div>
+        <ul class="address-check-list" id="address-check-list"></ul>
+      </div>
+
+      <footer class="page-foot">
+        This page declares the same "check another property" queue pattern as Layers 1–9. Cross-links: Layer 9's rail nav and backlink point here now; the Hub's card grid is updated to link to this page.
+      </footer>
+    </main>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="application/json" id="ld-state">{"rubric":[{"factor":"Local / SFR investor specialization","weight":"15%","desc":"Does the company actually manage single-family investment rentals in this specific market, not just HOAs or multifamily?"},{"factor":"Fee transparency & value","weight":"15%","desc":"Is the full fee schedule published (management %, leasing fee, renewal, maintenance markup), or does it require a call to find out?"},{"factor":"Maintenance & emergency response","weight":"15%","desc":"24/7 emergency coverage, in-house vs. subcontracted maintenance, and markup on repair costs."},{"factor":"Leasing performance","weight":"10%","desc":"Track record on days-to-lease and any written leasing guarantee."},{"factor":"Tenant screening","weight":"10%","desc":"Credit, income, employment, and rental-history screening rigor."},{"factor":"Reporting & technology","weight":"10%","desc":"Owner portal, monthly statements, year-end tax reporting (1099s)."},{"factor":"Reviews & reputation","weight":"10%","desc":"Cross-platform review volume and rating (Google/Birdeye/Yelp), weighted more for higher review counts."},{"factor":"Licensing & complaint history","weight":"10%","desc":"Active CA DRE broker license (legally required to manage rentals for compensation in California) plus BBB accreditation/rating and unresolved-complaint history."},{"factor":"Contract flexibility / guarantees","weight":"5%","desc":"Month-to-month vs. long-term contract lock-in, and any tenant-placement or leasing guarantee."}],"dreNote":"California law requires anyone who manages rental property for compensation on behalf of someone else to hold a real estate broker license (or work as a salesperson under one) issued by the CA Department of Real Estate -- this isn't optional paperwork, it's the legal floor for operating at all. Every company below was checked against DRE's public license lookup (www2.dre.ca.gov/publicasp/pplinfo.asp) where a license number could be found; where it couldn't, that's flagged rather than assumed.","subjects":[{"id":"hillsdale","address":"6316 Hillsdale Blvd","city":"Sacramento","state":"CA","zip":"95842","note":"The Layer 1/4/7/8/9 fixer-upper -- currently under renovation (Layer 8), so a manager would take over only after the rehab reaches a rentable state. Rent underwriting here uses a $2,650/mo base case (Layer 4's comp-based median was $2,915/mo for 4bd comps; Tony's ChatGPT thread used a more conservative $2,650 case-by-case midpoint, which this page keeps for consistency with its own fee-math examples).","rentBasis":2650,"headline":"Tony's ChatGPT thread's top pick, Tower Bridge Property Management, checks out on price and licensing (DRE #02102769, active, no discipline) but carries a real, independently-found red flag the thread didn't surface: a C- BBB rating from an unanswered complaint. That doesn't disqualify them -- plenty of well-regarded property managers have thin BBB profiles -- but it's the kind of thing worth asking about directly before signing. River Valley's flat $125/mo fee is the cheapest option here by a wide margin (about 4.7% of this property's rent vs. 6-10% elsewhere), though its review base is smaller. The honest takeaway from this research, matching Tony's thread's own conclusion: get written rental-analysis proposals from at least two or three of these before picking one -- the fee percentages differ by less than the disagreement in achievable rent.","companies":[{"rank":1,"name":"Tower Bridge Property Management","score":8.3,"tagline":"Sacramento-focused full-service manager; lowest published fee among the higher-review-volume options","website":"https://www.towerbridge.com/","serviceArea":"Sacramento, Roseville, Folsom, Elk Grove, Rancho Cordova and surrounding areas","fees":{"management":"6% of collected rent","leasing":"50% of one month's rent","renewal":"$175","other":"Routine annual inspection $125"},"feeAtRent":"$159/mo (~$1,908/yr) at $2,650 rent","licensing":{"dre":"DRE #02102769 (Corporation)","status":"Licensed, active","discipline":"No disciplinary action on record","verified":true,"sourceUrl":"https://www2.dre.ca.gov/publicasp/pplinfo.asp?License_id=02102769"},"reputation":{"rating":"4.9 / 5","reviewCount":"~222-230 reviews (Google/Birdeye)","bbb":"C- (not BBB accredited; 1 complaint on file went unanswered)","bbbUrl":"https://www.bbb.org/us/ca/gold-river/profile/property-management/tower-bridge-property-management-1156-90093481"},"strengths":["Lowest published management fee (6%) among the companies here with a substantial review count","One-year tenant-placement guarantee advertised","DRE license independently verified active with no disciplinary history"],"concerns":["BBB rating is C- with an unanswered complaint -- not disqualifying on its own, but worth asking about directly before signing","Not BBB-accredited (many solid local managers aren't, so weigh this alongside the rating itself, not instead of it)"],"sources":[{"label":"Tower Bridge — official site & pricing","url":"https://www.towerbridge.com/"},{"label":"Tower Bridge — BBB Business Profile (C-, not accredited)","url":"https://www.bbb.org/us/ca/gold-river/profile/property-management/tower-bridge-property-management-1156-90093481"},{"label":"CA DRE — license #02102769 lookup (verified active, no discipline)","url":"https://www2.dre.ca.gov/publicasp/pplinfo.asp?License_id=02102769"},{"label":"Birdeye — 230 reviews","url":"https://reviews.birdeye.com/tower-bridge-property-management-inc-158169123165146"}]},{"rank":2,"name":"Keyrenter Sacramento","score":8.1,"tagline":"High review volume, 24/7 emergency response; management fee corrected to 7% (not the 8% first quoted)","website":"https://keyrentersacramento.com/","serviceArea":"Greater Sacramento","fees":{"management":"7% of collected rent (per the Keyrenter Folsom-area pricing page — see correction note)","leasing":"50% of one month's rent, capped at $2,000","renewal":"$250 flat","other":"Discounts advertised for multiple properties"},"feeAtRent":"~$186/mo (~$2,226/yr) at $2,650 rent, at the verified 7% rate","licensing":{"dre":"Not independently looked up this session (franchise structure makes the exact license-holder unclear from the public site)","status":"Unverified this session","discipline":"Unverified this session","verified":false,"sourceUrl":""},"reputation":{"rating":"4.8 / 5","reviewCount":"293 reviews aggregated (268 Google, 21 Facebook, rest split across platforms)","bbb":"Not independently located for the Sacramento franchise specifically this session (other regional Keyrenter franchises have separate BBB profiles — this is a multi-franchise brand, not one national BBB entity)","bbbUrl":""},"strengths":["Largest cross-platform review count of any company on this page (293) with a strong 4.8/5 average","24/7 emergency response and a leasing guarantee advertised","Company-reported 97% on-time-payment rate and 76% tenant renewal rate (self-reported, not independently audited)"],"concerns":["Tony's original ChatGPT thread quoted this company's fee as 8%; on its own re-check it found only a Folsom-area pricing page showing 7% and explicitly flagged the number as unverified for Sacramento specifically. This page uses the 7% figure since it's the only one with a live published source, but treat it as needing a written local quote before underwriting.","DRE licensing not independently re-verified this session — confirm directly before signing."],"sources":[{"label":"Keyrenter Folsom — pricing page (7% figure)","url":"https://keyrenterfolsom.com/pricing"},{"label":"Keyrenter Sacramento — Birdeye reviews (293, 4.8/5)","url":"https://reviews.birdeye.com/keyrenter-property-management-sacramento-156986857755097"}]},{"rank":3,"name":"PMI American River","score":7.6,"tagline":"Most transparent tiered pricing structure of any company researched, but thin independent review history","website":"https://www.sacramentopropertymanagementinc.com/","serviceArea":"Sacramento","fees":{"management":"Platinum 6.5% / Gold $59 + 5.9% / Silver $59 + 4.5% (three published tiers, differing by service scope)","leasing":"50% of one month's rent (Platinum tier)","renewal":"Not published","other":"24/7 maintenance portal, move-in/out evaluation"},"feeAtRent":"~$172/mo (Platinum, 6.5%) at $2,650 rent","licensing":{"dre":"DRE #02114634, broker Justin James Frank (per company contact page — not independently re-verified via the DRE public lookup this session)","status":"Unverified this session","discipline":"Unverified this session","verified":false,"sourceUrl":""},"reputation":{"rating":"4.5 / 5","reviewCount":"~18 reviews","bbb":"Not Rated (BBB says insufficient information to issue a rating); not accredited; file opened 2022","bbbUrl":"https://www.bbb.org/us/ca/sacramento/profile/property-management/pmi-american-river-1156-90070030"},"strengths":["The clearest published fee-tier structure of any company on this page — easiest to comparison-shop without a sales call","Backed by the national PMI franchise system's technology/reporting stack"],"concerns":["Only ~18 reviews on record — meaningfully thinner track record than Tower Bridge or Keyrenter, so weight the rating less heavily","BBB has not yet issued a rating (too new/thin a file, not necessarily a red flag, but not a positive signal either)"],"sources":[{"label":"PMI American River — pricing/services","url":"https://www.sacramentopropertymanagementinc.com/"},{"label":"PMI American River — BBB Business Profile (Not Rated)","url":"https://www.bbb.org/us/ca/sacramento/profile/property-management/pmi-american-river-1156-90070030"}]},{"rank":4,"name":"River Valley Property Management","score":7.4,"tagline":"Cheapest published fee by a wide margin — flat $125/month regardless of rent","website":"https://www.rivervalleypropertymanagement.com/","serviceArea":"Sacramento","fees":{"management":"$125/month flat (not a percentage of rent)","leasing":"50% of one month's rent","renewal":"$150","other":"\"We don't get paid until you do,\" per their own site"},"feeAtRent":"$125/mo (~$1,500/yr) — equivalent to ~4.7% of rent at $2,650/mo, the lowest of any company here","licensing":{"dre":"Broker: Raul Ramos; specific license number not independently looked up this session","status":"Unverified this session (16 years in operation per BBB profile)","discipline":"Unverified this session","verified":false,"sourceUrl":""},"reputation":{"rating":"3.6 / 5","reviewCount":"~61-62 reviews","bbb":"Not Rated; not accredited; 16 years in operation","bbbUrl":"https://www.bbb.org/us/ca/sacramento/profile/property-management/river-valley-property-management-1156-47026700"},"strengths":["By far the lowest cost structure of any company here, especially valuable on a higher-rent property like this one","Flat fee means the cost doesn't scale up if rent negotiates higher after renovation"],"concerns":["Weakest review rating of the six Sacramento companies (3.6/5) — worth asking specifically what's behind the lower score","A flat fee can mean less incentive to actively manage a lower-maintenance property, though it can also mean less incentive to pad markup on repairs — ask directly how maintenance is billed"],"sources":[{"label":"River Valley — Sacramento pricing","url":"https://www.rivervalleypropertymanagement.com/sacramento-management-services"},{"label":"River Valley — BBB Business Profile (Not Rated)","url":"https://www.bbb.org/us/ca/sacramento/profile/property-management/river-valley-property-management-1156-47026700"}]},{"rank":5,"name":"Real Property Management Select Sacramento","score":7.3,"tagline":"By far the largest review base of any company here (~1,500+), but with a documented pattern of maintenance/responsiveness complaints","website":"","serviceArea":"Sacramento","fees":{"management":"Not published — quote required","leasing":"Not published","renewal":"Not published","other":""},"feeAtRent":"Quote required","licensing":{"dre":"Not independently looked up this session","status":"Unverified this session","discipline":"Unverified this session","verified":false,"sourceUrl":""},"reputation":{"rating":"4.7 / 5","reviewCount":"~1,537 reviews","bbb":"Not independently looked up this session","bbbUrl":""},"strengths":["Overwhelmingly the largest, most mature review base of any company evaluated for this ZIP — a 4.7/5 average across 1,500+ reviews is statistically a stronger signal than a smaller company's perfect score","Part of the national Real Property Management franchise network, with an established investor-oriented service model"],"concerns":["A meaningful cluster of negative owner reviews specifically about weekend/emergency responsiveness and maintenance markup pricing — worth asking about directly given how much weight this page's rubric puts on maintenance response","No published fee schedule found — requires a direct quote to compare against the others"],"sources":[{"label":"Real Property Management Select Sacramento — Birdeye reviews (4.7/5, ~1,537 reviews)","url":"https://birdeye.com/real-property-management-select-sacramento"}]},{"rank":6,"name":"Utopia Property Management","score":6.9,"tagline":"Largest operator by far (~9,000 properties, 27 offices) but the most expensive fee structure of the six","website":"https://www.utopiamanagement.com/","serviceArea":"Sacramento (part of a statewide/multi-state operation)","fees":{"management":"8-10% of collected rent (company's own general pricing guidance — not a Sacramento-specific quote)","leasing":"Can be waived under full-service arrangements per their site","renewal":"Not published","other":"In-house maintenance staff, 24/7/365 service claimed"},"feeAtRent":"$212-$265/mo (~$2,544-$3,180/yr) at $2,650 rent, at the published 8-10% range","licensing":{"dre":"Not independently looked up this session","status":"Unverified this session","discipline":"Unverified this session","verified":false,"sourceUrl":""},"reputation":{"rating":"4.8 / 5","reviewCount":"Not independently re-verified this session","bbb":"Not independently looked up this session","bbbUrl":""},"strengths":["Substantial operational scale (~9,000 properties, 27 offices, 30+ years) — meaningful institutional depth and in-house maintenance staff","24/7/365 service model with dedicated maintenance infrastructure rather than subcontracted vendors"],"concerns":["Highest fee range of any company evaluated (8-10% vs. 6-7% for the top three) — for this specific property, the extra 2-4% doesn't have clearly demonstrated extra value over the smaller, cheaper local firms","8-10% figure is Utopia's general published guidance, not a Sacramento- or property-specific quote"],"sources":[{"label":"Utopia Management — Sacramento office","url":"https://www.utopiamanagement.com/sacramento-property-management/"},{"label":"Utopia Management — fee guidance","url":"https://www.utopiamanagement.com/property-management-fees/"}]}]},{"id":"forni","address":"437 Forni Rd","city":"Placerville","state":"CA","zip":"95667","note":"The Layer 1/2/3/4/7/9 off-market outlier in unincorporated El Dorado County. Tony's shared ChatGPT thread for this layer only covered the Sacramento/95842 property, so every company below was independently sourced and researched this session -- none of it is carried over from a research thread.","rentBasis":2675,"headline":"Placerville's rental-management market looks very different from Sacramento's: no large franchise operator with thousands of reviews dominates here, and published fee schedules are harder to find -- most companies want a call before quoting a number. Imagine Property Services and Aborn Powers both publish real fee detail; Placerville Realty, the most locally-established option with the deepest service-area footprint, does not. None of the four DRE numbers found this session turned up any disciplinary history, which is a genuinely positive, if modest, signal for a market this thin on public reviews.","companies":[{"rank":1,"name":"Placerville Realty, Inc.","score":7.8,"tagline":"The most established, broadest-service-area local option — but the only one of the four without a public fee schedule","website":"https://www.placervillerealtyinc.com/placerville-property-management","serviceArea":"Placerville, Cameron Park, El Dorado Hills, Rescue, Shingle Springs, Diamond Springs, Pollock Pines, Pleasant Valley, Folsom","fees":{"management":"Not published — free consultation and free rental-price analysis offered instead","leasing":"Not published","renewal":"Not published","other":"Claims collecting \"over 99% of rents every month\""},"feeAtRent":"Quote required","licensing":{"dre":"DRE #01925552 (Salesperson, Sierra Marie Morrison) and #01855902 (Salesperson) on file with the company","status":"Licensed, active","discipline":"No disciplinary action on either license checked","verified":true,"sourceUrl":"https://www2.dre.ca.gov/publicasp/pplinfo.asp?License_id=01925552"},"reputation":{"rating":"Not independently located this session","reviewCount":"Not independently located this session","bbb":"Not independently looked up this session","bbbUrl":""},"strengths":["By far the broadest service-area footprint of any Placerville-area company found (9 named communities across El Dorado County)","Both DRE license numbers on file check out as active with no disciplinary history"],"concerns":["No published management-fee percentage anywhere on the site — requires a direct call to compare against the other three, which publish real numbers","Both DRE numbers on file are Salesperson licenses, not a Broker license — a salesperson must operate under a supervising broker; that broker's own license wasn't identified this session and is worth confirming directly"],"sources":[{"label":"Placerville Realty — Placerville property management page","url":"https://www.placervillerealtyinc.com/placerville-property-management"},{"label":"CA DRE — license #01925552 lookup (verified active, no discipline)","url":"https://www2.dre.ca.gov/publicasp/pplinfo.asp?License_id=01925552"},{"label":"CA DRE — license #01855902 lookup (verified active, no discipline)","url":"https://www2.dre.ca.gov/publicasp/pplinfo.asp?License_id=01855902"}]},{"rank":2,"name":"Imagine Property Services","score":7.6,"tagline":"El Dorado Hills-based, broker-licensed, with the clearest published service list of the Placerville-area options","website":"https://www.imaginepropertyservices.com/placerville-property-management","serviceArea":"Placerville, Folsom, El Dorado, El Dorado Hills, Roseville, Granite Bay, Shingle Springs, Cameron Park, Sacramento","fees":{"management":"Not published as a flat percentage — a 10% late-fee policy is published, but the core monthly management fee is not","leasing":"Not published","renewal":"Not published","other":"Eviction protection covering the initial 3-day notice cost"},"feeAtRent":"Quote required","licensing":{"dre":"DRE #01953967 (Broker license)","status":"Licensed, active (per company site — not independently re-verified via the DRE public lookup this session)","discipline":"Unverified this session","verified":false,"sourceUrl":""},"reputation":{"rating":"Not independently located this session","reviewCount":"Not independently located this session","bbb":"Not independently looked up this session","bbbUrl":""},"strengths":["Holds a Broker license directly (#01953967), rather than only a salesperson license operating under an unnamed broker","Eviction-protection feature (covers the initial 3-day notice cost) is a concrete, verifiable guarantee rather than a vague promise"],"concerns":["Core management fee percentage isn't published — only the 10% late-fee policy is stated","Broker license number wasn't cross-checked against the DRE public lookup this session — worth confirming directly"],"sources":[{"label":"Imagine Property Services — Placerville page","url":"https://www.imaginepropertyservices.com/placerville-property-management"}]},{"rank":3,"name":"Aborn Powers Property Management","score":7.2,"tagline":"The most transparent, itemized fee schedule of any Placerville-area company — but no DRE license number published on-site","website":"https://abornpowerspm.com/property-management-placerville-ca/","serviceArea":"Placerville, El Dorado County","fees":{"management":"8.9% of monthly rent collected","leasing":"50% of one month's rent (minimum $600)","renewal":"25% of one month's rent (minimum $300)","other":"Maintenance coordination billed at cost + 10%; company states \"no setup fees or hidden charges\""},"feeAtRent":"~$238/mo (~$2,860/yr) at $2,675 rent, at the published 8.9% rate","licensing":{"dre":"Not published on the company's own site — needs a direct request before signing","status":"Unverified this session","discipline":"Unverified this session","verified":false,"sourceUrl":""},"reputation":{"rating":"Not independently located this session","reviewCount":"Not independently located this session","bbb":"Not independently looked up this session","bbbUrl":""},"strengths":["The single most itemized, specific fee schedule found for this market — every charge (management, leasing, renewal, maintenance markup) is a real published number, not a \"call us\" placeholder","24-hour maintenance-response claim is specific and checkable, unlike vaguer \"responsive\" language elsewhere"],"concerns":["No DRE license number found anywhere on the company's own site — this is the one company on this page where licensing could not be checked at all, not just left unverified. Given that a broker license is legally required to manage rentals for compensation in California, this is worth resolving with a direct question before signing anything.","Highest published fee percentage (8.9%) of the three companies with real pricing on this property's ZIP"],"sources":[{"label":"Aborn Powers — Placerville property management page","url":"https://abornpowerspm.com/property-management-placerville-ca/"}]},{"rank":4,"name":"Keyrenter Folsom (Placerville service area)","score":7.1,"tagline":"Same national brand evaluated for the Hillsdale property, operating here through its Folsom-area franchise office","website":"https://keyrenterfolsom.com/placerville-property-management","serviceArea":"Folsom, Placerville, and surrounding El Dorado County communities","fees":{"management":"7% of rent per month, $120 minimum (per the Folsom-office pricing page, which explicitly serves Placerville)","leasing":"50% of one month's rent, capped at $2,000","renewal":"$250 flat","other":"Discounts advertised for multiple properties"},"feeAtRent":"~$187/mo (~$2,247/yr) at $2,675 rent","licensing":{"dre":"Not independently looked up this session for the Folsom franchise entity specifically","status":"Unverified this session","discipline":"Unverified this session","verified":false,"sourceUrl":""},"reputation":{"rating":"Not independently located for the Folsom office specifically this session","reviewCount":"Not independently located this session","bbb":"Not independently looked up this session","bbbUrl":""},"strengths":["Backed by a national franchise brand with an established playbook (the same brand scored well for the Hillsdale property, though as a different franchise office)","Published, specific fee schedule (7%, $120 minimum) with a capped leasing fee ($2,000 max) — more predictable than a pure percentage on a higher-rent property"],"concerns":["This is a different franchise office than the Sacramento Keyrenter evaluated above — its own review history, staff, and local performance weren't independently verified this session, so don't assume the Sacramento office's reputation carries over","Rural El Dorado County properties (unlike Forni Rd's paved-road, established-neighborhood context) can be outside a Sacramento-based franchise's normal service radius even when the marketing page lists the city — confirm they actually manage properties on this specific road before signing"],"sources":[{"label":"Keyrenter Folsom — Placerville property management page","url":"https://keyrenterfolsom.com/placerville-property-management"},{"label":"Keyrenter Folsom — pricing page (7%, $120 min)","url":"https://keyrenterfolsom.com/pricing"}]}]},{"id":"sagebrush","address":"1505 Sagebrush Dr","city":"Round Rock","state":"TX","zip":"78681","note":"This dashboard's first Texas subject, already tracked on Layers 3/4/7/8/9 -- a 1978 cash-only, as-is fixer in the Chisholm Valley subdivision, listed at $199,900, currently Pending. Rent underwriting here uses $1,850/mo, the exact median of Layer 4's own 10-comp similar-spec (3bd) rental sweep for this address.","rentBasis":1850,"headline":"Round Rock's rental-management market looks structurally different from either California ZIP on this page: no company here publishes a clean percentage-of-rent fee the way Tower Bridge or Keyrenter do, with one sharp exception -- Stetson Property Management's flat $125/month fee (about 6.8% of this property's rent, and the cheapest dollar cost of any company across all three subjects on this page) paired with a TREC-licensed broker, BBB A+ accreditation, and a published Round Rock-specific track record since 2009. The most important finding is a red flag hiding behind a big number: AustinVestors carries the largest raw review count of any Round Rock company found (599 Google reviews, 4.6 stars) but an F BBB rating with four unanswered complaints and recent reviews describing maintenance and habitability problems -- a sharper version of the Tower Bridge/BBB pattern this page already flags for the Sacramento property, and a reminder that review volume alone isn't a safety signal. As with both California subjects, the honest next step is the same: get written proposals from at least two or three of these before signing anything, since half the companies here don't publish enough pricing detail to compare without a direct call.","companies":[{"rank":1,"name":"Stetson Property Management","score":8.2,"tagline":"Flat $125/month fee -- the cheapest dollar cost of any company on this entire page -- from a Round Rock-based, TREC-licensed broker with no maintenance markup","website":"https://www.stetson.management/round-rock-property-management","serviceArea":"Round Rock and surrounding Central Texas communities, including Behrens Ranch, Forest Creek, Teravista and the Dell Technologies HQ area","fees":{"management":"$125/month flat (homes renting under $3,000/mo; $150/mo at $3,000+)","leasing":"70% of one month's rent (tenant placement)","renewal":"$200 flat annual renewal fee","other":"No setup fees; company states no markup on vendor repair/maintenance costs"},"feeAtRent":"$125/mo (~$1,500/yr) at $1,850 rent -- equivalent to ~6.8% of rent, and the lowest dollar management fee of any company across all three subjects on this page","licensing":{"dre":"Texas Real Estate Commission (TREC) Broker License #597044-B, broker Ryan Stetson","status":"Published as active on the company's own site; license number is consistent with Ryan Stetson's public HAR.com realtor profile, but not independently re-verified via TREC's own license-holder search tool this session (the tool could not be reached directly)","discipline":"Unverified this session","verified":false,"sourceUrl":""},"reputation":{"rating":"4.1 / 5 (Google, 212 reviews) · 3.9 / 5 (Yelp, 56 reviews) · 452 reviews aggregated on Birdeye","reviewCount":"212 Google + 56 Yelp + 452 Birdeye-aggregated","bbb":"A+ (BBB Accredited Business) -- though BBB's own review tab shows only 3 customer reviews directly on BBB itself (3.67/5 average, including one 1-star), a much smaller sample than the company's Google/Birdeye volume","bbbUrl":"https://www.bbb.org/us/tx/round-rock/profile/property-management/stetson-property-management-0825-1000144218"},"strengths":["Only company on this page (across all three subjects) with a genuinely flat, simple fee structure and an explicit no-markup-on-repairs policy","BBB Accredited with an A+ rating, and a Round Rock-specific operating history since 2009","Six-month tenant-replacement guarantee and no long-term contract or termination-fee lock-in, per the company's own site"],"concerns":["The 70% tenant-placement (leasing) fee is high relative to the flat monthly rate -- worth modeling the all-in first-year cost, not just the monthly fee, before comparing to a percentage-based competitor","BBB's own review tab (as opposed to the accreditation rating) is a thin sample -- 3 reviews, one of them 1-star -- so treat the A+ letter grade as the stronger signal here, not the review count"],"sources":[{"label":"Stetson Property Management -- Round Rock pricing page","url":"https://www.stetson.management/round-rock-property-management"},{"label":"Stetson Property Management -- BBB Business Profile (A+, accredited)","url":"https://www.bbb.org/us/tx/round-rock/profile/property-management/stetson-property-management-0825-1000144218"},{"label":"Ryan Stetson -- HAR.com realtor profile (license #597044)","url":"https://www.har.com/ryan-stetson/agent_abortx-597044"}]},{"rank":2,"name":"Rollingwood Management","score":7.5,"tagline":"The longest track record of any Round Rock-area company found (operating since 1986), with a published TREC broker license -- but no published fee percentage","website":"https://rollingwoodmanagement.com/","serviceArea":"Austin, Round Rock, Pflugerville, Buda, Kyle, Lakeway, Rollingwood, Bee Cave, West Lake Hills, Cedar Park, Leander, Manchaca","fees":{"management":"Not published as a flat percentage -- company states fees vary by scope and that \"most companies charge a percentage of monthly rent, while some may offer flat fees\"","leasing":"Not published (tenant-placement fee exists per the company's own fee explainer, no dollar figure given)","renewal":"Not published (\"usually a flat amount or a portion of one month's rent,\" per the company's own general explainer, not a Rollingwood-specific number)","other":"One-time setup/administrative fee mentioned but described as rarely charged (\"99% of our clients never see this fee\")"},"feeAtRent":"Quote required","licensing":{"dre":"Texas Real Estate Commission (TREC) Broker License #460192","status":"Published on the company's own site; not independently re-verified via TREC's own license-holder search tool this session","discipline":"Unverified this session","verified":false,"sourceUrl":""},"reputation":{"rating":"4.6 / 5 (Google, 117 reviews) · 3.5 / 5 (Yelp, 35 reviews)","reviewCount":"117 Google + 35 Yelp","bbb":"Not independently looked up this session","bbbUrl":""},"strengths":["By far the longest operating history found for this market -- since 1986, nearly 40 years -- a meaningfully deeper track record than any other company on this page","Publishes its TREC broker license number directly rather than requiring a lookup","Explicitly lists Round Rock among its named service areas, not just a general Austin-metro claim"],"concerns":["No published management-fee percentage anywhere on the site -- of the two companies here with a real fee number (Stetson) vs. those without, this is squarely in the \"needs a direct quote\" camp","Yelp rating (3.5/5, 35 reviews) trails its own Google rating (4.6/5, 117 reviews) by a meaningful margin -- worth reading both platforms' written reviews rather than picking whichever number looks better"],"sources":[{"label":"Rollingwood Management -- property management fees explainer","url":"https://rollingwoodmanagement.com/property-management-fees"},{"label":"Rollingwood Management -- official site","url":"https://rollingwoodmanagement.com/"}]},{"rank":3,"name":"Mars Hill Realty Group","score":7.3,"tagline":"Explicit Round Rock client testimonials and a cancel-anytime satisfaction guarantee, but no published fee schedule or license number","website":"https://www.marshillpropertymanagement.com/","serviceArea":"Round Rock, Georgetown, Austin metro, and surrounding Central Texas (Bastrop cited in a client testimonial)","fees":{"management":"Not published -- requires a direct consultation","leasing":"Not published","renewal":"Not published","other":"Company caps new-client intake at 20 properties per month, stated as a deliberate quality-over-volume constraint"},"feeAtRent":"Quote required","licensing":{"dre":"Not published on the company's own site; no TREC license number independently located this session","status":"Unverified this session","discipline":"Unverified this session","verified":false,"sourceUrl":""},"reputation":{"rating":"4.8 / 5 (Google, 195 reviews) · 4.8 / 5 (Yelp, 22 reviews), per Expertise.com's aggregated listing","reviewCount":"195 Google + 22 Yelp","bbb":"Not independently looked up this session","bbbUrl":""},"strengths":["Highest cross-platform star rating of any company found for this market (4.8/5 on both Google and Yelp)","A named, specific Round Rock client testimonial on the company's own site, not just a generic service-area claim","\"100% satisfaction, cancel at any time\" guarantee is a concrete, unusually low-friction commitment relative to competitors' fixed-term contracts"],"concerns":["No management-fee percentage, leasing fee, or renewal fee published anywhere found this session -- the least price-transparent of the three companies ranked ahead of AustinVestors","No TREC broker license number was located on the company's own site or in this session's research -- worth confirming directly, since a broker license is legally required to manage rental property for compensation in Texas"],"sources":[{"label":"Mars Hill Property Management -- Round Rock FAQ page","url":"https://www.wemanageyouhavepeace.com/property-management-in-round-rock-texas.php"},{"label":"Mars Hill Realty Group -- property management services","url":"https://www.marshillpropertymanagement.com/service/property-management/"}]},{"rank":4,"name":"HomeRiver Group","score":7,"tagline":"The largest, most institutional operator covering Round Rock -- but the least transparent of any company here on fees, licensing detail, or reviews","website":"https://www.homeriver.com/texas/round-rock-property-management","serviceArea":"Austin, Pflugerville, Round Rock, Cedar Park, Lakeway, Georgetown, Jarrell, Leander, Manor, San Marcos","fees":{"management":"Not published on the Round Rock service page -- requires a direct call","leasing":"Not published","renewal":"Not published","other":""},"feeAtRent":"Quote required","licensing":{"dre":"No specific license number published on the Round Rock page; footer references TREC consumer-protection compliance generally, not a specific broker license","status":"Unverified this session","discipline":"Unverified this session","verified":false,"sourceUrl":""},"reputation":{"rating":"Not displayed on the company's own Round Rock page -- the page references client testimonials but shows none","reviewCount":"Not independently located this session","bbb":"Not independently looked up this session","bbbUrl":""},"strengths":["Multi-state institutional franchise with the broadest named service-area footprint of any company here (10 named Austin-metro communities including Round Rock)","Separate, dedicated phone lines for investor-owners vs. renters -- a sign of institutional-scale operational maturity"],"concerns":["No fee schedule, specific broker license number, or review/rating data published on its own Round Rock page -- the least transparent company evaluated for this address, despite (or perhaps because of) its scale","A large national brand's local Round Rock office quality can vary independently of the parent company's reputation -- worth asking specifically about the local team's own track record, not just the HomeRiver name"],"sources":[{"label":"HomeRiver Group -- Round Rock property management page","url":"https://www.homeriver.com/texas/round-rock-property-management"}]},{"rank":5,"name":"AustinVestors","score":5.8,"tagline":"The largest raw review count of any Round Rock company found (599 Google reviews) -- but an F BBB rating with four unanswered complaints is the real story","website":"https://austinvestorspropertymanagement.com/round-rock-property-management/","serviceArea":"Round Rock, Austin metro (operating since 2013 per its BBB profile)","fees":{"management":"Not independently located this session (the company's own pricing page could not be retrieved)","leasing":"Not independently located this session","renewal":"Not independently located this session","other":""},"feeAtRent":"Quote required","licensing":{"dre":"Not independently located this session","status":"Unverified this session","discipline":"Unverified this session","verified":false,"sourceUrl":""},"reputation":{"rating":"4.6 / 5 (Google, 599 reviews) · 3.3 / 5 (Yelp, 62 reviews) per Expertise.com's aggregated listing -- but see BBB below","reviewCount":"599 Google + 62 Yelp","bbb":"F rating -- not BBB accredited, with 4 complaints filed against the business and the business failing to respond to all 4, per BBB's own stated reason for the F grade","bbbUrl":"https://www.bbb.org/us/tx/round-rock/profile/property-management/austin-vestors-0825-1000100801"},"strengths":["By far the largest raw Google review count of any Round Rock-area company found (599), with a solid 4.6/5 average on that platform specifically","Long operating history (since 2013) and an established Round Rock physical presence"],"concerns":["BBB rating is F, the worst possible grade, driven specifically by 4 complaints the business never responded to -- a meaningfully more serious red flag than Tower Bridge's C- rating on this dashboard's Sacramento page, which at least had an active (if unanswered) complaint thread, not a wholesale non-response pattern","Independent BBB-sourced customer feedback specifically cites maintenance issues and habitability concerns (\"horrible\" maintenance response, a health-hazard warning) -- exactly the kind of complaint this page's rubric weights most heavily (maintenance & emergency response is a top-3 factor)","This is a clear case where a large, positive-looking review count on one platform (599 Google reviews, 4.6 stars) does not match the company's complaint-handling record on a platform built specifically to track that -- worth weighing the BBB finding more heavily than the star count alone"],"sources":[{"label":"AustinVestors -- BBB Business Profile (F rating, 4 unanswered complaints)","url":"https://www.bbb.org/us/tx/round-rock/profile/property-management/austin-vestors-0825-1000100801"},{"label":"AustinVestors -- Round Rock property management page","url":"https://austinvestorspropertymanagement.com/round-rock-property-management/"}]}]},{"id":"margo","address":"9958 S Margo Dr","city":"Tempe","state":"AZ","zip":"85284","note":"This dashboard's first Arizona subject on Layer 10, already tracked on Layers 2/3/4/6/7/9 -- a 1994-built, 1,642 sqft, 3bd/2ba single-family home in the Sierra at Tempe subdivision, currently an active fix-and-flip relist after a 2026 roof and bathroom renovation. Rent underwriting here uses $2,450/mo, the median of six current 3bd/2ba single-family listings found this session in the 85284/85283 Tempe submarket (independently researched this pass -- not yet pulled from a Layer 4 comp sweep for this specific address, which hasn't scored a long-term rent comp set for this property as of this writing).","rentBasis":2450,"headline":"Tempe's rental-management market produces this page's cleanest split yet between licensing and reputation. Service Star Realty and AZ Prime Property Management are both ADRE-license-verified with zero disciplinary history and strong BBB accreditation (14 and 18 years respectively), and between them offer the two most owner-friendly fee structures found for this address -- Service Star's flat $155/month Gold package (about 6.3% of this property's rent, with all future placement and renewal costs pre-paid) versus AZ Prime's tiered 8%-of-rent fee with zero placement, vacancy, or markup charges of any kind. Crest Premier Properties is the only company actually headquartered in Tempe itself, with the longest BBB accreditation of the four (since 2009) and independent confirmation across two separate directories -- but it publishes no fee schedule and its ADRE licensing could not be pinned to a specific verified entity this session, the same 'quote required' gap this page already flags for Rollingwood and Mars Hill on the Texas subject. The sharpest finding, though, is Paramount Management & Realty: it has the single most transparent, fully-itemized fee schedule of any company evaluated here and a completely clean ADRE license -- yet carries a BBB F rating with two unanswered complaints, a direct Arizona echo of the AustinVestors pattern this page already flagged on 1505 Sagebrush Dr. A clean license is not the same thing as good complaint handling, and that gap is worth asking about directly before signing with any Tempe-area manager on fee transparency alone.","companies":[{"rank":1,"score":8.6,"name":"Service Star Realty","tagline":"Lowest all-in monthly cost of any company on this page ($155 flat, placement and renewals included) from an ADRE-clean, NARPM Master Property Manager-credentialed broker","website":"https://www.leaseaz.com/","serviceArea":"Phoenix and Tucson metro areas, including Tempe -- about two dozen named Phoenix-metro cities and seven Tucson-metro communities; Scottsdale-based office","fees":{"management":"$155/month flat (Gold package); $79/month flat (Basic package, excludes placement/releasing/renewal coverage)","leasing":"Included in Gold package price -- no separate tenant-placement fee; not covered under Basic","renewal":"Included in Gold package price; not covered under Basic","other":"Eviction Protection and a 4x/year AC filter-change program available at extra, unpublished cost; county rental registration and an annual technology fee are included in Gold"},"feeAtRent":"$155/mo (Gold) at $2,450 rent -- about 6.3% of rent, the lowest effective monthly cost of any company evaluated for this address, with placement, releasing, and renewal all pre-paid","licensing":{"dre":"Arizona Dept. of Real Estate (ADRE) License #LC641827000, Designated Broker David L. Swaim","status":"Active; confirmed directly via ADRE's public database","discipline":"None listed; 0 open complaints","verified":true,"sourceUrl":"https://services.azre.gov/PublicDatabase/DetailEntity.aspx?Id=32348"},"reputation":{"rating":"4.5/5 (Birdeye-aggregated, 1,747 reviews) · 4.6/5 per the company's own homepage (1,200+ Google reviews) · 85 Yelp reviews","reviewCount":"1,747 Birdeye-aggregated + 1,200+ Google (per company) + 85 Yelp","bbb":"A+ (BBB Accredited Business since 4/25/2016; 14 years in business per profile)","bbbUrl":"https://www.bbb.org/us/az/scottsdale/profile/property-management/service-star-realty-1126-1000029438"},"strengths":["Both company founders hold NARPM's Master Property Manager (MPM) designation -- a credential the company states fewer than 90 property managers hold nationwide","Largest review volume of any company found for this market (1,747 Birdeye-aggregated reviews) with a consistently strong average (4.5-4.6/5 across platforms)","Only company evaluated here whose flat monthly fee (Gold package) pre-pays all future placement and renewal costs -- no surprise leasing fee when a tenant turns over"],"concerns":["The cheaper Basic package ($79/mo) excludes placement, releasing, and renewal coverage entirely -- the $155 Gold-package comparison above only holds if the Gold tier is actually selected","Company is Scottsdale-based with a broad multi-city Phoenix/Tucson footprint rather than a Tempe-specific office -- worth confirming which property manager/team actually covers the Tempe submarket day-to-day"],"sources":[{"label":"Service Star Realty -- pricing page","url":"https://www.leaseaz.com/pricing"},{"label":"Service Star Realty -- company homepage (designations, service area, review volume)","url":"https://www.leaseaz.com/"},{"label":"Service Star Realty -- ADRE entity license detail (Active, 0 complaints)","url":"https://services.azre.gov/PublicDatabase/DetailEntity.aspx?Id=32348"},{"label":"Service Star Realty -- BBB Business Profile (A+, accredited since 2016)","url":"https://www.bbb.org/us/az/scottsdale/profile/property-management/service-star-realty-1126-1000029438"},{"label":"Service Star Realty -- Birdeye aggregated reviews (4.5/5, 1,747 reviews)","url":"https://reviews.birdeye.com/service-star-realty-149480921480401"}]},{"rank":2,"score":8.3,"name":"AZ Prime Property Management","tagline":"Zero placement, vacancy, or repair-markup fees of any kind -- \"$0 until leased\" -- from an ADRE-clean, 18-year BBB-accredited broker actually headquartered in Tempe","website":"https://azprimepropertymanagement.com/","serviceArea":"Over 40 Phoenix-metro-area cities including Tempe; company's own office is located in Tempe (3920 S Rural Rd, Ste 110)","fees":{"management":"Tiered percentage of rent: 10% under $1,495/mo, 8% at $1,500-$2,495/mo, 6% at $2,500-$2,995/mo, 5% at $3,000-$3,995/mo, 4% at $4,000-$4,995/mo","leasing":"None -- no tenant-placement fee at any rent tier","renewal":"Not published as a separate charge","other":"$100 one-time setup fee (discounted from a stated $300 standard rate); no markup on maintenance repairs; no vacancy fee; no charge for marketing, MLS listing, 1099/1042S filing, eviction filing, or after-hours emergency service"},"feeAtRent":"8% of $2,450 rent = $196/mo, plus a one-time $100 setup fee -- no placement, renewal, or vacancy fees at any point","licensing":{"dre":"Arizona Dept. of Real Estate (ADRE) License #LC665152000, Designated Broker Bonnie M. Burns (License BR109023000)","status":"Active, expires 10/31/2026; confirmed directly via ADRE's public database","discipline":"None listed; 0 open complaints","verified":true,"sourceUrl":"https://services.azre.gov/PdbWeb/EntityLicense/ViewEntityLicense/35019"},"reputation":{"rating":"38 Yelp reviews (star average not independently confirmed this session)","reviewCount":"38 Yelp reviews","bbb":"A+ (BBB Accredited Business since 1/10/2012; 18 years in business per profile)","bbbUrl":"https://www.bbb.org/us/az/phoenix/profile/property-management/az-prime-property-management-llc-1126-1000020528"},"strengths":["Genuinely headquartered in Tempe itself (3920 S Rural Rd), not just a service-area claim from a Phoenix or Scottsdale office","No placement fee, no vacancy fee, and no maintenance markup at any rent tier -- the most fee-transparent \"what you see is what you pay\" structure of the four companies evaluated","18-year BBB-accredited track record with an A+ rating and zero ADRE disciplinary history"],"concerns":["8% ongoing management fee at this property's rent level ($196/mo) is a higher effective monthly cost than Service Star's flat $155/mo Gold package, despite the $0 placement fee","Star-rating averages (Google/Yelp) could not be independently confirmed this session -- only the raw Yelp review count (38) was located; worth checking review sentiment directly rather than relying on the BBB letter grade alone"],"sources":[{"label":"AZ Prime Property Management -- pricing and fees page","url":"https://azprimepropertymanagement.com/pricing-and-fees"},{"label":"AZ Prime Property Management -- company homepage (service area, office location)","url":"https://azprimepropertymanagement.com/"},{"label":"AZ Prime Property Management -- ADRE entity license detail (Active, 0 complaints)","url":"https://services.azre.gov/PdbWeb/EntityLicense/ViewEntityLicense/35019"},{"label":"AZ Prime Property Management -- BBB Business Profile (A+, accredited since 2012)","url":"https://www.bbb.org/us/az/phoenix/profile/property-management/az-prime-property-management-llc-1126-1000020528"}]},{"rank":3,"score":7.2,"name":"Crest Premier Properties","tagline":"The only company actually headquartered in Tempe, with the longest BBB accreditation of the four (since 2009) -- but a quote-required fee schedule and licensing that couldn't be pinned to a specific verified ADRE entity this session","website":"https://crestpremierproperties.com/","serviceArea":"Family-owned since 2006; Phoenix, Gilbert, Scottsdale, Tempe, Chandler, Mesa, Maricopa, and Queen Creek, with Laveen also appearing in site navigation","fees":{"management":"Not published -- one client review calls the fees \"fair\" and says the company discloses what they cover, but no percentage or flat rate appears on the company's own site","leasing":"Not published","renewal":"Not published","other":"Also offers leasing-only service and assists with property sales"},"feeAtRent":"Quote required","licensing":{"dre":"Company states \"Licensed in Arizona\" but publishes no license number, designated-broker name, or legal entity suffix (LLC/Inc) anywhere on its own site","status":"Unverified this session -- no ADRE entity record could be confidently matched to \"Crest Premier Properties\" under an exact name search with this session's tools; worth asking the company directly for its license number","discipline":"Unverified this session","verified":false,"sourceUrl":""},"reputation":{"rating":"3.7/5 (Google, 70 reviews) · 3.9/5 (Yelp, 18 reviews), per an aggregator listing","reviewCount":"70 Google + 18 Yelp","bbb":"A+ (BBB Accredited Business since 6/26/2009 -- the longest continuous accreditation of any company evaluated for this address); 20 years in business per profile","bbbUrl":"https://www.bbb.org/us/az/tempe/profile/property-management/crest-premier-properties-1126-97019201"},"strengths":["The only company among the four actually headquartered in Tempe (4625 S Lakeshore Dr), not a satellite service area claimed from another city","Longest BBB accreditation of any company evaluated for this address -- continuously accredited since 2009, with a 20-year operating history","Independently confirmed on two separate directory sources (Expertise.com's Tempe-specific listing and a Phoenix-metro property-management aggregator) in addition to its own BBB and Yelp profiles"],"concerns":["No management fee, leasing fee, or renewal fee published anywhere found this session -- squarely in the \"needs a direct quote\" camp, the same gap this page already flags for Rollingwood and Mars Hill on the Texas subject","Could not independently verify an ADRE license number or designated-broker name under an exact entity-name match this session -- worth asking for the specific license number before signing, since Arizona law requires a licensed broker to manage rental property for compensation"],"sources":[{"label":"Crest Premier Properties -- company homepage","url":"https://crestpremierproperties.com/"},{"label":"Crest Premier Properties -- BBB Business Profile (A+, accredited since 2009)","url":"https://www.bbb.org/us/az/tempe/profile/property-management/crest-premier-properties-1126-97019201"},{"label":"Crest Premier Properties -- Expertise.com Tempe property-management listing","url":"https://www.expertise.com/business/property-management/arizona/tempe"},{"label":"Crest Premier Properties -- aggregated rating/fee listing","url":"https://propertymanagement.com/property-manager/crest-premier-properties-tempe-az"}]},{"rank":4,"score":6,"name":"Paramount Management & Realty","tagline":"The most fee-transparent, ADRE-clean company evaluated for this address -- undercut entirely by a BBB F rating and two unanswered complaints","website":"https://www.paramountpmr.com/","serviceArea":"Phoenix metro, with a dedicated Tempe property-management page","fees":{"management":"$115.00/month flat","leasing":"One-half of the first month's rent (tenant placement)","renewal":"$145.00 flat","other":"$17.89/month bank, mail & technology fee; $35.00 home-warranty coordination fee per occurrence"},"feeAtRent":"$115 + $17.89 = $132.89/mo recurring (about 5.4% of rent) plus a one-time $1,225 placement fee (50% of $2,450) whenever a tenant is placed","licensing":{"dre":"Arizona Dept. of Real Estate (ADRE) License #LC635334000, Designated Broker Keri L. Baker (License BR110460000)","status":"Active, expires 4/30/2028; confirmed directly via ADRE's public database","discipline":"None listed on ADRE; 0 open ADRE complaints","verified":true,"sourceUrl":"https://services.azre.gov/PdbWeb/EntityLicense/ViewEntityLicense/30936"},"reputation":{"rating":"3.6/5 (Birdeye-aggregated, 94 reviews, all Google) · 22 Yelp reviews","reviewCount":"94 Birdeye-aggregated + 22 Yelp","bbb":"F rating -- NOT BBB Accredited, with 2 complaints filed and the business failing to respond to both, per BBB's own stated reason for the F grade","bbbUrl":"https://www.bbb.org/us/az/phoenix/profile/property-management/paramount-property-management-realty-llc-1126-1000038997"},"strengths":["Most transparent, fully-itemized published fee schedule of any company evaluated for this address -- every fee (management, leasing, renewal, admin, warranty-coordination) has a specific dollar figure rather than a \"call for quote\"","ADRE license is clean -- Active status, zero disciplinary actions, 0 ADRE complaints -- so the reputation problem below is not a licensing problem","Dedicated Tempe-specific service page, not just a general Phoenix-metro claim"],"concerns":["BBB rating is F, the worst possible grade, driven specifically by 2 complaints the business never responded to -- the same pattern this page already flagged on its Texas subject (AustinVestors), just with a lower raw review count","A clean ADRE license record does not guarantee good complaint handling, and this page's rubric weights communication/maintenance responsiveness heavily -- worth asking directly about the 2 unanswered BBB complaints before signing","3.6/5 aggregated rating (94 reviews) is the lowest of the four companies evaluated for this address"],"sources":[{"label":"Paramount Management & Realty -- pricing page","url":"https://www.paramountpmr.com/pricing"},{"label":"Paramount Management & Realty -- Tempe property-management page","url":"https://www.paramountpmr.com/tempe-property-management"},{"label":"Paramount Management & Realty -- ADRE entity license detail (Active, 0 complaints)","url":"https://services.azre.gov/PdbWeb/EntityLicense/ViewEntityLicense/30936"},{"label":"Paramount Property Management & Realty LLC -- BBB Business Profile (F rating, not accredited, 2 unanswered complaints)","url":"https://www.bbb.org/us/az/phoenix/profile/property-management/paramount-property-management-realty-llc-1126-1000038997"},{"label":"Paramount Management & Realty -- Birdeye aggregated reviews (3.6/5, 94 reviews)","url":"https://reviews.birdeye.com/paramount-management-realty-165074773048680"}]}]}],"pendingRequests":[],"resolvedRequests":[],"lastRefresh":"2026-09-03"}</script>
+
+<script>
+(function () {
+  "use strict";
+  var STATE = JSON.parse(document.getElementById("ld-state").textContent);
+  var SUBJECTS = STATE.subjects || [];
+  var RUBRIC = STATE.rubric || [];
+  var DRE_NOTE = STATE.dreNote || "";
+  var PENDING_REQUESTS = STATE.pendingRequests || [];
+  var RESOLVED_REQUESTS = STATE.resolvedRequests || [];
+  var market = "CA";
+
+  function escapeHtml(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function scoreClass(score) {
+    if (score >= 8.5) return "score-top";
+    if (score >= 7.5) return "score-strong";
+    return "score-fair";
+  }
+
+  function rankBadge(rank) {
+    if (rank === 1) return "🥇";
+    if (rank === 2) return "🥈";
+    if (rank === 3) return "🥉";
+    return String(rank);
+  }
+
+  function renderRubric() {
+    var host = document.getElementById("rubric-rows");
+    if (!host) return;
+    host.innerHTML = RUBRIC.map(function (r) {
+      return "<tr><td><b>" + escapeHtml(r.factor) + "</b></td><td><span class=\"weight-chip\">" + escapeHtml(r.weight) + "</span></td><td>" + escapeHtml(r.desc) + "</td></tr>";
+    }).join("");
+    var note = document.getElementById("dre-note");
+    if (note) note.innerHTML = "<b>On licensing:</b> " + escapeHtml(DRE_NOTE);
+  }
+
+  function feeGridHtml(fees) {
+    fees = fees || {};
+    var items = [
+      ["Management", fees.management],
+      ["Leasing", fees.leasing],
+      ["Renewal", fees.renewal],
+      ["Other", fees.other]
+    ].filter(function (x) { return x[1]; });
+    return '<div class="fee-grid">' + items.map(function (x) {
+      return '<div class="fee-item"><div class="fee-label">' + escapeHtml(x[0]) + '</div><div class="fee-value">' + escapeHtml(x[1]) + "</div></div>";
+    }).join("") + "</div>";
+  }
+
+  function companyCard(c) {
+    var lic = c.licensing || {};
+    var rep = c.reputation || {};
+    var verifyChip = lic.verified
+      ? '<span class="verify-chip verify-yes">✓ DRE-verified</span>'
+      : '<span class="verify-chip verify-no">Not independently verified</span>';
+    var strengths = (c.strengths || []).map(function (s) { return "<li>" + escapeHtml(s) + "</li>"; }).join("");
+    var concerns = (c.concerns || []).map(function (s) { return "<li>" + escapeHtml(s) + "</li>"; }).join("");
+    var srcLinks = (c.sources || []).map(function (s) {
+      return '<a href="' + s.url + '" target="_blank" rel="noopener">' + escapeHtml(s.label) + "</a>";
+    }).join("");
+    var websiteLink = c.website ? '<a class="company-website" href="' + c.website + '" target="_blank" rel="noopener">Website ↗</a>' : "";
+
+    return '<div class="company-card rank-' + c.rank + '">' +
+      '<div class="company-head">' +
+        '<div class="company-name-row">' +
+          '<span class="company-rank">' + rankBadge(c.rank) + '</span>' +
+          '<span class="company-name">' + escapeHtml(c.name) + '</span>' +
+          websiteLink +
+        '</div>' +
+        '<span class="score-pill ' + scoreClass(c.score) + '">' + c.score.toFixed(1) + ' / 10</span>' +
+      '</div>' +
+      '<p class="company-tagline">' + escapeHtml(c.tagline) + '</p>' +
+      '<div class="company-meta-row">Serves: ' + escapeHtml(c.serviceArea || "") + '</div>' +
+      feeGridHtml(c.fees) +
+      (c.feeAtRent ? '<div class="fee-at-rent">💵 ' + escapeHtml(c.feeAtRent) + '</div>' : '') +
+      '<div class="info-cols">' +
+        '<div class="info-box"><h4>Licensing' + verifyChip + '</h4>' +
+          '<p>' + escapeHtml(lic.dre || "Not found") + '</p>' +
+          '<p>' + escapeHtml(lic.status || "") + (lic.discipline ? " — " + escapeHtml(lic.discipline) : "") + '</p>' +
+          (lic.sourceUrl ? '<p><a href="' + lic.sourceUrl + '" target="_blank" rel="noopener">DRE lookup ↗</a></p>' : '') +
+        '</div>' +
+        '<div class="info-box"><h4>Reputation</h4>' +
+          '<p><b>' + escapeHtml(rep.rating || "n/a") + '</b> — ' + escapeHtml(rep.reviewCount || "") + '</p>' +
+          '<p>BBB: ' + escapeHtml(rep.bbb || "not independently looked up") + '</p>' +
+        '</div>' +
+      '</div>' +
+      '<div class="swot-cols">' +
+        (strengths ? '<div><h4>Strengths</h4><ul class="swot-list strengths">' + strengths + '</ul></div>' : '<div></div>') +
+        (concerns ? '<div><h4>Worth asking about</h4><ul class="swot-list concerns">' + concerns + '</ul></div>' : '<div></div>') +
+      '</div>' +
+      (srcLinks ? '<div class="company-sources">' + srcLinks + '</div>' : '') +
+    '</div>';
+  }
+
+  function subjectHeaderHtml(s) {
+    return '<div class="subject-card">' +
+      "<h2>" + escapeHtml(s.address) + ", " + escapeHtml(s.city) + ", " + escapeHtml(s.state) + " " + escapeHtml(s.zip) + "</h2>" +
+      (s.note ? '<p class="note">' + escapeHtml(s.note) + "</p>" : "") +
+      '<div class="subject-meta">' +
+        "<span>" + (s.companies || []).length + " companies scored</span>" +
+        "<span>Rent basis: $" + Number(s.rentBasis).toLocaleString("en-US") + "/mo</span>" +
+      "</div>" +
+    "</div>";
+  }
+
+  function collectSubjectSources(s) {
+    var seen = {};
+    var out = [];
+    (s.companies || []).forEach(function (c) {
+      (c.sources || []).forEach(function (x) {
+        if (!x.url || seen[x.url]) return;
+        seen[x.url] = true;
+        out.push(x);
+      });
+    });
+    return out;
+  }
+
+  function sourcesHtml(list) {
+    var items = list.map(function (s) {
+      return '<li><a href="' + s.url + '" target="_blank" rel="noopener">' + escapeHtml(s.label) + "</a></li>";
+    }).join("");
+    return '<div class="subject-sources" style="margin-top:30px;"><h3 style="font-size:15px;">Sources for this property</h3><ul style="list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:5px;">' + items + "</ul></div>";
+  }
+
+  var MARKET_LABEL = { CA: "California", TX: "Texas", AZ: "Arizona" };
+  function marketLabel(code) { return MARKET_LABEL[code] || code; }
+
+  function renderMarketTabCounts() {
+    var host = document.getElementById("market-tab-bar");
+    if (!host) return;
+    var counts = {};
+    SUBJECTS.forEach(function (s) {
+      var st = s.state || "CA";
+      counts[st] = (counts[st] || 0) + 1;
+    });
+    var states = Object.keys(counts).sort();
+    if (states.length <= 1) { host.innerHTML = ""; host.hidden = true; return; }
+    if (states.indexOf(market) === -1) { market = states[0]; }
+    host.hidden = false;
+    host.innerHTML = states.map(function (st) {
+      var isActive = st === market;
+      return '<button type="button" class="market-tab-btn' + (isActive ? " active" : "") + '" data-market="' + st + '" onclick="switchMarket(\'' + st + '\')" role="tab" aria-selected="' + isActive + '">' +
+        escapeHtml(marketLabel(st)) + ' <span class="market-tab-count">' + counts[st] + "</span></button>";
+    }).join("") + '<span class="market-tab-sub">' + SUBJECTS.length + " properties across " + states.length + " markets</span>";
+  }
+
+  function switchMarket(mkt) {
+    if (mkt === market) return;
+    market = mkt;
+    renderMarketTabCounts();
+    renderSubjects();
+  }
+  window.switchMarket = switchMarket;
+
+  function renderSubjects() {
+    var host = document.getElementById("subjects-container");
+    if (!host) return;
+    var filtered = SUBJECTS.filter(function (s) { return (s.state || "CA") === market; });
+    if (!filtered.length) {
+      host.innerHTML = SUBJECTS.length
+        ? '<div class="market-empty">No properties in the ' + escapeHtml(marketLabel(market)) + " market yet.</div>"
+        : "";
+      return;
+    }
+    host.innerHTML = filtered.map(function (s, i) {
+      var companiesHtml = (s.companies || []).slice().sort(function (a, b) { return a.rank - b.rank; }).map(companyCard).join("");
+      return '<div class="subject-block">' +
+        (filtered.length > 1 ? '<div class="subject-kicker">Property ' + (i + 1) + " of " + filtered.length + "</div>" : "") +
+        subjectHeaderHtml(s) +
+        '<div class="domain-section"><div class="domain-head"><span class="domain-icon">🏢</span><h2>Ranked companies</h2><span class="domain-sub">Scored against the 9-factor rubric above, highest first</span></div>' +
+          '<div class="company-list">' + companiesHtml + "</div>" +
+        "</div>" +
+        (s.headline ? '<div class="headline-box"><h3>Bottom line</h3><p>' + escapeHtml(s.headline) + "</p></div>" : "") +
+        sourcesHtml(collectSubjectSources(s)) +
+      "</div>";
+    }).join("");
+  }
+
+  function sameQuery(a, b) { return String(a).trim().toLowerCase() === String(b).trim().toLowerCase(); }
+  function nextRequestId() {
+    var maxId = 0;
+    PENDING_REQUESTS.concat(RESOLVED_REQUESTS).forEach(function (r) { if (r.id > maxId) maxId = r.id; });
+    return maxId + 1;
+  }
+  function todayStr() {
+    var d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+
+  var REQUEST_STATUS_LABEL = {
+    queued: "⏳ Queued — tell Claude in chat to research this property",
+    added: "✅ Added — scored companies were built above",
+    "already-listed": "ℹ️ Already on this page",
+    notfound: "⚠️ Couldn't find enough reliable sources for this property",
+    error: "⚠️ Couldn't process this request — try again or check the spelling"
+  };
+
+  function renderRequestList() {
+    var list = document.getElementById("address-check-list");
+    if (!list) return;
+    var items = PENDING_REQUESTS.slice().concat(RESOLVED_REQUESTS.slice(-8).slice().reverse());
+    if (!items.length) {
+      list.innerHTML = '<li class="empty">No property checks yet — try one above.</li>';
+      return;
+    }
+    list.innerHTML = items.map(function (r) {
+      var label = REQUEST_STATUS_LABEL[r.status] || r.status;
+      return '<li class="' + r.status + '"><span class="addr">' + escapeHtml(r.query) + "</span>" +
+        '<span class="status">' + label + (r.reason ? " — " + escapeHtml(r.reason) : "") + "</span></li>";
+    }).join("");
+  }
+
+  function showToast(msg) {
+    var t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    setTimeout(function () { t.classList.remove("show"); }, 3200);
+  }
+
+  function buildPublishHtml() {
+    var clone = document.documentElement.cloneNode(true);
+    Array.prototype.forEach.call(clone.querySelectorAll(".toast"), function (n) { n.parentNode.removeChild(n); });
+    var input = clone.querySelector("#address-check-input");
+    if (input) input.removeAttribute("value");
+    var stateScript = clone.querySelector("#ld-state");
+    if (stateScript) {
+      stateScript.textContent = JSON.stringify({
+        rubric: RUBRIC,
+        dreNote: DRE_NOTE,
+        subjects: SUBJECTS,
+        pendingRequests: PENDING_REQUESTS,
+        resolvedRequests: RESOLVED_REQUESTS,
+        lastRefresh: STATE.lastRefresh
+      });
+    }
+    return "<!doctype html>\n" + clone.outerHTML;
+  }
+
+  function publishState(statusElId) {
+    var statusEl = document.getElementById(statusElId || "address-check-status");
+    if (statusEl) statusEl.hidden = true;
+    if (!window.claude || typeof window.claude.use !== "function") {
+      if (statusEl) {
+        statusEl.hidden = false;
+        statusEl.textContent = "Note: live saving isn't available in this view — open the published page link directly (not a preview) so your request is saved and picked up for processing.";
+      }
+      return;
+    }
+    window.claude.use("artifact").then(function (artifact) {
+      if (!artifact) {
+        if (statusEl) {
+          statusEl.hidden = false;
+          statusEl.textContent = "Note: live saving isn't available in this view — open the published page link directly (not a preview) so your request is saved and picked up for processing.";
+        }
+        return;
+      }
+      return artifact.publish(buildPublishHtml());
+    }).catch(function (err) {
+      if (statusEl) {
+        statusEl.hidden = false;
+        statusEl.textContent = "Note: couldn't save this request automatically (" + (err && err.message ? err.message : "unknown error") + "). It's queued in this browser tab only for now.";
+      }
+    });
+  }
+
+  var addressForm = document.getElementById("address-check-form");
+  if (addressForm) {
+    addressForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var input = document.getElementById("address-check-input");
+      var query = input.value.trim();
+      if (!query) return;
+
+      var already = SUBJECTS.some(function (s) { return sameQuery(s.address, query); });
+      if (already) { showToast("That property is already on this page."); return; }
+      var dup = PENDING_REQUESTS.some(function (r) { return sameQuery(r.query, query); });
+      if (dup) { showToast("That's already queued."); return; }
+
+      PENDING_REQUESTS.push({ id: nextRequestId(), query: query, submittedOn: todayStr(), status: "queued" });
+      renderRequestList();
+      input.value = "";
+      showToast("Queued — " + query + " is saved here. Tell Claude in chat to research it.");
+      publishState("address-check-status");
+    });
+  }
+
+  renderRubric();
+  renderMarketTabCounts();
+  renderSubjects();
+  renderRequestList();
+
+  var marketSet = {};
+  SUBJECTS.forEach(function (s) { marketSet[s.state || "CA"] = true; });
+  var numMarkets = Object.keys(marketSet).length;
+  document.getElementById("badge-properties").textContent = SUBJECTS.length + (SUBJECTS.length === 1 ? " property covered" : " properties covered") + (numMarkets > 1 ? " (all markets)" : "");
+  var totalCompanies = SUBJECTS.reduce(function (sum, s) { return sum + (s.companies || []).length; }, 0);
+  document.getElementById("badge-companies").textContent = totalCompanies + " companies scored";
+})();
+</script>
+
+</body></html>
