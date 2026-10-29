@@ -21,6 +21,27 @@
 td.th{font-size:12px;color:var(--muted)}
 @media (max-width:760px){.tiers{grid-template-columns:1fr}}
 @media (max-width:600px){.phase{grid-template-columns:minmax(0,1fr) 70px 54px}}
+/* CATEGORIES-CSS:START */
+.catbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px}
+.cattoggle{font:inherit;font-size:13px;font-weight:600;color:var(--accent);background:transparent;border:1px solid var(--line);border-radius:999px;padding:5px 14px;cursor:pointer}
+.cattoggle:hover{border-color:var(--accent)}
+.catlist{margin-top:10px;border-top:1px solid var(--line)}
+details.catd{border-bottom:1px solid var(--line);scroll-margin-top:12px}
+details.catd>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:34px minmax(0,1fr) 84px 120px 18px;gap:12px;align-items:center;padding:12px 4px}
+details.catd>summary::-webkit-details-marker{display:none}
+details.catd>summary::after{content:"";width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);justify-self:center;transition:transform .15s}
+details.catd[open]>summary::after{transform:rotate(-135deg)}
+details.catd>summary:hover .cname{color:var(--accent)}
+details.catd>summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:8px}
+.cnum{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-weight:700;font-size:13px;background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
+.cname{font-weight:600}.ctheme{display:block;font-weight:400;font-size:12.5px;color:var(--muted)}
+.cavg{text-align:right;line-height:1.2}.cavg small{display:block;font-size:11px;color:var(--muted)}
+.cbest{font-size:13px;color:var(--muted);text-align:right}
+details.catd .table-scroll{margin:0 0 14px}
+table.stk{font-size:13.5px}table.stk th{font-size:11.5px}table.stk td,table.stk th{padding:8px 10px}
+table.stk .cn{display:block;font-size:12px;color:var(--muted)}table.stk .tkr{font-size:12px;color:var(--muted);font-weight:600}
+@media (max-width:640px){details.catd>summary{grid-template-columns:30px minmax(0,1fr) 64px 16px}.cbest{display:none}}
+/* CATEGORIES-CSS:END */
 </style>
 </head>
 <body>
@@ -97,24 +118,243 @@ td.th{font-size:12px;color:var(--muted)}
       <div class="chart-title"><h3>Average chance of doubling by category</h3></div>
       <p class="chart-note">Categories 1–6 all ride the same AI spending cycle, so a pause there would hit half the list at once.</p>
       <div id="cats"></div>
-      <div class="table-scroll" style="margin-top:14px"><table>
-        <thead><tr><th>#</th><th>Category</th><th>Theme</th><th>Holdings</th><th>Avg P(2x)</th><th>Best candidate</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td>AI Semiconductors: Compute &amp; Foundry</td><td class="th">AI</td><td class="num">6</td><td class="num">31%</td><td>NVDA 36%</td></tr>
-          <tr><td>2</td><td>AI Memory &amp; Semiconductor Equipment</td><td class="th">AI</td><td class="num">5</td><td class="num">28%</td><td>SK hynix 33%</td></tr>
-          <tr><td>3</td><td>Hyperscalers &amp; AI Platforms</td><td class="th">AI</td><td class="num">5</td><td class="num">31%</td><td>APP 46%</td></tr>
-          <tr><td>4</td><td>Physical AI &amp; Robotics</td><td class="th">AI</td><td class="num">16</td><td class="num">20%</td><td>SYM 27%</td></tr>
-          <tr><td>5</td><td>AI Power &amp; Data-Center Infrastructure</td><td class="th">AI + energy security</td><td class="num">6</td><td class="num">26%</td><td>VRT 37%</td></tr>
-          <tr><td>6</td><td>AI Software &amp; Cybersecurity</td><td class="th">AI + cyber war</td><td class="num">4</td><td class="num">22%</td><td>PLTR 28%</td></tr>
-          <tr><td>7</td><td>US Defense Primes &amp; Defense Electronics</td><td class="th">War</td><td class="num">10</td><td class="num">19%</td><td>CW 22%</td></tr>
-          <tr><td>8</td><td>Defense Tech, Drones &amp; Allied Rearmament</td><td class="th">War</td><td class="num">7</td><td class="num">22%</td><td>ONDS 27%</td></tr>
-          <tr><td>9</td><td>Strategic Resources: Nuclear Fuel &amp; Critical Minerals</td><td class="th">War + AI power</td><td class="num">12</td><td class="num">21%</td><td>Lynas 29%</td></tr>
-          <tr><td>10</td><td>Biotech, Pandemic Preparedness &amp; AI Drug Discovery</td><td class="th">Pandemic</td><td class="num">13</td><td class="num">19%</td><td>REGN 23%</td></tr>
-          <tr><td>11</td><td>Solar &amp; Renewables</td><td class="th">Energy transition</td><td class="num">17</td><td class="num">23%</td><td>NXT 34%</td></tr>
-          <tr><td>12</td><td>Fintech &amp; Consumer</td><td class="th">Outside the 3 themes</td><td class="num">7</td><td class="num">28%</td><td>NU 40%</td></tr>
-        </tbody>
-      </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Plus a group of 9 funds. Categories 11 and 12 were the v1 report's two legacy watchlists.</p>
+      <!-- CATEGORIES:START (generated by website/build_categories.py; edit the data, not this block) -->
+      <div class="catbar"><p class="chart-note" style="margin:0">Click a category, or a bar in the chart, to see its stocks ranked by chance of doubling.</p><button type="button" class="cattoggle" id="cattoggle">Expand all</button></div>
+      <div class="catlist">
+<details class="catd" id="cat-1">
+  <summary><span class="cnum">1</span><span class="cname">AI Semiconductors: Compute &amp; Foundry<span class="ctheme">AI · 6 holdings</span></span><span class="cavg"><b>31%</b><small>avg P(2x)</small></span><span class="cbest">NVDA 36%</span></summary>
+  <div class="table-scroll"><table class="stk">
+    <thead><tr><th>#</th><th>Stock</th><th>Final P(2x)</th><th>ML / Rules</th><th>P(halves)</th><th>Fin. score</th><th>Rev growth</th><th>Op margin</th><th>P/E</th><th>Tier</th></tr></thead>
+    <tbody>
+<tr><td class="num">1</td><td><b>NVDA</b><span class="cn">NVIDIA</span></td><td class="num"><b>36%</b></td><td class="num">17% / 56%</td><td class="num">9%</td><td class="num">97</td><td class="num">106%</td><td class="num">65%</td><td class="num">27.3x</td><td><span class="tag good" title="A - Best balance of doubling odds and risk">A</span></td></tr>
+<tr><td class="num">2</td><td><b>AVGO</b><span class="cn">Broadcom</span></td><td class="num"><b>35%</b></td><td class="num">19% / 51%</td><td class="num">13%</td><td class="num">90</td><td class="num">86%</td><td class="num">49%</td><td class="num">44.8x</td><td><span class="tag good" title="A - Best balance of doubling odds and risk">A</span></td></tr>
+<tr><td class="num">3</td><td><b>TSM</b><span class="cn">Taiwan Semiconductor Manufacturing</span></td><td class="num"><b>32%</b></td><td class="num">17% / 48%</td><td class="num">8%</td><td class="num">98</td><td class="num">41%</td><td class="num">58%</td><td class="num">29.1x</td><td><span class="tag good" title="A - Best balance of doubling odds and risk">A</span></td></tr>
+<tr><td class="num">4</td><td><b>AMD</b><span class="cn">Advanced Micro Devices</span></td><td class="num"><b>30%</b></td><td class="num">19% / 41%</td><td class="num">30%</td><td class="num">95</td><td class="num">50%</td><td class="num">16%</td><td class="num">146.4x</td><td><span class="tag warn" title="B - High upside, high risk">B</span></td></tr>
+<tr><td class="num">5</td><td><b>QCOM</b><span class="cn">Qualcomm</span></td><td class="num"><b>29%</b></td><td class="num">19% / 39%</td><td class="num">10%</td><td class="num">92</td><td class="num">11%</td><td class="num">24%</td><td class="num">21.0x</td><td><span class="tag " title="C - Possible double">C</span></td></tr>
+<tr><td class="num">6</td><td><b>AMBA</b><span class="cn">Ambarella</span></td><td class="num"><b>23%</b></td><td class="num">22% / 24%</td><td class="num">9%</td><td class="num">55</td><td class="num">31%</td><td class="num">-15%</td><td class="num">N/M</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+    </tbody>
+  </table></div>
+</details>
+<details class="catd" id="cat-2">
+  <summary><span class="cnum">2</span><span class="cname">AI Memory &amp; Semiconductor Equipment<span class="ctheme">AI · 5 holdings</span></span><span class="cavg"><b>28%</b><small>avg P(2x)</small></span><span class="cbest">SK hynix 33%</span></summary>
+  <div class="table-scroll"><table class="stk">
+    <thead><tr><th>#</th><th>Stock</th><th>Final P(2x)</th><th>ML / Rules</th><th>P(halves)</th><th>Fin. score</th><th>Rev growth</th><th>Op margin</th><th>P/E</th><th>Tier</th></tr></thead>
+    <tbody>
+<tr><td class="num">1</td><td><b>SK hynix</b> <span class="tkr">SKHY</span><span class="cn">SK hynix</span></td><td class="num"><b>33%</b></td><td class="num">21% / 45%</td><td class="num">41%</td><td class="num">91</td><td class="num">72%</td><td class="num">68%</td><td class="num">6.5x</td><td><span class="tag warn" title="B - High upside, high risk">B</span></td></tr>
+<tr><td class="num">2</td><td><b>MU</b><span class="cn">Micron Technology</span></td><td class="num"><b>32%</b></td><td class="num">20% / 45%</td><td class="num">36%</td><td class="num">98</td><td class="num">379%</td><td class="num">75%</td><td class="num">13.2x</td><td><span class="tag warn" title="B - High upside, high risk">B</span></td></tr>
+<tr><td class="num">3</td><td><b>KLAC</b><span class="cn">KLA</span></td><td class="num"><b>26%</b></td><td class="num">19% / 34%</td><td class="num">20%</td><td class="num">96</td><td class="num">18%</td><td class="num">42%</td><td class="num">43.3x</td><td><span class="tag " title="C - Possible double">C</span></td></tr>
+<tr><td class="num">4</td><td><b>TER</b><span class="cn">Teradyne</span></td><td class="num"><b>24%</b></td><td class="num">19% / 30%</td><td class="num">16%</td><td class="num">94</td><td class="num">9%</td><td class="num">33%</td><td class="num">35.7x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">5</td><td><b>ASML</b><span class="cn">ASML</span></td><td class="num"><b>24%</b></td><td class="num">18% / 29%</td><td class="num">9%</td><td class="num">93</td><td class="num">9%</td><td class="num">39%</td><td class="num">42.6x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+    </tbody>
+  </table></div>
+</details>
+<details class="catd" id="cat-3">
+  <summary><span class="cnum">3</span><span class="cname">Hyperscalers &amp; AI Platforms<span class="ctheme">AI · 5 holdings</span></span><span class="cavg"><b>31%</b><small>avg P(2x)</small></span><span class="cbest">APP 46%</span></summary>
+  <div class="table-scroll"><table class="stk">
+    <thead><tr><th>#</th><th>Stock</th><th>Final P(2x)</th><th>ML / Rules</th><th>P(halves)</th><th>Fin. score</th><th>Rev growth</th><th>Op margin</th><th>P/E</th><th>Tier</th></tr></thead>
+    <tbody>
+<tr><td class="num">1</td><td><b>APP</b><span class="cn">AppLovin</span></td><td class="num"><b>46%</b></td><td class="num">27% / 66%</td><td class="num">31%</td><td class="num">97</td><td class="num">72%</td><td class="num">77%</td><td class="num">19.9x</td><td><span class="tag warn" title="B - High upside, high risk">B</span></td></tr>
+<tr><td class="num">2</td><td><b>GOOGL</b><span class="cn">Alphabet</span></td><td class="num"><b>31%</b></td><td class="num">17% / 45%</td><td class="num">7%</td><td class="num">90</td><td class="num">25%</td><td class="num">33%</td><td class="num">16.3x</td><td><span class="tag good" title="A - Best balance of doubling odds and risk">A</span></td></tr>
+<tr><td class="num">3</td><td><b>META</b><span class="cn">Meta Platforms</span></td><td class="num"><b>28%</b></td><td class="num">18% / 39%</td><td class="num">8%</td><td class="num">85</td><td class="num">22%</td><td class="num">38%</td><td class="num">20.8x</td><td><span class="tag " title="C - Possible double">C</span></td></tr>
+<tr><td class="num">4</td><td><b>MSFT</b><span class="cn">Microsoft</span></td><td class="num"><b>27%</b></td><td class="num">15% / 38%</td><td class="num">5%</td><td class="num">92</td><td class="num">16%</td><td class="num">47%</td><td class="num">~30x</td><td><span class="tag " title="C - Possible double">C</span></td></tr>
+<tr><td class="num">5</td><td><b>AMZN</b><span class="cn">Amazon</span></td><td class="num"><b>24%</b></td><td class="num">17% / 31%</td><td class="num">5%</td><td class="num">64</td><td class="num">12%</td><td class="num">12%</td><td class="num">20.4x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+    </tbody>
+  </table></div>
+</details>
+<details class="catd" id="cat-4">
+  <summary><span class="cnum">4</span><span class="cname">Physical AI &amp; Robotics<span class="ctheme">AI · 16 holdings</span></span><span class="cavg"><b>20%</b><small>avg P(2x)</small></span><span class="cbest">SYM 27%</span></summary>
+  <div class="table-scroll"><table class="stk">
+    <thead><tr><th>#</th><th>Stock</th><th>Final P(2x)</th><th>ML / Rules</th><th>P(halves)</th><th>Fin. score</th><th>Rev growth</th><th>Op margin</th><th>P/E</th><th>Tier</th></tr></thead>
+    <tbody>
+<tr><td class="num">1</td><td><b>SYM</b><span class="cn">Symbotic</span></td><td class="num"><b>27%</b></td><td class="num">22% / 31%</td><td class="num">23%</td><td class="num">61</td><td class="num">38%</td><td class="num">0%</td><td class="num">N/M</td><td><span class="tag " title="C - Possible double">C</span></td></tr>
+<tr><td class="num">2</td><td><b>OUST</b><span class="cn">Ouster</span></td><td class="num"><b>27%</b></td><td class="num">30% / 23%</td><td class="num">40%</td><td class="num">39</td><td class="num">43%</td><td class="num">-33%</td><td class="num">N/M</td><td><span class="tag " title="C - Possible double">C</span></td></tr>
+<tr><td class="num">3</td><td><b>ISRG</b><span class="cn">Intuitive Surgical</span></td><td class="num"><b>26%</b></td><td class="num">16% / 36%</td><td class="num">6%</td><td class="num">97</td><td class="num">19%</td><td class="num">32%</td><td class="num">53.9x</td><td><span class="tag " title="C - Possible double">C</span></td></tr>
+<tr><td class="num">4</td><td><b>SYK</b><span class="cn">Stryker</span></td><td class="num"><b>23%</b></td><td class="num">14% / 33%</td><td class="num">5%</td><td class="num">87</td><td class="num">11%</td><td class="num">24%</td><td class="num">31.5x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">5</td><td><b>FANUC</b> <span class="tkr">FANUY</span><span class="cn">FANUC</span></td><td class="num"><b>21%</b></td><td class="num">17% / 25%</td><td class="num">8%</td><td class="num">96</td><td class="num">4%</td><td class="num">23%</td><td class="num">27.6x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">6</td><td><b>CGNX</b><span class="cn">Cognex</span></td><td class="num"><b>21%</b></td><td class="num">18% / 25%</td><td class="num">8%</td><td class="num">96</td><td class="num">9%</td><td class="num">22%</td><td class="num">55.8x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">7</td><td><b>Keyence</b> <span class="tkr">KYCCF</span><span class="cn">Keyence</span></td><td class="num"><b>21%</b></td><td class="num">16% / 26%</td><td class="num">5%</td><td class="num">98</td><td class="num">10%</td><td class="num">52%</td><td class="num">39.3x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">8</td><td><b>EMR</b><span class="cn">Emerson Electric</span></td><td class="num"><b>21%</b></td><td class="num">15% / 26%</td><td class="num">4%</td><td class="num">81</td><td class="num">9%</td><td class="num">25%</td><td class="num">36.4x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">9</td><td><b>AUR</b><span class="cn">Aurora Innovation</span></td><td class="num"><b>20%</b></td><td class="num">26% / 14%</td><td class="num">21%</td><td class="num">29</td><td class="num">–</td><td class="num">-19400%</td><td class="num">N/M</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">10</td><td><b>VPG</b><span class="cn">Vishay Precision Group</span></td><td class="num"><b>19%</b></td><td class="num">23% / 15%</td><td class="num">34%</td><td class="num">71</td><td class="num">-7%</td><td class="num">2%</td><td class="num">182.0x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">11</td><td><b>FFR</b><span class="cn">FF EAI Robotics Ecosystem</span></td><td class="num"><b>19%</b></td><td class="num">25% / 13%</td><td class="num">52%</td><td class="num">18</td><td class="num">–</td><td class="num">–</td><td class="num">N/M</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">12</td><td><b>Yaskawa</b> <span class="tkr">YASKY</span><span class="cn">Yaskawa Electric</span></td><td class="num"><b>18%</b></td><td class="num">19% / 17%</td><td class="num">14%</td><td class="num">79</td><td class="num">-3%</td><td class="num">8%</td><td class="num">29.5x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">13</td><td><b>TSLA</b><span class="cn">Tesla</span></td><td class="num"><b>17%</b></td><td class="num">20% / 14%</td><td class="num">10%</td><td class="num">78</td><td class="num">-1%</td><td class="num">3%</td><td class="num">443.4x</td><td><span class="tag bad" title="E - Low doubling odds">E</span></td></tr>
+<tr><td class="num">14</td><td><b>NOVT</b><span class="cn">Novanta</span></td><td class="num"><b>16%</b></td><td class="num">17% / 16%</td><td class="num">6%</td><td class="num">88</td><td class="num">6%</td><td class="num">12%</td><td class="num">94.4x</td><td><span class="tag bad" title="E - Low doubling odds">E</span></td></tr>
+<tr><td class="num">15</td><td><b>ROK</b><span class="cn">Rockwell Automation</span></td><td class="num"><b>15%</b></td><td class="num">15% / 15%</td><td class="num">5%</td><td class="num">78</td><td class="num">-4%</td><td class="num">20%</td><td class="num">41.2x</td><td><span class="tag bad" title="E - Low doubling odds">E</span></td></tr>
+<tr><td class="num">16</td><td><b>DE</b><span class="cn">Deere &amp; Company</span></td><td class="num"><b>14%</b></td><td class="num">15% / 13%</td><td class="num">5%</td><td class="num">76</td><td class="num">-14%</td><td class="num">14%</td><td class="num">35.7x</td><td><span class="tag bad" title="E - Low doubling odds">E</span></td></tr>
+    </tbody>
+  </table></div>
+</details>
+<details class="catd" id="cat-5">
+  <summary><span class="cnum">5</span><span class="cname">AI Power &amp; Data-Center Infrastructure<span class="ctheme">AI + energy security · 6 holdings</span></span><span class="cavg"><b>26%</b><small>avg P(2x)</small></span><span class="cbest">VRT 37%</span></summary>
+  <div class="table-scroll"><table class="stk">
+    <thead><tr><th>#</th><th>Stock</th><th>Final P(2x)</th><th>ML / Rules</th><th>P(halves)</th><th>Fin. score</th><th>Rev growth</th><th>Op margin</th><th>P/E</th><th>Tier</th></tr></thead>
+    <tbody>
+<tr><td class="num">1</td><td><b>VRT</b><span class="cn">Vertiv</span></td><td class="num"><b>37%</b></td><td class="num">22% / 51%</td><td class="num">21%</td><td class="num">88</td><td class="num">61%</td><td class="num">20%</td><td class="num">45.2x</td><td><span class="tag warn" title="B - High upside, high risk">B</span></td></tr>
+<tr><td class="num">2</td><td><b>GEV</b><span class="cn">GE Vernova</span></td><td class="num"><b>30%</b></td><td class="num">–* / 40%</td><td class="num">–</td><td class="num">69</td><td class="num">25%</td><td class="num">8%</td><td class="num">23.1x</td><td><span class="tag " title="C - Possible double">C</span></td></tr>
+<tr><td class="num">3</td><td><b>AMSC</b><span class="cn">American Superconductor</span></td><td class="num"><b>28%</b></td><td class="num">23% / 33%</td><td class="num">32%</td><td class="num">66</td><td class="num">43%</td><td class="num">4%</td><td class="num">9.3x</td><td><span class="tag " title="C - Possible double">C</span></td></tr>
+<tr><td class="num">4</td><td><b>CEG</b><span class="cn">Constellation Energy</span></td><td class="num"><b>25%</b></td><td class="num">23% / 26%</td><td class="num">11%</td><td class="num">65</td><td class="num">–</td><td class="num">–</td><td class="num">~27x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">5</td><td><b>ETN</b><span class="cn">Eaton</span></td><td class="num"><b>21%</b></td><td class="num">15% / 26%</td><td class="num">6%</td><td class="num">69</td><td class="num">9%</td><td class="num">18%</td><td class="num">40.1x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">6</td><td><b>NEE</b><span class="cn">NextEra Energy</span></td><td class="num"><b>13%</b></td><td class="num">14% / 13%</td><td class="num">5%</td><td class="num">44</td><td class="num">-1%</td><td class="num">30%</td><td class="num">14.8x</td><td><span class="tag bad" title="E - Low doubling odds">E</span></td></tr>
+    </tbody>
+  </table></div>
+</details>
+<details class="catd" id="cat-6">
+  <summary><span class="cnum">6</span><span class="cname">AI Software &amp; Cybersecurity<span class="ctheme">AI + cyber war · 4 holdings</span></span><span class="cavg"><b>22%</b><small>avg P(2x)</small></span><span class="cbest">PLTR 28%</span></summary>
+  <div class="table-scroll"><table class="stk">
+    <thead><tr><th>#</th><th>Stock</th><th>Final P(2x)</th><th>ML / Rules</th><th>P(halves)</th><th>Fin. score</th><th>Rev growth</th><th>Op margin</th><th>P/E</th><th>Tier</th></tr></thead>
+    <tbody>
+<tr><td class="num">1</td><td><b>PLTR</b><span class="cn">Palantir Technologies</span></td><td class="num"><b>28%</b></td><td class="num">23% / 32%</td><td class="num">24%</td><td class="num">86</td><td class="num">93%</td><td class="num">60%</td><td class="num">~120x+ fwd</td><td><span class="tag " title="C - Possible double">C</span></td></tr>
+<tr><td class="num">2</td><td><b>PANW</b><span class="cn">Palo Alto Networks</span></td><td class="num"><b>22%</b></td><td class="num">20% / 25%</td><td class="num">12%</td><td class="num">70</td><td class="num">15%</td><td class="num">–</td><td class="num">high</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">3</td><td><b>ZS</b><span class="cn">Zscaler</span></td><td class="num"><b>21%</b></td><td class="num">23% / 19%</td><td class="num">10%</td><td class="num">50</td><td class="num">24%</td><td class="num">-4%</td><td class="num">N/M</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">4</td><td><b>CRWD</b><span class="cn">CrowdStrike</span></td><td class="num"><b>18%</b></td><td class="num">23% / 14%</td><td class="num">19%</td><td class="num">54</td><td class="num">26%</td><td class="num">-2%</td><td class="num">7189.8x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+    </tbody>
+  </table></div>
+</details>
+<details class="catd" id="cat-7">
+  <summary><span class="cnum">7</span><span class="cname">US Defense Primes &amp; Defense Electronics<span class="ctheme">War · 10 holdings</span></span><span class="cavg"><b>19%</b><small>avg P(2x)</small></span><span class="cbest">CW 22%</span></summary>
+  <div class="table-scroll"><table class="stk">
+    <thead><tr><th>#</th><th>Stock</th><th>Final P(2x)</th><th>ML / Rules</th><th>P(halves)</th><th>Fin. score</th><th>Rev growth</th><th>Op margin</th><th>P/E</th><th>Tier</th></tr></thead>
+    <tbody>
+<tr><td class="num">1</td><td><b>CW</b><span class="cn">Curtiss-Wright</span></td><td class="num"><b>22%</b></td><td class="num">16% / 27%</td><td class="num">8%</td><td class="num">87</td><td class="num">11%</td><td class="num">20%</td><td class="num">32.8x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">2</td><td><b>DRS</b><span class="cn">Leonardo DRS</span></td><td class="num"><b>22%</b></td><td class="num">16% / 27%</td><td class="num">9%</td><td class="num">82</td><td class="num">14%</td><td class="num">11%</td><td class="num">29.8x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">3</td><td><b>CACI</b><span class="cn">CACI International</span></td><td class="num"><b>21%</b></td><td class="num">16% / 26%</td><td class="num">6%</td><td class="num">63</td><td class="num">12%</td><td class="num">10%</td><td class="num">27.3x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">4</td><td><b>LMT</b><span class="cn">Lockheed Martin</span></td><td class="num"><b>21%</b></td><td class="num">15% / 26%</td><td class="num">6%</td><td class="num">74</td><td class="num">11%</td><td class="num">11%</td><td class="num">22.4x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">5</td><td><b>GD</b><span class="cn">General Dynamics</span></td><td class="num"><b>19%</b></td><td class="num">12% / 26%</td><td class="num">4%</td><td class="num">81</td><td class="num">12%</td><td class="num">10%</td><td class="num">21.6x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">6</td><td><b>RTX</b><span class="cn">RTX</span></td><td class="num"><b>19%</b></td><td class="num">14% / 24%</td><td class="num">5%</td><td class="num">71</td><td class="num">11%</td><td class="num">13%</td><td class="num">32.1x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">7</td><td><b>TDY</b><span class="cn">Teledyne Technologies</span></td><td class="num"><b>18%</b></td><td class="num">16% / 21%</td><td class="num">5%</td><td class="num">89</td><td class="num">4%</td><td class="num">20%</td><td class="num">30.0x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">8</td><td><b>HII</b><span class="cn">Huntington Ingalls Industries</span></td><td class="num"><b>18%</b></td><td class="num">19% / 17%</td><td class="num">9%</td><td class="num">54</td><td class="num">4%</td><td class="num">6%</td><td class="num">16.7x</td><td><span class="tag bad" title="E - Low doubling odds">E</span></td></tr>
+<tr><td class="num">9</td><td><b>NOC</b><span class="cn">Northrop Grumman</span></td><td class="num"><b>18%</b></td><td class="num">15% / 20%</td><td class="num">7%</td><td class="num">74</td><td class="num">7%</td><td class="num">13%</td><td class="num">17.5x</td><td><span class="tag bad" title="E - Low doubling odds">E</span></td></tr>
+<tr><td class="num">10</td><td><b>LHX</b><span class="cn">L3Harris Technologies</span></td><td class="num"><b>17%</b></td><td class="num">14% / 19%</td><td class="num">6%</td><td class="num">71</td><td class="num">6%</td><td class="num">13%</td><td class="num">26.2x</td><td><span class="tag bad" title="E - Low doubling odds">E</span></td></tr>
+    </tbody>
+  </table></div>
+</details>
+<details class="catd" id="cat-8">
+  <summary><span class="cnum">8</span><span class="cname">Defense Tech, Drones &amp; Allied Rearmament<span class="ctheme">War · 7 holdings</span></span><span class="cavg"><b>22%</b><small>avg P(2x)</small></span><span class="cbest">ONDS 27%</span></summary>
+  <div class="table-scroll"><table class="stk">
+    <thead><tr><th>#</th><th>Stock</th><th>Final P(2x)</th><th>ML / Rules</th><th>P(halves)</th><th>Fin. score</th><th>Rev growth</th><th>Op margin</th><th>P/E</th><th>Tier</th></tr></thead>
+    <tbody>
+<tr><td class="num">1</td><td><b>ONDS</b><span class="cn">Ondas</span></td><td class="num"><b>27%</b></td><td class="num">30% / 24%</td><td class="num">43%</td><td class="num">35</td><td class="num">80%</td><td class="num">-121%</td><td class="num">N/M</td><td><span class="tag " title="C - Possible double">C</span></td></tr>
+<tr><td class="num">2</td><td><b>RCAT</b><span class="cn">Red Cat Holdings</span></td><td class="num"><b>25%</b></td><td class="num">25% / 26%</td><td class="num">50%</td><td class="num">35</td><td class="num">51%</td><td class="num">-150%</td><td class="num">N/M</td><td><span class="tag " title="C - Possible double">C</span></td></tr>
+<tr><td class="num">3</td><td><b>AVAV</b><span class="cn">AeroVironment</span></td><td class="num"><b>23%</b></td><td class="num">21% / 25%</td><td class="num">19%</td><td class="num">33</td><td class="num">66%</td><td class="num">-1%</td><td class="num">N/M</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">4</td><td><b>Rheinmetall</b> <span class="tkr">RNMBY</span><span class="cn">Rheinmetall</span></td><td class="num"><b>22%</b></td><td class="num">18% / 26%</td><td class="num">17%</td><td class="num">48</td><td class="num">18%</td><td class="num">17%</td><td class="num">65.5x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">5</td><td><b>BAE Systems</b> <span class="tkr">BAESY</span><span class="cn">BAE Systems</span></td><td class="num"><b>21%</b></td><td class="num">15% / 27%</td><td class="num">5%</td><td class="num">77</td><td class="num">11%</td><td class="num">10%</td><td class="num">28.9x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">6</td><td><b>KTOS</b><span class="cn">Kratos Defense &amp; Security Solutions</span></td><td class="num"><b>19%</b></td><td class="num">20% / 18%</td><td class="num">19%</td><td class="num">52</td><td class="num">14%</td><td class="num">2%</td><td class="num">241.8x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">7</td><td><b>ESLT</b><span class="cn">Elbit Systems</span></td><td class="num"><b>18%</b></td><td class="num">16% / 20%</td><td class="num">9%</td><td class="num">75</td><td class="num">15%</td><td class="num">9%</td><td class="num">60.9x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+    </tbody>
+  </table></div>
+</details>
+<details class="catd" id="cat-9">
+  <summary><span class="cnum">9</span><span class="cname">Strategic Resources: Nuclear Fuel &amp; Critical Minerals<span class="ctheme">War + AI power · 12 holdings</span></span><span class="cavg"><b>21%</b><small>avg P(2x)</small></span><span class="cbest">Lynas 29%</span></summary>
+  <div class="table-scroll"><table class="stk">
+    <thead><tr><th>#</th><th>Stock</th><th>Final P(2x)</th><th>ML / Rules</th><th>P(halves)</th><th>Fin. score</th><th>Rev growth</th><th>Op margin</th><th>P/E</th><th>Tier</th></tr></thead>
+    <tbody>
+<tr><td class="num">1</td><td><b>Lynas</b> <span class="tkr">LYSDY</span><span class="cn">Lynas Rare Earths</span></td><td class="num"><b>29%</b></td><td class="num">19% / 39%</td><td class="num">11%</td><td class="num">82</td><td class="num">45%</td><td class="num">24%</td><td class="num">52.9x</td><td><span class="tag " title="C - Possible double">C</span></td></tr>
+<tr><td class="num">2</td><td><b>BWXT</b><span class="cn">BWX Technologies</span></td><td class="num"><b>23%</b></td><td class="num">18% / 28%</td><td class="num">8%</td><td class="num">79</td><td class="num">13%</td><td class="num">10%</td><td class="num">34.7x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">3</td><td><b>CCJ</b><span class="cn">Cameco</span></td><td class="num"><b>23%</b></td><td class="num">19% / 27%</td><td class="num">10%</td><td class="num">88</td><td class="num">16%</td><td class="num">14%</td><td class="num">143.6x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">4</td><td><b>USAR</b><span class="cn">USA Rare Earth</span></td><td class="num"><b>22%</b></td><td class="num">29% / 15%</td><td class="num">36%</td><td class="num">35</td><td class="num">–</td><td class="num">-859%</td><td class="num">N/M</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">5</td><td><b>MP</b><span class="cn">MP Materials</span></td><td class="num"><b>20%</b></td><td class="num">25% / 16%</td><td class="num">24%</td><td class="num">43</td><td class="num">4%</td><td class="num">-18%</td><td class="num">N/M</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">6</td><td><b>Neo Performance</b> <span class="tkr">NOPMF</span><span class="cn">Neo Performance Materials</span></td><td class="num"><b>20%</b></td><td class="num">23% / 18%</td><td class="num">16%</td><td class="num">52</td><td class="num">-8%</td><td class="num">14%</td><td class="num">527.5x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">7</td><td><b>UUUU</b><span class="cn">Energy Fuels</span></td><td class="num"><b>20%</b></td><td class="num">23% / 18%</td><td class="num">29%</td><td class="num">37</td><td class="num">32%</td><td class="num">-79%</td><td class="num">N/M</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">8</td><td><b>FCX</b><span class="cn">Freeport-McMoRan</span></td><td class="num"><b>19%</b></td><td class="num">16% / 22%</td><td class="num">6%</td><td class="num">92</td><td class="num">6%</td><td class="num">29%</td><td class="num">27.7x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">9</td><td><b>ALB</b><span class="cn">Albemarle</span></td><td class="num"><b>19%</b></td><td class="num">20% / 18%</td><td class="num">15%</td><td class="num">78</td><td class="num">-27%</td><td class="num">14%</td><td class="num">197.5x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">10</td><td><b>ATI</b><span class="cn">ATI</span></td><td class="num"><b>18%</b></td><td class="num">18% / 17%</td><td class="num">15%</td><td class="num">83</td><td class="num">5%</td><td class="num">16%</td><td class="num">48.8x</td><td><span class="tag bad" title="E - Low doubling odds">E</span></td></tr>
+<tr><td class="num">11</td><td><b>Almonty</b> <span class="tkr">ALM</span><span class="cn">Almonty Industries</span></td><td class="num"><b>18%</b></td><td class="num">–* / 16%</td><td class="num">–</td><td class="num">44</td><td class="num">20%</td><td class="num">5%</td><td class="num">N/M</td><td><span class="tag bad" title="E - Low doubling odds">E</span></td></tr>
+<tr><td class="num">12</td><td><b>MTRN</b><span class="cn">Materion</span></td><td class="num"><b>17%</b></td><td class="num">18% / 15%</td><td class="num">11%</td><td class="num">68</td><td class="num">4%</td><td class="num">6%</td><td class="num">51.0x</td><td><span class="tag bad" title="E - Low doubling odds">E</span></td></tr>
+    </tbody>
+  </table></div>
+</details>
+<details class="catd" id="cat-10">
+  <summary><span class="cnum">10</span><span class="cname">Biotech, Pandemic Preparedness &amp; AI Drug Discovery<span class="ctheme">Pandemic · 13 holdings</span></span><span class="cavg"><b>19%</b><small>avg P(2x)</small></span><span class="cbest">REGN 23%</span></summary>
+  <div class="table-scroll"><table class="stk">
+    <thead><tr><th>#</th><th>Stock</th><th>Final P(2x)</th><th>ML / Rules</th><th>P(halves)</th><th>Fin. score</th><th>Rev growth</th><th>Op margin</th><th>P/E</th><th>Tier</th></tr></thead>
+    <tbody>
+<tr><td class="num">1</td><td><b>REGN</b><span class="cn">Regeneron Pharmaceuticals</span></td><td class="num"><b>23%</b></td><td class="num">16% / 30%</td><td class="num">7%</td><td class="num">100</td><td class="num">5%</td><td class="num">27%</td><td class="num">20.2x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">2</td><td><b>ABCL</b><span class="cn">AbCellera Biologics</span></td><td class="num"><b>23%</b></td><td class="num">25% / 20%</td><td class="num">32%</td><td class="num">41</td><td class="num">41%</td><td class="num">-340%</td><td class="num">N/M</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">3</td><td><b>TEM</b><span class="cn">Tempus AI</span></td><td class="num"><b>21%</b></td><td class="num">–* / 23%</td><td class="num">–</td><td class="num">20</td><td class="num">55%</td><td class="num">-20%</td><td class="num">N/M</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">4</td><td><b>ABSI</b><span class="cn">Absci</span></td><td class="num"><b>21%</b></td><td class="num">28% / 13%</td><td class="num">36%</td><td class="num">25</td><td class="num">-30%</td><td class="num">-8372%</td><td class="num">N/M</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">5</td><td><b>RXRX</b><span class="cn">Recursion Pharmaceuticals</span></td><td class="num"><b>21%</b></td><td class="num">25% / 16%</td><td class="num">18%</td><td class="num">25</td><td class="num">29%</td><td class="num">-1002%</td><td class="num">N/M</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">6</td><td><b>ADPT</b><span class="cn">Adaptive Biotechnologies</span></td><td class="num"><b>20%</b></td><td class="num">24% / 16%</td><td class="num">14%</td><td class="num">22</td><td class="num">28%</td><td class="num">-12%</td><td class="num">N/M</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">7</td><td><b>SDGR</b><span class="cn">Schrodinger</span></td><td class="num"><b>19%</b></td><td class="num">23% / 15%</td><td class="num">13%</td><td class="num">48</td><td class="num">9%</td><td class="num">-59%</td><td class="num">N/M</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">8</td><td><b>Insilico</b> <span class="tkr">3696</span><span class="cn">Insilico Medicine</span></td><td class="num"><b>18%</b></td><td class="num">–* / 16%</td><td class="num">–</td><td class="num">53</td><td class="num">5%</td><td class="num">-7%</td><td class="num">N/M</td><td><span class="tag bad" title="E - Low doubling odds">E</span></td></tr>
+<tr><td class="num">9</td><td><b>TMO</b><span class="cn">Thermo Fisher Scientific</span></td><td class="num"><b>18%</b></td><td class="num">15% / 21%</td><td class="num">4%</td><td class="num">80</td><td class="num">9%</td><td class="num">24%</td><td class="num">~22x fwd</td><td><span class="tag bad" title="E - Low doubling odds">E</span></td></tr>
+<tr><td class="num">10</td><td><b>MRNA</b><span class="cn">Moderna</span></td><td class="num"><b>18%</b></td><td class="num">24% / 12%</td><td class="num">33%</td><td class="num">38</td><td class="num">-20%</td><td class="num">–</td><td class="num">loss</td><td><span class="tag bad" title="E - Low doubling odds">E</span></td></tr>
+<tr><td class="num">11</td><td><b>GENB</b><span class="cn">Generate Biomedicines</span></td><td class="num"><b>17%</b></td><td class="num">–* / 14%</td><td class="num">–</td><td class="num">27</td><td class="num">–</td><td class="num">-991%</td><td class="num">N/M</td><td><span class="tag bad" title="E - Low doubling odds">E</span></td></tr>
+<tr><td class="num">12</td><td><b>GILD</b><span class="cn">Gilead Sciences</span></td><td class="num"><b>17%</b></td><td class="num">14% / 19%</td><td class="num">4%</td><td class="num">78</td><td class="num">6%</td><td class="num">–</td><td class="num">~15x fwd</td><td><span class="tag bad" title="E - Low doubling odds">E</span></td></tr>
+<tr><td class="num">13</td><td><b>ABT</b><span class="cn">Abbott Laboratories</span></td><td class="num"><b>15%</b></td><td class="num">15% / 15%</td><td class="num">6%</td><td class="num">82</td><td class="num">6%</td><td class="num">–</td><td class="num">~25x fwd</td><td><span class="tag bad" title="E - Low doubling odds">E</span></td></tr>
+    </tbody>
+  </table></div>
+</details>
+<details class="catd" id="cat-11">
+  <summary><span class="cnum">11</span><span class="cname">Solar &amp; Renewables<span class="ctheme">Energy transition · 17 holdings</span></span><span class="cavg"><b>23%</b><small>avg P(2x)</small></span><span class="cbest">NXT 34%</span></summary>
+  <div class="table-scroll"><table class="stk">
+    <thead><tr><th>#</th><th>Stock</th><th>Final P(2x)</th><th>ML / Rules</th><th>P(halves)</th><th>Fin. score</th><th>Rev growth</th><th>Op margin</th><th>P/E</th><th>Tier</th></tr></thead>
+    <tbody>
+<tr><td class="num">1</td><td><b>NXT</b><span class="cn">Nextpower</span></td><td class="num"><b>34%</b></td><td class="num">25% / 42%</td><td class="num">20%</td><td class="num">92</td><td class="num">19%</td><td class="num">20%</td><td class="num">20.9x</td><td><span class="tag warn" title="B - High upside, high risk">B</span></td></tr>
+<tr><td class="num">2</td><td><b>TOYO</b><span class="cn">TOYO</span></td><td class="num"><b>31%</b></td><td class="num">28% / 34%</td><td class="num">40%</td><td class="num">79</td><td class="num">162%</td><td class="num">20%</td><td class="num">1.6x</td><td><span class="tag warn" title="B - High upside, high risk">B</span></td></tr>
+<tr><td class="num">3</td><td><b>FSLR</b><span class="cn">First Solar</span></td><td class="num"><b>29%</b></td><td class="num">20% / 37%</td><td class="num">16%</td><td class="num">90</td><td class="num">25%</td><td class="num">34%</td><td class="num">10.7x</td><td><span class="tag " title="C - Possible double">C</span></td></tr>
+<tr><td class="num">4</td><td><b>ARRY</b><span class="cn">Array Technologies</span></td><td class="num"><b>28%</b></td><td class="num">25% / 31%</td><td class="num">27%</td><td class="num">62</td><td class="num">-10%</td><td class="num">7%</td><td class="num">N/M</td><td><span class="tag " title="C - Possible double">C</span></td></tr>
+<tr><td class="num">5</td><td><b>ENLT</b><span class="cn">Enlight Renewable Energy</span></td><td class="num"><b>25%</b></td><td class="num">22% / 28%</td><td class="num">15%</td><td class="num">50</td><td class="num">38%</td><td class="num">52%</td><td class="num">117.5x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">6</td><td><b>FLNC</b><span class="cn">Fluence Energy</span></td><td class="num"><b>24%</b></td><td class="num">30% / 17%</td><td class="num">45%</td><td class="num">23</td><td class="num">1%</td><td class="num">-4%</td><td class="num">N/M</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">7</td><td><b>SHLS</b><span class="cn">Shoals Technologies Group</span></td><td class="num"><b>23%</b></td><td class="num">26% / 20%</td><td class="num">25%</td><td class="num">54</td><td class="num">-1%</td><td class="num">14%</td><td class="num">40.0x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">8</td><td><b>TURB</b><span class="cn">Turbo Energy</span></td><td class="num"><b>22%</b></td><td class="num">30% / 14%</td><td class="num">69%</td><td class="num">28</td><td class="num">23%</td><td class="num">3%</td><td class="num">N/M</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">9</td><td><b>ENPH</b><span class="cn">Enphase Energy</span></td><td class="num"><b>22%</b></td><td class="num">24% / 20%</td><td class="num">35%</td><td class="num">88</td><td class="num">-20%</td><td class="num">9%</td><td class="num">36.6x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">10</td><td><b>BRNX</b><span class="cn">BrenX</span></td><td class="num"><b>21%</b></td><td class="num">30% / 12%</td><td class="num">62%</td><td class="num">23</td><td class="num">-21%</td><td class="num">–</td><td class="num">N/M</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">11</td><td><b>ELVA</b><span class="cn">Electrovaya</span></td><td class="num"><b>21%</b></td><td class="num">22% / 19%</td><td class="num">29%</td><td class="num">47</td><td class="num">20%</td><td class="num">9%</td><td class="num">55.2x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">12</td><td><b>SEDG</b><span class="cn">SolarEdge Technologies</span></td><td class="num"><b>20%</b></td><td class="num">25% / 14%</td><td class="num">39%</td><td class="num">55</td><td class="num">-37%</td><td class="num">-11%</td><td class="num">N/M</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">13</td><td><b>WAVE</b><span class="cn">Eco Wave Power</span></td><td class="num"><b>19%</b></td><td class="num">26% / 13%</td><td class="num">40%</td><td class="num">41</td><td class="num">-64%</td><td class="num">-7225%</td><td class="num">N/M</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">14</td><td><b>RUN</b><span class="cn">Sunrun</span></td><td class="num"><b>19%</b></td><td class="num">25% / 13%</td><td class="num">29%</td><td class="num">24</td><td class="num">14%</td><td class="num">3%</td><td class="num">4.9x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">15</td><td><b>BLDP</b><span class="cn">Ballard Power Systems</span></td><td class="num"><b>18%</b></td><td class="num">24% / 13%</td><td class="num">31%</td><td class="num">35</td><td class="num">-2%</td><td class="num">-47%</td><td class="num">N/M</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">16</td><td><b>CSIQ</b><span class="cn">Canadian Solar</span></td><td class="num"><b>18%</b></td><td class="num">22% / 14%</td><td class="num">23%</td><td class="num">24</td><td class="num">-14%</td><td class="num">2%</td><td class="num">N/M</td><td><span class="tag bad" title="E - Low doubling odds">E</span></td></tr>
+<tr><td class="num">17</td><td><b>PBK</b><span class="cn">PowerBank</span></td><td class="num"><b>16%</b></td><td class="num">–* / 12%</td><td class="num">–</td><td class="num">7</td><td class="num">-32%</td><td class="num">-63%</td><td class="num">N/M</td><td><span class="tag bad" title="E - Low doubling odds">E</span></td></tr>
+    </tbody>
+  </table></div>
+</details>
+<details class="catd" id="cat-12">
+  <summary><span class="cnum">12</span><span class="cname">Fintech &amp; Consumer<span class="ctheme">Outside the 3 themes · 7 holdings</span></span><span class="cavg"><b>28%</b><small>avg P(2x)</small></span><span class="cbest">NU 40%</span></summary>
+  <div class="table-scroll"><table class="stk">
+    <thead><tr><th>#</th><th>Stock</th><th>Final P(2x)</th><th>ML / Rules</th><th>P(halves)</th><th>Fin. score</th><th>Rev growth</th><th>Op margin</th><th>P/E</th><th>Tier</th></tr></thead>
+    <tbody>
+<tr><td class="num">1</td><td><b>NU</b><span class="cn">Nu Holdings</span></td><td class="num"><b>40%</b></td><td class="num">22% / 58%</td><td class="num">8%</td><td class="num">78</td><td class="num">37%</td><td class="num">52%</td><td class="num">16.4x</td><td><span class="tag good" title="A - Best balance of doubling odds and risk">A</span></td></tr>
+<tr><td class="num">2</td><td><b>SOFI</b><span class="cn">SoFi Technologies</span></td><td class="num"><b>33%</b></td><td class="num">24% / 41%</td><td class="num">15%</td><td class="num">74</td><td class="num">32%</td><td class="num">19%</td><td class="num">31.1x</td><td><span class="tag warn" title="B - High upside, high risk">B</span></td></tr>
+<tr><td class="num">3</td><td><b>PDD</b><span class="cn">PDD Holdings</span></td><td class="num"><b>32%</b></td><td class="num">21% / 43%</td><td class="num">11%</td><td class="num">94</td><td class="num">32%</td><td class="num">22%</td><td class="num">8.4x</td><td><span class="tag good" title="A - Best balance of doubling odds and risk">A</span></td></tr>
+<tr><td class="num">4</td><td><b>TBBK</b><span class="cn">The Bancorp</span></td><td class="num"><b>25%</b></td><td class="num">19% / 31%</td><td class="num">9%</td><td class="num">79</td><td class="num">8%</td><td class="num">–</td><td class="num">9.6x</td><td><span class="tag " title="C - Possible double">C</span></td></tr>
+<tr><td class="num">5</td><td><b>CELH</b><span class="cn">Celsius Holdings</span></td><td class="num"><b>25%</b></td><td class="num">20% / 29%</td><td class="num">25%</td><td class="num">86</td><td class="num">38%</td><td class="num">21%</td><td class="num">110.5x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">6</td><td><b>MELI</b><span class="cn">MercadoLibre</span></td><td class="num"><b>24%</b></td><td class="num">17% / 32%</td><td class="num">8%</td><td class="num">60</td><td class="num">38%</td><td class="num">8%</td><td class="num">45.3x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">7</td><td><b>LULU</b><span class="cn">lululemon athletica</span></td><td class="num"><b>19%</b></td><td class="num">20% / 18%</td><td class="num">14%</td><td class="num">84</td><td class="num">7%</td><td class="num">17%</td><td class="num">8.6x</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+    </tbody>
+  </table></div>
+</details>
+<details class="catd" id="cat-f">
+  <summary><span class="cnum">F</span><span class="cname">Theme Funds (ETFs and closed-end)<span class="ctheme">Diversified · 9 holdings</span></span><span class="cavg"><b>24%</b><small>avg P(2x)</small></span><span class="cbest">SMH 27%</span></summary>
+  <div class="table-scroll"><table class="stk">
+    <thead><tr><th>#</th><th>Stock</th><th>Final P(2x)</th><th>ML / Rules</th><th>P(halves)</th><th>Tier</th></tr></thead>
+    <tbody>
+<tr><td class="num">1</td><td><b>SMH</b><span class="cn">VanEck Semiconductor ETF</span></td><td class="num"><b>27%</b></td><td class="num">17% / 37%</td><td class="num">9%</td><td><span class="tag " title="C - Possible double">C</span></td></tr>
+<tr><td class="num">2</td><td><b>SOXX</b><span class="cn">iShares Semiconductor ETF</span></td><td class="num"><b>25%</b></td><td class="num">18% / 32%</td><td class="num">10%</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">3</td><td><b>KOID</b><span class="cn">KraneShares Humanoid Robotics &amp; Physical AI ETF</span></td><td class="num"><b>25%</b></td><td class="num">–* / 30%</td><td class="num">–</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">4</td><td><b>THNQ</b><span class="cn">ROBO Global Artificial Intelligence ETF</span></td><td class="num"><b>25%</b></td><td class="num">21% / 28%</td><td class="num">6%</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">5</td><td><b>REMX</b><span class="cn">VanEck Rare Earth &amp; Strategic Metals ETF</span></td><td class="num"><b>24%</b></td><td class="num">21% / 27%</td><td class="num">11%</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">6</td><td><b>XSD</b><span class="cn">SPDR S&amp;P Semiconductor ETF</span></td><td class="num"><b>24%</b></td><td class="num">19% / 28%</td><td class="num">10%</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">7</td><td><b>BOTT</b><span class="cn">Themes Humanoid Robotics ETF</span></td><td class="num"><b>23%</b></td><td class="num">–* / 27%</td><td class="num">–</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">8</td><td><b>EART</b><span class="cn">Critical Materials ETF (ex-DMAT)</span></td><td class="num"><b>23%</b></td><td class="num">21% / 26%</td><td class="num">8%</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+<tr><td class="num">9</td><td><b>BOT</b><span class="cn">RoboStrategy (closed-end)</span></td><td class="num"><b>22%</b></td><td class="num">–* / 25%</td><td class="num">–</td><td><span class="tag muted" title="D - Compounder, doubling unlikely">D</span></td></tr>
+    </tbody>
+  </table></div>
+</details>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Final P(2x) = 50% trained ML model + 50% rules model. P(halves) = the ML model's chance the price ends at half or less. Fin. score = Financial Strength 0–100. Rev growth = latest-quarter growth where Q2/Q3 2026 results were reviewed, otherwise the 2-year revenue CAGR. * = too little price history; the universe median was used. Tiers: A 30%+ with strong finances and low loss risk · B 30%+, higher risk · C 25–29% · D 18–24% · E under 18%. Categories 11 and 12 were the v1 report's two legacy watchlists.</p>
+      <script>
+      (function(){var ds=[].slice.call(document.querySelectorAll('details.catd')),btn=document.getElementById('cattoggle');
+      function sync(){btn.textContent=ds.every(function(d){return d.open})?'Collapse all':'Expand all';}
+      btn.addEventListener('click',function(){var o=!ds.every(function(d){return d.open});ds.forEach(function(d){d.open=o});sync();});
+      ds.forEach(function(d){d.addEventListener('toggle',sync);});
+      function openHash(){var m=location.hash.match(/^#cat-(\w+)$/);if(!m)return;var d=document.getElementById('cat-'+m[1]);if(d){d.open=true;sync();d.scrollIntoView({behavior:'smooth',block:'start'});}}
+      window.addEventListener('hashchange',openHash);openHash();
+      var host=document.getElementById('cats');if(host){host.style.cursor='pointer';host.addEventListener('click',function(ev){var svg=host.querySelector('svg');if(!svg)return;var r=svg.getBoundingClientRect(),vb=svg.viewBox.baseVal,sx=(ev.clientX-r.left)*vb.width/r.width,L=46,R=8,n=12;var i=Math.floor((sx-L)/((vb.width-L-R)/n));if(i<0||i>=n)return;var d=ds[i];d.open=true;sync();d.scrollIntoView({behavior:'smooth',block:'start'});});}
+      })();
+      </script>
+<!-- CATEGORIES:END -->
     </div>
   </section>
 
