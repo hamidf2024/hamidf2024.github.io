@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Best Stocks for Investment — Hamid Faghidi</title>
+<meta name="description" content="Project 12: which stocks could double by October 2029? 117 holdings across AI, war and pandemic themes in 12 categories, scored by a machine-learning model tested on 1967–2023 history plus a fundamentals model.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+.phase{display:grid;grid-template-columns:minmax(0,1fr) 120px 60px;gap:12px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}
+.phase:last-child{border-bottom:0}
+.phase .n{color:var(--muted);text-align:right}
+.sbar{display:flex;height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.sbar i{display:block;height:100%}.sbar .d{background:var(--accent)}.sbar .p{background:var(--warn)}
+.tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.tiers .card h3{display:flex;justify-content:space-between;align-items:baseline}
+.tiers .card h3 span{font-family:var(--serif);font-size:26px}
+.tk{display:inline-block;font-weight:600;font-size:13px;padding:2px 9px;border-radius:999px;margin:3px 4px 0 0;background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
+td.th{font-size:12px;color:var(--muted)}
+@media (max-width:760px){.tiers{grid-template-columns:1fr}}
+@media (max-width:600px){.phase{grid-template-columns:minmax(0,1fr) 70px 54px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../">Hamid Faghidi</a>
+  <nav><a href="../#categories">Projects</a><a href="./">Stocks Investment</a></nav>
+</div></header>
+
+<main class="wrap">
+  <div class="crumbs" style="padding-top:20px"><a href="../">Home</a><span class="sep">/</span><a href="./">Stocks Investment</a><span class="sep">/</span><span>Project 12</span></div>
+  <section class="hero" style="padding-top:28px">
+    <div class="eyebrow">Project 12 &middot; Equity research &middot; AI, war &amp; pandemic themes &middot; Machine learning</div>
+    <h1>Project 12: Best Stocks for Investment</h1>
+    <p class="lede">Which stocks have the best chance of <strong>doubling within 3 years</strong>, by October 2029? 117 holdings across the AI build-out, a world rearming for war and the risk of the next global virus, sorted into 12 categories and scored by a machine-learning model trained and tested on 1967–2023 stock history, blended with a fundamentals model.</p>
+    <p style="margin-top:14px"><span class="tag good">Status: v2.1 report delivered</span> <span class="tag muted">Started Oct 29, 2026</span> <span class="tag muted">Last updated Oct 29, 2026</span></p>
+    <nav class="toc" aria-label="On this page"><a href="#leaderboard">Leaderboard</a><a href="#categories12">Categories</a><a href="#model">Model &amp; testing</a><a href="#benchmark">Benchmark</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
+  </section>
+
+  <section aria-label="At a glance">
+    <div class="statstrip">
+      <div class="primary"><div class="k">Top candidate</div><div class="v">APP 46%</div><div class="s">highest chance of a double</div></div>
+      <div><div class="k">Holdings scored</div><div class="v">117</div><div class="s">108 stocks + 9 funds</div></div>
+      <div><div class="k">Categories</div><div class="v">12</div><div class="s">10 themed + 2 more</div></div>
+      <div><div class="k">Tier A picks</div><div class="v">6</div><div class="s">≥30% odds, strong finances</div></div>
+      <div><div class="k">Training cases</div><div class="v">66,010</div><div class="s">690 stocks, 1967–2023</div></div>
+      <div><div class="k">Model lift</div><div class="v sm">31–34%</div><div class="s">top 10% doubled vs 18–22% base</div></div>
+    </div>
+  </section>
+
+  <section id="findings">
+    <h2>What the research found</h2>
+    <div class="card" style="border-left:4px solid var(--accent)">
+      <div class="eyebrow" style="margin-bottom:8px">Main conclusion</div>
+      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0">No stock is close to a sure double. Even the best candidate has under a 50% chance. Doubling in 3 years needs about 26% a year, which the S&amp;P 500 managed in only 3 of 48 three-year windows. The model is far better at spotting stocks likely to <em>halve</em> than ones likely to double.</p>
+    </div>
+    <div class="tiers" style="margin-top:16px">
+      <div class="card"><h3>Tier A <span>6</span></h3><p style="font-size:14px;color:var(--muted);margin:0 0 6px">Final odds ≥30%, financial score ≥70, chance of halving ≤15%</p>
+        <span class="tk">NU</span><span class="tk">NVDA</span><span class="tk">AVGO</span><span class="tk">TSM</span><span class="tk">PDD</span><span class="tk">GOOGL</span></div>
+      <div class="card"><h3>Tier B <span>8</span></h3><p style="font-size:14px;color:var(--muted);margin:0 0 6px">Final odds ≥30%, higher risk</p>
+        <span class="tk">APP</span><span class="tk">VRT</span><span class="tk">SK hynix</span><span class="tk">MU</span><span class="tk">AMD</span><span class="tk">NXT</span><span class="tk">TOYO</span><span class="tk">SOFI</span></div>
+      <div class="card"><h3>Tier C <span>17</span></h3><p style="font-size:14px;color:var(--muted);margin:0 0 6px">Final odds 25–29%</p>
+        <span class="tk">QCOM</span><span class="tk">FSLR</span><span class="tk">Lynas</span><span class="tk">META</span><span class="tk">PLTR</span><span class="tk">MSFT</span><span class="tk">SYM</span><span class="tk">ONDS</span><span class="tk">+9</span></div>
+    </div>
+  </section>
+
+  <section id="leaderboard">
+    <h2>Doubling leaderboard</h2>
+    <div class="card">
+      <div class="chart-title"><h3>Top candidates: chance of at least doubling by Oct 2029</h3></div>
+      <p class="chart-note">Final P(2x) = 50% trained ML model + 50% rules model (scenarios + financial score). Hover a bar for details.</p>
+      <div id="lead"></div>
+      <div class="table-scroll" style="margin-top:14px"><table>
+        <thead><tr><th>#</th><th>Stock</th><th>Category</th><th>Final P(2x)</th><th>ML / Rules</th><th>P(halves)</th><th>Fin. score</th><th>Main risk</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><strong>APP</strong> AppLovin</td><td>Hyperscalers &amp; AI</td><td class="num">46%</td><td class="num">27 / 66</td><td class="num">31%</td><td class="num">97</td><td>Ad-tech platform concentration</td></tr>
+          <tr><td>2</td><td><strong>NU</strong> Nu Holdings</td><td>Fintech &amp; Consumer</td><td class="num">40%</td><td class="num">22 / 58</td><td class="num">8%</td><td class="num">78</td><td>Brazil/Mexico credit cycle, FX</td></tr>
+          <tr><td>3</td><td><strong>VRT</strong> Vertiv</td><td>AI Power &amp; Data-Center</td><td class="num">37%</td><td class="num">22 / 51</td><td class="num">21%</td><td class="num">88</td><td>~50x earnings; any slip hurts</td></tr>
+          <tr><td>4</td><td><strong>NVDA</strong> Nvidia</td><td>AI Semiconductors</td><td class="num">36%</td><td class="num">17 / 56</td><td class="num">9%</td><td class="num">97</td><td>Customer concentration</td></tr>
+          <tr><td>5</td><td><strong>AVGO</strong> Broadcom</td><td>AI Semiconductors</td><td class="num">35%</td><td class="num">19 / 51</td><td class="num">13%</td><td class="num">90</td><td>A few AI labs drive custom chips</td></tr>
+          <tr><td>6</td><td><strong>NXT</strong> Nextracker</td><td>Solar &amp; Renewables</td><td class="num">34%</td><td class="num">25 / 42</td><td class="num">20%</td><td class="num">92</td><td>US tax credits, rates</td></tr>
+          <tr><td>7</td><td><strong>SK hynix</strong></td><td>AI Memory &amp; Equipment</td><td class="num">33%</td><td class="num">21 / 45</td><td class="num">41%</td><td class="num">91</td><td>Memory price reversal</td></tr>
+          <tr><td>8</td><td><strong>SOFI</strong> SoFi</td><td>Fintech &amp; Consumer</td><td class="num">33%</td><td class="num">24 / 41</td><td class="num">15%</td><td class="num">74</td><td>Share dilution, credit losses</td></tr>
+          <tr><td>9</td><td><strong>TSM</strong> TSMC</td><td>AI Semiconductors</td><td class="num">32%</td><td class="num">17 / 48</td><td class="num">8%</td><td class="num">98</td><td>Taiwan Strait tail risk</td></tr>
+          <tr><td>10</td><td><strong>MU</strong> Micron</td><td>AI Memory &amp; Equipment</td><td class="num">32%</td><td class="num">20 / 45</td><td class="num">36%</td><td class="num">98</td><td>Memory is cyclical</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">P(halves) = the trained model's chance the stock ends at half its price or less. Financial score (0–100) from the v1 dossiers and Q2/Q3 2026 results. The full 25-stock leaderboard is in the report.</p>
+    </div>
+  </section>
+
+  <section id="categories12">
+    <h2>Twelve categories</h2>
+    <div class="card">
+      <div class="chart-title"><h3>Average chance of doubling by category</h3></div>
+      <p class="chart-note">Categories 1–6 all ride the same AI spending cycle, so a pause there would hit half the list at once.</p>
+      <div id="cats"></div>
+      <div class="table-scroll" style="margin-top:14px"><table>
+        <thead><tr><th>#</th><th>Category</th><th>Theme</th><th>Holdings</th><th>Avg P(2x)</th><th>Best candidate</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>AI Semiconductors: Compute &amp; Foundry</td><td class="th">AI</td><td class="num">6</td><td class="num">31%</td><td>NVDA 36%</td></tr>
+          <tr><td>2</td><td>AI Memory &amp; Semiconductor Equipment</td><td class="th">AI</td><td class="num">5</td><td class="num">28%</td><td>SK hynix 33%</td></tr>
+          <tr><td>3</td><td>Hyperscalers &amp; AI Platforms</td><td class="th">AI</td><td class="num">5</td><td class="num">31%</td><td>APP 46%</td></tr>
+          <tr><td>4</td><td>Physical AI &amp; Robotics</td><td class="th">AI</td><td class="num">16</td><td class="num">20%</td><td>SYM 27%</td></tr>
+          <tr><td>5</td><td>AI Power &amp; Data-Center Infrastructure</td><td class="th">AI + energy security</td><td class="num">6</td><td class="num">26%</td><td>VRT 37%</td></tr>
+          <tr><td>6</td><td>AI Software &amp; Cybersecurity</td><td class="th">AI + cyber war</td><td class="num">4</td><td class="num">22%</td><td>PLTR 28%</td></tr>
+          <tr><td>7</td><td>US Defense Primes &amp; Defense Electronics</td><td class="th">War</td><td class="num">10</td><td class="num">19%</td><td>CW 22%</td></tr>
+          <tr><td>8</td><td>Defense Tech, Drones &amp; Allied Rearmament</td><td class="th">War</td><td class="num">7</td><td class="num">22%</td><td>ONDS 27%</td></tr>
+          <tr><td>9</td><td>Strategic Resources: Nuclear Fuel &amp; Critical Minerals</td><td class="th">War + AI power</td><td class="num">12</td><td class="num">21%</td><td>Lynas 29%</td></tr>
+          <tr><td>10</td><td>Biotech, Pandemic Preparedness &amp; AI Drug Discovery</td><td class="th">Pandemic</td><td class="num">13</td><td class="num">19%</td><td>REGN 23%</td></tr>
+          <tr><td>11</td><td>Solar &amp; Renewables</td><td class="th">Energy transition</td><td class="num">17</td><td class="num">23%</td><td>NXT 34%</td></tr>
+          <tr><td>12</td><td>Fintech &amp; Consumer</td><td class="th">Outside the 3 themes</td><td class="num">7</td><td class="num">28%</td><td>NU 40%</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Plus a group of 9 funds. Categories 11 and 12 were the v1 report's two legacy watchlists.</p>
+    </div>
+  </section>
+
+  <section id="model">
+    <h2>Model &amp; testing</h2>
+    <div class="grid g2">
+      <div class="card">
+        <h3>How it was built</h3>
+        <ol class="steps">
+          <li><strong>Data</strong>: monthly prices for 690 stocks, giving 66,010 historical cases with start dates from 1967 to 2023.</li>
+          <li><strong>Features</strong>: 17 price-history signals: volatility, momentum, drawdown, beta, company age and the market's own trend.</li>
+          <li><strong>Models</strong>: gradient boosting plus logistic regression, calibrated so a "30%" means about 30%.</li>
+          <li><strong>Walk-forward test</strong>: trained only on earlier years, tested on later ones it never saw.</li>
+          <li><strong>Blend</strong>: 50/50 with a rules model built from 3-year scenarios and each company's financial score.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>Walk-forward results (unseen years)</h3>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Test period</th><th>Base rate</th><th>Top 10% doubled</th><th>AUC</th></tr></thead>
+          <tbody>
+            <tr><td>2001–2005</td><td class="num">22.0%</td><td class="num">30.5%</td><td class="num">0.58</td></tr>
+            <tr><td>2009–2014</td><td class="num">21.7%</td><td class="num">33.6%</td><td class="num">0.59</td></tr>
+            <tr><td>2016–2023</td><td class="num">18.4%</td><td class="num">30.7%</td><td class="num">0.63</td></tr>
+          </tbody>
+        </table></div>
+        <p style="font-size:14px;margin:12px 0 0">Doubling is only weakly predictable (AUC 0.58–0.63; 0.5 is a coin flip). The separate <strong>loss model</strong> is much stronger (AUC 0.75), so it is used to filter out stocks likely to halve.</p>
+        <p style="font-size:13px;color:var(--muted);margin:8px 0 0">Limits: no historical fundamentals in the ML model, and 444 of 1,209 candidate tickers (mostly delisted companies) had no data, which flatters past results.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="benchmark">
+    <h2>Benchmark</h2>
+    <p style="color:var(--muted);margin:-6px 0 14px">Stock-rating services and theme funds an investor could use instead.</p>
+    <div class="card">
+      <div class="table-scroll"><table>
+        <thead><tr><th>Capability</th><th>This project</th><th>Zacks Rank</th><th>Seeking Alpha Quant</th><th>Danelfin</th><th>Motley Fool Stock Advisor</th><th>Theme ETFs</th></tr></thead>
+        <tbody>
+          <tr><td>Method</td><td>ML + fundamentals blend</td><td>Earnings revisions</td><td>Factor grades vs sector</td><td>ML on 10,000+ features</td><td>Analyst picks</td><td>Index weights</td></tr>
+          <tr><td>Predicts a 3-year double</td><td><span class="yes">✓</span> with a probability</td><td><span class="no">✗</span> 1–3 months</td><td><span class="no">✗</span> rating only</td><td><span class="no">✗</span> 3 months</td><td><span class="part">◐</span> 5-year holds</td><td><span class="no">✗</span></td></tr>
+          <tr><td>Shows downside odds</td><td><span class="yes">✓</span> P(halves)</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="part">◐</span> low scores</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
+          <tr><td>Out-of-sample tested</td><td><span class="yes">✓</span> 3 walk-forward folds</td><td><span class="part">◐</span> own track record</td><td><span class="yes">✓</span> Univ. of Kentucky study</td><td><span class="part">◐</span> own track record</td><td><span class="part">◐</span> own track record</td><td>n/a</td></tr>
+          <tr><td>Live track record</td><td><span class="no">✗</span> starts now</td><td><span class="yes">✓</span> since 1988</td><td><span class="yes">✓</span> since 2019</td><td><span class="yes">✓</span> since 2017</td><td><span class="yes">✓</span> since 2002</td><td><span class="yes">✓</span></td></tr>
+          <tr><td>Reported result</td><td>Top 10% doubled 31–34% vs 18–22%</td><td>#1 picks +23.8%/yr vs +11.6% S&amp;P 500</td><td>Strong Buys ~25.6%/yr (2016–22)</td><td>+191% vs +118% S&amp;P 500 (2017–23)</td><td>+993% vs +208% S&amp;P 500 since 2002</td><td>Theme's market return</td></tr>
+          <tr><td>Cost</td><td>Claude subscription</td><td>Free / paid</td><td>Paid</td><td>Free / paid</td><td>$199/yr</td><td>~0.35–0.70%/yr</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">✓ yes &middot; ◐ partial &middot; ✗ no. Competitor results are each vendor's own figures (or a reviewer's summary), measured over different periods and targets, so they aren't directly comparable.</p>
+    </div>
+    <div class="grid g3" style="margin-top:16px">
+      <div class="card"><h3>Where we're ahead</h3><p>The only one aiming at the owner's actual goal, a 3-year double, with an explicit chance of halving and a thesis built around AI, war and pandemic risk.</p></div>
+      <div class="card"><h3>Where we're behind</h3><p>No live track record yet, no historical fundamentals in the ML model, and survivorship bias in the training data.</p></div>
+      <div class="card"><h3>What to add</h3><p>Record each pick's Zacks, Seeking Alpha and Danelfin ratings every quarter, and track the Tier A basket against SMH, ITA, BOTZ and the S&amp;P 500.</p></div>
+    </div>
+  </section>
+
+  <section id="roadmap">
+    <h2>Status &amp; roadmap</h2>
+    <div class="card">
+      <h3>Progress by phase</h3>
+      <div id="phases"></div>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <h3>Next steps</h3>
+        <ol class="steps">
+          <li><strong>Freeze the Oct 29, 2026 tiers</strong> as a paper portfolio and measure it every quarter to Oct 2029.</li>
+          <li><strong>Re-score after each earnings season</strong> and publish a change log.</li>
+          <li><strong>Add the benchmark checks</strong>: rating cross-checks and the ETF baseline.</li>
+          <li><strong>Improve the model</strong> with historical fundamentals and delisted stocks.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>Main risks</h3>
+        <ul>
+          <li><span class="tag bad">Concentration</span> Categories 1–6 depend on the same AI capex cycle.</li>
+          <li><span class="tag warn">Geopolitics</span> Taiwan, China/US trade and Korean listings affect several top names.</li>
+          <li><span class="tag warn">Policy</span> Solar and renewables depend on US tax credits.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="disclosure">
+    <h2>Disclosures</h2>
+    <div class="card"><p style="margin:0">Research and education only, not investment advice; the author isn't a licensed financial advisor. Probabilities are model estimates, not guarantees. The ML model learned from past price behaviour only and its data lacks most delisted companies. Prices and financials are as of Oct 29, 2026. Check current filings and consider a licensed advisor before investing.</p></div>
+  </section>
+
+  <section>
+    <h2>Sources</h2>
+    <div class="card"><ul style="margin:0">
+      <li>Project 12 report v2.1 (Oct 29, 2026) and ChatGPT's v1 report of 109 investments (Oct 28, 2026), kept in the private project repository</li>
+      <li><a href="https://www.zacks.com/zrank/about_zrank_inds.php">Zacks Rank: about and performance</a></li>
+      <li><a href="https://seekingalpha.com/article/4683185-university-of-kentucky-study-finds-seeking-alpha-quant-ratings-beat-the-market-sa-quant">Seeking Alpha: University of Kentucky study of Quant Ratings</a></li>
+      <li><a href="https://danelfin.com/">Danelfin AI Score</a></li>
+      <li><a href="https://stockanalysis.com/article/motley-fool-stock-advisor-review/">Motley Fool Stock Advisor review (StockAnalysis)</a></li>
+    </ul></div>
+  </section>
+
+  <a class="back" href="./">&larr; Back to Stocks Investment</a>
+  <section><h2 style="text-align:center">Browse categories</h2><nav class="catnav" aria-label="Project categories"><a class="c-ai" href="../ai-trading/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 38 L17 26 L25 32 L41 13"/><path d="M33 13h8v8"/><path d="M6 42h36"/></svg></span>AI Trading</a><a class="c-stk on" href="../stocks-investment/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M13 8v32"/><rect x="9" y="15" width="8" height="14" rx="1.5"/><path d="M24 12v28"/><rect x="20" y="20" width="8" height="12" rx="1.5"/><path d="M35 6v30"/><rect x="31" y="10" width="8" height="16" rx="1.5"/></svg></span>Stocks Investment</a><a class="c-home" href="../home-projects/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 22 L24 8 L41 22"/><path d="M12 19v21h24V19"/><path d="M21 40V29h6v11"/></svg></span>Home Projects</a><a class="c-biz" href="../business/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="15" width="34" height="24" rx="3"/><path d="M18 15v-4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"/><path d="M7 26h34"/><path d="M22 26v4h4v-4"/></svg></span>Business Projects</a><a class="c-gen" href="../general/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="3"/><rect x="27" y="8" width="13" height="13" rx="3"/><rect x="8" y="27" width="13" height="13" rx="3"/><circle cx="33.5" cy="33.5" r="6.5"/></svg></span>General Projects</a></nav></section>
+</main>
+<footer><div class="wrap">&copy; 2026 Hamid Faghidi &middot; Trading results are hypothetical backtests. Nothing on this site is investment advice.</div></footer>
+<script src="../charts.js"></script>
+<script>
+(function(){
+var LEAD=[["APP",46],["NU",40],["VRT",37],["NVDA",36],["AVGO",35],["NXT",34],["SK hynix",33],["SOFI",33],["TSM",32],["MU",32],["PDD",32],["TOYO",31],["GOOGL",31],["AMD",30],["GEV",30]];
+var CATS=[["1 AI chips",31],["2 Memory",28],["3 Platforms",31],["4 Robotics",20],["5 AI power",26],["6 AI software",22],["7 Defense",19],["8 Drones",22],["9 Resources",21],["10 Biotech",19],["11 Solar",23],["12 Fintech",28]];
+function pc(v){return Math.round(v)+'%';}
+function draw(){
+ var narrow=window.innerWidth<600;
+ barChart(document.getElementById('lead'),(narrow?LEAD.slice(0,10):LEAD).map(function(d){return{label:d[0],value:d[1],tip:d[0]+': '+d[1]+'% chance of doubling'}}),{height:260,rotate:narrow,fmt:pc});
+ barChart(document.getElementById('cats'),CATS.map(function(d){return{label:d[0],value:d[1],tip:'Category '+d[0]+': average '+d[1]+'%'}}),{height:260,rotate:true,fmt:pc});}
+draw();var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,150)});
+var phases=[["1 · Discovery & baseline (v1 report imported)",1,0,0],["2 · Framework & 12 categories",1,0,0],["3 · Deep research, ML model & scoring",1,0,0],["4 · Report v2.1",1,0,0],["5 · Quarterly monitoring & refresh",0,1,0]];var host=document.getElementById('phases');
+phases.forEach(function(p){var tot=p[1]+p[2]+p[3];var r=document.createElement('div');r.className='phase';r.innerHTML='<div>'+p[0]+'</div><div class="sbar"><i class="d" style="width:'+(100*p[1]/tot)+'%"></i><i class="p" style="width:'+(100*p[2]/tot)+'%"></i></div><div class="n">'+(p[1]?'Done':p[2]?'Ongoing':'—')+'</div>';host.appendChild(r);});
+})();
+</script>
+</body>
+</html>

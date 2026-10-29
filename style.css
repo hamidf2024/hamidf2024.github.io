@@ -154,3 +154,12 @@ a.pcard:hover{border-color:var(--c);transform:translateY(-2px)}
 .catnav a .mini-ring svg{width:26px;height:26px;stroke:var(--c);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .catnav a:hover{color:var(--ink)}.catnav a:hover .mini-ring{transform:translateY(-3px)}
 .catnav a.on .mini-ring{background:var(--c)}.catnav a.on .mini-ring svg{stroke:var(--surface)}.catnav a.on{color:var(--ink);font-weight:600}
+
+/* ---- 2026-10-29: fifth category (Stocks Investment) ---- */
+:root{--c-stk:#c23d5e}
+@media (prefers-color-scheme:dark){:root{--c-stk:#ec7a95}}
+.c-stk{--c:var(--c-stk)}
+.cats{display:flex;flex-wrap:wrap;justify-content:center;gap:24px 20px}
+.cats>.cat{flex:0 1 calc((100% - 80px)/5);min-width:0}
+@media (max-width:1000px){.cats>.cat{flex-basis:calc((100% - 40px)/3)}}
+@media (max-width:640px){.cats{gap:18px 14px}.cats>.cat{flex-basis:calc((100% - 14px)/2)}}
