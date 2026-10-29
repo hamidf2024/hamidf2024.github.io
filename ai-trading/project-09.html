@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AI Option Trading — Hamid Faghidi</title>
-<meta name="description" content="Project 9: machine-learning research for options trading. 20 models, 20 success factors and 5 frameworks reviewed, a 10-layer system design, and a benchmark against published research and option platforms.">
+<meta name="description" content="Project 9: machine-learning research for options trading. Goal: grow account equity after costs, with a 1%-a-day target to test. 20 models and 5 frameworks reviewed, a reference ML options system audited, and a first SPY/QQQ experiment designed.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../style.css">
@@ -32,9 +32,9 @@
   <section class="hero" style="padding-top:28px">
     <div class="eyebrow">Project 9 &middot; Quantitative research &middot; Options &middot; Machine learning</div>
     <h1>Project 9: AI Option Trading</h1>
-    <p class="lede">A research-first project to find which machine-learning models and frameworks can trade listed options at a profit after real costs. So far: a reviewed study of 20 models, 20 success factors and 5 frameworks, and a 10-layer system design. The goal is the model with the <strong>highest net profit</strong>, then the <strong>highest win rate</strong>, with a <strong>reasonable number of trades</strong>.</p>
-    <p style="margin-top:14px"><span class="tag warn">Status: research &amp; design &middot; no backtests yet</span> <span class="tag muted">Started Sep 27, 2026</span> <span class="tag muted">Last updated Oct 28, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#findings">Findings</a><a href="#frameworks">Frameworks</a><a href="#benchmark">Benchmark</a><a href="#approach">Approach</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
+    <p class="lede">A research-first project to find which machine-learning models and frameworks can trade listed options at a profit after real costs. So far: a reviewed study of 20 models, 20 success factors and 5 frameworks, an audit of a working ML options system, and a first experiment ready to run. The goal is to <strong>grow the whole account after all costs</strong>, testing a target of <strong>more than 1% a trading day</strong>. Win rate is tracked, not chased.</p>
+    <p style="margin-top:14px"><span class="tag warn">Status: research &amp; design &middot; no backtests yet</span> <span class="tag muted">Started Sep 27, 2026</span> <span class="tag muted">Last updated Oct 29, 2026</span></p>
+    <nav class="toc" aria-label="On this page"><a href="#findings">Findings</a><a href="#reference">Reference system</a><a href="#experiment">First experiment</a><a href="#frameworks">Frameworks</a><a href="#benchmark">Benchmark</a><a href="#approach">Approach</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
   </section>
 
   <section aria-label="At a glance">
@@ -42,9 +42,9 @@
       <div class="primary"><div class="k">Stage</div><div class="v">Research</div><div class="s">design done, nothing built yet</div></div>
       <div><div class="k">Models reviewed</div><div class="v">20</div><div class="s">6 core families chosen</div></div>
       <div><div class="k">Frameworks</div><div class="v">5</div><div class="s">3 to build, 2 as benchmarks</div></div>
-      <div><div class="k">Primary horizon</div><div class="v">Daily+</div><div class="s">daily and 1 week – 3 months</div></div>
+      <div><div class="k">Daily target</div><div class="v">&gt;1%</div><div class="s">account growth, to be tested</div></div>
       <div><div class="k">Backtests</div><div class="v">0</div><div class="s">no data or code yet</div></div>
-      <div><div class="k">Roadmap</div><div class="v">1 / 19</div><div class="s">research phase done</div></div>
+      <div><div class="k">Build plan</div><div class="v">1 / 8</div><div class="s">stages done (Phase 10)</div></div>
     </div>
   </section>
 
@@ -80,6 +80,81 @@
           <li><strong>Out-of-sample testing</strong>: walk-forward in time, never random splits, with 2008, 2020 and 2022 tested separately.</li>
         </ul>
       </div>
+    </div>
+  </section>
+
+  <section id="reference">
+    <h2>A working system, examined</h2>
+    <p style="color:var(--muted);margin:-6px 0 14px">On Oct 29 we reviewed 21 screenshots of a third-party ML options system ("m14.fund3") shown publicly on video. It's the best real-world model of what to build &mdash; but none of its returns can be verified.</p>
+    <div class="grid g2">
+      <div class="card">
+        <h3>What it shows</h3>
+        <ul>
+          <li>A trained, checkpointed neural model (PyTorch-style file, &asymp;553 million training steps) with versioned runs.</li>
+          <li>The model is scored on <strong>gain</strong> and <strong>tradability</strong>, separately for calls and puts.</li>
+          <li>Separate scanner, live ranking, risk view, <strong>independent exit schedule</strong> and two brokers (Alpaca, Schwab).</li>
+          <li>Displayed realized profit of <strong>$53,917</strong> on positions opened Aug 17&ndash;27, 2026.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>What it doesn't prove</h3>
+        <ul>
+          <li><span class="tag bad">No daily return</span> Percentages are on option cost per entry day, not on the account. Account size isn't shown.</li>
+          <li><span class="tag warn">Concentrated</span> About <strong>85%</strong> of the profit ($45,855) came from positions opened on one day.</li>
+          <li><span class="tag warn">Unreconciled</span> One total shows 7.7% where its own formula gives &asymp;5.8%; some daily figures changed between snapshots.</li>
+          <li>A training chart value of &asymp;9.7 is a model metric with unknown units, <strong>not</strong> a 9.7% daily return.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="chart-title"><h3>Displayed realized profit by entry day, Aug 2026 ($)</h3></div>
+      <p class="chart-note">From the reference system's dashboard, not this project. One entry day accounts for most of the total.</p>
+      <div id="refpnl"></div>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin:10px 0 0">What we copy: the structure &mdash; train on real profit after costs, add a tradability output, keep every trade linked to the model version that made it, and run exits and accounting separately from the model.</p>
+  </section>
+
+  <section id="experiment">
+    <h2>First experiment</h2>
+    <p style="color:var(--muted);margin:-6px 0 14px">Narrow on purpose, and fixed before looking at the test period. These are starting assumptions, not settings known to be profitable.</p>
+    <div class="grid g2">
+      <div class="card">
+        <div class="table-scroll"><table>
+          <tbody>
+            <tr><td>Markets</td><td>SPY and QQQ options (one shared risk bucket)</td></tr>
+            <tr><td>Trades</td><td>Buy calls or puts; debit spreads as a second test</td></tr>
+            <tr><td>Expiry</td><td>7&ndash;21 days out, delta 0.35&ndash;0.60</td></tr>
+            <tr><td>Timing</td><td>Decide every 15 minutes, hold 60 minutes, close same day</td></tr>
+            <tr><td>Fills</td><td>Buy at the ask, sell at the bid, plus fees and delay</td></tr>
+            <tr><td>Target</td><td>Profit per contract after costs, in $ and % of premium</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="card">
+        <h3>Models, in order</h3>
+        <ol class="steps">
+          <li><strong>Simple rules and linear model</strong> &mdash; the baseline every model must beat.</li>
+          <li><strong>LightGBM</strong> &mdash; first main model.</li>
+          <li><strong>Small neural network</strong> &mdash; with and without a tradability output and call/put outputs.</li>
+          <li><strong>LSTM or causal CNN</strong> &mdash; uses recent market history.</li>
+          <li>Later, only if they add profit: transformers, graph models, reinforcement learning.</li>
+        </ol>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>Starting risk limits</h3>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Limit</th><th>Starting value</th></tr></thead>
+        <tbody>
+          <tr><td>Most a new position can lose</td><td class="num">0.25&ndash;0.5% of account</td></tr>
+          <tr><td>All open option premium</td><td class="num">&le; 5% of account</td></tr>
+          <tr><td>SPY + QQQ together</td><td class="num">&le; 2% of account</td></tr>
+          <tr><td>Daily loss: stop new trades</td><td class="num">&asymp; 1&ndash;1.5%</td></tr>
+          <tr><td>Drawdown: pause and review</td><td class="num">&asymp; 5%</td></tr>
+          <tr><td>Overnight positions</td><td class="num">None at first</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:10px 0 0">These limits pull against the 1% target: with 5% of the account in options, a 1% day needs a 20% gain on the premium. Evidence, not looser limits, will settle that.</p>
     </div>
   </section>
 
@@ -134,9 +209,9 @@
   <section>
     <h2>Goals &amp; objectives</h2>
     <div class="grid g3">
-      <div class="card"><h3>1. Maximum profit</h3><p>The top priority: the highest net profit after all trading and hedging costs, on data the model never saw.</p></div>
-      <div class="card"><h3>2. Higher win rate</h3><p>Among models with similar profit, prefer the one that wins more often.</p></div>
-      <div class="card"><h3>3. Reasonable trade count</h3><p>Enough trades to trust the result. Drawdown, tail-loss and margin limits act as pass/fail gates.</p></div>
+      <div class="card"><h3>1. Grow the account</h3><p>Net growth of total account equity after every cost. Target: <strong>more than 1% a trading day</strong> on average, compounded, losing days allowed. It's a hypothesis to test, not a promise: 1% a day would be about 12&times; in a year.</p></div>
+      <div class="card"><h3>2. Survive</h3><p>Pass/fail limits on drawdown, daily loss, tail loss and margin. A model that breaks them is out, however profitable.</p></div>
+      <div class="card"><h3>3. Prove it's real</h3><p>Beat simple rules and published benchmarks on data the model never saw, under cost stress, with checks for luck and overfitting. Win rate is reported, not ranked on.</p></div>
     </div>
   </section>
 
@@ -165,15 +240,15 @@
   <section id="roadmap">
     <h2>Status &amp; roadmap</h2>
     <div class="card">
-      <h3>Progress by phase (incl. new Phase 9)</h3>
+      <h3>Progress by phase (Phase 10 is now the main build path)</h3>
       <div class="legend"><span style="--c:var(--accent)">Done</span><span style="--c:var(--warn)">Partial</span><span style="--c:var(--line)">Not started</span></div>
       <div id="phases"></div>
     </div>
     <div class="grid g2" style="margin-top:16px">
       <div class="card">
-        <h3>Added from the benchmark review (Phase 9)</h3>
+        <h3>Benchmark track (Phase 9)</h3>
         <ol class="steps">
-          <li><strong>Profit-first selection rule</strong> with a minimum trade count.</li>
+          <li><strong>Selection rule</strong>: now account growth first, survival limits as gates.</li>
           <li><strong>Choose a data vendor</strong> and lock a point-in-time dataset.</li>
           <li><strong>Rule benchmark</strong>: the Goyal–Saretto IV–RV straddle sort.</li>
           <li><strong>Reproduce Bali et al.</strong>: ML on delta-hedged option returns.</li>
@@ -186,7 +261,8 @@
         <ul>
           <li><span class="tag bad">Data</span> Option quotes with clean bid/ask history cost money; the vendor isn't chosen yet.</li>
           <li><span class="tag warn">Costs</span> Option spreads are wide, and published edges shrink fast as costs rise.</li>
-          <li><span class="tag warn">Overfitting</span> A 20 strategies × 20 models grid needs multiple-testing corrections before any result counts.</li>
+          <li><span class="tag warn">Overfitting</span> Every model and setting tried is logged and corrected for before any result counts.</li>
+          <li><span class="tag warn">Target vs risk</span> 1% a day is far above any published result; the risk limits may make it unreachable.</li>
         </ul>
       </div>
     </div>
@@ -206,6 +282,9 @@
       <li><a href="https://www.federalreserve.gov/econres/feds/capturing-heterogeneity-machine-learning-approaches-to-implied-volatility-forecasting.htm">Kim &amp; Oh (2026): ML approaches to implied volatility forecasting (Federal Reserve)</a></li>
       <li><a href="https://ideas.repec.org/a/taf/quantf/v19y2019i8p1271-1291.html">Buehler et al. (2019): Deep Hedging</a></li>
       <li><a href="https://www.cxoadvisory.com/equity-options/performance-of-cboe-putwrite-indexes">Performance of the Cboe PutWrite indexes</a></li>
+      <li><a href="https://www.davidhbailey.com/dhbpapers/deflated-sharpe.pdf">Bailey &amp; L&oacute;pez de Prado: The Deflated Sharpe Ratio</a></li>
+      <li><a href="https://docs.alpaca.markets/us/docs/paper-trading">Alpaca: paper trading limitations</a> &middot; <a href="https://datashop.cboe.com/option-quote-intervals">Cboe DataShop option quotes</a></li>
+      <li><a href="https://www.finra.org/rules-guidance/notices/26-10">FINRA Regulatory Notice 26-10: intraday margin</a></li>
       <li><a href="https://orats.com/blog/best-options-backtesting-platforms-in-2024">ORATS: options backtesting platforms compared</a> &middot; <a href="https://optionalpha.com/backtester">Option Alpha backtester</a></li>
     </ul></div>
   </section>
@@ -218,13 +297,15 @@
 <script>
 (function(){
 var FW=[{"label":"Adaptive ML","value":5},{"label":"ML + deep hedging","value":5},{"label":"Regime ML","value":4.5},{"label":"Inst. VRP","value":4},{"label":"Inst. overlay","value":3}];
+var REF=[{"label":"Aug 17","value":6118},{"label":"Aug 18","value":4337},{"label":"Aug 19","value":1712},{"label":"Aug 20","value":-2356},{"label":"Aug 21","value":-6231},{"label":"Aug 24","value":4865},{"label":"Aug 25","value":-4080},{"label":"Aug 26","value":45855},{"label":"Aug 27","value":3696}];
 var COST=[{"label":"LSTM · 0 bps","value":1.329},{"label":"Best rule · 0 bps","value":0.762},{"label":"LSTM · 20 bps","value":0.952},{"label":"Best rule · 20 bps","value":0.663},{"label":"LSTM · 50 bps","value":0.388},{"label":"Best rule · 50 bps","value":0.514},{"label":"LSTM + turnover penalty · 50 bps","value":0.689}];
 function f1(v){return (+v).toFixed(1);}function f2(v){return (+v).toFixed(2);}
 function draw(){
  barChart(document.getElementById('fw'),FW.map(function(d){return{label:d.label,value:d.value,tip:d.label+': '+d.value+' / 5'}}),{height:240,rotate:window.innerWidth<600,fmt:f1});
+ barChart(document.getElementById('refpnl'),REF.map(function(d){return{label:d.label,value:d.value,tip:d.label+': '+(d.value<0?'-$':'$')+Math.abs(d.value).toLocaleString()}}),{height:240,rotate:window.innerWidth<600,fmt:function(v){return (v<0?'-$':'$')+Math.round(Math.abs(v)/1000)+'k'}});
  barChart(document.getElementById('cost'),COST.map(function(d){return{label:d.label,value:d.value,tip:d.label+': Sharpe '+f2(d.value)}}),{height:260,rotate:true,fmt:f1});}
 draw();var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,150)});
-var phases=[["0 · Research review (models, factors, frameworks)",1,0,0],["1 · Verify key papers",0,1,0],["2 · Strategy × model grid",0,0,1],["3 · Data vendor & dataset",0,0,1],["4 · Targets & regime thresholds",0,0,1],["5 · Baselines (Elastic Net, VRP, overlay)",0,0,1],["6 · XGBoost / LightGBM, then LSTM",0,0,1],["7 · Regime engine, Transformer/GNN, RL",0,0,1],["8 · Multiple-testing checks & paper trading",0,0,1],["9 · Benchmark-review additions (new)",0,0,10]];var host=document.getElementById('phases');
+var phases=[["0 · Research review (models, factors, frameworks)",1,0,0],["1 · Verify key papers",0,1,0],["2 · Strategy × model grid",0,0,1],["3 · Data vendor & dataset",0,0,1],["4 · Targets & regime thresholds",0,0,1],["5 · Baselines (Elastic Net, VRP, overlay)",0,0,1],["6 · XGBoost / LightGBM, then LSTM",0,0,1],["7 · Regime engine, Transformer/GNN, RL",0,0,1],["8 · Multiple-testing checks & paper trading",0,0,1],["9 · Benchmark track (papers, Cboe PUT/BXM)",0,0,10],["10 · Build: define → data → baselines → models → paper → pilot → scale",0,1,7]];var host=document.getElementById('phases');
 phases.forEach(function(p){var tot=p[1]+p[2]+p[3];var r=document.createElement('div');r.className='phase';r.innerHTML='<div>'+p[0]+'</div><div class="sbar"><i class="d" style="width:'+(100*p[1]/tot)+'%"></i><i class="p" style="width:'+(100*p[2]/tot)+'%"></i></div><div class="n">'+(p[1]?'Done':p[2]?'Partial':'—')+'</div>';host.appendChild(r);});
 })();
 </script>
