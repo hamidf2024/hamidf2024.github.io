@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Home Dashboard — Hamid Faghidi</title>
+<meta name="description" content="Project 6: an 11-layer research platform for finding, valuing and operating investment homes in Sacramento, Austin and Phoenix, with a benchmark against Mashvisor, AirDNA, DealCheck and HouseCanary.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+.layer{display:grid;grid-template-columns:40px minmax(0,1fr) 70px;gap:12px;align-items:start;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.layer:last-child{border-bottom:0}
+.layer .n{font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
+.layer .v{color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.layer p{margin:2px 0 0;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../">Hamid Faghidi</a>
+  <nav><a href="../#categories">Projects</a><a href="./">Home Projects</a></nav>
+</div></header>
+
+<main class="wrap">
+  <div class="crumbs" style="padding-top:20px"><a href="../">Home</a><span class="sep">/</span><a href="./">Home Projects</a><span class="sep">/</span><span>Project 6</span></div>
+  <section class="hero" style="padding-top:28px">
+    <div class="eyebrow">Project 6 &middot; Real estate &middot; Research platform</div>
+    <h1>Project 6: Home Dashboard</h1>
+    <p class="lede">An 11-page research platform for buying investment homes in <strong>Sacramento CA, Austin/Round Rock TX and Phoenix AZ</strong>. Each layer answers one question about a property: does it clear the buy bar, what it would earn, what it's worth, what the law allows, what the rehab costs, how risky it is, and who should manage it. A hub ties them together into a per-address dossier.</p>
+    <p style="margin-top:14px"><span class="tag good">Status: 10 of 10 layers live</span> <span class="tag muted">Started Aug 26, 2026</span> <span class="tag muted">Last updated Oct 28, 2026</span></p>
+    <nav class="toc" aria-label="On this page"><a href="#layers">Layers</a><a href="#example">Example</a><a href="#benchmark">Benchmark</a><a href="#approach">Approach</a><a href="#next">Next</a><a href="#disclosure">Disclosures</a></nav>
+  </section>
+
+  <section aria-label="At a glance">
+    <div class="statstrip">
+      <div class="primary"><div class="k">Layers live</div><div class="v">10 / 10</div><div class="s">plus the hub (Layer 0)</div></div>
+      <div><div class="k">Markets</div><div class="v">3</div><div class="s">Sacramento, Austin, Phoenix</div></div>
+      <div><div class="k">Properties screened</div><div class="v">65</div><div class="s">in the investment ledger</div></div>
+      <div><div class="k">STR comps</div><div class="v">153</div><div class="s">live Airbnb calendars, 40 subjects</div></div>
+      <div><div class="k">Sold comps</div><div class="v">118</div><div class="s">verified sales, 13 subjects</div></div>
+      <div><div class="k">Rent comps</div><div class="v">120</div><div class="s">long-term rentals, 8 subjects</div></div>
+    </div>
+  </section>
+
+  <section id="layers">
+    <h2>The layers</h2>
+    <div class="card">
+      <div class="chart-title"><h3>Records collected per layer</h3></div>
+      <p class="chart-note">Each record was read individually from its own listing, calendar, price-history page, ordinance or license lookup, not pulled from a bulk feed.</p>
+      <div id="rec"></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div id="layer-list"></div>
+    </div>
+  </section>
+
+  <section id="example">
+    <h2>Example: one address through every layer</h2>
+    <p style="color:var(--muted);margin:-6px 0 14px">6316 Hillsdale Blvd, Sacramento CA 95842: a 4bd/2ba "contractor special" listed at $375,000, the platform's most-evaluated property (8 of 10 layers).</p>
+    <div class="card">
+      <div class="table-scroll"><table>
+        <thead><tr><th>Layer</th><th>Key result</th><th>What it means</th></tr></thead>
+        <tbody>
+          <tr><td>1 · Screening</td><td class="num">Score 64 / 100 · net ≈ +$2,002/mo all-cash · cap rate ≈ 6.4%</td><td>Clears the buy bar</td></tr>
+          <tr><td>2 · STR comps</td><td class="num">33.5% occupancy · $322/night · ≈ $39,300/yr</td><td>Modest short-term-rental demand in a suburban ZIP</td></tr>
+          <tr><td>3 · Sold comps</td><td class="num">Median $423,889 · RealEstimate $494,839</td><td>Finished homes nearby sell well above list</td></tr>
+          <tr><td>4 · Rent comps</td><td class="num">Median 4bd rent $2,915/mo · gross yield ≈ 7.2%</td><td>Solid long-term rental case</td></tr>
+          <tr><td>7 · Regulations</td><td class="num">STR 71 · ADU 78 · LTR 77 (out of 100)</td><td>Unincorporated county rules, confirmed on the parcel viewer</td></tr>
+          <tr><td>8 · Renovation</td><td class="num">Recommended budget ≈ $219,000</td><td>Purchase + rehab ≈ $594K, above two finished comps (~$470–481K)</td></tr>
+          <tr><td>9 · Risk</td><td class="num">Flood/fire Low · smoke &amp; heat Severe · crime D-</td><td>The real open questions before an offer</td></tr>
+          <tr><td>10 · Managers</td><td class="num">Top pick 8.3 / 10 at a 6% fee</td><td>Independent BBB check found a C- the source research missed</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Snapshot figures as recorded on each layer between Aug 26 and Oct 25, 2026. The listing's status changed several times (Active → Pending → Active), which the hub flags rather than hides.</p>
+    </div>
+  </section>
+
+  <section id="benchmark">
+    <h2>Benchmark</h2>
+    <p style="color:var(--muted);margin:-6px 0 14px">Commercial tools an investor would otherwise pay for.</p>
+    <div class="card">
+      <div class="table-scroll"><table>
+        <thead><tr><th>Capability</th><th>This project</th><th>Mashvisor</th><th>AirDNA</th><th>DealCheck</th><th>HouseCanary</th></tr></thead>
+        <tbody>
+          <tr><td>Type</td><td>Personal research platform</td><td>Investment analytics</td><td>STR data</td><td>Deal calculator</td><td>Valuation &amp; data</td></tr>
+          <tr><td>STR revenue</td><td><span class="yes">✓</span> Live calendars, 153 comps</td><td><span class="yes">✓</span> Projections</td><td><span class="yes">✓</span> 10M+ listings</td><td><span class="part">◐</span> Manual inputs</td><td><span class="no">✗</span></td></tr>
+          <tr><td>Long-term rent</td><td><span class="yes">✓</span> 120 comps</td><td><span class="yes">✓</span></td><td><span class="no">✗</span></td><td><span class="yes">✓</span> Rent estimates</td><td><span class="yes">✓</span> Rental AVM</td></tr>
+          <tr><td>Market value</td><td><span class="yes">✓</span> 118 verified sales</td><td><span class="part">◐</span></td><td><span class="no">✗</span></td><td><span class="part">◐</span> Comps</td><td><span class="yes">✓</span> AVM, 2.7% median error</td></tr>
+          <tr><td>Regulations (STR/ADU/LTR)</td><td><span class="yes">✓</span> From ordinance text</td><td><span class="no">✗</span></td><td><span class="part">◐</span> Market notes</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
+          <tr><td>Renovation &amp; risk</td><td><span class="yes">✓</span> Budgets + 7 hazards + crime</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="part">◐</span> Rehab inputs</td><td><span class="part">◐</span></td></tr>
+          <tr><td>Financing &amp; IRR</td><td><span class="no">✗</span> All-cash only</td><td><span class="yes">✓</span></td><td><span class="no">✗</span></td><td><span class="yes">✓</span> 35-yr projections</td><td><span class="no">✗</span></td></tr>
+          <tr><td>Scale &amp; freshness</td><td><span class="part">◐</span> ~40 subjects, daily search</td><td><span class="yes">✓</span> US-wide</td><td><span class="yes">✓</span> Daily</td><td><span class="yes">✓</span> US-wide</td><td><span class="yes">✓</span> 136M+ properties</td></tr>
+          <tr><td>Cost</td><td>Claude subscription</td><td>From ~$40/mo</td><td>Free tier; Pro from ~$34/mo</td><td>Free / $10 / $20 per mo</td><td>On request</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">✓ yes &middot; ◐ partial &middot; ✗ no. Based on vendor pages and published reviews as of Oct 2026 (sources below); vendor figures are their own claims.</p>
+    </div>
+    <div class="grid g3" style="margin-top:16px">
+      <div class="card"><h3>Where we're ahead</h3><p>Breadth in one place: no commercial tool found combines comps, regulations, renovation, risk and property managers. Every number is traceable to the page it came from.</p></div>
+      <div class="card"><h3>Where we're behind</h3><p>Scale and freshness: about 40 subjects vs. national coverage, no measured valuation error rate, and no financing or IRR model yet.</p></div>
+      <div class="card"><h3>Biggest lesson</h3><p>Depth catches what automated scores miss: the wrong STR jurisdiction in a source thread, a stale investment score, an unanswered BBB complaint.</p></div>
+    </div>
+  </section>
+
+  <section id="approach">
+    <h2>Approach</h2>
+    <div class="grid g2">
+      <div class="card">
+        <h3>How each layer is built</h3>
+        <ol class="steps">
+          <li><strong>One question per layer</strong>, each a standalone page with an "At a glance" box: goal, summary, inputs, outputs.</li>
+          <li><strong>Primary sources first</strong>: county parcel viewers, ordinance text, license lookups, each listing's own price history.</li>
+          <li><strong>Every comp read individually</strong>, with methodology notes and flagged deviations.</li>
+          <li><strong>Queue-based growth</strong>: type an address on any layer and it's researched and added.</li>
+          <li><strong>Daily 7am search</strong> adds new listings that clear the buy criteria.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>Buy criteria (Layer 1)</h3>
+        <div class="table-scroll"><table>
+          <tbody>
+            <tr><td>Type</td><td>Single-family, 3+ beds, over 1,250 sq ft</td></tr>
+            <tr><td>Age</td><td>Built after 1975</td></tr>
+            <tr><td>Price</td><td>Under $450K and under ~$350–360 per sq ft</td></tr>
+            <tr><td>HOA</td><td>$0</td></tr>
+            <tr><td>Neighborhood</td><td>EJSCREEN demographic index under the 80th percentile</td></tr>
+          </tbody>
+        </table></div>
+        <p style="font-size:13px;color:var(--muted);margin:10px 0 0">Thresholds are editable on the page and each market (CA/TX/AZ) has its own bar.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="next">
+    <h2>Next steps</h2>
+    <div class="grid g2">
+      <div class="card">
+        <h3>Added from the benchmark review</h3>
+        <ol class="steps">
+          <li><strong>Financing &amp; IRR scenarios</strong> in Layer 1.</li>
+          <li><strong>Measure our own valuation error</strong> against eventual sale prices.</li>
+          <li><strong>STR cross-check</strong> against a free AirDNA estimate.</li>
+          <li><strong>Daily status sync</strong> across all layers.</li>
+          <li><strong>Refresh the hub's Property Dossier</strong> (still at its Sep 5 snapshot).</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>Main challenges</h3>
+        <ul>
+          <li><span class="tag warn">Freshness</span> Listing statuses change faster than manual sweeps.</li>
+          <li><span class="tag warn">Sample size</span> 3–4 STR comps per subject is thin next to AirDNA's history.</li>
+          <li><span class="tag bad">Sites</span> Some listing sites block automated reading, which forces fallback methods (flagged on each page).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="disclosure">
+    <h2>Disclosures</h2>
+    <div class="card"><p style="margin:0">Personal research. Figures are snapshots from public listing sites, county records and vendor pages at the dates noted. Not investment, legal or tax advice; verify with licensed professionals before buying.</p></div>
+  </section>
+
+  <section>
+    <h2>Sources</h2>
+    <div class="card"><ul style="margin:0">
+      <li><a href="https://mashvisor.com/pricing">Mashvisor pricing</a> &middot; <a href="https://www.bnbcalc.com/reviews/mashvisor-review-2026">Mashvisor review (BNBCalc)</a></li>
+      <li><a href="https://strspecialist.com/reviews/airdna-analytics-review">AirDNA review (STR Specialist)</a></li>
+      <li><a href="https://www.crowdfundedwealth.com/reviews/dealcheck-review">DealCheck pricing &amp; review</a></li>
+      <li><a href="https://housecanary.com/industries/real-estate-investors">HouseCanary for real estate investors</a></li>
+    </ul></div>
+  </section>
+
+  <a class="back" href="./">&larr; Back to Home Projects</a>
+  <section><h2 style="text-align:center">Browse categories</h2><nav class="catnav" aria-label="Project categories"><a class="c-ai" href="../ai-trading/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 38 L17 26 L25 32 L41 13"/><path d="M33 13h8v8"/><path d="M6 42h36"/></svg></span>AI Trading</a><a class="c-home on" href="../home-projects/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 22 L24 8 L41 22"/><path d="M12 19v21h24V19"/><path d="M21 40V29h6v11"/></svg></span>Home Projects</a><a class="c-biz" href="../business/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="15" width="34" height="24" rx="3"/><path d="M18 15v-4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"/><path d="M7 26h34"/><path d="M22 26v4h4v-4"/></svg></span>Business Projects</a><a class="c-gen" href="../general/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="3"/><rect x="27" y="8" width="13" height="13" rx="3"/><rect x="8" y="27" width="13" height="13" rx="3"/><circle cx="33.5" cy="33.5" r="6.5"/></svg></span>General Projects</a></nav></section>
+</main>
+<footer><div class="wrap">&copy; 2026 Hamid Faghidi &middot; Trading results are hypothetical backtests. Nothing on this site is investment advice.</div></footer>
+<script src="../charts.js"></script>
+<script>
+(function(){
+var REC=[{"label":"Screened (L1)","value":65},{"label":"STR comps (L2)","value":153},{"label":"Sold comps (L3)","value":118},{"label":"Rent comps (L4)","value":120},{"label":"Channels (L6)","value":100},{"label":"Managers (L10)","value":19}];
+function f0(v){return Math.round(v);}
+function draw(){barChart(document.getElementById('rec'),REC.map(function(d){return{label:d.label,value:d.value,tip:d.label+': '+d.value}}),{height:250,rotate:true,fmt:f0});}
+draw();var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,150)});
+var L=[[0,"Platform Hub","Index of all layers plus a per-address dossier","v4"],[1,"Investment Screening","Buy-bar screening across CA/TX/AZ, hot-market evaluator, best ZIPs, price forecasts","v74"],[2,"STR (Airbnb) Comps","Occupancy and nightly rates from live calendars","v37"],[3,"Sold Comps","Defensible market value from verified closed sales","v18"],[4,"Long-Term Rent Comps","Realistic long-term rent and gross yield","v23"],[5,"Realtor Sourcing","Agents scored on an 8-factor off-market rubric","v14"],[6,"Off-Market Finder","100 sourcing channels and live leads in 3 metros","v6"],[7,"STR, ADU & LTR Regulations","What the local law actually allows, scored","v10"],[8,"Renovation Cost Estimator","Line-item rehab budgets vs. finished comps","v11"],[9,"Risk Assessment","Seven natural hazards, crime and property-specific risks","v7"],[10,"Rental Management Companies","Managers scored on 9 factors with license checks","v3"]];
+var host=document.getElementById('layer-list');
+L.forEach(function(l){var r=document.createElement('div');r.className='layer';var a=document.createElement('div');a.className='n';a.textContent=l[0];var b=document.createElement('div');var s=document.createElement('strong');s.textContent=l[1];var p=document.createElement('p');p.textContent=l[2];b.appendChild(s);b.appendChild(p);var c=document.createElement('div');c.className='v';c.textContent=l[3];r.appendChild(a);r.appendChild(b);r.appendChild(c);host.appendChild(r);});
+})();
+</script>
+</body>
+</html>
