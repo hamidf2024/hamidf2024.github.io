@@ -1,0 +1,1032 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<style>.p6-snap{position:sticky;top:0;z-index:1000;background:#2a2f3a;color:#fff;font:13px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:8px 16px;display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center}.p6-snap a{color:#cfe3ff}.address-check,#criteria-toggle,#dossier-check,#agent-search,.zip-city-check,.dossier-check{display:none!important}</style>
+<div class="p6-snap" role="note"><span><strong>Home Dashboard</strong> · read-only snapshot published Oct 28, 2026</span><a href="../project-06.html">← Project 6 overview</a><a href="layer0.html">Hub (Layer 0)</a><span style="opacity:.75">Request forms are hidden: they only work inside Claude. Figures are dated research snapshots, not advice.</span></div>
+
+<meta name="robots" content="noindex"><title>Realtor Sourcing</title>
+<meta name="color-scheme" content="light only">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"></noscript>
+
+<style>
+  :root {
+    --paper: #FFFFFF;
+    --paper-raised: #FAFAFB;
+    --ink: #0E0F10;
+    --ink-soft: #3A3D42;
+    --ink-faint: #74787E;
+    --line: #DADCE0;
+    --line-soft: #ECEDEF;
+    --river: #5F497A;
+    --river-strong: #46345E;
+    --river-tint: #E5DFEC;
+    --brass: #8A70A8;
+    --brass-strong: #6B5488;
+    --brass-tint: #F0EBF6;
+    --sage: #2E7D4F;
+    --sage-tint: #D9EAD3;
+    --clay: #6B7178;
+    --clay-tint: #ECEDEF;
+    --amber: #B5760B;
+    --amber-tint: #FBF0DB;
+    --red: #B23A2F;
+    --red-tint: #F8E4E1;
+    --gold: #9C7A1E;
+    --gold-tint: #F5EFD9;
+    --shadow: 0 12px 32px -16px rgba(14,15,16,0.16);
+    --radius-s: 6px;
+    --radius-m: 10px;
+    --radius-l: 16px;
+    --focus: 0 0 0 3px rgba(95,73,122,0.32);
+  }
+  * { box-sizing: border-box; }
+  html { color-scheme: light; background: #FFFFFF; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper) !important;
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+  h1, h2, h3 { font-family: "Fraunces", Georgia, serif; font-weight: 600; text-wrap: balance; margin: 0; }
+  a { color: var(--river); }
+  button { font-family: inherit; }
+  input { font-family: inherit; }
+  ::selection { background: var(--brass-tint); }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+
+  .shell { max-width: 1320px; margin: 0 auto; padding: 0 20px 64px; }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+    gap: 18px; padding: 32px 0 22px; border-bottom: 1px solid var(--line);
+  }
+  .wordmark-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .wordmark { font-size: 30px; letter-spacing: -0.01em; }
+  .wordmark em { font-style: normal; color: var(--brass-strong); border-bottom: 2px solid var(--brass); }
+  .tagline { color: var(--ink-soft); font-size: 14.5px; margin-top: 4px; max-width: 62ch; }
+  .backlink { font-size: 13px; color: var(--ink-faint); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; margin-bottom: 6px; }
+  .backlink:hover { color: var(--river); }
+  .badges { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600;
+    padding: 6px 11px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--paper-raised); color: var(--ink-soft); white-space: nowrap;
+  }
+  .badge.accent { background: var(--river-tint); color: var(--river-strong); border-color: transparent; }
+
+  /* ---------- Nav rail ---------- */
+  .layout { display: grid; grid-template-columns: 220px 1fr; gap: 32px; padding-top: 26px; align-items: start; }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+  .rail { position: sticky; top: 20px; display: flex; flex-direction: column; gap: 4px; }
+  .rail-item {
+    display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: var(--radius-s);
+    font-size: 13.5px; color: var(--ink-faint); border: 1px solid transparent;
+  }
+  .rail-item .num {
+    width: 20px; height: 20px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; background: var(--clay-tint); color: var(--ink-faint); flex-shrink: 0;
+  }
+  .rail-item.active { background: var(--river-tint); color: var(--river-strong); border-color: transparent; font-weight: 600; }
+  .rail-item.active .num { background: var(--river); color: #fff; }
+  .rail-item.locked { color: #B5B8BD; }
+  .rail-item.locked .num { background: var(--line-soft); color: #B5B8BD; }
+  .rail-item.done .num { background: var(--sage); color: #fff; }
+  .rail-item.done { color: var(--ink-soft); }
+  .rail-item a { color: inherit; text-decoration: none; display: flex; align-items: center; gap: 10px; width: 100%; }
+
+  .main { min-width: 0; }
+
+  /* ---------- At-a-glance box (Goal/Summary/Inputs/Outputs) ---------- */
+  .page-meta-box { border-left: 3px solid var(--river); background: var(--paper-raised); border-radius: var(--radius-s); padding: 12px 16px 13px; margin: 0 0 20px; }
+  .page-meta-box .pmb-label { display: block; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--river-strong); margin-bottom: 7px; font-family: "IBM Plex Sans", sans-serif; }
+  .page-meta-box ul { margin: 0; padding-left: 18px; }
+  .page-meta-box li { font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; margin: 3px 0; }
+  .page-meta-box li b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Intro / methodology ---------- */
+  .intro-card {
+    background: var(--paper-raised); border: 1px solid var(--line); border-radius: var(--radius-l);
+    padding: 22px 24px; margin-bottom: 20px;
+  }
+  .intro-card h2 { font-size: 19px; margin-bottom: 8px; }
+  .intro-card p { color: var(--ink-soft); font-size: 14px; margin: 0 0 10px; max-width: 98ch; }
+  .intro-card p:last-child { margin-bottom: 0; }
+  .caveat-box {
+    margin-top: 14px; padding: 12px 14px; border-radius: var(--radius-m);
+    background: var(--amber-tint); border: 1px solid transparent; font-size: 13px; color: #6B4E0C;
+  }
+  .caveat-box strong { color: #4F3A08; }
+  details.methodology { margin-top: 14px; }
+  details.methodology summary {
+    cursor: pointer; font-size: 13px; font-weight: 600; color: var(--river); list-style: none; display: inline-flex; align-items: center; gap: 6px;
+  }
+  details.methodology summary::-webkit-details-marker { display: none; }
+  details.methodology summary::before { content: "▸"; font-size: 11px; transition: transform 0.15s; }
+  details.methodology[open] summary::before { transform: rotate(90deg); }
+  .method-grid {
+    margin-top: 12px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+  }
+  @media (max-width: 760px) { .method-grid { grid-template-columns: repeat(2, 1fr); } }
+  .method-item {
+    background: var(--paper); border: 1px solid var(--line-soft); border-radius: var(--radius-m); padding: 10px 12px;
+  }
+  .method-item .mi-weight { font-family: "IBM Plex Mono", monospace; font-size: 17px; font-weight: 700; color: var(--river-strong); }
+  .method-item .mi-name { font-size: 12.5px; font-weight: 600; margin-top: 2px; }
+  .method-item .mi-desc { font-size: 11.5px; color: var(--ink-faint); margin-top: 3px; line-height: 1.4; }
+  .interview-list { margin: 10px 0 0; padding-left: 20px; font-size: 13px; color: var(--ink-soft); }
+  .interview-list li { margin-bottom: 5px; }
+  .source-list { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-size: 12.5px; }
+  .source-list a { color: var(--ink-soft); text-decoration: none; border-bottom: 1px dotted var(--ink-faint); }
+  .source-list a:hover { color: var(--river); border-color: var(--river); }
+
+  /* ---------- Market tabs ---------- */
+  .market-tab-bar { display: flex; flex-direction: column; gap: 10px; margin-bottom: 4px; }
+  .market-tab-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .market-tab-row-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--ink-faint); margin-right: 2px; white-space: nowrap;
+  }
+  .market-tab-btn {
+    display: inline-flex; align-items: center; gap: 7px; padding: 9px 16px; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--paper); color: var(--ink-soft);
+    font-size: 13.5px; font-weight: 600; font-family: inherit; cursor: pointer; transition: border-color 0.15s, background 0.15s;
+  }
+  .market-tab-btn:hover { border-color: var(--river); color: var(--river-strong); }
+  .market-tab-btn:focus-visible { outline: none; box-shadow: var(--focus); }
+  .market-tab-btn.active { background: var(--river); border-color: var(--river); color: #fff; }
+  .market-tab-sub {
+    font-size: 11.5px; font-weight: 700; padding: 1px 8px; border-radius: 999px;
+    background: var(--paper-raised); color: var(--ink-faint);
+  }
+  .market-tab-btn.active .market-tab-sub { background: rgba(255,255,255,0.24); color: #fff; }
+  .market-empty {
+    padding: 40px 20px; text-align: center; color: var(--ink-faint); font-size: 14px;
+    border: 1px dashed var(--line); border-radius: var(--radius-l); margin-top: 22px;
+  }
+
+  /* ---------- Low-commission guide ---------- */
+  .guide-section { margin-top: 30px; }
+  .guide-section h3 { font-size: 20px; margin-bottom: 4px; }
+  .guide-kicker { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--river-strong); margin-bottom: 4px; }
+  .guide-intro { color: var(--ink-soft); font-size: 13.5px; margin: 6px 0 14px; max-width: 98ch; }
+  .guide-table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius-m); }
+  table.guide-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.guide-table th {
+    text-align: left; background: var(--river-tint); color: var(--river-strong); font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.03em; padding: 9px 12px; border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+  }
+  table.guide-table td { padding: 10px 12px; border-bottom: 1px solid var(--line-soft); vertical-align: top; color: var(--ink-soft); }
+  table.guide-table tr:last-child td { border-bottom: none; }
+  table.guide-table td:first-child { font-weight: 600; color: var(--ink); }
+  table.guide-table.nums td { font-variant-numeric: tabular-nums; }
+  table.guide-table.nums td:not(:first-child) { text-align: right; }
+  .guide-note {
+    margin-top: 12px; padding: 12px 14px; border-radius: var(--radius-m);
+    background: var(--brass-tint); border: 1px solid transparent; font-size: 13px; color: var(--brass-strong);
+  }
+  .guide-note strong { color: var(--river-strong); }
+  .guide-note.formula { font-family: "IBM Plex Mono", monospace; font-size: 12px; background: var(--paper-raised); color: var(--ink-soft); }
+  .guide-guidance { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+  .guide-guidance-item { background: var(--paper-raised); border: 1px solid var(--line-soft); border-radius: var(--radius-m); padding: 10px 14px; }
+  .guide-guidance-item .label { font-weight: 600; font-size: 13px; color: var(--ink); display: block; margin-bottom: 3px; }
+  .guide-guidance-item .text { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; }
+  .guide-restrictions { margin-top: 10px; display: flex; flex-direction: column; gap: 8px; }
+  .guide-restrictions .item { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; }
+  .guide-restrictions .item b { color: var(--ink); }
+  .guide-closing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 14px; }
+  @media (max-width: 760px) { .guide-closing-grid { grid-template-columns: 1fr; } }
+  .guide-closing-item { background: var(--paper-raised); border: 1px solid var(--line-soft); border-radius: var(--radius-m); padding: 12px 14px; }
+  .guide-closing-item .ci-label { font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--river-strong); margin-bottom: 4px; }
+  .guide-closing-item .ci-text { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; }
+  .guide-questions { margin: 10px 0 0; padding-left: 20px; font-size: 13px; color: var(--ink-soft); }
+  .guide-questions li { margin-bottom: 5px; }
+  .guide-sources-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px 20px; margin-top: 10px; font-size: 12px; }
+  @media (max-width: 760px) { .guide-sources-grid { grid-template-columns: 1fr; } }
+  .guide-sources-grid a { color: var(--ink-soft); text-decoration: none; border-bottom: 1px dotted var(--ink-faint); }
+  .guide-sources-grid a:hover { color: var(--river); border-color: var(--river); }
+  .guide-sources-grid .src-id { color: var(--ink-faint); font-family: "IBM Plex Mono", monospace; }
+  .guide-source-unlinked { color: var(--ink-faint); font-style: italic; }
+  .guide-evidence-limits { margin-top: 16px; font-size: 12px; color: var(--ink-faint); font-style: italic; }
+  .guide-baseline-list { margin: 10px 0 0; padding-left: 20px; font-size: 13px; color: var(--ink-soft); columns: 2; column-gap: 24px; }
+  .guide-baseline-list li { margin-bottom: 5px; break-inside: avoid; }
+  @media (max-width: 760px) { .guide-baseline-list { columns: 1; } }
+  table.guide-table td.cell-miss { background: var(--red-tint); color: #7A2A21; border-bottom-color: rgba(178,58,47,0.15); }
+  table.guide-table td.cell-better { background: var(--sage-tint); color: #1E5C38; border-bottom-color: rgba(46,125,79,0.15); }
+  table.guide-table.compare-table td:first-child { background: transparent; color: var(--ink); white-space: normal; }
+
+  /* ---------- ZIP section ---------- */
+  .zip-section { margin-top: 30px; }
+  .zip-header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 4px; }
+  .zip-title { font-size: 22px; }
+  .zip-sub { color: var(--ink-soft); font-size: 13.5px; margin-top: 2px; max-width: 90ch; }
+  .zip-stats { display: flex; gap: 8px; flex-wrap: wrap; }
+  .zip-stat {
+    font-size: 12px; font-weight: 600; color: var(--river-strong); background: var(--river-tint);
+    padding: 5px 10px; border-radius: 999px;
+  }
+
+  /* ---------- Agent cards ---------- */
+  .agent-list { display: flex; flex-direction: column; gap: 12px; margin-top: 18px; }
+  .agent-card {
+    border: 1px solid var(--line); border-radius: var(--radius-l); background: var(--paper);
+    padding: 18px 20px; display: grid; grid-template-columns: auto 1fr auto; gap: 18px; align-items: start;
+  }
+  @media (max-width: 820px) { .agent-card { grid-template-columns: 1fr; } }
+  .agent-card.rank-1 { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold) inset; }
+  .rank-badge {
+    width: 42px; height: 42px; border-radius: 50%; background: var(--clay-tint); color: var(--ink-soft);
+    display: flex; align-items: center; justify-content: center; font-family: "Fraunces", serif; font-weight: 700;
+    font-size: 17px; flex-shrink: 0;
+  }
+  .rank-1 .rank-badge { background: var(--gold); color: #fff; }
+  .rank-2 .rank-badge, .rank-3 .rank-badge { background: var(--brass); color: #fff; }
+  .agent-main { min-width: 0; }
+  .agent-name-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .agent-name { font-family: "Fraunces", serif; font-weight: 600; font-size: 17px; }
+  .team-pill { font-size: 10.5px; font-weight: 700; letter-spacing: 0.03em; color: var(--river-strong); background: var(--river-tint); padding: 2px 7px; border-radius: 999px; }
+  .agent-brokerage { color: var(--ink-soft); font-size: 13px; margin-top: 1px; }
+  .agent-meta { display: flex; flex-wrap: wrap; gap: 5px 14px; font-size: 12.5px; color: var(--ink-faint); margin-top: 6px; }
+  .agent-meta b { color: var(--ink-soft); font-weight: 600; }
+  .confidence-pill { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 600; padding: 3px 9px; border-radius: 999px; margin-top: 8px; }
+  .confidence-verified { background: var(--sage-tint); color: #1E5C38; }
+  .confidence-strong { background: var(--amber-tint); color: #6B4E0C; }
+  .confidence-single { background: var(--clay-tint); color: var(--ink-soft); }
+  .agent-evidence { font-size: 12.5px; color: var(--ink-soft); margin-top: 8px; line-height: 1.5; max-width: 70ch; }
+  .agent-sources { display: flex; flex-wrap: wrap; gap: 5px 12px; margin-top: 8px; font-size: 12px; }
+  .agent-sources a { color: var(--river); text-decoration: none; }
+  .agent-sources a:hover { text-decoration: underline; }
+
+  .score-col { display: flex; flex-direction: column; align-items: center; gap: 10px; min-width: 168px; }
+  .overall-score { text-align: center; }
+  .overall-score .num { font-family: "Fraunces", serif; font-weight: 700; font-size: 34px; line-height: 1; color: var(--river-strong); }
+  .overall-score .lbl { font-size: 10.5px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px; }
+  .score-bars { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px; width: 100%; }
+  .score-bar-row { display: flex; flex-direction: column; gap: 2px; }
+  .score-bar-label { display: flex; justify-content: space-between; font-size: 10px; color: var(--ink-faint); font-weight: 600; }
+  .score-bar-track { height: 4px; border-radius: 3px; background: var(--line-soft); overflow: hidden; }
+  .score-bar-fill { height: 100%; background: var(--brass); border-radius: 3px; }
+  .score-bar-fill.om { background: var(--red); }
+  .score-bar-fill.ze { background: var(--river); }
+
+  /* ---------- Check another ZIP ---------- */
+  .address-check {
+    margin-top: 40px; padding: 20px 22px; border: 1px solid var(--line); border-radius: var(--radius-l); background: var(--paper-raised);
+  }
+  .address-check-head h3 { font-size: 16px; }
+  .address-check-head p { margin: 4px 0 0; color: var(--ink-faint); font-size: 12.5px; max-width: 66ch; }
+  .address-check-form { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .address-check-form input {
+    flex: 1; min-width: 220px; padding: 10px 12px; border-radius: var(--radius-s); border: 1px solid var(--line);
+    font-size: 13.5px; background: var(--paper);
+  }
+  .address-check-form input:focus { outline: none; box-shadow: var(--focus); border-color: var(--river); }
+  .address-check-form button {
+    padding: 10px 18px; border-radius: var(--radius-s); border: none; background: var(--river); color: #fff;
+    font-size: 13.5px; font-weight: 600; cursor: pointer;
+  }
+  .address-check-form button:hover { background: var(--river-strong); }
+  .address-check-status { margin-top: 10px; font-size: 12.5px; color: var(--brass-strong); background: var(--brass-tint); border-radius: var(--radius-s); padding: 8px 10px; }
+  .address-check-list { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .address-check-list li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; font-size: 12.5px; padding: 7px 10px; border-radius: var(--radius-s); background: var(--paper); border: 1px solid var(--line-soft); }
+  .address-check-list li.empty { color: var(--ink-faint); background: none; border: none; padding: 4px 2px; }
+  .address-check-list .addr { font-weight: 600; }
+  .address-check-list .status { color: var(--ink-soft); }
+  .address-check-list li.queued .status { color: var(--brass-strong); }
+  .address-check-list li.added .status { color: var(--sage); }
+  .address-check-list li.error .status, .address-check-list li.notfound .status { color: #A6473B; }
+
+  .agent-search-form { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .agent-search-form input {
+    padding: 10px 12px; border-radius: var(--radius-s); border: 1px solid var(--line);
+    font-size: 13.5px; background: var(--paper);
+  }
+  .agent-search-form input:focus { outline: none; box-shadow: var(--focus); border-color: var(--river); }
+  .agent-search-form input.name-input { flex: 2; min-width: 220px; }
+  .agent-search-form input.zip-input { flex: 1; min-width: 110px; }
+  .agent-search-form button {
+    padding: 10px 18px; border-radius: var(--radius-s); border: none; background: var(--river); color: #fff;
+    font-size: 13.5px; font-weight: 600; cursor: pointer;
+  }
+  .agent-search-form button:hover { background: var(--river-strong); }
+  .agent-search-list .status.evaluated { color: var(--sage); }
+
+  footer.page-foot { margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--line-soft); color: var(--ink-faint); font-size: 12.5px; }
+
+  .toast {
+    position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); background: var(--ink); color: #fff;
+    padding: 10px 18px; border-radius: 999px; font-size: 13px; box-shadow: var(--shadow); z-index: 50; opacity: 0;
+    pointer-events: none; transition: opacity 0.2s, transform 0.2s;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+</style>
+
+<div class="shell">
+  <div class="topbar">
+    <div>
+      <a class="backlink" href="layer4.html">&larr; Layer 4 — Long-Term Rent Comps</a>
+      <div class="wordmark-row">
+        <span class="wordmark">Home Dashboard <em>&nbsp;Realtor Sourcing&nbsp;</em></span>
+      </div>
+      <p class="tagline">Realtor &amp; off-market deal-sourcing agents, scored by ZIP code on an 8-factor "Off-Market Acquisition Score" — built to find agents who can surface deals before they hit the open market, not just agents who sell a lot of houses.</p>
+    </div>
+    <div class="badges">
+      <span class="badge accent" id="badge-zips">1 ZIP scored</span>
+      <span class="badge" id="badge-agents">10 candidates</span>
+    </div>
+  </div>
+
+  <div class="layout">
+    <nav class="rail">
+      <div class="rail-item done"><a href="layer1.html"><span class="num">1</span> Investment Ledger</a></div>
+      <div class="rail-item done"><a href="layer2.html"><span class="num">2</span> STR Comps</a></div>
+      <div class="rail-item done"><a href="layer3.html"><span class="num">3</span> Sold Comps</a></div>
+      <div class="rail-item done"><a href="layer4.html"><span class="num">4</span> Long-Term Rent Comps</a></div>
+      <div class="rail-item active"><span class="num">5</span> Realtor Sourcing</div>
+      <div class="rail-item done"><a href="layer6.html"><span class="num">6</span> Off-Market Finder</a></div>
+      <div class="rail-item done"><a href="layer7.html"><span class="num">7</span> STR &amp; ADU Regulations</a></div>
+      <div class="rail-item done"><a href="layer8.html"><span class="num">8</span> Renovation Cost Estimator</a></div>
+      <div class="rail-item done"><a href="layer9.html"><span class="num">9</span> Risk Assessment</a></div>
+      <div class="rail-item done"><a href="layer10.html"><span class="num">10</span> Rental Management Companies</a></div>
+    </nav>
+
+    <main class="main">
+      <div class="intro-card">
+        <h2>How this scorecard works</h2>
+        <p>A deep-research pass (summarized from a shared ChatGPT investigation, cross-checked here against Zillow's and realtor.com's live agent directories and the California DRE's public license lookup) found the same conclusion every time: <strong>no single platform ranks agents by their ability to find off-market deals.</strong> Zillow and realtor.com surface production and reviews; RealTrends Verified surfaces objective sales volume; the California DRE confirms a license is real and clean; but "finds properties before anyone else sees them" is a network and business-development skill that has to be pieced together from indirect evidence — team structure, brokerage reach, on-platform service claims, and (ultimately) a direct interview.</p>
+        <p>So this page scores each candidate across <strong>8 weighted factors</strong> instead of a single star rating, and tags every score with how solid the evidence actually is — verified against a second source, strongly evidenced, or single-source only. Off-market ability specifically is scored conservatively for everyone here: none of these candidates had documented, verifiable off-market transaction evidence turned up by this research pass, which is itself the headline finding — it's the hardest thing to verify from public data, and the main reason the direct-interview questions below matter more than the leaderboard order.</p>
+        <div class="caveat-box">
+          <strong>Read this before contacting anyone:</strong> this ranks candidates on public, verifiable signals (transaction volume in the ZIP, review count/rating, cross-platform presence, active license status). It does <em>not</em> confirm any agent's actual off-market track record — that requires the direct interview questions below. Treat this as a shortlist to interview, not a hire-this-one-first list.
+        </div>
+        <details class="methodology">
+          <summary>Full scoring model &amp; sourcing (click to expand)</summary>
+          <div class="method-grid">
+            <div class="method-item"><div class="mi-weight">25</div><div class="mi-name">Off-Market Sourcing</div><div class="mi-desc">Documented evidence of finding pocket/pre-market/private deals for buyers — the rarest, most valuable signal.</div></div>
+            <div class="method-item"><div class="mi-weight">20</div><div class="mi-name">ZIP Expertise</div><div class="mi-desc">Actual transaction volume inside this specific ZIP, not just the metro area.</div></div>
+            <div class="method-item"><div class="mi-weight">15</div><div class="mi-name">Buyer-Side Performance</div><div class="mi-desc">Overall transaction volume as a proxy for how much buyer-representation capacity the agent/team has.</div></div>
+            <div class="method-item"><div class="mi-weight">15</div><div class="mi-name">Negotiation</div><div class="mi-desc">Inferred from review volume and rating quality — a weak proxy pending direct review-content analysis.</div></div>
+            <div class="method-item"><div class="mi-weight">10</div><div class="mi-name">Local Network</div><div class="mi-desc">Team size and brokerage scale, as a proxy for how many local agents/owners this candidate can reach.</div></div>
+            <div class="method-item"><div class="mi-weight">5</div><div class="mi-name">Verified Production</div><div class="mi-desc">Full credit only when sales activity is independently confirmed on a second platform.</div></div>
+            <div class="method-item"><div class="mi-weight">5</div><div class="mi-name">Reviews</div><div class="mi-desc">Rating combined with review volume (a 5.0 from 900 reviews outweighs a 5.0 from 6).</div></div>
+            <div class="method-item"><div class="mi-weight">5</div><div class="mi-name">License / Reputation</div><div class="mi-desc">Full credit only when a matching active record was found on the CA DRE public lookup.</div></div>
+          </div>
+          <p style="margin-top:12px;"><strong>The 10 questions worth asking every candidate</strong> (adapted from the source research — the single best filter for off-market ability that no platform can answer for you):</p>
+          <ol class="interview-list">
+            <li>Walk me through 3 off-market or pre-market properties you've sourced for buyers in the last 12–24 months — how you found each, and what happened.</li>
+            <li>Was each one fully off-market, pre-market, "coming soon," or an office/private listing?</li>
+            <li>Did you identify the opportunity yourself, or did another agent bring it to you?</li>
+            <li>How did you know the seller might be willing to sell before it was listed?</li>
+            <li>What share of your buyer deals in the last 2 years started before the property was public?</li>
+            <li>How do you proactively search for off-market opportunities?</li>
+            <li>What relationships do you have with listing agents in this specific ZIP code?</li>
+            <li>How many agents do you regularly communicate with in this market?</li>
+            <li>Do you keep a buyer-needs list you distribute to local agents?</li>
+            <li>What's your plan if nothing suitable is currently listed anywhere?</li>
+          </ol>
+          <p style="margin-top:10px;">A vague answer to #10 ("I'll keep an eye on the MLS") is a red flag. A concrete answer (target list, ownership/equity/motivation signals, calls to listing agents, expired/withdrawn listings, direct owner outreach where compliant) is the strongest signal this scorecard can't measure from a directory listing alone.</p>
+          <div class="source-list">
+            <span>Sources used to build this page:</span>
+            <a href="https://www.zillow.com/professionals/real-estate-agent-reviews/95842/" target="_blank" rel="noopener">Zillow agent directory (95842)</a>
+            <a href="https://www.realtor.com/realestateagents/95842" target="_blank" rel="noopener">realtor.com agent directory (95842)</a>
+            <a href="https://www2.dre.ca.gov/PublicASP/pplinfo.asp" target="_blank" rel="noopener">California DRE public license lookup</a>
+            <a href="https://www.biggerpockets.com/ca/sacramento/agents" target="_blank" rel="noopener">BiggerPockets agent finder (Sacramento)</a>
+            <a href="https://chatgpt.com/share/6a908bd6-a2cc-83e8-9762-09ab77f77c1a" target="_blank" rel="noopener">Source deep-research chat (scoring framework)</a>
+          </div>
+        </details>
+      </div>
+
+      <div class="market-tab-bar" id="market-tab-bar" role="tablist" aria-label="Market">
+        <div class="market-tab-row" role="presentation">
+          <button type="button" class="market-tab-btn active" id="market-tab-CA" role="tab" aria-selected="true" onclick="switchMarket('CA')">Sacramento <span class="market-tab-sub" id="market-tab-sub-CA">0</span></button>
+          <button type="button" class="market-tab-btn" id="market-tab-AZ" role="tab" aria-selected="false" onclick="switchMarket('AZ')">Arizona (Phoenix) <span class="market-tab-sub" id="market-tab-sub-AZ">0</span></button>
+          <button type="button" class="market-tab-btn" id="market-tab-TX" role="tab" aria-selected="false" onclick="switchMarket('TX')">Texas (Austin) <span class="market-tab-sub" id="market-tab-sub-TX">0</span></button>
+        </div>
+        <div class="market-tab-row" role="presentation">
+          <span class="market-tab-row-label">Seller guides</span>
+          <button type="button" class="market-tab-btn" id="market-tab-SELL" role="tab" aria-selected="false" onclick="switchMarket('SELL')">Low-Commission Selling (PHX/SAC) <span class="market-tab-sub" id="market-tab-sub-SELL">Guide</span></button>
+          <button type="button" class="market-tab-btn" id="market-tab-LICENSE" role="tab" aria-selected="false" onclick="switchMarket('LICENSE')">Get Your Own License (AZ/TX) <span class="market-tab-sub" id="market-tab-sub-LICENSE">Guide</span></button>
+        </div>
+      </div>
+
+      <div id="zip-sections"></div>
+
+      <div class="address-check" id="address-check">
+        <div class="address-check-head">
+          <h3>Check another ZIP code</h3>
+          <p id="address-check-desc">Type a 5-digit ZIP to queue it here — then tell Claude in chat and it'll pull agents from Zillow + realtor.com, verify licenses on the CA DRE, and score a new shortlist for that ZIP.</p>
+        </div>
+        <form class="address-check-form" id="address-check-form">
+          <label for="address-check-input" class="visually-hidden">ZIP code to check</label>
+          <input id="address-check-input" type="text" placeholder="e.g. 95673" autocomplete="off" required maxlength="5" pattern="[0-9]{5}">
+          <button type="submit">Queue ZIP</button>
+        </form>
+        <div class="address-check-status" id="address-check-status" hidden></div>
+        <ul class="address-check-list" id="address-check-list"></ul>
+      </div>
+
+      <div class="address-check" id="agent-search">
+        <div class="address-check-head">
+          <h3>Search a specific realtor by name</h3>
+          <p id="agent-search-desc">Already have someone in mind? Just type their name — Claude will look them up on Zillow, realtor.com, and the CA DRE, figure out their primary service area, score them against the same 8-factor model above, and slot them into that ZIP's ranked list (or add a new ZIP section if they don't work one of the ones already here). Know the ZIP they'd be working? Add it too to narrow the search.</p>
+        </div>
+        <form class="agent-search-form" id="agent-search-form">
+          <label for="agent-search-name" class="visually-hidden">Realtor name</label>
+          <input id="agent-search-name" class="name-input" type="text" placeholder="e.g. Jane Smith" autocomplete="off" required>
+          <label for="agent-search-zip" class="visually-hidden">ZIP code (optional)</label>
+          <input id="agent-search-zip" class="zip-input" type="text" placeholder="ZIP (optional)" autocomplete="off" maxlength="5" pattern="[0-9]{5}">
+          <button type="submit">Evaluate &amp; rank</button>
+        </form>
+        <div class="address-check-status" id="agent-search-status" hidden></div>
+        <ul class="address-check-list agent-search-list" id="agent-search-list"></ul>
+      </div>
+
+      <footer class="page-foot">
+        This page also declares the "check another ZIP" and "search a realtor by name" queues so it can grow the same way Layers 1–4 do. Cross-links: Layer 4's rail nav, Layer 1's sidebar, Layer 3's rail nav, and the Hub's card grid all now point here.
+      </footer>
+    </main>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="application/json" id="ld-state">{"zipSections": [{"zip": "95842", "areaName": "Foothill Farms / Antelope, Sacramento, CA", "note": "Initiated for the Layer 1 fixer-upper at 6316 Hillsdale Blvd, 95842. Candidate pool pulled from Zillow's and realtor.com's 95842 agent directories; cross-referenced against each other and against the CA DRE license lookup where a confident name match was possible.", "agentsChecked": 21, "agents": [{"name": "Suneet Agarwal", "brokerage": "Best Sac Homes Group @ LPT Realty", "team": true, "rating": 5.0, "reviews": 1187, "salesLastYear": 142, "salesInZip": 103, "priceRange": "$13K – $2.3M", "confidence": "strong", "scores": {"om": 3, "ze": 20, "bp": 13, "ng": 11, "nw": 7, "vp": 3, "rv": 5, "lc": 5}, "evidence": "Highest 95842-specific volume of any candidate found (103 team sales in this ZIP in the last 12 months) and the largest review base in the pool. License confirmed on CA DRE (Suneet Kumar Agarwal, Salesperson, Sacramento, Lic #01730722). No documented off-market examples found in this pass — ask directly.", "sources": [{"label": "Zillow profile", "url": "https://www.zillow.com/profile/SuneetAgarwalRE"}, {"label": "CA DRE lookup", "url": "https://www2.dre.ca.gov/PublicASP/pplinfo.asp"}]}, {"name": "Parm Atwal", "brokerage": "Parm Atwal Real Estate Team · Keller Williams Sac Metro", "team": false, "rating": 5.0, "reviews": 267, "salesLastYear": 110, "salesInZip": 25, "priceRange": "$60K – $1.2M", "confidence": "verified", "scores": {"om": 3, "ze": 11, "bp": 13, "ng": 10, "nw": 8, "vp": 5, "rv": 4, "lc": 5}, "evidence": "The strongest cross-verification in the pool: matches independently on Zillow (110 sales/12mo, 25 in 95842) and realtor.com (101 sales/12mo, RealPro Select™ Agent, 165 reviews + 123 testimonials), plus a confirmed CA DRE match (Parminder Atwal, Broker/Officer, Sacramento, Lic #01275899). Broker-level license is a meaningful trust signal. No documented off-market examples found in this pass.", "sources": [{"label": "Zillow profile", "url": "https://www.zillow.com/profile/parmatwal"}, {"label": "realtor.com 95842 directory", "url": "https://www.realtor.com/realestateagents/95842"}, {"label": "CA DRE lookup", "url": "https://www2.dre.ca.gov/PublicASP/pplinfo.asp"}]}, {"name": "Culbertson Gray Group", "brokerage": "eXp Realty of California, Inc.", "team": true, "rating": 5.0, "reviews": 954, "salesLastYear": 597, "salesInZip": 39, "priceRange": "$11K – $10M", "confidence": "single", "scores": {"om": 3, "ze": 11, "bp": 15, "ng": 11, "nw": 9, "vp": 3, "rv": 5, "lc": 2}, "evidence": "By far the highest overall production of any candidate (597 sales/12mo across the team) and a huge review base, but 95842-specific volume (39) is modest relative to team size, and eXp's national-cloud model means individual accountability is harder to pin down. Not yet cross-checked on realtor.com or the CA DRE.", "sources": [{"label": "Zillow 95842 directory", "url": "https://www.zillow.com/professionals/real-estate-agent-reviews/95842/"}]}, {"name": "Jay Friedman", "brokerage": "eXp Realty of California, Inc.", "team": true, "rating": 5.0, "reviews": 308, "salesLastYear": 79, "salesInZip": 42, "priceRange": "$120K – $2.5M", "confidence": "strong", "scores": {"om": 3, "ze": 14, "bp": 11, "ng": 10, "nw": 9, "vp": 5, "rv": 4, "lc": 2}, "evidence": "Cross-verified on both Zillow (79 sales/12mo, 42 in 95842) and realtor.com (59 sales/12mo, 110 reviews + 31 testimonials) — consistent numbers across platforms. Not yet checked on the CA DRE.", "sources": [{"label": "Zillow 95842 directory", "url": "https://www.zillow.com/professionals/real-estate-agent-reviews/95842/"}, {"label": "realtor.com 95842 directory", "url": "https://www.realtor.com/realestateagents/95842"}]}, {"name": "Johnny Jennings", "brokerage": "Made 4 More Realty", "team": true, "rating": 4.9, "reviews": 383, "salesLastYear": 158, "salesInZip": 75, "priceRange": "$53K – $1.7M", "confidence": "single", "scores": {"om": 3, "ze": 17, "bp": 13, "ng": 8, "nw": 6, "vp": 3, "rv": 3, "lc": 2}, "evidence": "Second-highest 95842-specific volume in the pool (75 sales) with solid overall production. Slightly lower rating (4.9) than most of the pool. Not yet cross-checked on realtor.com or the CA DRE.", "sources": [{"label": "Zillow 95842 directory", "url": "https://www.zillow.com/professionals/real-estate-agent-reviews/95842/"}]}, {"name": "Justin Johnson", "brokerage": "Johnson & Johnson Real Estate Group", "team": true, "rating": 5.0, "reviews": 245, "salesLastYear": 17, "salesInZip": 19, "priceRange": "$60K – $1.7M", "confidence": "verified", "scores": {"om": 8, "ze": 8, "bp": 7, "ng": 9, "nw": 6, "vp": 5, "rv": 4, "lc": 5}, "evidence": "The only candidate whose realtor.com profile explicitly advertises “Early access to new listings” as a service — a real (if self-reported) pre-market signal, which is why this is the only candidate scored above the pool floor on off-market sourcing. Cross-verified on Zillow and realtor.com, and the brokerage (Johnson & Johnson Real Estate Group Inc, Lic #01948955, Roseville) plus the individual (Justin Charles Johnson, Broker/Officer, Lic #01703034) both confirmed on the CA DRE. Lower raw sales volume than the top of the pool.", "sources": [{"label": "Zillow 95842 directory", "url": "https://www.zillow.com/professionals/real-estate-agent-reviews/95842/"}, {"label": "realtor.com 95842 directory", "url": "https://www.realtor.com/realestateagents/95842"}, {"label": "CA DRE lookup", "url": "https://www2.dre.ca.gov/PublicASP/pplinfo.asp"}]}, {"name": "Oleg Minzu", "brokerage": "Takmin Group", "team": false, "rating": 5.0, "reviews": 160, "salesLastYear": 31, "salesInZip": 63, "priceRange": "$32K – $1.4M", "confidence": "single", "scores": {"om": 3, "ze": 17, "bp": 9, "ng": 9, "nw": 6, "vp": 3, "rv": 3, "lc": 2}, "evidence": "Strong 95842 concentration (63 of 31 annual sales are inside this one ZIP, an unusually tight focus for a solo agent) but a smaller review base than the team listings. Not yet cross-checked on realtor.com or the CA DRE.", "sources": [{"label": "Zillow 95842 directory", "url": "https://www.zillow.com/professionals/real-estate-agent-reviews/95842/"}]}, {"name": "Tanya Bridges", "brokerage": "1st Choice Realty & Associates", "team": false, "rating": 5.0, "reviews": 164, "salesLastYear": 17, "salesInZip": 79, "priceRange": "$65K – $1.4M", "confidence": "strong", "scores": {"om": 3, "ze": 17, "bp": 7, "ng": 9, "nw": 6, "vp": 4, "rv": 3, "lc": 2}, "evidence": "Highest ZIP-concentration ratio in the pool — 79 of her sales are inside 95842 against only 17 total sales/12mo reported by Zillow (the two figures likely span different windows, but both point the same direction: this is her core turf). Same brokerage (1st Choice Realty & Associates) also appears on realtor.com via colleague Evelyn M Jenkins, a brokerage-level cross-check rather than an individual one. Not yet checked on the CA DRE.", "sources": [{"label": "Zillow 95842 directory", "url": "https://www.zillow.com/professionals/real-estate-agent-reviews/95842/"}, {"label": "realtor.com 95842 directory", "url": "https://www.realtor.com/realestateagents/95842"}]}, {"name": "HomeSmart ICARE Realty", "brokerage": "HomeSmart ICARE Realty", "team": true, "rating": 5.0, "reviews": 247, "salesLastYear": 82, "salesInZip": 25, "priceRange": "$32K – $2.4M", "confidence": "single", "scores": {"om": 3, "ze": 11, "bp": 11, "ng": 10, "nw": 7, "vp": 3, "rv": 4, "lc": 2}, "evidence": "Solid all-around production and reviews, but no standout ZIP concentration or off-market signal found. Not yet cross-checked on realtor.com or the CA DRE.", "sources": [{"label": "Zillow 95842 directory", "url": "https://www.zillow.com/professionals/real-estate-agent-reviews/95842/"}]}, {"name": "The Lockhart Bailey Group", "brokerage": "Guide Real Estate", "team": true, "rating": 5.0, "reviews": 257, "salesLastYear": 46, "salesInZip": 28, "priceRange": "$60K – $1.7M", "confidence": "single", "scores": {"om": 3, "ze": 11, "bp": 9, "ng": 10, "nw": 7, "vp": 3, "rv": 4, "lc": 2}, "evidence": "Middle-of-the-pool production and ZIP concentration; nothing that distinguishes it on off-market ability specifically. Not yet cross-checked on realtor.com or the CA DRE.", "sources": [{"label": "Zillow 95842 directory", "url": "https://www.zillow.com/professionals/real-estate-agent-reviews/95842/"}]}], "market": "CA"}, {"zip": "94526", "areaName": "Danville, CA (Contra Costa County / Tri-Valley)", "note": "Created from a single named-realtor request (Arezoo Sorkhabi) rather than a full comparative ZIP sweep -- this section has one scored candidate, not a screened pool like 95842. Her CA DRE mailing address and Experience.com \"primary serving area\" both point to 94526 as her home base.", "agentsChecked": 1, "agents": [{"name": "Arezoo Sorkhabi", "brokerage": "Compass California II, Inc. (Danville)", "team": false, "rating": 5.0, "reviews": 16, "salesLastYear": null, "salesInZip": 2, "salesMeta": "17+ sales visible on her Compass profile (partial, paginated list), spanning 2018-2025", "zipMeta": "2 confirmed sales in 94526 + 2 more in neighboring Danville ZIP 94506", "priceRange": "$821K - $6.85M sales - $1.75K - $10.8K/mo rentals", "confidence": "verified", "scores": {"om": 3, "ze": 10, "bp": 11, "ng": 12, "nw": 7, "vp": 5, "rv": 4, "lc": 5}, "evidence": "Requested by name -- not part of the 95842 sweep, since she's a Bay Area agent (Compass, Danville), not Sacramento. CA DRE fully verified: Lic #02061123, Salesperson, mailing address 25 Whitside Ct, Danville CA 94526 (matches one of her own past-sale addresses), status LICENSED through 05/16/30, no disciplinary action on file. Cross-verified on 3 independent sources (Compass, Homes.com, Experience.com aggregating Zillow + Google reviews). 8 years' experience (since 2018) with a civil-engineering background. Reviews explicitly praise her negotiation skill multiple times -- stronger direct textual evidence than most of the pool has -- but all 16 reviews are dated 2019-2021, none more recent despite a confirmed Aug 2025 sale, so treat the review signal as dated. CCAR Grievance Committee membership is a real local trade-association role, a more concrete network signal than the team-size proxy used for most of the pool. No documented off-market/pocket-listing evidence found in this pass.", "sources": [{"label": "Compass profile", "url": "https://www.compass.com/agents/arezoo-sorkhabi/"}, {"label": "Homes.com profile", "url": "https://www.homes.com/real-estate-agents/arezoo-sorkhabi/pqbt84v/"}, {"label": "Experience.com reviews", "url": "https://www.experience.com/reviews/arezoo-3618525"}, {"label": "CA DRE lookup (Lic #02061123)", "url": "https://www2.dre.ca.gov/PublicASP/pplinfo.asp?License_id=02061123"}]}], "market": "CA"}, {"zip": "78753", "areaName": "North Austin (Rundberg / Georgian Acres), Austin, TX (Travis County)", "note": "Requested directly by Tony — 78753 is the Austin-metro ZIP containing Layer 1's “1404 Verdana Dr” investment-screening comp, the dashboard's existing Texas property. Candidate pool pulled from HAR.com's 78753 real-estate-agent directory (ABoR-affiliated listings) after Zillow's and realtor.com's own 78753-specific agent-directory pages could not be reached directly in this session (both returned provenance/robots errors to this pass's fetch tooling). Individual candidates were then cross-referenced against their brokerage's own site, Compass's internal neighborhood-tagging (where it names ‘North Austin’ specifically), Zillow/HAR/Yelp/FastExpert profiles, and local-media features where available. Texas has no direct analog to California's DRE lookup that's easy to query programmatically; TREC's own license-holder search tool (trec.texas.gov/apps/license-holder-search/) was attempted first per the Layer 10 precedent, but was unreachable in this session (blocked before a query could even be attempted — see methodology note), so HAR.com/ABoR directory-listing confirmation is used as the next-best license/reputation signal throughout this section. This is explicitly NOT the same as an independent TREC lookup.", "agentsChecked": 20, "agents": [{"name": "Lisa Muñoz", "brokerage": "The Muñoz Group @ Compass", "team": true, "rating": 5.0, "reviews": 120, "salesLastYear": null, "salesMeta": "90+ transactions/year at her team's current pace per her Compass profile (lifetime: 26 years licensed, 1,800+ transactions, $675M+ volume); FastExpert (270+ reviews) and Yelp (11 reviews) corroborate high-volume, long-tenured status but don't publish an independent annual figure", "salesInZip": null, "zipMeta": "No 78753-specific sales count published anywhere found; her documented core neighborhoods (Crestview, Allandale, Windsor Park, Mueller, Hyde Park, Tarrytown, Northwest Hills) sit in central/northwest Austin, adjacent to but not squarely inside 78753 — she surfaced in this pool via HAR's 78753 agent-directory pull, not a named 78753 claim on her own marketing", "priceRange": "~$300K – luxury (exact range not published; described as spanning first-time buyers to high-end on her Compass profile)", "confidence": "strong", "scores": {"om": 9, "ze": 7, "bp": 13, "ng": 12, "nw": 8, "vp": 5, "rv": 5, "lc": 2}, "evidence": "The only Austin candidate in this pool with a genuine, self-reported pre-market sourcing claim: her own site runs a dedicated page (“Discover the Hidden Gems: A Guide to Off-Market Properties in Austin”) stating she gives clients “exclusive access to Private Exclusive and coming soon listings” through Compass's internal network — a real, institutionally-backed pre-MLS program, not just a marketing line, which is why she's the only 78753 candidate scored meaningfully above the pool floor on off-market sourcing (9/25, the highest in this ZIP's pool). Also the highest-volume, longest-tenured candidate found: 26 years licensed, $675M+ lifetime sales volume, 1,800+ lifetime transactions, and a pace her own Compass profile frames as ~90+ transactions/year. Cross-referenced across Compass, HAR.com's 78753 agent-directory pull, FastExpert (270+ reviews), Yelp (11 reviews), and RealtyAustin — five independent sources — plus trade recognitions (multi-year Platinum Top 50 REALTOR, REAL Trends America's Best 2019-2025, NAHREP Top 250 Latino Agents). TREC's license-holder search tool was unreachable this session (see methodology note), so this is NOT an independent license-board confirmation — only HAR/ABoR directory-listing confirmation, capping confidence at ‘strong’ rather than ‘verified.’ Her core service neighborhoods are concentrated in central/northwest Austin rather than 78753 itself, so ZIP Expertise is scored conservatively despite the otherwise strong profile. No TREC license number independently verified.", "sources": [{"label": "Compass profile", "url": "https://www.compass.com/agents/lisa-mu%C3%B1oz/"}, {"label": "HAR.com 78753 agent directory", "url": "https://www.har.com/zipcode_78753/agents?cid=DCL"}, {"label": "Her own “off-market properties” page", "url": "https://munozaustin.com/blogs/off-market-properties-in-austin/"}, {"label": "FastExpert profile", "url": "https://www.fastexpert.com/agents/lisa-munoz-108919/"}, {"label": "Yelp profile", "url": "https://www.yelp.com/biz/lisa-munoz-austins-real-estate-resource-austin"}]}, {"name": "Kent Redding", "brokerage": "Kent Redding Group @ Berkshire Hathaway HomeServices Texas Realty", "team": true, "rating": 5.0, "reviews": 232, "salesLastYear": 51, "salesInZip": null, "zipMeta": "No 78753-specific figure published; his team's documented Austin-area ZIPs (78717, 78733, 78735, 78642, 78758) run along the north/northwest side of the metro — 78758 borders 78753 directly — but 78753 itself isn't named, and he surfaced in this pool via HAR's 78753 directory pull rather than a direct ZIP claim", "priceRange": "$59K – $5.7M", "confidence": "strong", "scores": {"om": 3, "ze": 6, "bp": 12, "ng": 11, "nw": 8, "vp": 5, "rv": 5, "lc": 2}, "evidence": "22-year team lead with by far the deepest review base of any candidate found in this pass outside Lisa Muñoz: 5.0 stars across 232 Zillow reviews, a separate 12-review Yelp profile, 51 sales in the trailing 12 months, and a $59K–$5.7M price range spanning the full market. Cross-verified on Zillow, HAR.com, Yelp, and the team's own site (kentreddinggroup.com / callkent.com), which bills Kent Redding Group as the “#1 Berkshire Hathaway Team in Texas” (a self-reported ranking claim, not independently confirmed here). No documented off-market/pocket-listing evidence found — scored at the pool floor on that factor. TREC's license-holder search tool was unreachable this session; HAR.com directory confirmation is the closest available substitute, which is why this is ‘strong’ rather than ‘verified’ confidence. His team's named service ZIPs sit just north/northwest of 78753 rather than inside it, so ZIP Expertise is scored conservatively.", "sources": [{"label": "Zillow profile", "url": "https://www.zillow.com/profile/KentRedding"}, {"label": "HAR.com profile", "url": "https://www.har.com/kent-redding/agent_kentredding"}, {"label": "Yelp profile", "url": "https://www.yelp.com/biz/kent-redding-berkshire-hathaway-austin"}, {"label": "Kent Redding Group site", "url": "https://www.kentreddinggroup.com/"}]}, {"name": "Jessica Pino", "brokerage": "Jessica Pino Group @ Compass", "team": true, "rating": 5.0, "reviews": 0, "salesLastYear": null, "salesMeta": "20+ past sales shown on her Compass profile ($620K–$1.65M) plus 25+ past rentals; no independently-tallied annual sales figure found on a second platform", "salesInZip": null, "zipMeta": "Compass's own site categorizes her under its ‘North Austin Agents’ location tag — one of only three candidates in this pool to get that specific tag, alongside Nanette Labastida and Lily Clason below — North Austin being the exact submarket 78753 sits inside; she also surfaced directly in HAR's 78753 agent pull. No exact 78753 sales count published.", "priceRange": "$620K – $1.65M (past sales shown); rentals not priced on profile", "confidence": "strong", "scores": {"om": 3, "ze": 10, "bp": 8, "ng": 8, "nw": 6, "vp": 4, "rv": 3, "lc": 2}, "evidence": "Works as a team with her husband Phillip. Compass's own geographic tagging places her specifically under ‘North Austin’ — a direct match to 78753's submarket, and one of only three candidates in this pool to carry that exact tag from Compass itself, cross-referenced against its own appearance in HAR.com's 78753 pull. Recognized in Compass's Platinum Top 500 (2023) and hosts a real, named national TV segment (“The American Dream”) — an unusual, checkable media credential. No star-rating aggregator (Zillow/realtor.com) profile was found for her independently of Compass and HAR, so Reviews is scored conservatively despite consistently positive client testimonials. No documented off-market evidence found. TREC lookup unreachable this session; HAR.com's 78753 directory listing is the only license-board-adjacent confirmation available, capping this at ‘strong’ rather than ‘verified.’", "sources": [{"label": "Compass profile", "url": "https://www.compass.com/agents/jessica-pino/"}, {"label": "Compass ‘North Austin Agents’ tag", "url": "https://www.compass.com/agents/locations/north-austin-austin-tx/43887/"}, {"label": "HAR.com 78753 agent directory", "url": "https://www.har.com/zipcode_78753/agents?cid=DCL"}, {"label": "Jessica Pino Group site", "url": "https://www.atxhomesbyteampino.realtor/"}]}, {"name": "Nanette Labastida", "brokerage": "Compass RE Texas, LLC", "team": false, "rating": 5.0, "reviews": 1, "salesLastYear": 0, "salesMeta": "0 recorded sales in the trailing 12 months on her Zillow profile despite 26 career sales and 21 years' licensed experience — a long-tenured agent currently in a quiet production stretch", "salesInZip": null, "zipMeta": "Compass's own site tags her under ‘North Austin Agents’ (the submarket 78753 sits inside), and she appeared directly in HAR's 78753 agent pull; no 78753-specific sales count published", "priceRange": "$499K – $560K (current listings only; career range not published)", "confidence": "strong", "scores": {"om": 3, "ze": 9, "bp": 4, "ng": 5, "nw": 6, "vp": 3, "rv": 1, "lc": 2}, "evidence": "21 years licensed with 26 career sales and a 5.0 Zillow rating, but only 1 review and 0 sales recorded in the trailing 12 months — the thinnest recent-production signal in this scored group despite real tenure. Cross-referenced on Zillow, Compass (which tags her under its own ‘North Austin Agents’ location category, a direct geographic match to 78753's submarket), and HAR.com's 78753 directory pull. A RealTrends Verified profile page surfaced in search results but returned a 404 when checked directly, so that source could not be used. No documented off-market evidence found. TREC lookup unreachable this session; capped at ‘strong’ on the strength of the Compass + HAR + Zillow triangulation rather than a license-board match.", "sources": [{"label": "Zillow profile", "url": "https://www.zillow.com/profile/NanetteLabastida"}, {"label": "Compass ‘North Austin Agents’ tag", "url": "https://www.compass.com/agents/locations/north-austin-austin-tx/43887/"}, {"label": "HAR.com 78753 agent directory", "url": "https://www.har.com/zipcode_78753/agents?cid=DCL"}]}, {"name": "Lily Clason", "brokerage": "Compass RE Texas, LLC", "team": false, "rating": 5.0, "reviews": 0, "salesLastYear": null, "salesMeta": "Licensed since 2009 (15+ years); 3 active for-sale and 6 active rental listings shown on her HAR.com profile at time of check — no independently-tallied annual sales figure found", "salesInZip": null, "zipMeta": "Compass tags her under its ‘North Austin Agents’ location category (the submarket 78753 sits inside, shared with Jessica Pino and Nanette Labastida above); also surfaced directly in HAR's 78753 agent pull. No exact 78753 count published.", "priceRange": "Not published (profile emphasizes ZIP 78746 and Downtown/Travis Heights listings specifically, not 78753)", "confidence": "strong", "scores": {"om": 3, "ze": 8, "bp": 5, "ng": 6, "nw": 5, "vp": 3, "rv": 1, "lc": 2}, "evidence": "15+ years licensed (since 2009); cross-referenced on Compass (tagged ‘North Austin Agents,’ matching 78753's submarket), HAR.com (ABoR profile agent_ABORTX-598908), and Homes.com. Current listings skew toward 78746 and Downtown Austin rather than 78753 itself, so ZIP Expertise credit reflects the North Austin tag plus 78753-directory presence rather than a confirmed in-ZIP sale. No numeric review count or rating found on an aggregator independent of Compass/HAR. No documented off-market evidence found. TREC lookup unreachable this session; confidence capped at ‘strong.’", "sources": [{"label": "Compass profile", "url": "https://www.compass.com/agents/lily-clason/"}, {"label": "Compass ‘North Austin Agents’ tag", "url": "https://www.compass.com/agents/locations/north-austin-austin-tx/43887/"}, {"label": "HAR.com profile", "url": "https://www.har.com/lily-clason/agent_ABORTX-598908"}]}, {"name": "Lily Lynn", "brokerage": "Compass RE Texas, LLC", "team": false, "rating": 5.0, "reviews": 0, "salesLastYear": null, "salesMeta": "22+ years in Austin real estate per her Compass/RealtyAustin profiles; 100+ client testimonials described as consistently 5-star, but no independently-tallied platform review count or annual sales figure found", "salesInZip": null, "zipMeta": "No 78753-specific sales data published; her documented service area (Round Rock, Buda, Cedar Park, Georgetown, Liberty Hill, Pflugerville, Spicewood, Kyle) is metro-wide rather than ZIP-specific, and she doesn't carry Compass's ‘North Austin’ location tag the way Pino/Labastida/Clason do above — she surfaced in this pool only via HAR's 78753 directory pull", "priceRange": "$450K – $1.295M (sales); $1.5K – $2.75K/mo (rentals)", "confidence": "strong", "scores": {"om": 3, "ze": 4, "bp": 6, "ng": 7, "nw": 5, "vp": 2, "rv": 3, "lc": 1}, "evidence": "22+ years of Austin experience, Certified Negotiation Expert designation, bilingual (English/Mandarin) — a real, checkable local-network asset for a diverse ZIP like 78753. Cross-referenced across Compass, RealtyAustin, Homes.com, and Nextdoor, with 100+ testimonials described consistently as 5-star, though no platform publishes an aggregated numeric review count independent of those testimonial pages. No Compass ‘North Austin’ location tag and no 78753-specific sales figure found — her documented territory runs through the northern and southern suburbs rather than this ZIP specifically, so ZIP Expertise is scored at the low end. No documented off-market evidence found. TREC lookup unreachable this session; no individual HAR.com agent subpage was located for her beyond the bulk 78753 directory listing, so License/Reputation credit is minimal.", "sources": [{"label": "Compass profile", "url": "https://www.compass.com/agents/lily-lynn/"}, {"label": "RealtyAustin profile", "url": "https://www.realtyaustin.com/agents/lily-lynn"}, {"label": "HAR.com 78753 agent directory", "url": "https://www.har.com/zipcode_78753/agents?cid=DCL"}]}, {"name": "Amy Reinarz", "brokerage": "Compass RE Texas, LLC", "team": false, "rating": 5.0, "reviews": 0, "salesLastYear": null, "salesMeta": "Featured in Austin Home Magazine's ‘Best Real Estate Agents’ list and runs her own branded site (amyknowsaustin.com) referencing Compass Concierge; no independently-tallied platform review count or annual sales figure found", "salesInZip": null, "zipMeta": "No 78753-specific sales data published; surfaced in this pool through HAR's 78753 directory pull, not through a named North Austin or 78753-specific service-area claim", "priceRange": "Not published", "confidence": "strong", "scores": {"om": 3, "ze": 4, "bp": 5, "ng": 6, "nw": 5, "vp": 2, "rv": 2, "lc": 1}, "evidence": "Cross-referenced across Compass, her own branded site (amyknowsaustin.com), and a feature placement in Austin Home Magazine's ‘Best Real Estate Agents’ roundup — a real, checkable local-media credential, though not a sales statistic. Offers Compass Concierge (a renovation-advance program, not an off-market-sourcing one) per her site. No numeric rating/review count was confirmed on Zillow (a profile exists but the fetch hit a rate limit on this pass — see caveat) or realtor.com independently of Compass. No 78753-specific service claim or sales figure found; she surfaced in this pool only via HAR's bulk 78753 directory pull. No documented off-market evidence found. TREC lookup unreachable this session.", "sources": [{"label": "Compass profile", "url": "https://www.compass.com/agents/amy-reinarz/"}, {"label": "Her own site", "url": "https://amyknowsaustin.com/"}, {"label": "Austin Home Magazine feature", "url": "https://www.austinhomemag.com/best-real-estate-agents/amy-reinarz/"}, {"label": "HAR.com 78753 agent directory", "url": "https://www.har.com/zipcode_78753/agents?cid=DCL"}]}, {"name": "Janiece Dickson", "brokerage": "Compass RE Texas, LLC (listed as eXp Realty, LLC on HAR.com's 78753 directory — see caveat)", "team": false, "rating": 5.0, "reviews": 0, "salesLastYear": null, "salesMeta": "20+ past sales shown on her Compass profile ($434,900–$1,149,900) plus 9+ past rentals; over 20 years in the industry per her own bio", "salesInZip": null, "zipMeta": "No 78753-specific figure published; her listed service area (Cedar Park, Georgetown, Leander, Liberty Hill, Pflugerville, Round Rock, Hutto, Cottonwood Shores) runs through Austin's northern suburbs, adjacent to but not naming 78753 — she surfaced in this pool via HAR's 78753 directory pull", "priceRange": "$435K – $1.15M", "confidence": "single", "scores": {"om": 3, "ze": 4, "bp": 6, "ng": 5, "nw": 4, "vp": 1, "rv": 2, "lc": 1}, "evidence": "20+ years in the industry with a real, specific past-sales list on her Compass profile. Flagged for a genuine data conflict found during this pass: HAR.com's 78753 agent directory lists her brokerage as ‘eXp Realty, LLC,’ while her current Compass profile (compass.com/agents/janiece-dickson) shows her at Compass — this may reflect a recent brokerage move not yet updated on one platform, or two different people; this research pass could not resolve which, so Verified Production and overall confidence are scored down accordingly rather than treated as a clean cross-platform match. Her named service suburbs don't include 78753 itself. No documented off-market evidence found. TREC lookup unreachable this session.", "sources": [{"label": "Compass profile", "url": "https://www.compass.com/agents/janiece-dickson/"}, {"label": "HAR.com 78753 agent directory (lists eXp Realty)", "url": "https://www.har.com/zipcode_78753/agents?cid=DCL"}, {"label": "HAR.com individual profile", "url": "https://www.har.com/janiece-dickson/agent_abortx-782905"}]}, {"name": "Amy Whitston", "brokerage": "Compass RE Texas, LLC", "team": false, "rating": 5.0, "reviews": 0, "salesLastYear": null, "salesMeta": "No independently-tallied review count, rating, or annual sales figure found on Zillow, Homelight, or U.S. News despite profiles existing on all three", "salesInZip": null, "zipMeta": "No 78753-specific sales data published; surfaced in this pool via HAR's 78753 directory pull. Compass tags her under its ‘Rosewood’ neighborhood location category — a different Austin submarket from the ‘North Austin’ tag Pino/Labastida/Clason carry above", "priceRange": "Not published", "confidence": "single", "scores": {"om": 3, "ze": 3, "bp": 5, "ng": 5, "nw": 5, "vp": 2, "rv": 1, "lc": 1}, "evidence": "Has a real presence across Compass, Zillow, Homelight, LinkedIn, and U.S. News Real Estate — broad directory breadth — but none of those profiles published a star rating, review count, or sales figure this pass could independently confirm, so most factors here default toward the pool floor rather than being backed by a hard number. Compass's own ‘Rosewood’ neighborhood tag places her in a different Austin submarket from the ‘North Austin’ tag three other candidates above carry, so her 78753 connection rests on the HAR directory pull alone. No documented off-market evidence found. TREC lookup unreachable this session.", "sources": [{"label": "Compass profile", "url": "https://www.compass.com/agents/amy-whitston/"}, {"label": "Zillow profile", "url": "https://www.zillow.com/profile/Amy%20Whitston"}, {"label": "Homelight profile", "url": "https://www.homelight.com/agents/amy-whitston-tx-0613869"}, {"label": "HAR.com 78753 agent directory", "url": "https://www.har.com/zipcode_78753/agents?cid=DCL"}]}, {"name": "Marelis Morales Triana", "brokerage": "Classic Realty", "team": false, "rating": 5.0, "reviews": 0, "salesLastYear": null, "salesMeta": "Licensed since 2017 (7-8 years); 1 active listing found on HAR.com at time of check", "salesInZip": null, "zipMeta": "The one concrete 78753 data point in this group: her single active HAR.com listing at time of check (13701 Harrisglenn Dr) is physically inside 78753 — a direct, verifiable in-ZIP match, even though her profile doesn't name 78753 as a stated specialty", "priceRange": "Not published beyond the one active listing", "confidence": "single", "scores": {"om": 3, "ze": 6, "bp": 3, "ng": 4, "nw": 3, "vp": 2, "rv": 1, "lc": 1}, "evidence": "The smallest brokerage in this scored group (Classic Realty, based in Round Rock) and the thinnest profile overall — but also the only candidate whose single active listing found during this pass is a direct, physically-confirmed address inside 78753 (13701 Harrisglenn Dr), rather than a service-area claim or a directory-pull inference alone. Bilingual (English/Spanish), licensed since 2017. No star rating, review count, or sales-volume figure found on any second platform. No documented off-market evidence found. TREC lookup unreachable this session; HAR.com's ABoR profile (agent_ABORTX-694405) is the only license-board-adjacent confirmation available.", "sources": [{"label": "HAR.com profile", "url": "https://www.har.com/marelis-morales-triana/agent_abortx-694405"}, {"label": "HAR.com 78753 agent directory", "url": "https://www.har.com/zipcode_78753/agents?cid=DCL"}]}], "market": "TX"}, {"zip": "78747", "areaName": "Southeast Austin (Onion Creek / Garden Valley / Dittmar), Austin, TX (Travis County)", "note": "Requested directly by Tony — 78747 is the far-south-Austin ZIP containing two of Layer 1's investment-screening comps, “6733 Doyal Dr” and “9009 Stambourne St,” the dashboard's second and third Texas properties (alongside 78753's “1404 Verdana Dr”). Tony also asked for extra focus on Persian/Iranian-American agents serving this area, and after reviewing the first pass (2 Persian/Iranian candidates among 10), asked for a deliberately curated mix instead: exactly 5 Persian/Iranian-American candidates plus the top 5 general candidates already ranked, replacing the earlier merit-ranked-only pool. This section's 10 agents are NOT a single merit-ranked top 10 — they are two explicitly separate groups of 5, each independently sourced and scored on the same 8-factor model, then combined per Tony's instruction. General-pool sourcing: realtor.com's 78747 agent-directory page returned a 404 this session and Zillow's dedicated 78747 directory page could not be fetched directly either — the same failure documented for 78753 — so this pass combined two fallbacks: (1) century21.com's ZIP-level agent search, which surfaced several Georgetown-based Century 21 Stribling agents whose actual footprint is ~30 miles from 78747 (not retained in this revised 5-general-candidate cut); and (2) Zillow's organic web-search results for 78747-area agent queries, which surfaced real, individually-fetchable Zillow profiles (Eric Bramlett, Caroline Mowry, Adam Zell, Robby Roberts, Matt Morper — the 5 kept from the original pass, unchanged). Persian/Iranian-focused search (expanded this pass): ran targeted queries ('Persian realtor Austin TX', 'Iranian real estate agent Austin Texas', 'Farsi speaking realtor Austin'), HAR.com's dedicated Persian-speaking-agents directory, and iranianagent.com's Texas and Austin-specific listing pages, then went back and researched every candidate the first pass had found but not scored — Fara Kosari, Mahshid Caras, Atoosa Ponsford, Elham Tarkashvand, and the Austin Skyline Realty brokerage (principal: K.C. Naghaviani) — with the same depth as any other candidate (Zillow/HAR/Compass/Keller Williams profiles, sales history, reviews, TREC-or-fallback license verification). None of the 5 candidates sourced this way had a documented sale or named service claim specifically inside 78747 or the immediate South/Southeast Austin submarket — the closest geographic signals found were Mahshid Caras's 78749 (Oak Hill/Circle C, South Austin) listing and Austin Skyline Realty's own office address at 6707 Stage Coach Trl (78745, South Austin, directly adjacent to 78747), though the latter's principal, K.C. Naghaviani, could not be verified individually (no full legal name, reviews, or TREC record located for her specifically, so the firm was not carried into the scored 5 despite its promising address) and Atoosa Ponsford's data (conflicting brokerage affiliations between Moreland Properties and RE/MAX POSH, no reviews, no sales volume, no TREC record) was judged too thin to score credibly in good faith. The 3 best-documented of the 5 researched candidates were selected to round out Reza Rostamnejad and Kobra Dadfar (already scored in the prior pass) into the full 5: Mahshid Caras (TREC-verified License #700455, #1 Individual Top Producer at Realty Austin|Compass 2024–2025, Farsi+English confirmed on Zillow), Fara Kosari (17+ years, Farsi-Persian fluency explicitly stated on her own Compass bio, GRI/CNE/MCNE/Luxury Home Marketing Specialist credentials, Realty Austin Diamond Club 2017–2023), and Elham Tarkashvand (TX Broker Individual license, HAR's own TREC-status mirror showing Active through 06/30/2028). TREC's license-holder search tool — fully blocked for 78753, partially reachable in the first 78747 pass — worked again this pass via the same approach (locating a direct detail-page URL via targeted web search rather than using the search form itself): Mahshid Caras's and Reza Rostamnejad's records both returned successfully and are marked 'verified'; Fara Kosari's surname search returned only her son's record, not her own, so her license could not be confirmed. The search FORM itself (typing a name directly into trec.texas.gov) remains unusable from this session.", "agentsChecked": 29, "agents": [{"name": "Eric Bramlett", "brokerage": "Bramlett Residential (Treaty Oak Properties)", "team": true, "rating": 5.0, "reviews": 2201, "salesLastYear": 772, "salesInZip": null, "zipMeta": "No 78747-specific sales figure published; his own site frames the team's core focus as central and west Austin. No 78747-specific claim found — he surfaced in this pool via a Zillow web-search workaround for 78747-area agents, used because Zillow's own dedicated 78747 agent-directory page (zillow.com/professionals/real-estate-agent-reviews/78747/) could not be fetched directly this session, the same failure mode documented for 78753.", "priceRange": "$100K – $10M", "confidence": "strong", "scores": {"om": 3, "ze": 5, "bp": 15, "ng": 13, "nw": 10, "vp": 5, "rv": 5, "lc": 2}, "evidence": "By far the largest team and production volume found in this ZIP's pool: 772 sales in the trailing 12 months across a 106-member team, 2,201 reviews at a 5.0 average on Zillow, and a separate 317-340 review Yelp profile — full marks on Buyer-Side Performance, Local Network, and Reviews. Full-time broker/owner since 2003. Cross-referenced across Zillow, HAR.com, Homes.com, Homelight, LinkedIn, and Yelp — five independent sources. A Texas license record for 'Bramlett, Richard Eric' (his legal name) was located via web search on TREC's license-holder search tool, but the live detail page returned a robots.txt fetch error on both attempts this pass (TREC's known intermittent blocking, documented in this section's methodology note), so this is NOT counted as an independent license-board confirmation and confidence is capped at 'strong' rather than 'verified.' His team's documented focus is central/west Austin rather than the south side where 78747 sits, so ZIP Expertise is scored conservatively. No documented off-market/pocket-listing evidence found for him or the team specifically.", "sources": [{"label": "Zillow profile", "url": "https://www.zillow.com/profile/ericbramlett"}, {"label": "HAR.com profile", "url": "https://www.har.com/eric-bramlett/agent_one"}, {"label": "Bramlett Residential site", "url": "https://bramlettpartners.com/agents/eric-bramlett"}, {"label": "TREC record (located via search; live fetch failed)", "url": "https://www.trec.texas.gov/apps/license-holder-search/?detail_id=881220440"}]}, {"name": "Caroline Mowry", "brokerage": "Compass RE Texas, LLC (Realty Austin)", "team": false, "rating": 5.0, "reviews": 0, "salesLastYear": null, "salesMeta": "Her Zillow profile could not be pulled this session — after an initial batch of successful fetches, Zillow began returning HTTP 429 (rate-limited) on repeated attempts for her specifically, so no exact rating/review-count/sales-last-12-months figure could be confirmed directly from Zillow this pass; this is a genuine data gap, not a zero. Her Compass and HAR.com profiles (both fetched successfully) show 14+ years licensed and several trade recognitions in lieu of a raw sales number: RealTrends Verified Top 1.5% REALTORS Nationwide (2026), Platinum Top 500 REALTOR (2026), Realty Austin Diamond Club $10M+ Top Producer (2021, 2022), and Sapphire Club Top Producer (2023, 2025).", "salesInZip": null, "zipMeta": "The one candidate in this entire pool whose own brokerage profile explicitly lists ‘South Austin’ among her named service territories (alongside Central Austin, East Austin, Northwest Austin, Mueller, Brentwood, Crestview, Allandale, Tarrytown, Westlake, Rollingwood, Dripping Springs, Cedar Park, Leander, and Round Rock) — the only direct textual service-area match to 78747’s general submarket found in this research pass, even though 78747 itself is not individually named and no in-ZIP sale is confirmed.", "priceRange": "Not published this pass (Zillow rate-limited; see salesMeta)", "confidence": "strong", "scores": {"om": 3, "ze": 11, "bp": 9, "ng": 8, "nw": 5, "vp": 3, "rv": 2, "lc": 2}, "evidence": "14+ years licensed with five named trade-recognition credentials (RealTrends Verified Top 1.5% Nationwide 2026, Platinum Top 500 2026, Austin Business Journal Residential Real Estate Awards Nominee 2026, Realty Austin Diamond Club and Sapphire Club multi-year Top Producer), plus four professional designations (ABR, GRI, CHMS, MCNE) — the deepest credential list in this ZIP's pool. Cross-referenced across Compass, HAR.com, LinkedIn, Facebook, U.S. News Real Estate, and Yelp. Her Compass profile is also the only one in this pool to explicitly name ‘South Austin’ as a service area, the closest direct textual match to 78747's submarket found anywhere in this pass, which is why ZIP Expertise is scored above the pool floor despite no confirmed 78747 sale. Reviews and a raw sales-last-12-months figure could not be independently confirmed this session because Zillow began rate-limiting (HTTP 429) this pass's fetches partway through — a genuine tooling gap, flagged here rather than guessed at. No documented off-market/pocket-listing evidence found. No TREC lookup attempted for her specifically this pass.", "sources": [{"label": "Compass profile", "url": "https://www.compass.com/agents/caroline-mowry/"}, {"label": "HAR.com profile", "url": "https://www.har.com/caroline-mowry/agent_cmowry"}, {"label": "Zillow profile (fetch rate-limited this pass)", "url": "https://www.zillow.com/profile/CarolineMowry512"}]}, {"name": "Adam Zell", "brokerage": "Compass RE Texas, LLC (Zell Team)", "team": true, "rating": 5.0, "reviews": 1, "salesLastYear": 69, "salesInZip": null, "zipMeta": "No 78747-specific sales figure published; the Zell Team's own site names Austin's urban core (downtown) and Westover Hills as its focus areas, not South Austin — he surfaced in this pool via the same Zillow organic-search workaround used for Bramlett, Mowry, and Morper above.", "priceRange": "$210K – $3.8M", "confidence": "strong", "scores": {"om": 3, "ze": 4, "bp": 10, "ng": 6, "nw": 6, "vp": 3, "rv": 2, "lc": 2}, "evidence": "9+ years individually, 600+ lifetime transactions per his team bio, and the Zell Team collectively describes ‘over 5 decades of combined experience’ — a real, if self-reported, team-scale claim. 69 sales in the trailing 12 months on Zillow, $210K–$3.8M price range. Cross-referenced across Zillow, Compass, Homes.com, Nextdoor, and the team's own site (zellteam.com). A Texas license record for ‘Zell, Adam Michael’ was located via web search on TREC's license-holder search tool, but — like Bramlett's above — the live detail page returned the same robots.txt fetch error on both attempts this pass, so it is not counted as an independent confirmation and confidence stays at ‘strong.’ Only 1 Zillow review is shown despite the sales volume, so Reviews is scored conservatively. His named focus areas (downtown, Westover Hills) sit well north of 78747. No documented off-market/pocket-listing evidence found.", "sources": [{"label": "Zillow profile", "url": "https://www.zillow.com/profile/ZellAdam"}, {"label": "Zell Team site", "url": "https://zellteam.com/about-adam"}, {"label": "Compass profile", "url": "https://www.compass.com/agents/adam-zell/"}, {"label": "TREC record (located via search; live fetch failed)", "url": "https://www.trec.texas.gov/apps/license-holder-search/?detail_id=881370489"}]}, {"name": "Robby Roberts", "brokerage": "eXp Realty, LLC", "team": false, "rating": 5.0, "reviews": 15, "salesLastYear": 0, "salesInZip": null, "zipMeta": "No 78747-specific sales data published; surfaced in this pool via the Zillow organic-search workaround for 78747-area agents.", "priceRange": "$750K – $1.1M", "confidence": "strong", "scores": {"om": 3, "ze": 4, "bp": 6, "ng": 7, "nw": 4, "vp": 3, "rv": 3, "lc": 2}, "evidence": "11 years' experience, 46 total career sales at an $886K average price per Zillow, and a named 'Showcase' listing-enhancement service he offers clients. Cross-referenced across Zillow, LinkedIn, Facebook, and unlockmls.com's agent directory. 0 sales recorded in the trailing 12 months on Zillow despite the tenure and review base. Property-management specialization noted but no direct South Austin service claim found. No documented off-market/pocket-listing evidence found. No TREC lookup attempted for him specifically this pass.", "sources": [{"label": "Zillow profile", "url": "https://www.zillow.com/profile/RobbyRoberts/"}, {"label": "LinkedIn profile", "url": "https://www.linkedin.com/in/robbyroberts/"}]}, {"name": "Matt Morper", "brokerage": "Compass RE Texas, LLC (VIBE Real Estate Group)", "team": true, "rating": 5.0, "reviews": 0, "salesLastYear": null, "salesMeta": "10+ years in Austin real estate per his team bio; specific transaction counts not published, though his team site (viberegroup.com) carries named client testimonials praising responsiveness, staging help, and expedited closings", "salesInZip": null, "zipMeta": "No 78747/South Austin-specific sales found; his named specialties (Lake Austin waterfront, downtown, ranch properties, new construction, high-net-worth clients) point toward west/central Austin rather than the far-south side where 78747 sits — he surfaced in this pool via the same Zillow organic-search workaround used for Bramlett, Mowry, and Zell above.", "priceRange": "Not published (luxury/high-net-worth focus per his bio)", "confidence": "verified", "scores": {"om": 3, "ze": 4, "bp": 8, "ng": 9, "nw": 5, "vp": 5, "rv": 3, "lc": 5}, "evidence": "The strongest license-board confirmation found in this ZIP's pool outside the Persian/Iranian-focused search below: TREC's license-holder search tool returned a direct detail-page match this pass (located via a targeted web search for his license number, then fetched successfully) for Matthew Steven Morper, Sales Agent, License #666113, status ‘Active,’ Travis County, sponsored since 02/14/2020 — a genuine, independently-verified license-board match, not just a directory listing (the page's own displayed expiration date, 01/31/2026, appears to predate this session's date, which may reflect a renewal not yet reflected on the snapshot rather than a lapsed license; reported as found rather than reconciled). Cross-referenced across Compass, his team's own site (viberegroup.com, with named client testimonials), and LinkedIn. Specializes in luxury/high-net-worth/waterfront/new-construction business, which is west/central rather than south Austin, so ZIP Expertise is scored conservatively despite the strong license confirmation. No documented off-market/pocket-listing evidence found — Compass Exclusives is mentioned as a brokerage-wide program on his team's site but not framed as his own sourcing specialty the way Lisa Muñoz's page was in 78753.", "sources": [{"label": "TREC license-holder search (License #666113)", "url": "https://www.trec.texas.gov/apps/license-holder-search/?detail_id=1000037506"}, {"label": "Compass profile", "url": "https://www.compass.com/agents/matt-morper/"}, {"label": "VIBE Real Estate Group site", "url": "https://viberegroup.com/agents/matt-morper"}]}, {"name": "Mahshid Caras", "brokerage": "Compass RE Texas, LLC (The Caras Group @ Realty Austin)", "team": true, "rating": 5.0, "reviews": 37, "salesLastYear": 31, "salesInZip": null, "zipMeta": "No 78747-specific sales found; her current listings cluster in Leander (78641), Round Rock (78681), Cedar Park (78613), Pflugerville (78660), and Austin 78717/78749 — 78749 (Oak Hill/Circle C, South Austin) is the single closest geographic match to 78747 found among any Persian/Iranian candidate in this research pass, though it is not 78747 itself and no sale inside this ZIP was confirmed.", "priceRange": "$179K – $1.9M", "confidence": "verified", "scores": {"om": 3, "ze": 5, "bp": 11, "ng": 10, "nw": 6, "vp": 5, "rv": 4, "lc": 5}, "evidence": "Sourced via this pass's Persian/Iranian-focused search (iranianagent.com's Austin listing, which also names her as an ‘award-winning real estate agent...ranked among the Top 1.5% of America's Best Agents Nationwide (2022)’). The strongest production record of any Persian/Iranian candidate found this pass: 5.0 rating across 37 Zillow team reviews, 31 sales in the trailing 12 months, 234 career sales, $179K–$1.9M price range — and named #1 Individual Top Producer at Realty Austin|Compass for 2024–2025 (the most recent year-over-year ranking found for any candidate on this entire page), plus Diamond Club ($10M+ producer) honors every year from 2020–2025. Holds a Bachelor's in Engineering and an MBA from Baylor. Zillow's own profile explicitly lists ‘English and Farsi’ as her languages — a direct platform-level confirmation of the Persian background this search track was targeting. TREC's license-holder search returned a direct, name-matched record (License #700455, Sales Agent, sponsored under a Real Estate LLC) that was independently cross-confirmed by two further sources carrying the identical number: her own HAR.com profile slug (agent_abortx-700455) and a third-party license mirror (licensee.io) showing ‘Current and Active’ status — three-way corroboration on one license number, the same bar used elsewhere on this page for ‘verified’ tier. (The licensee.io mirror's listed expiration date, Feb 2022, looks like a stale snapshot inconsistent with its own ‘Current and Active’ label and the fact she's actively selling in 2025–2026 — reported as observed, not reconciled.) No 78747-specific sale or stated service claim was found despite the broad search; her nearest listed ZIP (78749) is South Austin but still roughly 5–6 miles from 78747, so ZIP Expertise is scored above the pool floor but not highly. No documented off-market/pocket-listing evidence found.", "sources": [{"label": "Zillow profile", "url": "https://www.zillow.com/profile/mahshid-caras/"}, {"label": "Compass profile", "url": "https://www.compass.com/agents/mahshid-caras/"}, {"label": "TREC license-holder search (License #700455)", "url": "https://www.trec.texas.gov/apps/license-holder-search/?detail_id=1000097703"}, {"label": "HAR.com profile (same license #)", "url": "https://www.har.com/mahshid-caras/agent_abortx-700455"}, {"label": "licensee.io mirror (Current and Active)", "url": "https://licensee.io/real-estate/700455-mahshid-caras-tx/"}, {"label": "iranianagent.com Austin listing (Persian/Iranian-focused search)", "url": "https://www.iranianagent.com/location/austin/"}]}, {"name": "Fara Kosari", "brokerage": "Compass RE Texas, LLC (Realty Austin)", "team": false, "rating": 5.0, "reviews": 0, "salesLastYear": null, "salesMeta": "No independently-tallied annual sales figure or platform review count found; career-level credentials instead: Realty Austin Diamond Club ($10M+ producer) every year 2017–2023, Platinum Top 50 REALTOR 2018–2023, 5-Year Hall of Fame (2020), Austin Business Journal Top 50 nominee multiple years", "salesInZip": null, "zipMeta": "No 78747-specific sales found; her current listings are in 78759 (Northwest Austin) with her brokerage office at 2500 Bee Caves Rd (78746, West Austin) — both well north/west of 78747, on the opposite side of the metro", "priceRange": "Not published", "confidence": "strong", "scores": {"om": 3, "ze": 3, "bp": 8, "ng": 9, "nw": 5, "vp": 4, "rv": 1, "lc": 2}, "evidence": "Sourced via this pass's Persian/Iranian-focused search (surfaced directly in both HAR.com's dedicated Persian-speaking-agents directory and iranianagent.com's Texas listing). Her own Compass bio states she is ‘Fluent in English and Farsi-Persian’ — an explicit, direct self-statement of the Persian background this search track targeted, not an inference from her name. 17+ years in Austin real estate with an unusually dense credential list for this page: GRI, CNE, MCNE (Master Certified Negotiation Expert — a genuine negotiation-specific certification, a rarer and more concrete signal than this page's usual review-count proxy for the Negotiation factor), Certified Luxury Home Marketing Specialist, Million Dollar Guild, and Pricing Strategy Advisor designations. Works alongside her son/partner Parsa Kosari as the small Kosari Group. Cross-referenced across Compass, HAR.com, LinkedIn, Instagram, Facebook, roomvu, and Nextdoor — seven independent sources, the broadest footprint of any Persian/Iranian candidate in this pass, though none of them publish a numeric star rating or review count independently of each other. TREC's license-holder search returned only a record for her son (Parsa Koochak Kosari) when queried by surname, not one matching her own first/last name combination, so her individual license could not be confirmed this pass. Her documented territory (78759/78746) is on the opposite side of Austin from 78747. No documented off-market/pocket-listing evidence found.", "sources": [{"label": "Compass profile", "url": "https://www.compass.com/agents/fara-kosari/"}, {"label": "HAR.com profile", "url": "https://www.har.com/fara-kosari/agent_freshtehk"}, {"label": "HAR.com Persian-speaking-agents directory (Persian/Iranian-focused search)", "url": "https://www.har.com/persian_speaking_agents"}, {"label": "iranianagent.com Texas listing (Persian/Iranian-focused search)", "url": "https://www.iranianagent.com/location/texas/"}, {"label": "LinkedIn profile", "url": "https://www.linkedin.com/in/farakosari/"}]}, {"name": "Reza Rostamnejad", "brokerage": "eXp Realty, LLC", "team": false, "rating": 5.0, "reviews": 0, "salesLastYear": null, "salesMeta": "1 active listing ($399K in Austin) and 1 rental under contract (Hutto) visible on his profile at time of check; no independently-tallied annual sales figure or star rating/review count found on Zillow or realtor.com for him specifically", "salesInZip": null, "zipMeta": "Sourced specifically through this pass's Persian/Iranian-focused search (query: ‘Iranian real estate agent Austin Texas’, surfaced via iranianagent.com's dedicated Texas and Austin listing pages), per Tony's explicit request to surface Persian/Iranian-American agents serving the Austin area — not through the standard 78747 directory pull. No 78747 or South Austin sale is documented for him: his one confirmed past listing found in this pass (9843 Childress Dr) is in 78753, North Austin, and his own site is branded ‘Austin and Suburbs,’ implying broad metro coverage rather than a South Austin specialty. Included in this scored pool as one of the 5 deliberately-curated Persian/Iranian candidates per Tony's instruction that their inclusion itself — not rank or exact ZIP match — is the point.", "priceRange": "Not published", "confidence": "verified", "scores": {"om": 3, "ze": 4, "bp": 5, "ng": 5, "nw": 4, "vp": 4, "rv": 1, "lc": 5}, "evidence": "Found via this pass's explicit Persian/Iranian-focused search rather than the standard 78747 sourcing pool. TREC's license-holder search tool returned a direct, successfully-fetched match: Reza Ryan Rostamnejad, Sales Agent, License #800814, status ‘Active,’ expiration 02/28/2027, sponsored by his current broker (eXp Realty) since 05/29/2025 — a genuine, independently-confirmed active Texas license. Cross-referenced across HAR.com, the Austin Board of Realtors (ABoR) directory, LinkedIn, a dedicated YouTube channel ('Reza Rostamnejad – Texas Real Estate'), Yelp, and his own site (rezarostamnejad.com / austinandsuburbs.com) — a broad, genuine cross-platform footprint even without a tallied sales figure. Holds a Bachelor of Science with Honors in Petroleum Engineering and a background in real estate valuation (also held an appraiser-trainee license, now expired). No documented 78747-specific transaction and no star rating/review count found on a consumer platform, so ZIP Expertise and Reviews are both scored conservatively despite the strong license confirmation. No documented off-market/pocket-listing evidence found for him specifically.", "sources": [{"label": "TREC license-holder search (License #800814)", "url": "https://www.trec.texas.gov/apps/license-holder-search/?detail_id=1000219939"}, {"label": "HAR.com profile", "url": "https://www.har.com/reza-rostamnejad/agent_abortx-800814"}, {"label": "iranianagent.com Austin listing (Persian/Iranian-focused search)", "url": "https://www.iranianagent.com/location/austin/"}, {"label": "ABoR profile", "url": "https://www.abor.com/agent/reza-rostamnejad/996daec2-9a2d-4d7c-ad25-7fa65b6358b5"}, {"label": "His own site", "url": "https://www.rezarostamnejad.com/"}]}, {"name": "Kobra Dadfar", "brokerage": "All City Real Estate, Ltd. Co", "team": false, "rating": 5.0, "reviews": 18, "salesLastYear": 0, "salesInZip": null, "zipMeta": "Sourced specifically through this pass's Persian/Iranian-focused search (iranianagent.com's dedicated Austin listing page), per Tony's explicit request. No 78747 or South Austin sale is documented for her: Homes.com's 5-year sales breakdown shows her concentrated in Round Rock and Pflugerville, and her office (10222 Pecan Park Blvd) is in 78729, North Austin — the opposite side of the metro from 78747. An initial lead connecting her to a listing at 4702 Rocking Chair Rd (78744, which borders 78747) could not be confirmed: the listing page itself showed blank agent/brokerage fields when fetched, so that specific connection is reported as inconclusive rather than used as evidence. Included in this scored pool as one of the 5 deliberately-curated Persian/Iranian candidates per Tony's instruction that their inclusion itself — not rank or exact ZIP match — is the point.", "priceRange": "$285K – $950K", "confidence": "strong", "scores": {"om": 3, "ze": 3, "bp": 6, "ng": 5, "nw": 4, "vp": 4, "rv": 4, "lc": 2}, "evidence": "Found via this pass's explicit Persian/Iranian-focused search rather than the standard 78747 sourcing pool. 19-20 years' experience as a 'former owner of several small businesses' before real estate, per her iranianagent.com listing. Her Zillow profile explicitly lists 'English, Farsi' as her languages — a direct, platform-level confirmation of the Persian/Iranian-American background this search was targeting, rather than an inference from her name alone. 5.0 rating across 18 Zillow reviews; Homes.com's independent 5-year tally shows 24 closed sales totaling $11.1M ($461K average, $285K–$950K range, split 18 buyer-side/6 seller-side deals). Cross-referenced across Zillow, Homes.com, Experience.com (a dedicated reviews aggregator profile), and HAR.com — four independent sources, though no TREC lookup for her was located this pass. Her documented sales territory (Round Rock, Pflugerville, North Austin) is on the opposite side of the metro from 78747, so ZIP Expertise is scored at the pool floor despite the otherwise solid cross-platform profile. No documented off-market/pocket-listing evidence found.", "sources": [{"label": "Zillow profile (English, Farsi listed)", "url": "https://www.zillow.com/profile/queenkobra"}, {"label": "Homes.com profile", "url": "https://www.homes.com/real-estate-agents/kobra-dadfar/j8pcdq7/"}, {"label": "iranianagent.com Austin listing (Persian/Iranian-focused search)", "url": "https://www.iranianagent.com/location/austin/"}, {"label": "HAR.com profile", "url": "https://www.har.com/kobra-dadfar/agent_kobra512d"}]}, {"name": "Elham Tarkashvand", "brokerage": "Keller Williams Realty", "team": false, "rating": 5.0, "reviews": 0, "salesLastYear": null, "salesMeta": "No independently-tallied annual sales figure, review count, or star rating found on any platform; 4 properties listed for sale and 2 for rent shown on her HAR.com profile at time of check", "salesInZip": null, "zipMeta": "No 78747-specific sales found; her office is at 9606 N Mopac Expressway (78759, Northwest Austin) and her current listings span 78752/78723 (Central/East Austin), Jarrell, and Spicewood — none inside or adjacent to 78747", "priceRange": "Not published", "confidence": "strong", "scores": {"om": 3, "ze": 3, "bp": 4, "ng": 4, "nw": 5, "vp": 3, "rv": 1, "lc": 3}, "evidence": "Sourced via this pass's Persian/Iranian-focused search (surname of likely Persian origin, confirmed as an active candidate via iranianagent.com's Texas listing and HAR's own license-status mirror rather than her own stated ethnicity, which her profile text does not explicitly address). Holds a TX Broker Individual license — a broker-level credential, one tier above the Sales Agent license most candidates on this page carry — which HAR.com's own TREC-status mirror page shows as ‘Current and Active’ through 06/30/2028. This is a real license-status confirmation sourced through HAR's own TREC-integration feature rather than a direct trec.texas.gov lookup, so it is scored as 'strong' rather than 'verified,' consistent with how this page treats other non-primary-source license confirmations. Also maintains her own educational content on resideinaustin.com (e.g. a post on understanding home inspections), a genuine, checkable content-marketing presence beyond a bare directory listing. Cross-referenced across HAR.com, two separate LinkedIn profiles, Zoominfo, residential.com, Instagram, and Facebook. No star rating, review count, or sales-volume figure was found on any platform. Her documented territory (central/east Austin, Jarrell, Spicewood) does not include 78747 or South Austin. No documented off-market/pocket-listing evidence found.", "sources": [{"label": "HAR.com profile", "url": "https://www.har.com/elham-tarkashvand/agent_abortx-575674"}, {"label": "HAR.com TREC-status mirror (Current and Active through 06/30/2028)", "url": "https://www.har.com/elham-tarkashvand/trec_ECYhDJK1cnE="}, {"label": "iranianagent.com Texas listing (Persian/Iranian-focused search)", "url": "https://www.iranianagent.com/location/texas/"}, {"label": "Her own content site", "url": "https://www.resideinaustin.com/post/understanding-home-inspections"}]}], "market": "TX"}, {"zip": "78759", "areaName": "Northwest Austin (Great Hills / Balcones Woods), Austin, TX (Travis County)", "note": "Created from a single named-realtor request (Summer Carter) rather than a full comparative ZIP sweep -- this section has one scored candidate, not a screened pool like 78753/78747. Her eXp Realty office address on file with HAR.com (9600 Great Hills Trl, Austin, TX 78759) is what places her here; no sale specifically inside 78759 was confirmed during this pass, and her own site describes a broader Austin / Bastrop / Travis County footprint rather than a 78759-specific one.", "agentsChecked": 1, "agents": [{"name": "Summer Carter", "brokerage": "eXp Realty, LLC (ATX Homes Sold Group)", "team": true, "rating": null, "reviews": null, "salesLastYear": null, "salesInZip": null, "salesMeta": "No publicly listed sold-count or dollar volume found on any profile checked (HAR.com, her own site, Facebook/findglocal mirror) -- her HAR.com profile currently shows only 2 active for-sale listings and 1 for-rent listing, not a sales history.", "zipMeta": "No sales specifically confirmed within 78759 itself; her active listings found during this pass were in 78723 (Austin) and 78945 (La Grange), and her own site cites Austin, Bastrop, and Travis County generally rather than 78759 specifically.", "priceRange": "Not found -- no price range published on any source checked.", "confidence": "verified", "scores": {"om": 3, "ze": 7, "bp": 4, "ng": 7, "nw": 4, "vp": 1, "rv": 1, "lc": 5}, "evidence": "Requested by name (Tony confirmed \"Summer Carter, Realtor - eXp Realty\" after an initial AskUserQuestion to resolve name ambiguity -- several unrelated same-named agents exist in Montana, Connecticut, North Carolina, and Georgia, none of which were treated as a match). No existing Layer 5 ZIP section fit her: her verified eXp Realty office (9600 Great Hills Trl, Austin, TX 78759, confirmed on HAR.com) sits in Northwest Austin's Great Hills/Balcones Woods area, distinct from both 78753 (North Austin/Rundberg) and 78747 (Southeast Austin/Onion Creek) already on this page -- so a new ZIP section was created for her office location, mirroring how 94526 was created for Arezoo Sorkhabi rather than forcing her into an unrelated existing pool. TREC-verified: Texas Real Estate Sales Agent license #685440-SA, opened 03/10/2017 (just over 9 years active), status Active through 2027-03-31, zero disciplinary actions on file, sponsored by eXp Realty LLC (Place-of-Business license #603392-BB, dba \"Alumbra International Properties\") since 2017-03-29 -- checked directly against TREC's own license database via its license-search Typesense API and licenseDetail API, not just taken from the brokerage's own claim (the TREC search form itself remains unusable from this session, consistent with prior passes on this page; the underlying API was called directly instead). Cross-confirmed across 3 independent profile sources: HAR.com (agent_ABORTX-685440), her own business site atxhomessold.com (\"ATX Homes Sold Group w/eXp Realty\"), and a Facebook-mirror business listing on findglocal.com -- all agree she is with eXp Realty and based in Austin; the Facebook mirror adds that she is a UT alum and Austin resident since 2006 (about 19 years local). Her own site lists Austin, Bastrop, and Travis County as service areas and carries three named client testimonials with concrete specifics (one describes a staging strategy that produced 10 offers in 3 days and a sale above asking; another specifically praises her negotiation conduct through closing) -- read as genuine signal of her working style, but these are self-published on her own site rather than an independent rating aggregator, and no Yelp, Zillow, Google Business, HomeLight, or realtor.com profile could be located for her despite several attempts (Yelp and the Austin Board of Realtors site block automated fetches, consistent with the standing restriction on this project against routing around that). No specific closed-sale count, dollar volume, or buyer/seller split could be verified on any source checked -- her HAR.com profile shows only 2 current active listings and no sales history -- so Buyer-Side Performance and Verified Production are scored conservatively here rather than assumed from unverifiable claims. No off-market or pocket-listing evidence found, consistent with almost every other candidate on this page. She runs her own small branded group (\"ATX Homes Sold Group\") under eXp Realty rather than operating as a solo agent.", "sources": [{"label": "HAR.com profile (Lic #ABORTX-685440)", "url": "https://www.har.com/summer-carter/agent_ABORTX-685440"}, {"label": "ATX Homes Sold (her own site)", "url": "https://atxhomessold.com"}, {"label": "Facebook-mirror business listing (findglocal.com)", "url": "https://www.findglocal.com/US/Austin/222285598251781/Summer-Carter-Realtor"}, {"label": "TREC License Search (Lic #685440-SA)", "url": "https://www.trec.texas.gov/license-search/"}]}], "market": "TX"}], "pendingRequests": [], "resolvedRequests": [], "agentPendingRequests": [], "agentResolvedRequests": [{"id": 1, "name": "Arezoo Sorkhabi", "zip": "94526", "submittedOn": "2026-08-27", "status": "added"}], "lastRefresh": "2026-08-27", "lowCommissionGuide": {"title": "Low-Commission & Zero-Commission Selling Methods", "subtitle": "Phoenix, AZ + Sacramento, CA — flat-fee MLS services, DIY/FSBO channels, assisted low-fee brokers and cash buyers, compared against a traditional percentage commission. This is a seller's reference, not a realtor-sourcing scorecard like the other tabs on this page — use it if you're selling a property and want to avoid or minimize commission, rather than buying and looking for an agent.", "asOfDate": "October 24, 2026", "sourceThread": "https://chatgpt.com/share/6add408b-0780-83e8-bd79-c3863fe54952", "mainRecommendation": "For an ordinary house or condo, start by comparing a true flat fee listing on the correct local MLS with a low fee assisted broker. Treat buyer-agent compensation as a separate negotiation. A free listing is useful, but the lowest advertised fee does not establish the best sale outcome.", "scopeNote": "Every fee in this report is listing-side only unless identified as a cash-buyer charge. Add any buyer-agent amount you agree to fund, title/escrow charges, taxes, prep and repairs. Advertised pricing can change by address, MLS, package and contract. Primarily covers existing residential houses/condos; land and commercial are discussed separately. No property address, condition or price was supplied, so these are conditional recommendations, not property-specific quotes.", "priorityTable": [{"priority": "Lowest listing cost", "phoenix": "Brokerless from $99; Homecoin $199.", "sacramento": "Beycome $99; Homecoin $149; Brokerless from $99."}, {"priority": "More transaction help", "phoenix": "Dash List $59 or $99 + 0.5%; Congress $399 + 0.5%.", "sacramento": "Beycome Concierge currently $999 promotional; compare service scope with a local 1% agent."}, {"priority": "A local agent handles the sale", "phoenix": "AZ Flat Fee advertises full service from $4,500.", "sacramento": "Your Advantage Realty advertises a 1% listing fee."}, {"priority": "Strictly no broker commission", "phoenix": "Find a direct buyer without a commission obligation; pay separately for necessary closing and advice.", "sacramento": "Same approach; check existing listing and buyer-compensation contracts first."}], "routesTable": [{"route": "Direct sale to an unrepresented buyer", "zero": "Yes, if no contract creates a commission obligation.", "tradeoff": "You find the buyer and arrange pricing, showings, contract help and closing."}, {"route": "Free FSBO advertising", "zero": "Potentially — advertising alone does not determine buyer-agent costs.", "tradeoff": "You manage buyer screening and the entire sale. Reach varies."}, {"route": "True flat fee MLS", "zero": "No percentage listing commission; a fixed broker fee remains.", "tradeoff": "A licensed broker enters the listing; you normally manage much of the sale."}, {"route": "Assisted flat fee / low percentage", "zero": "The stated flat fee or reduced percentage applies.", "tradeoff": "Confirm who negotiates and who attends in person."}, {"route": "Cash buyer / investor", "zero": "A traditional agent commission may be absent.", "tradeoff": "Service fees, repair credits and offer pricing can reduce your net."}], "buyerAgentNote": "You can decline to offer buyer-agent compensation, negotiate a fixed dollar amount, or consider a buyer request with the purchase offer. NAR guidance says seller offers of compensation are voluntary, require written seller approval through the listing agent, and cannot be displayed on the MLS — they may still be discussed and agreed elsewhere. All commissions are negotiable; there is no legally fixed 3%, 5% or 6% rate. A buyer may still owe their own agent under a representation contract even if you decline to pay — do not assume asking a buyer to proceed without an agent releases that obligation.", "netFormula": "Net before mortgage payoff = sale price − listing/platform charges − agreed buyer-agent compensation − closing costs − repairs/credits − preparation and holding costs. Then subtract liens and mortgage payoff to estimate cash received.", "freeChannels": [{"channel": "Zillow owner listing", "cost": "Free to post. Owner listings can be shown separately from agent listings; this is not an MLS entry.", "use": "Useful public exposure, particularly with a good photo set and direct response process."}, {"channel": "FSBO.com Starter", "cost": "Free for 30 days; only one photo. Plus is $99 for six months; MLS plan is $399.", "use": "Use the free tier as a supplement. One photo is a significant marketing constraint."}, {"channel": "Local Craigslist", "cost": "US owner category schedule is $0–$5, depending on category/location. Office/commercial posts are $5.", "use": "Post in the correct Phoenix or Sacramento owner category. Screen inquiries carefully."}, {"channel": "Personal and neighborhood channels", "cost": "Organic posts to your contacts and permitted local groups; optional paid ads are separate.", "use": "Reach neighbors, friends, local employers and buyers seeking that exact location. Follow group and sign rules."}, {"channel": "Known buyers and current tenants", "cost": "No platform required for a direct introduction. Professional closing/advice costs remain.", "use": "A tenant, neighbor or existing investor contact can be a good lead if pricing and financing are sound."}, {"channel": "Local investor networks", "cost": "AZREIA in Phoenix; NorCal REIA around Sacramento. Event, membership or promotion charges may apply.", "use": "Request several direct offers for a rental or repair-heavy property. Confirm any deal-posting rules."}], "mlsProviders": [{"name": "Homecoin", "price": "Phoenix $199; Sacramento $149. No listing-agent amount at sale for the MLS-only product.", "fit": "12-month term, maximum MLS photo allowance and 10 changes; $5 each thereafter. Extra services cost more."}, {"name": "Brokerless", "price": "Basic $99; Standard $149; Premium $188. City pages advertise no closing fees.", "fit": "Both cities. Basic: six months / six photos. Standard: six months / 25 photos. Uses affiliate brokers; get the local agreement."}, {"name": "Beycome", "price": "Basic $99; Enhanced $399. Current page says $0 to Beycome at closing.", "fit": "Sacramento / California; Arizona is absent from its current covered-state list. Confirm the exact MetroList entry and package."}, {"name": "Listed Simply", "price": "MLS Only $199 with no listing commission or Listed Simply fee at closing.", "fit": "Advertises Arizona and California service and six months. Keep distinct from plans with additional closing fees."}, {"name": "Congress Realty", "price": "Arizona Basic $299; Plus $399; Premium $499.", "fit": "Phoenix. Six months. Basic allows four MLS photos; Plus allows the MLS maximum. Enhanced service is separate."}, {"name": "Houzeo Bronze", "price": "From $399; $0 at closing on Bronze. State/market details vary.", "fit": "Six months, 25 photos and 10 changes advertised. Check actual AZ/CA availability before buying. Higher tiers add percentages."}, {"name": "FSBO.com MLS", "price": "Advertises $399 once for a six-month MLS plan.", "fit": "National platform; verify local broker, MLS, photo allowance and agreement. MLS Pro is a different product with partner terms."}], "mlsPreference": "My DIY preference: compare Homecoin with Brokerless in Phoenix; compare Homecoin with Beycome in Sacramento. The lowest tier is less attractive if its photo allowance forces an upgrade. Confirm buyer inquiries reach you and that you can meet MLS status-update deadlines.", "mlsEvidenceNote": "Some vendor pages are rendered mainly through scripts. Local Homecoin prices and Listed Simply details were verified through current primary-domain search-index text where a full page reader was unavailable — these are advertised prices, not completed checkout quotes.", "phoenixAssisted": [{"name": "Dash List / Mountain Lake Realty", "fee500k": "$59 + 0.5% = $2,559. The $99 plan totals $2,599.", "confirm": "Virtual transaction support. The $99 plan expressly includes professional photos and an electronic lockbox. Clarify in-person tasks and any conditions."}, {"name": "Congress Realty Full Service", "fee500k": "$399 + 0.5% = $2,899.", "confirm": "Negotiation and closing support. Confirm attendance, showing responsibilities and the difference from MLS-only plans."}, {"name": "AZ Flat Fee", "fee500k": "Advertised full service from $4,500.", "confirm": "Obtain the property-specific tier and scope — a starting price is not a universal fixed quote."}], "phoenixGuidance": [{"label": "If you can host showings and handle negotiations", "text": "Buy the least expensive appropriate ARMLS package and get a separate quote for contract/disclosure review as needed. A $50–$100 difference in listing cost should not drive the decision if one plan materially improves photo coverage, inquiry handling or support."}, {"label": "If you want help through escrow", "text": "Compare Dash List and Congress in writing. Ask who reads offers, counters inspection requests, tracks contingencies and communicates with title — virtual support does not establish that someone will host showings or visit the property."}, {"label": "If you are remote or cannot do the sale work", "text": "Compare an actual local full-service quote, such as AZ Flat Fee, with the hybrid options after adding any separate field services. Your availability is more decisive than whether the fee is called flat."}], "phoenixMarketNote": "ARMLS reported 4.45 months of supply in its October 2026 report using September data — marketwide data, not a valuation or absorption estimate for any specific Phoenix neighborhood. Price carefully and preserve buyer reach; budget for carrying costs instead of assuming an immediate sale.", "sacramentoAssisted": [{"name": "Beycome assisted plans", "price": "Enhanced $399; Concierge currently $999 promotional, with $1,399 shown as list price.", "assessment": "Concierge advertises negotiation and paperwork help. Verify local human support, media availability and third-party closing charges."}, {"name": "Homecoin seller support", "price": "Sacramento page advertises $2,999 flat fee or $149/hour.", "assessment": "A quote-dependent alternative to MLS-only. Get a precise list of services, upfront/closing allocation and any separately billed listing fee."}, {"name": "Your Advantage Realty", "price": "1% listing fee, advertised as full service and paid at closing.", "assessment": "A local comparison if you want the agent to run the transaction. Confirm any property minimum, extras and buyer-side arrangement."}], "sacramentoGuidance": [{"label": "Comfortable selling yourself", "text": "Compare Homecoin $149 and Beycome $99, focusing on the actual MetroList entry, photo allowance, contact routing and forms. Brokerless is another low-fee quote. Confirm the provider covers the exact parcel and property category."}, {"label": "Need negotiation help while doing field work", "text": "Compare Beycome Concierge and Homecoin support. Decide who will be available for showings, inspections and a difficult buyer negotiation; avoid paying for vague access to support."}, {"label": "Prefer a local agent managing the sale", "text": "Get a 1% quote from Your Advantage Realty. At $500,000 that is $5,000 listing-side before any separately agreed buyer-agent contribution. Ask for comparable recent sales and a realistic marketing plan."}], "sacramentoMarketNote": "Sacramento County reported 2.7 months of inventory and 35 average days on market for September 2026 — countywide measures that don't describe every neighborhood or price segment. A good listing and fast responses still matter despite the association describing a seller's market. California has required written buyer representation agreements since January 1, 2025 — this does not require the seller to pay the buyer agent; the DRE describes the seller accepting or rejecting a buyer request for that payment, and the buyer may remain responsible under their own contract.", "feeTraps": [{"service": "Houzeo", "detail": "Bronze from $399 has no closing fee. Silver from $449 + 0.5%; Gold from $479 + 1%; Platinum from $499 + 1.25%. Higher-tier closing minimum: $999.", "meaning500k": "Bronze: $399+. Silver: $2,949+. Gold: $5,479+. Platinum: $6,749+."}, {"service": "List With Freedom", "detail": "Gold $89 + 0.5%; Platinum $195 + 0.25%; Platinum Plus $395 + 0.25%. Confirm local availability.", "meaning500k": "Gold: $2,589. Platinum: $1,445. Platinum Plus: $1,645. These are not percentage-free plans."}, {"service": "Redfin", "detail": "Published sell-only fee is 2% in both cities; minimum $4,500 Phoenix / $5,500 Sacramento. Adds 1 percentage point when the buyer is unrepresented.", "meaning500k": "With represented buyer: $10,000 listing-side. With unrepresented buyer: $15,000 listing-side. Buyer-side payments are separate."}], "redfinNote": "Redfin advertises an effective 1% listing fee only when you also buy with Redfin within 365 days, subject to program terms and minimums — don't assume a 1% ad is the price for a stand-alone sale.", "otherRestrictions": [{"name": "Homepie", "note": "Its site says the platform is winding down and directs sellers to FSBO.com. Older Homepie recommendations should not be treated as a current standalone option."}, {"name": "Crexi", "note": "Despite free-listing language, its current sale-listing FAQ says owners can only list lease space; sale listings require the licensed broker/agent route. Not a direct commercial FSBO sale solution on those terms."}, {"name": "Galleon", "note": "The current homepage emphasizes investor screening and portfolio software. A current free seller marketplace could not be verified from that page, so it isn't ranked as an active selling route."}, {"name": "Clever", "note": "A referral service rather than a zero-commission platform. Its current local pages advertise 1.5% in Phoenix and 2% in Sacramento, with lower-value exceptions. Compare the actual agent agreement rather than assuming a universal national rate."}], "dollarExamples": {"note": "Calculations use published fee formulas — they are not estimates of total closing costs or sale proceeds.", "rows": [{"route": "True free direct sale", "p350": "$0", "p500": "$0", "p800": "$0"}, {"route": "Brokerless Basic / Beycome Basic*", "p350": "$99", "p500": "$99", "p800": "$99"}, {"route": "Homecoin Sacramento", "p350": "$149", "p500": "$149", "p800": "$149"}, {"route": "Homecoin Phoenix", "p350": "$199", "p500": "$199", "p800": "$199"}, {"route": "Dash List $59 plan", "p350": "$1,809", "p500": "$2,559", "p800": "$4,059"}, {"route": "Congress Full Service", "p350": "$2,149", "p500": "$2,899", "p800": "$4,399"}, {"route": "A 1% listing quote", "p350": "$3,500", "p500": "$5,000", "p800": "$8,000"}, {"route": "Redfin sell only, Phoenix**", "p350": "$7,000", "p500": "$10,000", "p800": "$16,000"}, {"route": "Redfin sell only, Sacramento**", "p350": "$7,000", "p500": "$10,000", "p800": "$16,000"}], "footnote": "* Beycome is a Sacramento/California option here; this is a fee calculation, not an equivalence claim. ** Redfin figures assume a represented buyer and no buy-with-Redfin rebate."}, "buyerSideNote": "At a $500,000 sale, a 1% buyer-agent payment is $5,000, 2% is $10,000, and 2.5% is $12,500 — illustrations, not suggested or required rates. A flat dollar amount is another possible negotiation. Example: a $199 listing plus an agreed $10,000 buyer-agent payment is $10,199 in brokerage charges. A zero buyer-agent contribution leaves the listing-side amount at $199, but the buyer may have an out-of-pocket obligation and could ask for a price change or other terms.", "priceVsFeeNote": "A 1% price difference on $500,000 is $5,000. A hypothetical $475,000 direct offer with no brokerage fee yields less before other costs than a $500,000 offer minus $10,199 in brokerage fees ($489,801) — compare both using the same repair, closing-cost and timing assumptions. Add a monthly carrying-cost estimate and multiply by the expected extra months to close; don't count mortgage principal reduction as an economic expense twice.", "cashBuyers": [{"name": "Opendoor", "position": "Has Phoenix and Sacramento seller pages. Its help center says the service charge varies and does not publish a fixed percentage.", "evaluate": "Request the final itemized offer, including service charge, condition adjustments and closing costs. Compare its net with a market listing."}, {"name": "Offerpad", "position": "Current coverage lists Phoenix; Sacramento was not found on that list. Advertises a 5% service fee plus about 1% closing costs; repair credits may apply.", "evaluate": "A Phoenix convenience comparison, not a minimum-fee recommendation. Address eligibility must be confirmed."}, {"name": "Direct local investors", "position": "Find contacts through AZREIA or NorCal REIA — networking communities, not guaranteed buyers.", "evaluate": "Compare several offers. Ask whether the signer is buying directly or intends to assign the contract. Check funds, deposits and contingencies."}, {"name": "Vacant land / rural property", "position": "LandSearch allows one basic owner listing free; a promoted single listing is $29/month. Its paid MLS brokerage offering currently names other states.", "evaluate": "Use for land-oriented buyers around either city. Do not assume a free listing includes ARMLS or MetroList."}], "cashBuyerCaveat": "A direct purchaser has its own resale or investment economics and may recover costs through its offer rather than a fee labeled commission. Compare final net proceeds after the walkthrough, not a preliminary online amount — a discount may be worthwhile for speed or a difficult property, but that's a property-specific choice.", "commercialNote": "For commercial property or a larger apartment asset, verify the platform accepts that category before purchasing a residential package. Price from leases, expenses, condition and buyer return expectations; ask local brokers for a capped or fixed-fee quote. For a tenant-occupied house or condo, give buyers accurate lease, rent, deposit and expense information, and don't assume selling ends the tenancy or that a residential cash-buyer program accepts the occupancy arrangement.", "closingCosts": {"intro": "Budget separately for title/escrow services, recording, applicable transfer taxes, loan payoff and liens, HOA documents, agreed buyer credits, repairs and professional advice. Ask an escrow/title provider for an address-specific seller net sheet before choosing the sales route.", "sacTransferTax": "For a typical taxable transfer, Sacramento County charges $0.55 per $500 (or fraction) of taxable consideration; the City of Sacramento adds $2.75 per $1,000. At $500,000, if both apply on the full amount, that's $550 plus $1,375 = $1,925 of transfer tax. Who pays depends on the contract; exemptions and the taxable base matter — a Sacramento mailing address alone does not prove the city tax applies.", "california": "A sale without an agent does not eliminate disclosure obligations. For a typical nonexempt residential sale, address the Transfer Disclosure Statement, natural-hazard disclosures and other applicable property/local requirements — which forms apply depends on the property and transaction.", "arizona": "The Arizona DRE buyer advisory explains that sellers commonly provide a Seller Property Disclosure Statement, and that a seller disclosure obligation remains even if the parties agree not to provide that form.", "federalLead": "Most housing built before 1978 is subject to federal lead disclosure requirements, including known information and available reports, a required information pamphlet, and contract provisions.", "professionalHelp": "Consider a fixed or capped quote from a local real estate attorney for contract/disclosure review if you handle marketing yourself. A transaction coordinator can track paperwork, but confirm their role and licensing rather than assuming they provide negotiation or legal advice — escrow instructions and independent advice serve different purposes. Before hiring, verify the responsible Arizona or California broker through the relevant regulator; provider marketing and customer ratings are not a substitute for an active-license check or a clear engagement agreement."}, "actionPlan": [{"step": "1. Define the sale", "action": "Identify property type, occupancy, realistic price and deadline.", "decide": "Can you do showings and negotiations? Are you local?"}, {"step": "2. Check existing contracts", "action": "Review any listing agreement, protection period or signed compensation promise.", "decide": "Does an owner-found buyer still trigger a fee? Obtain advice on release terms if needed."}, {"step": "3. Get comparable quotes", "action": "Choose two MLS providers and one assisted/local broker.", "decide": "Get the correct local MLS and complete dollar fee at your expected price."}, {"step": "4. Prepare exposure", "action": "Use accurate details, adequate photography, a showing plan and permitted local outreach.", "decide": "Confirm contact routing and how unrepresented inquiries are handled."}, {"step": "5. Evaluate offers", "action": "Compare price, buyer funding, credits, commissions and contingencies.", "decide": "Do not promise buyer-agent payment without understanding the written terms."}, {"step": "6. Close with support", "action": "Use title/escrow and the professional help you selected. Track every deadline.", "decide": "Reconcile the final seller statement against the agreed fee schedule."}], "sellerQuestions": ["What is the complete listing-side cost, upfront and at closing?", "Is there any percentage, minimum, compliance, admin or transaction fee?", "Do costs change if I find the buyer or the buyer has no agent?", "Will the property be entered into ARMLS or MetroList, in the right category?", "How many photos, edits and open-house updates are included?", "Who receives portal inquiries, showing requests and written offers?", "Who provides forms, reviews offers and negotiates inspection issues?", "Who performs in-person services, and what is billed separately?", "What cancellation, refund and post-expiration protection terms apply?", "Can I review the actual broker agreement before paying?"], "evidenceLimits": "Public published pages and current indexed primary-domain text were researched on October 24, 2026. No seller account was opened, property-specific quote obtained, provider contacted or agreement executed. Provider performance, sale-price outcomes and support quality were not independently tested. Recommendations reflect fees, stated scope and fit.", "sources": [{"id": 1, "label": "NAR: compensation and negotiable commissions", "domain": "nar.realtor"}, {"id": 2, "label": "NAR: seller choices for buyer-agent compensation", "domain": "nar.realtor"}, {"id": 3, "label": "Zillow: post a free owner listing", "domain": "zillow.help"}, {"id": 4, "label": "Zillow: owner-listing visibility and separate listings", "domain": "zillow.help"}, {"id": 5, "label": "FSBO.com: current plans, fees and limitations", "domain": "fsbo.com"}, {"id": 6, "label": "Craigslist: posting fees", "domain": "craigslist.org"}, {"id": 7, "label": "Homecoin: Phoenix local listing price", "domain": "homecoin.com"}, {"id": 8, "label": "Homecoin: Sacramento local price and MLS", "domain": "homecoin.com"}, {"id": 9, "label": "Homecoin: MLS listing terms and optional extras", "domain": "support.homecoin.com"}, {"id": 10, "label": "Brokerless: package prices and photo allowances", "domain": "brokerless.com"}, {"id": 11, "label": "Brokerless: Phoenix / ARMLS coverage", "domain": "brokerless.com"}, {"id": 12, "label": "Brokerless: Sacramento / MetroList coverage", "domain": "brokerless.com"}, {"id": 13, "label": "Beycome: current packages, fees and served states", "domain": "beycome.com"}, {"id": 14, "label": "Beycome: Sacramento / MetroList coverage claim", "domain": "beycome.com"}, {"id": 15, "label": "Listed Simply: $199 MLS Only plan and states", "domain": "listedsimply.com"}, {"id": 16, "label": "Listed Simply: Arizona MLS Only details", "domain": "listedsimply.com"}, {"id": 17, "label": "Congress Realty: Arizona packages and scope", "domain": "congressrealty.com"}, {"id": 18, "label": "Dash List / Mountain Lake Realty: complete pricing", "domain": "azflat.com"}, {"id": 19, "label": "AZ Flat Fee: advertised full-service starting fee", "domain": "azflatfee.com"}, {"id": 20, "label": "Houzeo: current national fees and contract caveats", "domain": "houzeo.com"}, {"id": 21, "label": "Your Advantage Realty: Sacramento 1% service", "domain": "youradvantagerealty.com"}, {"id": 22, "label": "Homecoin: Sacramento flat fee / hourly seller support", "domain": "homecoin.com"}, {"id": 23, "label": "Redfin: market fees, minimums and unrepresented buyers", "domain": "redfin.com"}, {"id": 24, "label": "List With Freedom: upfront and percentage fees", "domain": "listwithfreedom.com"}, {"id": 25, "label": "Opendoor: current service-charge policy", "domain": "help.opendoor.com"}, {"id": 26, "label": "Opendoor: Phoenix selling availability", "domain": "opendoor.com"}, {"id": 27, "label": "Opendoor: Sacramento selling availability", "domain": "opendoor.com"}, {"id": 28, "label": "Offerpad: cash sale fees and repair credits", "domain": "offerpad.com"}, {"id": 29, "label": "Offerpad: current market coverage", "domain": "offerpad.com"}, {"id": 30, "label": "AZREIA: Phoenix investor networking", "domain": "azreia.org"}, {"id": 31, "label": "NorCal REIA: Sacramento investor networking", "domain": "norcalreia.com"}, {"id": 32, "label": "LandSearch: free owner listing and promotion prices", "domain": "landsearch.com"}, {"id": 33, "label": "Crexi: eligibility restrictions for sale listings", "domain": "crexi.com"}, {"id": 34, "label": "California DRE: buyer representation and compensation", "domain": "dre.ca.gov"}, {"id": 35, "label": "California DRE: disclosure obligations guide", "domain": "dre.ca.gov"}, {"id": 36, "label": "Arizona DRE: buyer advisory and seller disclosures", "domain": "azre.gov"}, {"id": 37, "label": "EPA: lead disclosure for most pre-1978 housing", "domain": "epa.gov"}, {"id": 38, "label": "Sacramento County: recording and transfer-tax fees", "domain": "ccr.saccounty.gov"}, {"id": 39, "label": "City of Sacramento: additional transfer tax", "domain": "cityofsacramento.gov"}, {"id": 40, "label": "ARMLS: October report using September 2026 data", "domain": "armls.com"}, {"id": 41, "label": "Sacramento REALTORS: September 2026 county statistics", "domain": "sacrealtor.org"}, {"id": 42, "label": "Homepie: platform transition to FSBO.com", "domain": "homepie.com"}, {"id": 43, "label": "Galleon: current investor-software product", "domain": "galleon.io"}, {"id": 44, "label": "Arizona DRE: license and disciplinary lookup entry point", "domain": "azre.gov"}, {"id": 45, "label": "California DRE: license verification entry point", "domain": "dre.ca.gov"}, {"id": 46, "label": "NAR: written buyer agreements and flat/hourly fees", "domain": "nar.realtor"}, {"id": 47, "label": "Clever: Phoenix advertised listing fee", "domain": "listwithclever.com"}, {"id": 48, "label": "Clever: Sacramento advertised listing fee", "domain": "listwithclever.com"}], "standardPathComparison": {"intro": "The rest of this page compares low-commission methods against each other. This table instead compares each method against the standard path — a traditional full-service listing agent paid a commission on the listing side (nationally averaging 2.76%, typically 2.5–3%, per industry fee surveys). That fee is what funds the services below; every low-commission method saves money by doing without some subset of them.", "baselineServices": ["Pricing strategy / comparative market analysis", "Professional photography, staging advice and marketing copy", "Full MLS entry plus marketing (signs, digital ads, open houses, syndication)", "Fielding and scheduling every showing, and screening buyers", "Receiving, presenting, explaining and negotiating every offer on the seller's behalf", "Transaction management — paperwork, disclosures, deadlines through closing", "Licensed fiduciary duty, errors-and-omissions insurance and accountability", "Access to the cooperating-broker network that brings pre-qualified buyer's-agent traffic"], "baselineStat": "In NAR's 2025 Profile of Home Buyers and Sellers, 86% of sellers said their agent provided this broad a range of services, and sellers ranked marketing effectiveness, competitive pricing and selling within their timeframe as what mattered most — which is exactly the three things most low-commission methods ask the seller to take on personally.", "rows": [{"method": "True flat-fee MLS-only (DIY) — Homecoin, Brokerless, Beycome, Listed Simply, Houzeo Bronze, FSBO.com MLS", "miss": "No pricing/CMA guidance (DIY or a paid add-on), no professional photography (self-supplied, often capped at a handful of images), no one fielding showing requests or screening buyers, no offer presentation or negotiation at all, and no transaction management after an offer is accepted — many sellers hire a separate attorney for that. MLS compliance (status updates, accuracy) is the seller's own responsibility, including any fines. A buyer's-agent commission (commonly 2.5–3%) is still typically offered to get full cooperating-broker traffic, so the flat fee is not the whole brokerage cost.", "better": "By far the lowest listing-side cost ($99–$399 flat vs. roughly $13,800 at 2.76% on a $500,000 sale). Full control over price changes, photos and showing times with no broker as a gatekeeper. Keeps 100% of any negotiating result the seller achieves personally, and avoids one agent's attention being split across many other listings."}, {"method": "Assisted flat-fee / low-percentage hybrid — Dash List, Congress Realty Full Service, Houzeo Gold/Platinum, List With Freedom", "miss": "Support is usually virtual rather than an agent who visits the property, hosts showings in person, or attends inspections — confirm this per provider before assuming it. The advertised flat/low fee commonly adds a separate 0.25–1.25% charge at closing, so the headline price understates the true cost once the fine print is read.", "better": "Real negotiation and paperwork support at roughly a quarter to a third of the standard cost (about $2,559–$2,899 vs. ~$13,800 at $500,000). Some plans include professional photos and a lockbox. A genuine middle ground for sellers who want backup without paying for a dedicated local agent's full-time attention."}, {"method": "1% local full-service agent — e.g. Your Advantage Realty-style", "miss": "Marketing budget is often MLS-only, with professional photos, 3D tours and paid ad placement priced as add-ons. Industry comparisons flag weaker negotiation leverage/experience and slower response times at this price point than a standard-commission agent. Because the 1% covers only the listing side, the customary 2.5–3% still paid to the buyer's agent means total brokerage cost can approach the same 3.5–4% as a standard sale — the \"1%\" framing can understate the real total.", "better": "Still a local, licensed, in-person agent running the whole transaction — showings, offers, negotiation, closing — for roughly a third of the standard listing-side fee ($5,000 vs. ~$13,800 on $500,000). Full fiduciary duty and accountability, unlike DIY or iBuyer routes."}, {"method": "Discount national brokerage (Redfin-style, ~1.5% listing fee)", "miss": "A team-based model: a lead agent plus separate showing/transaction/tour coordinators split the work, which industry comparisons flag as a real source of miscommunication and less personal continuity than one dedicated agent. Minimum fees (roughly $3,000–$9,000) can erode savings on lower-priced homes, a buyer-unrepresented sale adds a 1-point surcharge, and in thinner markets the seller may be routed to a non-discounted partner agent at full price instead.", "better": "Still a genuinely full-service model — free professional photos and a 3D walkthrough, and offer negotiation/closing handled by the lead agent — at roughly half the standard listing-side cost. Team coverage can mean more flexible showing scheduling, and per industry reporting this model's agents close substantially more transactions per agent than a typical traditional agent, which can mean broader buyer reach."}, {"method": "Referral discount network (Clever-style, ~1.5–2%)", "miss": "Clever itself is a referral matchmaker, not the agent — the agent doing the work is an ordinary local agent working at a pre-negotiated reduced rate, so service quality depends entirely on who the network matches the seller with, and the network doesn't vet negotiation skill the way interviewing agents personally would.", "better": "Still full traditional-agent service — showings, negotiation, paperwork — since it is a real licensed agent, just at a referral-negotiated discount (currently advertised around 1.5% in Phoenix, 2% in Sacramento) instead of the seller having to shop or negotiate the rate themselves."}, {"method": "iBuyer / cash buyer — Opendoor, Offerpad", "miss": "No negotiation — the seller accepts an algorithm-set price. No representation or advocate on the seller's side. No choice of buyer. Repair costs are deducted at the iBuyer's own estimate, which can be substantial. The service charge isn't a disclosed fixed percentage and isn't negotiable. Coverage is limited to the markets the company currently serves, and offers typically run below the peak price a competitive traditional sale could reach.", "better": "Unmatched certainty and speed — a firm cash offer with no financing contingency and a close date the seller picks (commonly 21–60 days). No showings, no staging or decluttering effort (the iBuyer handles this), and often no inspection required of the seller. Opendoor's own published comparison puts typical closing costs at roughly the same 1–3% on both paths, and argues avoided holding costs, repairs and concessions can offset part of the lower headline price in a traditional sale — though that specific comparison is the company's own marketing and should be checked against a real local listing quote."}, {"method": "Direct FSBO — no MLS, free/cheap channels only (Zillow owner listing, Craigslist, personal network)", "miss": "Everything a listing agent does: no CMA/pricing expertise (NAR's own data flags “getting the price right” as FSBO sellers' single hardest step), no MLS exposure — the channel most buyer's agents actually search — no professional photography or staging, no cooperating-broker network bringing pre-qualified buyers, no offer negotiation support, no transaction/paperwork management, and no fiduciary protection or E&O insurance if something goes wrong.", "better": "Zero commission paid at all if no agent is involved on either side. Complete control over timing, showings and terms. NAR's 2025 data shows FSBO sales cluster where this gap matters least — 30% went to a personal contact (friend, relative, neighbor) — but across all FSBO sales the median price was $360,000 versus $425,000 for agent-assisted sales, a $65,000 (≈15%) gap, so this route works best precisely in the known-buyer case where marketing reach and negotiating leverage matter less."}, {"method": "Direct sale to a known buyer or local investor contact (AZREIA / NorCal REIA networks)", "miss": "The same gaps as FSBO — no agent-run marketing, pricing guidance or negotiation support — plus a wrinkle specific to investor buyers: their offer already bakes in their own renovation/resale economics, so “no commission” doesn't by itself mean a strong price. The seller is negotiating against a professional buyer instead of being represented by a professional agent.", "better": "Often the fastest, most certain route for a repair-heavy or hard-to-finance property that might struggle to attract traditional financed buyers on the open market. No buyer-agent commission since there typically isn't a buyer's agent involved, and closing can move about as fast as both sides can arrange title and escrow."}], "evidenceNote": "Figures and comparisons above are drawn from published industry analyses, NAR's own 2025 Profile of Home Buyers and Sellers data, and (for the iBuyer row) Opendoor's own published seller-facing comparison, which is marketing content and should be checked against a real local quote rather than taken as neutral. These are general patterns reported across the industry, not guarantees for any specific sale — actual service quality varies by the individual agent, brokerage or company a seller actually works with.", "sources": [{"label": "NAR 2025 Profile of Home Buyers and Sellers — key takeaways (FSBO vs. agent-assisted price, services valued)", "url": "https://virginiarealtors.org/2025/12/08/key-takeaways-from-nars-2025-profile-of-home-buyers-and-sellers/"}, {"label": "NAR 2025 Profile — what sellers said agents helped with most", "url": "https://www.realtybillings.com/blog/91-of-sellers-used-an-agent-in-2025-heres-what-they-value-most/"}, {"label": "Flat-fee MLS: services typically excluded", "url": "https://www.isoldmyhouse.com/flat-fee-mls/"}, {"label": "Full-service vs. limited-service listing feature comparison", "url": "https://www.mashvisor.com/blog/limited-service-listing-guide/"}, {"label": "Redfin vs. traditional realtor service comparison", "url": "https://www.realestatewitch.com/redfin-vs-realtor/"}, {"label": "1% commission agent vs. full-commission agent comparison", "url": "https://homelight.com/blog/1-percent-commission-real-estate-agent"}, {"label": "Discount real estate broker service limitations", "url": "https://www.homelight.com/blog/discount-real-estate-brokers/"}, {"label": "Opendoor's own comparison: Opendoor vs. a traditional home sale", "url": "https://www.opendoor.com/articles/how-selling-to-opendoor-compares-to-a-traditional-home-sale"}, {"label": "iBuyer pros and cons vs. a traditional agent", "url": "https://ibuyer.com/blog/ibuyer-pros-cons/"}, {"label": "Average real estate commission and what it covers", "url": "https://www.realestatewitch.com/average-real-estate-commission/"}]}, "buyerAgentCommissionSection": {"intro": "You can pay $0 buyer-agent commission whether you use a selling platform or become a licensed agent. Having a license does not make that payment mandatory or automatically eliminate it. Your signed agreements determine what you owe.", "secondParagraph": "For your goal of reducing selling costs, I would generally start with a flat fee MLS service if you are selling only one or two properties you own.", "scenarioTable": {"colHeaders": ["Scenario", "Listing-side commission or fees", "Must you pay the buyer’s agent?", "My assessment"], "rows": [["Sell yourself using free advertising — Zillow FSBO, FSBO.com Starter, personal contacts", "Potentially $0 listing commission. Professional help and closing costs remain separate.", "No automatic requirement. You can pay $0 if you have not agreed otherwise.", "Lowest brokerage cost, but you handle pricing, inquiries, showings, negotiations and paperwork. Free advertising does not necessarily include MLS exposure."], ["Use a flat fee MLS platform without obtaining a license", "Examples researched: Homecoin $199 Phoenix / $149 Sacramento; Brokerless from $99. These replace a percentage listing commission with a fixed fee.", "No automatic requirement. Any seller-funded buyer-agent payment is negotiated separately.", "My preferred starting point for a capable DIY seller: inexpensive MLS exposure without acquiring and maintaining a license."], ["Use an assisted or low commission broker", "Examples: Phoenix’s Dash List $59 + 0.5%; Sacramento’s Your Advantage Realty advertises 1% listing commission.", "No automatic requirement, but read the proposed listing and compensation agreements.", "Useful when you want negotiation and transaction support. At $500,000, these listing charges are $2,559 and $5,000, respectively."], ["Obtain the appropriate state salesperson license and sell through your brokerage", "You may avoid hiring another listing agent, but your brokerage may charge a transaction fee, percentage or recurring fees. Licensing, education and MLS access cost extra.", "No automatic requirement. The same separate negotiation applies.", "More worthwhile for an ongoing real estate business or repeated transactions. The license alone does not guarantee cheaper personal sales. Arizona brokerage compensation runs through the employing broker."]]}, "buyerSituationIntro": "A represented buyer does not automatically mean you must pay their agent. The possibilities are:", "buyerSituationTable": {"colHeaders": ["Buyer situation", "Your possible buyer-agent payment"], "rows": [["Buyer proceeds without an agent and no existing compensation obligation applies", "$0"], ["Buyer has an agent and pays that agent themselves", "$0"], ["Buyer requests that you fund their agent, and you decline", "$0, although the buyer may negotiate other terms or choose another property"], ["You agree to contribute a fixed amount", "The agreed dollar amount"], ["You agree to contribute 2% on a $500,000 sale", "$10,000 — an illustration, not a required rate"]]}, "afterTableParagraphs": ["California’s regulator expressly describes buyers requesting seller payment and sellers accepting or rejecting that request; sellers generally have that compensation choice regardless of whether they personally hold a license.", "The financial comparison is therefore platform fees versus the full cost of being licensed—not “pay buyer commission versus avoid it.” For example, ARMLS currently charges $492 annually, before education, licensing, brokerage and other applicable charges. That subscription alone exceeds a single $149–$199 MLS listing.", "You generally already have the right to sell your personally owned property without a license, subject to the applicable owner exemption."], "recommendation": "My recommendation is to compare flat fee MLS options first, keep buyer-agent compensation open to negotiation, and assess each offer by the money you retain after all costs. Consider licensing if you also want the professional access and ongoing business opportunities. Existing listing agreements, brokerage policies and compensation promises still need to be honored in either route.", "sources": [{"label": "NAR — seller choices for buyer-agent compensation", "url": "https://www.nar.realtor/"}, {"label": "Homecoin — Phoenix and Sacramento flat fee MLS pricing", "url": "https://www.homecoin.com/"}, {"label": "AZ Flat Fee / Dash List — assisted low-fee broker pricing", "url": "https://www.azflat.com/"}, {"label": "Arizona Revised Statutes — brokerage compensation through the employing broker; owner exemption (“Applicability of article; exceptions”)", "url": "https://www.azleg.gov/"}, {"label": "California DRE — buyer-agent compensation requests and the seller’s choice", "url": "https://www.dre.ca.gov/"}, {"label": "ARMLS — annual subscription fee", "url": "https://www.armls.com/"}]}}, "licenseGuide": {"title": "Should You Get Your Own Real Estate License?", "subtitle": "Arizona (Phoenix) and Texas (Austin) — an alternative route to avoiding commission: becoming licensed yourself, instead of hiring a flat-fee or full-service agent. Entry-level salesperson/sales-agent licenses only; a broker license has additional requirements. “REALTOR®” membership is separate from state licensing.", "asOfDate": "October 24, 2026", "intro": "You do not need to live in Phoenix or Austin to obtain the relevant state license. A California license can simplify the Arizona process, but Texas has no automatic reciprocity. And you generally do not need any real estate license to sell property you personally own.", "quickTable": {"colHeaders": ["Your question", "Phoenix → Arizona license", "Austin → Texas license"], "rows": [["Must I live in that city?", "No. The license is statewide.", "No. The license is statewide."], ["Must I live in that state?", "No. Arizona expressly accommodates nonresident licensees.", "No. Texas removed its state residency requirement in 2019."], ["Can my California license help?", "Yes. ADRE publishes an out-of-state recognition route for qualifying applicants licensed elsewhere for at least one year.", "Limited benefit. There is no automatic conversion or reciprocity. You must satisfy Texas requirements."], ["What education would ordinarily apply?", "Starting from scratch: 90 hours plus a six-hour contract-writing course. A qualifying nonresident recognition applicant instead needs 27 hours of Arizona education plus the six-hour contract-writing course.", "180 hours of qualifying education, subject to TREC accepting any eligible prior coursework. Holding a California license alone does not replace this requirement."], ["Can I operate independently immediately?", "A salesperson needs an Arizona-licensed employing broker for brokerage work.", "A sales agent needs a Texas-licensed sponsoring broker for brokerage work."], ["Will the license eliminate all selling costs?", "No. Brokerage agreements, MLS charges, negotiated buyer-agent compensation and closing costs remain relevant.", "No. The same distinction applies."]], "sourceNote": "Sources: Arizona’s nonresident statute and licensing checklists; Texas’s residency announcement, licensing requirements and reciprocity guidance."}, "arizonaSection": {"heading": "Arizona: a California license can be a useful shortcut", "paragraphs": ["For Arizona, a California license can provide a useful shortcut—but it is an application for an additional license, not an automatic conversion.", "ADRE’s published recognition qualifications include being currently licensed in another state where you have been licensed for at least one year, having completed approved education and passed that state’s examination, and meeting ADRE’s disciplinary-history conditions."], "checklistIntro": "For a qualifying California license holder who continues living outside Arizona, the current checklist calls for:", "checklist": ["An official license history showing the required licensing period.", "27 hours of required Arizona prelicensing education.", "The six-hour contract-writing course.", "Passing the Arizona state-specific examination.", "An Arizona DPS fingerprint clearance card.", "Proof of authorized legal presence and the application/disclosure documents."], "afterChecklist": ["For a qualifying applicant who establishes Arizona residency, the checklist substitutes proof of residency for the 27-hour education certificate. The other requirements still apply.", "That distinction matters: you can use the published nonresident route without moving to Arizona. Older descriptions that discuss only Arizona residents do not capture the current checklist.", "If you do not already hold a California license, I would generally apply directly in Arizona when your objective is Phoenix. Completing California licensing first and then waiting to qualify for recognition adds a step; Arizona’s direct route already accepts nonresidents."]}, "texasSection": {"heading": "Texas: do not plan on a California-to-Texas conversion", "paragraphs": ["For Texas, do not plan on a California-to-Texas conversion.", "TREC states that Texas has no reciprocity with any state. Its standard sales-agent education consists of six 30-hour courses: Principles I and II, Agency, Contracts, Promulgated Contract Forms, and Finance. Specific qualifying academic coursework can be submitted for evaluation; ordinary California licensing coursework should not be assumed acceptable without TREC’s approval. Texas also requires its fingerprint/background process and broker sponsorship to practice actively.", "There is a narrower potential benefit: TREC may waive the national examination portion when an applicant holds an appropriate active out-of-state license and passed a qualifying accredited national examination. TREC asks applicants to submit their license history so it can determine eligibility. A California license by itself does not establish that you qualify for this waiver. Budget for the examination requirements until TREC confirms otherwise.", "State residency is also different from licensing eligibility: Arizona requires proof of authorized U.S. legal presence, while TREC lists U.S. citizenship or lawful admission among its qualifications. Both have age and background requirements."]}, "costChangeTable": {"heading": "Getting licensed does not mean a fixed commission — and it does not automatically make your own sale free", "intro": "The most useful distinction is between these charges (illustrated for a Phoenix property):", "colHeader1": "Cost when selling your Phoenix property", "colHeader2": "What having an Arizona salesperson license changes", "colHeader3": "How much could you pay?", "rows": [["Another listing agent’s commission", "You may perform the listing work through your brokerage instead of hiring another agent.", "Potentially $0 percentage commission, subject to your brokerage agreement."], ["Your employing brokerage’s charge", "Your broker’s personal-transaction policy applies when the transaction goes through the firm.", "Whatever you agree to: a flat transaction fee, percentage, monthly charge, waiver or combination. There is no universal state-set amount."], ["Buyer-agent compensation funded by you", "Your license does not remove this separate negotiation.", "$0 if you make no payment obligation, or the fixed amount/percentage you agree to fund."], ["MLS access", "A license makes you eligible to pursue access through an eligible brokerage; it does not include access automatically.", "ARMLS currently publishes $492 per year, with other enrollment/access arrangements potentially adding charges."], ["License, education and business expenses", "You incur these to obtain and maintain your license.", "Application, examination, fingerprints, coursework, renewal and any brokerage/business charges."], ["Closing costs, repairs and buyer credits", "Licensing does not eliminate them.", "Property- and contract-specific."]], "note": "Arizona regulates brokerage employment and compensation through the employing broker, and ARMLS’s joining instructions require licensing, brokerage affiliation and a separate subscription. Seller-funded buyer-agent compensation remains optional and negotiable."}, "beforeJoiningBrokerage": {"heading": "Before joining a brokerage", "intro": "Obtain its written policy for agents selling their own properties. Ask whether it:", "questions": ["Allows a personal listing with $0 listing commission.", "Charges a transaction fee even when no commission is collected.", "Requires monthly, insurance, technology or review fees.", "Covers investor properties and LLC-owned properties under the same personal-sale policy.", "Requires association membership or permits a nonmember MLS arrangement."], "brokerNote": "A salesperson license is also different from a broker license. Arizona’s original broker route ordinarily requires three years of active licensed experience during the preceding five years, plus additional requirements. Getting a new salesperson license does not immediately let you open an independent brokerage."}, "illustrativeExample": {"heading": "Illustrative example: a $500,000 Phoenix sale", "intro": "To illustrate the commission question, assume a $500,000 Phoenix sale and a brokerage that agrees to charge you a $500 personal-transaction fee with no percentage listing commission. This $500 is a hypothetical quote, not a verified offer:", "colHeaders": ["Arrangement", "Listing/brokerage charge", "Buyer-agent payment funded by you", "Transaction brokerage total"], "rows": [["You are licensed; no buyer-agent payment agreed", "$500", "$0", "$500"], ["You are licensed; you agree to fund 2% for the buyer’s agent", "$500", "$10,000", "$10,500"], ["You are unlicensed and use a $199 flat fee MLS listing; same 2% buyer-agent agreement", "$199", "$10,000", "$10,199"]], "note": "These figures exclude license acquisition, annual subscriptions and other selling costs. The point is that your license does not determine the buyer-agent payment, and a brokerage’s personal-sale fee can exceed an inexpensive MLS-only listing."}, "ownerExemption": {"heading": "You can already avoid a full-service listing agent without becoming licensed", "paragraphs": ["Arizona’s owner exemption generally allows a person to sell their own property without a real estate license, subject to the statute’s conditions. Texas likewise allows a person acting as principal to buy or sell their own property without a license. Entity ownership and acting for someone else can change the analysis.", "Once licensed, additional duties apply to your personal transactions. Arizona requires the “owner/agent” disclosure in applicable advertising; Texas requires written disclosure of your license status when acting on your own behalf before entering the relevant contract."]}, "feeTable": {"heading": "Licensing fee schedule (government/testing charges)", "colHeaders": ["Licensing route", "Examination", "Initial application/license", "Fingerprints", "Subtotal before tuition and other charges"], "rows": [["Arizona, starting from scratch", "$75 combined examination price when scheduled under the stated combination arrangement", "$60, including recovery fund", "$67 DPS fee, plus service/vendor charges", "$202 + additional charges"], ["Arizona, qualifying out-of-state recognition", "$60 state-specific salesperson examination", "$60", "$67 DPS fee, unless an acceptable clearance card is already held; service charges can apply", "$187 + additional charges"], ["Texas sales agent", "$58 published examination fee", "$206 current original application total", "$37 published fingerprint fee", "$301 + additional charges"]], "note": "Arizona figures come from ADRE, Pearson and DPS; Texas figures come from TREC’s fee schedule effective September 1, 2026. These are not complete costs to become an active, MLS-equipped agent.", "example": "For example, the Arizona starting subtotal of $202 plus a $492 ARMLS subscription already reaches $694, before school tuition, brokerage charges and other access costs. The recognition-route equivalent is $679."}, "renewalNote": "Renewal also requires continuing work. Texas renews sales-agent licenses every two years; first renewal ordinarily requires 90 hours of additional qualifying education plus eight hours of legal updates. Subsequent active renewals generally require 18 hours of continuing education.", "realtorMembershipNote": "You also do not automatically need REALTOR® association membership merely because you hold a license. Phoenix REALTORS® currently offers a nonmember MLS access route that participating brokers can make available to agents. That route still has eligibility, subscription and fee requirements.", "recommendation": "If your main objective is saving commission on one or two properties you own, compare a flat fee MLS service with an assisted low fee broker before pursuing a license. You can obtain much of the listing-commission saving without licensing expenses. If you want an ongoing real estate business, repeated personal transactions or direct professional MLS access, licensing becomes more useful. If you already have a qualifying California license held for at least a year, investigate Arizona’s recognition route; if Austin is the objective, plan directly around Texas’s requirements. Before enrolling, secure a brokerage quote covering personal-sale fees, recurring charges and MLS access, because those numbers determine whether the license actually saves you money.", "citations": [{"label": "Arizona Revised Statutes — nonresident licensing statute; owner exemption (“Applicability of article; exceptions”)", "domain": "azleg.gov"}, {"label": "Arizona Department of Real Estate (ADRE) — out-of-state recognition qualifications, licensing checklists, owner/agent disclosure, broker-license requirements (“Qualifications of licensees”)", "domain": "azre.gov"}, {"label": "Texas Real Estate Commission (TREC) — residency announcement, education requirements, reciprocity/examination-waiver guidance, fee schedule, renewal and CE requirements, disclosure of license status", "domain": "trec.texas.gov"}, {"label": "Phoenix REALTORS® — nonmember MLS access route", "domain": null}], "evidenceNote": "This tab reproduces, in organized form, deep research Tony requested on getting an Arizona or Texas real-estate license as an alternative to paying commission. It reflects Arizona and Texas regulator guidance, statutes and fee schedules as checked as of October 24, 2026. Rules, fees and checklists change — confirm current requirements with ADRE, TREC and the relevant brokerage/MLS before acting. This is not legal or licensing advice."}}</script>
+<script>
+(function () {
+  "use strict";
+  var STATE = JSON.parse(document.getElementById("ld-state").textContent);
+  var ZIP_SECTIONS = STATE.zipSections;
+  var PENDING_REQUESTS = STATE.pendingRequests;
+  var RESOLVED_REQUESTS = STATE.resolvedRequests;
+  var AGENT_PENDING = STATE.agentPendingRequests || [];
+  var AGENT_RESOLVED = STATE.agentResolvedRequests || [];
+  var LOWCOMM_GUIDE = STATE.lowCommissionGuide || null;
+  var LICENSE_GUIDE = STATE.licenseGuide || null;
+  var MARKET_LABEL = { CA: "Sacramento", AZ: "Arizona (Phoenix)", TX: "Texas (Austin)", SELL: "Low-Commission Selling", LICENSE: "Get Your Own License" };
+  var market = "CA";
+
+  var PAGE_META_BOXES = {
+    sourcing: '<div class="page-meta-box">' +
+      '<span class="pmb-label">At a glance</span>' +
+      '<ul>' +
+      '<li><b>Goal:</b> find a realtor who can actually surface a deal before it hits the open market — not just one with high sales volume — since no platform ranks agents on that skill directly, so it has to be pieced together from indirect, cross-verified evidence and tested with direct interview questions.</li>' +
+      '<li><b>Summary:</b> 5 ZIPs scored so far (2 Sacramento-area California, 3 Austin-area Texas — Arizona/Phoenix not yet scored), 32 candidate agents evaluated across an 8-factor weighted scorecard.</li>' +
+      '<li><b>Inputs:</b> none to start — pick a market tab, queue a new ZIP below, or search a specific realtor by name.</li>' +
+      '<li><b>Outputs:</b> a ranked, scored shortlist per ZIP with evidence citations and confidence tags, plus the 10 off-market-ability interview questions worth asking before hiring anyone.</li>' +
+      '</ul></div>',
+    sell: '<div class="page-meta-box">' +
+      '<span class="pmb-label">At a glance</span>' +
+      '<ul>' +
+      '<li><b>Goal:</b> show a seller in Phoenix or Sacramento how to avoid or minimize the standard ~5–6% commission, so a sale can be priced against real low-commission alternatives instead of assuming a full-service listing agent is the only option.</li>' +
+      '<li><b>Summary:</b> a full reproduction of a 13-table, 64-source research pass comparing 8 low-commission routes (flat-fee MLS, assisted hybrid, 1% agent, discount brokerage, referral network, iBuyer, FSBO, direct sale) against a standard listing agent, plus a dedicated section on whether buyer-agent commission is ever truly unavoidable.</li>' +
+      '<li><b>Inputs:</b> none — this is a reference guide, not an interactive tool.</li>' +
+      '<li><b>Outputs:</b> a route-by-route cost/tradeoff comparison, a dollar-amount worked example at three price points, and a seller\'s step-by-step action plan.</li>' +
+      '</ul></div>',
+    license: '<div class="page-meta-box">' +
+      '<span class="pmb-label">At a glance</span>' +
+      '<ul>' +
+      '<li><b>Goal:</b> answer whether becoming licensed yourself in Arizona or Texas actually beats hiring an agent or using a flat-fee MLS when selling, so that option can be ruled in or out with real numbers instead of assumption.</li>' +
+      '<li><b>Summary:</b> a 6-row quick-answer table plus full Arizona/Texas licensing-requirement sections, a licensing-fee schedule, owner-exemption rules, and a worked $500K example comparing licensed-with-brokerage-fee vs. unlicensed flat-fee-MLS costs.</li>' +
+      '<li><b>Inputs:</b> none — this is a reference guide, not an interactive tool.</li>' +
+      '<li><b>Outputs:</b> a state-by-state requirement and cost breakdown, plus a final recommendation on whether licensing is worth it.</li>' +
+      '</ul></div>'
+  };
+
+  function escapeHtml(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function fmt0(n) { return n == null ? "" : "$" + Number(n).toLocaleString(); }
+  function fmtNum(n) { return n == null ? "" : Number(n).toLocaleString(); }
+
+  var CONFIDENCE_LABEL = {
+    verified: { cls: "confidence-verified", text: "🟢 Verified — license board match + cross-platform" },
+    strong: { cls: "confidence-strong", text: "🟡 Strong evidence — partially cross-checked" },
+    single: { cls: "confidence-single", text: "⚪ Single-source — Zillow only, not yet cross-checked" }
+  };
+
+  var SCORE_MAX = { om: 25, ze: 20, bp: 15, ng: 15, nw: 10, vp: 5, rv: 5, lc: 5 };
+  var SCORE_LABEL = { om: "Off-Market", ze: "ZIP Exp.", bp: "Buyer Perf.", ng: "Negotiation", nw: "Network", vp: "Verif. Prod.", rv: "Reviews", lc: "License" };
+  var SCORE_ORDER = ["om", "ze", "bp", "ng", "nw", "vp", "rv", "lc"];
+
+  function overallScore(scores) {
+    return SCORE_ORDER.reduce(function (sum, k) { return sum + (scores[k] || 0); }, 0);
+  }
+
+  function scoreBars(scores) {
+    return SCORE_ORDER.map(function (k) {
+      var pct = Math.round((scores[k] / SCORE_MAX[k]) * 100);
+      return '<div class="score-bar-row">' +
+        '<div class="score-bar-label"><span>' + SCORE_LABEL[k] + '</span><span>' + scores[k] + '/' + SCORE_MAX[k] + '</span></div>' +
+        '<div class="score-bar-track"><div class="score-bar-fill ' + k + '" style="width:' + pct + '%;"></div></div>' +
+        "</div>";
+    }).join("");
+  }
+
+  function agentCard(agent, rank) {
+    var conf = CONFIDENCE_LABEL[agent.confidence] || CONFIDENCE_LABEL.single;
+    var overall = overallScore(agent.scores);
+    var sources = (agent.sources || []).map(function (s) {
+      return '<a href="' + s.url + '" target="_blank" rel="noopener">' + escapeHtml(s.label) + " ↗</a>";
+    }).join("");
+    return '<div class="agent-card rank-' + rank + '">' +
+      '<div class="rank-badge">#' + rank + "</div>" +
+      '<div class="agent-main">' +
+        '<div class="agent-name-row"><span class="agent-name">' + escapeHtml(agent.name) + "</span>" +
+          (agent.team ? '<span class="team-pill">TEAM</span>' : "") + "</div>" +
+        '<div class="agent-brokerage">' + escapeHtml(agent.brokerage) + "</div>" +
+        '<div class="agent-meta">' +
+          "<span>" + (agent.rating != null ? ("<b>" + agent.rating.toFixed(1) + "★</b> (" + fmtNum(agent.reviews) + " reviews)") : "<b>No rating aggregator profile found</b>") + "</span>" +
+          "<span>" + (agent.salesMeta ? escapeHtml(agent.salesMeta) : "<b>" + fmtNum(agent.salesLastYear) + "</b> sales / 12mo") + "</span>" +
+          "<span>" + (agent.zipMeta ? escapeHtml(agent.zipMeta) : "<b>" + fmtNum(agent.salesInZip) + "</b> sales in " + escapeHtml(agent.zipRef || "")) + "</span>" +
+          "<span>" + escapeHtml(agent.priceRange) + " range</span>" +
+        "</div>" +
+        '<div class="confidence-pill ' + conf.cls + '">' + conf.text + "</div>" +
+        '<div class="agent-evidence">' + escapeHtml(agent.evidence) + "</div>" +
+        '<div class="agent-sources">' + sources + "</div>" +
+      "</div>" +
+      '<div class="score-col">' +
+        '<div class="overall-score"><div class="num">' + overall + '</div><div class="lbl">/ 100</div></div>' +
+        '<div class="score-bars">' + scoreBars(agent.scores) + "</div>" +
+      "</div>" +
+    "</div>";
+  }
+
+  function guideTableHtml(headers, rows, numsClass) {
+    var thead = "<tr>" + headers.map(function (h) { return "<th>" + escapeHtml(h) + "</th>"; }).join("") + "</tr>";
+    var tbody = rows.map(function (r) {
+      return "<tr>" + r.map(function (c) { return "<td>" + escapeHtml(c) + "</td>"; }).join("") + "</tr>";
+    }).join("");
+    return '<div class="guide-table-wrap"><table class="guide-table' + (numsClass ? " nums" : "") + '"><thead>' + thead + "</thead><tbody>" + tbody + "</tbody></table></div>";
+  }
+
+  function lowCommissionGuideHtml(g) {
+    var html = "";
+
+    html += '<div class="intro-card">' +
+      '<h2>' + escapeHtml(g.title) + "</h2>" +
+      '<p>' + escapeHtml(g.subtitle) + "</p>" +
+      '<p><strong>As of ' + escapeHtml(g.asOfDate) + '.</strong> Source: a ChatGPT deep-research thread plus its attached 13-page, 48-source PDF report, reproduced in full below. <a href="' + escapeHtml(g.sourceThread) + '" target="_blank" rel="noopener">View the original research thread ↗</a></p>' +
+      '<div class="caveat-box"><strong>Main recommendation:</strong> ' + escapeHtml(g.mainRecommendation) + "</div>" +
+      '<p style="margin-top:10px;">' + escapeHtml(g.scopeNote) + "</p>" +
+    "</div>";
+
+    html += '<div class="guide-section"><div class="guide-kicker">Quick answer</div><h3>Where to start, by priority</h3>' +
+      guideTableHtml(["Your priority", "Phoenix starting point", "Sacramento starting point"],
+        g.priorityTable.map(function (r) { return [r.priority, r.phoenix, r.sacramento]; })) +
+    "</div>";
+
+    html += '<div class="guide-section"><div class="guide-kicker">01 — Understand the routes</div><h3>What can actually be zero?</h3>' +
+      '<p class="guide-intro">Separate the listing fee, the buyer-agent payment and the costs of completing the transfer.</p>' +
+      guideTableHtml(["Route", "Can broker commission be $0?", "Your workload / tradeoff"],
+        g.routesTable.map(function (r) { return [r.route, r.zero, r.tradeoff]; })) +
+      '<div class="guide-note"><strong>The buyer-agent payment is optional for the seller.</strong> ' + escapeHtml(g.buyerAgentNote) + "</div>" +
+      '<div class="guide-note formula">' + escapeHtml(g.netFormula) + "</div>" +
+    "</div>";
+
+    html += '<div class="guide-section"><div class="guide-kicker">02 — Free & inexpensive buyer sources</div><h3>Find buyers without a listing commission</h3>' +
+      guideTableHtml(["Channel", "Published charge / limitation", "How to use it"],
+        g.freeChannels.map(function (r) { return [r.channel, r.cost, r.use]; })) +
+    "</div>";
+
+    html += '<div class="guide-section"><div class="guide-kicker">03 — MLS access without a percentage</div><h3>Self-service listing comparison</h3>' +
+      '<p class="guide-intro">An MLS is the broker listing database. For these markets, ask specifically about ARMLS in Phoenix and MetroList in Sacramento.</p>' +
+      guideTableHtml(["Provider", "Published listing-side price", "Local fit and material limits"],
+        g.mlsProviders.map(function (r) { return [r.name, r.price, r.fit]; })) +
+      '<div class="guide-note">' + escapeHtml(g.mlsPreference) + "</div>" +
+      '<p style="font-size:12px;color:var(--ink-faint);margin-top:10px;">' + escapeHtml(g.mlsEvidenceNote) + "</p>" +
+    "</div>";
+
+    html += '<div class="guide-section"><div class="guide-kicker">04 — Phoenix</div><h3>Lower fees with more help</h3>' +
+      guideTableHtml(["Provider / plan", "Listing fee at a $500,000 sale", "What to confirm"],
+        g.phoenixAssisted.map(function (r) { return [r.name, r.fee500k, r.confirm]; })) +
+      '<div class="guide-guidance">' + g.phoenixGuidance.map(function (it) {
+        return '<div class="guide-guidance-item"><span class="label">' + escapeHtml(it.label) + '</span><span class="text">' + escapeHtml(it.text) + "</span></div>";
+      }).join("") + "</div>" +
+      '<div class="guide-note">' + escapeHtml(g.phoenixMarketNote) + "</div>" +
+    "</div>";
+
+    html += '<div class="guide-section"><div class="guide-kicker">05 — Sacramento</div><h3>DIY savings or a local 1% agent</h3>' +
+      guideTableHtml(["Option", "Published pricing", "Assessment"],
+        g.sacramentoAssisted.map(function (r) { return [r.name, r.price, r.assessment]; })) +
+      '<div class="guide-guidance">' + g.sacramentoGuidance.map(function (it) {
+        return '<div class="guide-guidance-item"><span class="label">' + escapeHtml(it.label) + '</span><span class="text">' + escapeHtml(it.text) + "</span></div>";
+      }).join("") + "</div>" +
+      '<div class="guide-note">' + escapeHtml(g.sacramentoMarketNote) + "</div>" +
+    "</div>";
+
+    html += '<div class="guide-section"><div class="guide-kicker">06 — Read the complete fee</div><h3>The headline can be misleading</h3>' +
+      guideTableHtml(["Service", "Published fee detail", "Meaning at $500,000"],
+        g.feeTraps.map(function (r) { return [r.service, r.detail, r.meaning500k]; })) +
+      '<div class="guide-note">' + escapeHtml(g.redfinNote) + "</div>" +
+      '<div class="guide-restrictions">' + g.otherRestrictions.map(function (r) {
+        return '<div class="item"><b>' + escapeHtml(r.name) + ':</b> ' + escapeHtml(r.note) + "</div>";
+      }).join("") + "</div>" +
+    "</div>";
+
+    html += '<div class="guide-section"><div class="guide-kicker">07 — Dollar examples</div><h3>What the listing side would cost</h3>' +
+      '<p class="guide-intro">' + escapeHtml(g.dollarExamples.note) + "</p>" +
+      guideTableHtml(["Listing route", "$350,000", "$500,000", "$800,000"],
+        g.dollarExamples.rows.map(function (r) { return [r.route, r.p350, r.p500, r.p800]; }), true) +
+      '<p style="font-size:12px;color:var(--ink-faint);margin-top:10px;">' + escapeHtml(g.dollarExamples.footnote) + "</p>" +
+      '<div class="guide-note">' + escapeHtml(g.buyerSideNote) + "</div>" +
+      '<div class="guide-note">' + escapeHtml(g.priceVsFeeNote) + "</div>" +
+    "</div>";
+
+    html += '<div class="guide-section"><div class="guide-kicker">08 — Cash buyers & other property types</div><h3>Use the right audience</h3>' +
+      guideTableHtml(["Route", "Verified position", "How to evaluate"],
+        g.cashBuyers.map(function (r) { return [r.name, r.position, r.evaluate]; })) +
+      '<div class="guide-note">' + escapeHtml(g.cashBuyerCaveat) + "</div>" +
+      '<p class="guide-intro" style="margin-top:12px;">' + escapeHtml(g.commercialNote) + "</p>" +
+    "</div>";
+
+    html += '<div class="guide-section"><div class="guide-kicker">09 — Preserve the savings</div><h3>Closing and disclosure work still exists</h3>' +
+      '<p class="guide-intro">' + escapeHtml(g.closingCosts.intro) + "</p>" +
+      '<div class="guide-closing-grid">' +
+        '<div class="guide-closing-item"><div class="ci-label">Sacramento transfer tax</div><div class="ci-text">' + escapeHtml(g.closingCosts.sacTransferTax) + "</div></div>" +
+        '<div class="guide-closing-item"><div class="ci-label">California disclosures</div><div class="ci-text">' + escapeHtml(g.closingCosts.california) + "</div></div>" +
+        '<div class="guide-closing-item"><div class="ci-label">Arizona disclosures</div><div class="ci-text">' + escapeHtml(g.closingCosts.arizona) + "</div></div>" +
+        '<div class="guide-closing-item"><div class="ci-label">Federal lead rules</div><div class="ci-text">' + escapeHtml(g.closingCosts.federalLead) + "</div></div>" +
+      "</div>" +
+      '<div class="guide-note" style="margin-top:14px;">' + escapeHtml(g.closingCosts.professionalHelp) + "</div>" +
+    "</div>";
+
+    html += '<div class="guide-section"><div class="guide-kicker">10 — Put it into practice</div><h3>A low commission sale plan</h3>' +
+      guideTableHtml(["Step", "Action", "Decision to settle before proceeding"],
+        g.actionPlan.map(function (r) { return [r.step, r.action, r.decide]; })) +
+      '<p style="margin-top:16px;font-weight:600;font-size:13.5px;">Get written answers to these questions</p>' +
+      '<ol class="guide-questions">' + g.sellerQuestions.map(function (q) { return "<li>" + escapeHtml(q) + "</li>"; }).join("") + "</ol>" +
+    "</div>";
+
+    if (g.standardPathComparison) {
+      var spc = g.standardPathComparison;
+      html += '<div class="guide-section"><div class="guide-kicker">11 — vs. the standard path</div><h3>Each method against a standard full-service agent</h3>' +
+        '<p class="guide-intro">' + escapeHtml(spc.intro) + "</p>" +
+        '<ul class="guide-baseline-list">' + spc.baselineServices.map(function (s) { return "<li>" + escapeHtml(s) + "</li>"; }).join("") + "</ul>" +
+        '<div class="guide-note" style="margin-top:12px;">' + escapeHtml(spc.baselineStat) + "</div>" +
+        '<div class="guide-table-wrap" style="margin-top:16px;"><table class="guide-table compare-table"><thead><tr><th>Method</th><th>What you’d likely miss vs. the standard path</th><th>Where it can beat the standard path</th></tr></thead><tbody>' +
+        spc.rows.map(function (r) {
+          return "<tr><td>" + escapeHtml(r.method) + '</td><td class="cell-miss">' + escapeHtml(r.miss) + '</td><td class="cell-better">' + escapeHtml(r.better) + "</td></tr>";
+        }).join("") +
+        "</tbody></table></div>" +
+        '<p style="font-size:12px;color:var(--ink-faint);margin-top:10px;">' + escapeHtml(spc.evidenceNote) + "</p>" +
+        '<div class="guide-sources-grid" style="margin-top:12px;">' + spc.sources.map(function (s) {
+          return '<a href="' + escapeHtml(s.url) + '" target="_blank" rel="noopener">' + escapeHtml(s.label) + "</a>";
+        }).join("") + "</div>" +
+      "</div>";
+    }
+
+    if (g.buyerAgentCommissionSection) {
+      var bac = g.buyerAgentCommissionSection;
+      html += '<div class="guide-section"><div class="guide-kicker">12 — Do you still pay the buyer’s agent?</div><h3>Platform fees vs. buyer-agent compensation vs. the cost of a license</h3>' +
+        '<p class="guide-intro">' + escapeHtml(bac.intro) + "</p>" +
+        '<p class="guide-intro" style="margin-top:10px;">' + escapeHtml(bac.secondParagraph) + "</p>" +
+        guideTableHtml(bac.scenarioTable.colHeaders, bac.scenarioTable.rows) +
+        '<p style="margin-top:20px;font-weight:600;font-size:13.5px;">' + escapeHtml(bac.buyerSituationIntro) + "</p>" +
+        guideTableHtml(bac.buyerSituationTable.colHeaders, bac.buyerSituationTable.rows, true) +
+        bac.afterTableParagraphs.map(function (p) { return '<p class="guide-intro" style="margin-top:12px;">' + escapeHtml(p) + "</p>"; }).join("") +
+        '<div class="guide-note" style="margin-top:14px;">' + escapeHtml(bac.recommendation) + "</div>" +
+        '<div class="guide-sources-grid" style="margin-top:12px;">' + bac.sources.map(function (s) {
+          return '<a href="' + escapeHtml(s.url) + '" target="_blank" rel="noopener">' + escapeHtml(s.label) + "</a>";
+        }).join("") + "</div>" +
+      "</div>";
+    }
+
+    html += '<div class="guide-section"><div class="guide-kicker">13 — Sources</div><h3>Primary-source reading list</h3>' +
+      '<p class="guide-intro">Numbered references link to each source\'s domain. All were checked ' + escapeHtml(g.asOfDate) + ".</p>" +
+      '<div class="guide-sources-grid">' + g.sources.map(function (s) {
+        return '<a href="https://' + escapeHtml(s.domain) + '/" target="_blank" rel="noopener"><span class="src-id">[' + s.id + "]</span> " + escapeHtml(s.label) + " — " + escapeHtml(s.domain) + "</a>";
+      }).join("") + "</div>" +
+      '<p class="guide-evidence-limits">' + escapeHtml(g.evidenceLimits) + "</p>" +
+    "</div>";
+
+    return html;
+  }
+
+  function licenseGuideHtml(g) {
+    var html = "";
+
+    html += '<div class="intro-card">' +
+      '<h2>' + escapeHtml(g.title) + "</h2>" +
+      '<p>' + escapeHtml(g.subtitle) + "</p>" +
+      '<p><strong>As of ' + escapeHtml(g.asOfDate) + '.</strong></p>' +
+      '<div class="caveat-box"><strong>Short answer:</strong> ' + escapeHtml(g.intro) + "</div>" +
+    "</div>";
+
+    html += '<div class="guide-section"><div class="guide-kicker">01 — Quick answer</div><h3>Residency, reciprocity and commission at a glance</h3>' +
+      guideTableHtml(g.quickTable.colHeaders, g.quickTable.rows) +
+      '<p class="guide-evidence-limits">' + escapeHtml(g.quickTable.sourceNote) + "</p>" +
+    "</div>";
+
+    html += '<div class="guide-section"><div class="guide-kicker">02 — Arizona</div><h3>' + escapeHtml(g.arizonaSection.heading) + "</h3>" +
+      g.arizonaSection.paragraphs.map(function (p) { return '<p class="guide-intro">' + escapeHtml(p) + "</p>"; }).join("") +
+      '<p style="margin-top:14px;font-weight:600;font-size:13.5px;">' + escapeHtml(g.arizonaSection.checklistIntro) + "</p>" +
+      '<ul class="guide-baseline-list">' + g.arizonaSection.checklist.map(function (c) { return "<li>" + escapeHtml(c) + "</li>"; }).join("") + "</ul>" +
+      g.arizonaSection.afterChecklist.map(function (p) { return '<p class="guide-intro" style="margin-top:12px;">' + escapeHtml(p) + "</p>"; }).join("") +
+    "</div>";
+
+    html += '<div class="guide-section"><div class="guide-kicker">03 — Texas</div><h3>' + escapeHtml(g.texasSection.heading) + "</h3>" +
+      g.texasSection.paragraphs.map(function (p) { return '<p class="guide-intro">' + escapeHtml(p) + "</p>"; }).join("") +
+    "</div>";
+
+    html += '<div class="guide-section"><div class="guide-kicker">04 — What licensing changes</div><h3>' + escapeHtml(g.costChangeTable.heading) + "</h3>" +
+      '<p class="guide-intro">' + escapeHtml(g.costChangeTable.intro) + "</p>" +
+      guideTableHtml([g.costChangeTable.colHeader1, g.costChangeTable.colHeader2, g.costChangeTable.colHeader3], g.costChangeTable.rows) +
+      '<div class="guide-note" style="margin-top:12px;">' + escapeHtml(g.costChangeTable.note) + "</div>" +
+    "</div>";
+
+    html += '<div class="guide-section"><div class="guide-kicker">05 — Before joining a brokerage</div><h3>' + escapeHtml(g.beforeJoiningBrokerage.heading) + "</h3>" +
+      '<p class="guide-intro">' + escapeHtml(g.beforeJoiningBrokerage.intro) + "</p>" +
+      '<ol class="guide-questions">' + g.beforeJoiningBrokerage.questions.map(function (q) { return "<li>" + escapeHtml(q) + "</li>"; }).join("") + "</ol>" +
+      '<div class="guide-note" style="margin-top:12px;">' + escapeHtml(g.beforeJoiningBrokerage.brokerNote) + "</div>" +
+    "</div>";
+
+    html += '<div class="guide-section"><div class="guide-kicker">06 — Worked example</div><h3>' + escapeHtml(g.illustrativeExample.heading) + "</h3>" +
+      '<p class="guide-intro">' + escapeHtml(g.illustrativeExample.intro) + "</p>" +
+      guideTableHtml(g.illustrativeExample.colHeaders, g.illustrativeExample.rows, true) +
+      '<div class="guide-note" style="margin-top:12px;">' + escapeHtml(g.illustrativeExample.note) + "</div>" +
+    "</div>";
+
+    html += '<div class="guide-section"><div class="guide-kicker">07 — Owner exemption</div><h3>' + escapeHtml(g.ownerExemption.heading) + "</h3>" +
+      g.ownerExemption.paragraphs.map(function (p) { return '<p class="guide-intro">' + escapeHtml(p) + "</p>"; }).join("") +
+    "</div>";
+
+    html += '<div class="guide-section"><div class="guide-kicker">08 — Fee schedule</div><h3>' + escapeHtml(g.feeTable.heading) + "</h3>" +
+      guideTableHtml(g.feeTable.colHeaders, g.feeTable.rows) +
+      '<div class="guide-note" style="margin-top:12px;">' + escapeHtml(g.feeTable.note) + "</div>" +
+      '<p class="guide-intro" style="margin-top:12px;">' + escapeHtml(g.feeTable.example) + "</p>" +
+    "</div>";
+
+    html += '<div class="guide-section"><div class="guide-kicker">09 — Renewal &amp; REALTOR® membership</div><h3>Keeping the license active</h3>' +
+      '<p class="guide-intro">' + escapeHtml(g.renewalNote) + "</p>" +
+      '<p class="guide-intro" style="margin-top:10px;">' + escapeHtml(g.realtorMembershipNote) + "</p>" +
+    "</div>";
+
+    html += '<div class="guide-section"><div class="guide-kicker">10 — Recommendation</div><h3>Is this the right move for you?</h3>' +
+      '<div class="guide-note">' + escapeHtml(g.recommendation) + "</div>" +
+    "</div>";
+
+    html += '<div class="guide-section"><div class="guide-kicker">11 — Sources</div><h3>Primary-source reading list</h3>' +
+      '<div class="guide-sources-grid">' + g.citations.map(function (c) {
+        return c.domain
+          ? '<a href="https://' + escapeHtml(c.domain) + '/" target="_blank" rel="noopener">' + escapeHtml(c.label) + " — " + escapeHtml(c.domain) + "</a>"
+          : '<span class="guide-source-unlinked">' + escapeHtml(c.label) + "</span>";
+      }).join("") + "</div>" +
+      '<p class="guide-evidence-limits">' + escapeHtml(g.evidenceNote) + "</p>" +
+    "</div>";
+
+    return html;
+  }
+
+  function renderZipSections() {
+    var host = document.getElementById("zip-sections");
+
+    if (market === "SELL" || market === "LICENSE") {
+      if (market === "SELL") {
+        host.innerHTML = PAGE_META_BOXES.sell + (LOWCOMM_GUIDE ? lowCommissionGuideHtml(LOWCOMM_GUIDE) : '<div class="market-empty">No low-commission selling guide loaded.</div>');
+      } else {
+        host.innerHTML = PAGE_META_BOXES.license + (LICENSE_GUIDE ? licenseGuideHtml(LICENSE_GUIDE) : '<div class="market-empty">No license guide loaded.</div>');
+      }
+      document.getElementById("badge-zips").textContent = ZIP_SECTIONS.length + (ZIP_SECTIONS.length === 1 ? " ZIP scored" : " ZIPs scored");
+      var totalAgentsSell = ZIP_SECTIONS.reduce(function (sum, z) { return sum + z.agents.length; }, 0);
+      document.getElementById("badge-agents").textContent = totalAgentsSell + " candidates";
+      return;
+    }
+
+    var inMarket = ZIP_SECTIONS.filter(function (z) { return (z.market || "CA") === market; });
+
+    if (!inMarket.length) {
+      host.innerHTML = PAGE_META_BOXES.sourcing + '<div class="market-empty">No ' + MARKET_LABEL[market] + ' ZIPs scored yet on this tab — use the "check another ZIP" box below to queue one and tell Claude in chat to run the realtor-sourcing sweep.</div>';
+    } else {
+      host.innerHTML = PAGE_META_BOXES.sourcing + inMarket.map(function (z) {
+        var sorted = z.agents.slice().map(function (a) { a.zipRef = z.zip; return a; })
+          .sort(function (a, b) { return overallScore(b.scores) - overallScore(a.scores); });
+        var cards = sorted.map(function (a, i) { return agentCard(a, i + 1); }).join("");
+        return '<div class="zip-section">' +
+          '<div class="zip-header">' +
+            '<div><div class="zip-title">' + escapeHtml(z.zip) + " — " + escapeHtml(z.areaName) + "</div>" +
+              '<div class="zip-sub">' + escapeHtml(z.note) + "</div></div>" +
+            '<div class="zip-stats"><span class="zip-stat">' + z.agentsChecked + ' agents screened</span><span class="zip-stat">' + z.agents.length + ' scored candidates</span></div>' +
+          "</div>" +
+          '<div class="agent-list">' + cards + "</div>" +
+        "</div>";
+      }).join("");
+    }
+
+    document.getElementById("badge-zips").textContent = ZIP_SECTIONS.length + (ZIP_SECTIONS.length === 1 ? " ZIP scored" : " ZIPs scored");
+    var totalAgents = ZIP_SECTIONS.reduce(function (sum, z) { return sum + z.agents.length; }, 0);
+    document.getElementById("badge-agents").textContent = totalAgents + " candidates";
+  }
+
+  function renderMarketTabCounts() {
+    ["CA", "AZ", "TX"].forEach(function (m) {
+      var el = document.getElementById("market-tab-sub-" + m);
+      if (el) el.textContent = ZIP_SECTIONS.filter(function (z) { return (z.market || "CA") === m; }).length;
+    });
+  }
+
+  function switchMarket(mkt) {
+    market = mkt;
+    ["CA", "AZ", "TX", "SELL", "LICENSE"].forEach(function (m) {
+      var btn = document.getElementById("market-tab-" + m);
+      if (!btn) return;
+      if (m === mkt) { btn.classList.add("active"); btn.setAttribute("aria-selected", "true"); }
+      else { btn.classList.remove("active"); btn.setAttribute("aria-selected", "false"); }
+    });
+    var isGuideTab = (mkt === "SELL" || mkt === "LICENSE");
+    var addressCheck = document.getElementById("address-check");
+    if (addressCheck) addressCheck.hidden = isGuideTab;
+    var agentSearch = document.getElementById("agent-search");
+    if (agentSearch) agentSearch.hidden = isGuideTab;
+    renderZipSections();
+  }
+  window.switchMarket = switchMarket;
+
+  function sameZip(a, b) { return String(a).trim() === String(b).trim(); }
+  function sameName(a, b) { return String(a).trim().toLowerCase() === String(b).trim().toLowerCase(); }
+  function nextRequestId() {
+    var maxId = 0;
+    PENDING_REQUESTS.concat(RESOLVED_REQUESTS).concat(AGENT_PENDING).concat(AGENT_RESOLVED).forEach(function (r) { if (r.id > maxId) maxId = r.id; });
+    return maxId + 1;
+  }
+  function todayStr() {
+    var d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+
+  var REQUEST_STATUS_LABEL = {
+    queued: "⏳ Queued — tell Claude in chat to run the realtor-sourcing sweep",
+    added: "✅ Added — scored shortlist built and added above",
+    "already-listed": "ℹ️ Already on this page",
+    notfound: "⚠️ Couldn't find enough agents for this ZIP",
+    error: "⚠️ Couldn't process this ZIP — try again or check it"
+  };
+
+  function renderRequestList() {
+    var list = document.getElementById("address-check-list");
+    if (!list) return;
+    var items = PENDING_REQUESTS.slice().concat(RESOLVED_REQUESTS.slice(-8).slice().reverse());
+    if (!items.length) {
+      list.innerHTML = '<li class="empty">No ZIP checks yet — try one above.</li>';
+      return;
+    }
+    list.innerHTML = items.map(function (r) {
+      var label = REQUEST_STATUS_LABEL[r.status] || r.status;
+      return '<li class="' + r.status + '"><span class="addr">' + escapeHtml(r.zip) + "</span>" +
+        '<span class="status">' + label + (r.reason ? " — " + escapeHtml(r.reason) : "") + "</span></li>";
+    }).join("");
+  }
+
+  var AGENT_REQUEST_STATUS_LABEL = {
+    queued: "⏳ Queued — tell Claude in chat to evaluate this realtor",
+    added: "✅ Evaluated — scored and slotted into that ZIP's ranking above",
+    "already-listed": "ℹ️ Already scored on this page",
+    notfound: "⚠️ Couldn't find enough public info on this person to score them",
+    error: "⚠️ Couldn't process this request — try again or check the spelling"
+  };
+
+  function renderAgentRequestList() {
+    var list = document.getElementById("agent-search-list");
+    if (!list) return;
+    var items = AGENT_PENDING.slice().concat(AGENT_RESOLVED.slice(-8).slice().reverse());
+    if (!items.length) {
+      list.innerHTML = '<li class="empty">No realtor searches yet — try one above.</li>';
+      return;
+    }
+    list.innerHTML = items.map(function (r) {
+      var label = AGENT_REQUEST_STATUS_LABEL[r.status] || r.status;
+      var zipPart = r.zip ? " (" + escapeHtml(r.zip) + ")" : " (ZIP auto-detected)";
+      return '<li class="' + r.status + '"><span class="addr">' + escapeHtml(r.name) + zipPart + "</span>" +
+        '<span class="status">' + label + (r.reason ? " — " + escapeHtml(r.reason) : "") + "</span></li>";
+    }).join("");
+  }
+
+  function showToast(msg) {
+    var t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    setTimeout(function () { t.classList.remove("show"); }, 3200);
+  }
+
+  function buildPublishHtml() {
+    var clone = document.documentElement.cloneNode(true);
+    Array.prototype.forEach.call(clone.querySelectorAll(".toast"), function (n) { n.parentNode.removeChild(n); });
+    var input = clone.querySelector("#address-check-input");
+    if (input) input.removeAttribute("value");
+    var nameInput = clone.querySelector("#agent-search-name");
+    if (nameInput) nameInput.removeAttribute("value");
+    var zipInput = clone.querySelector("#agent-search-zip");
+    if (zipInput) zipInput.removeAttribute("value");
+    var stateScript = clone.querySelector("#ld-state");
+    if (stateScript) {
+      stateScript.textContent = JSON.stringify({
+        zipSections: ZIP_SECTIONS,
+        pendingRequests: PENDING_REQUESTS,
+        resolvedRequests: RESOLVED_REQUESTS,
+        agentPendingRequests: AGENT_PENDING,
+        agentResolvedRequests: AGENT_RESOLVED,
+        lowCommissionGuide: LOWCOMM_GUIDE,
+        licenseGuide: LICENSE_GUIDE,
+        lastRefresh: STATE.lastRefresh
+      });
+    }
+    return "<!doctype html>\n" + clone.outerHTML;
+  }
+
+  function publishState(statusElId) {
+    var statusEl = document.getElementById(statusElId || "address-check-status");
+    if (statusEl) statusEl.hidden = true;
+    if (!window.claude || typeof window.claude.use !== "function") {
+      if (statusEl) {
+        statusEl.hidden = false;
+        statusEl.textContent = "Note: live saving isn't available in this view — open the published page link directly (not a preview) so your request is saved and picked up for processing.";
+      }
+      return;
+    }
+    window.claude.use("artifact").then(function (artifact) {
+      if (!artifact) {
+        if (statusEl) {
+          statusEl.hidden = false;
+          statusEl.textContent = "Note: live saving isn't available in this view — open the published page link directly (not a preview) so your request is saved and picked up for processing.";
+        }
+        return;
+      }
+      return artifact.publish(buildPublishHtml());
+    }).catch(function (err) {
+      if (statusEl) {
+        statusEl.hidden = false;
+        statusEl.textContent = "Note: couldn't save this request automatically (" + (err && err.message ? err.message : "unknown error") + "). It's queued in this browser tab only for now.";
+      }
+    });
+  }
+
+  var addressForm = document.getElementById("address-check-form");
+  if (addressForm) {
+    addressForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var input = document.getElementById("address-check-input");
+      var zip = input.value.trim();
+      if (!zip) return;
+      if (!/^\d{5}$/.test(zip)) { showToast("Enter a 5-digit ZIP code."); return; }
+
+      var already = ZIP_SECTIONS.some(function (z) { return sameZip(z.zip, zip); });
+      if (already) { showToast("That ZIP already looks like it's on this page."); return; }
+      var dup = PENDING_REQUESTS.some(function (r) { return sameZip(r.zip, zip); });
+      if (dup) { showToast("That ZIP is already queued."); return; }
+
+      PENDING_REQUESTS.push({ id: nextRequestId(), zip: zip, market: market, submittedOn: todayStr(), status: "queued" });
+      renderRequestList();
+      input.value = "";
+      showToast("Queued — " + zip + " is saved here (" + MARKET_LABEL[market] + " tab). Tell Claude in chat to run the realtor-sourcing sweep.");
+      publishState("address-check-status");
+    });
+  }
+
+  var agentSearchForm = document.getElementById("agent-search-form");
+  if (agentSearchForm) {
+    agentSearchForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var nameInput = document.getElementById("agent-search-name");
+      var zipInput = document.getElementById("agent-search-zip");
+      var name = nameInput.value.trim();
+      var zip = zipInput.value.trim();
+      if (!name) return;
+      if (zip && !/^\d{5}$/.test(zip)) { showToast("ZIP must be 5 digits — or leave it blank and Claude will figure out their area."); return; }
+
+      var alreadyScored = ZIP_SECTIONS.some(function (z) {
+        return (!zip || sameZip(z.zip, zip)) && z.agents.some(function (a) { return sameName(a.name, name); });
+      });
+      if (alreadyScored) { showToast(name + " is already scored" + (zip ? " for " + zip : "") + " on this page."); return; }
+      var dup = AGENT_PENDING.some(function (r) {
+        return sameName(r.name, name) && (!zip || !r.zip || sameZip(r.zip, zip));
+      });
+      if (dup) { showToast("That realtor is already queued."); return; }
+
+      AGENT_PENDING.push({ id: nextRequestId(), name: name, zip: zip || null, market: market, submittedOn: todayStr(), status: "queued" });
+      renderAgentRequestList();
+      nameInput.value = "";
+      zipInput.value = "";
+      showToast("Queued — " + name + " is saved here. Tell Claude in chat to evaluate and rank them.");
+      publishState("agent-search-status");
+    });
+  }
+
+  renderMarketTabCounts();
+  renderZipSections();
+  renderRequestList();
+  renderAgentRequestList();
+})();
+</script>
+
+</body></html>

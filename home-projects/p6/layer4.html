@@ -1,0 +1,808 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<style>.p6-snap{position:sticky;top:0;z-index:1000;background:#2a2f3a;color:#fff;font:13px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:8px 16px;display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center}.p6-snap a{color:#cfe3ff}.address-check,#criteria-toggle,#dossier-check,#agent-search,.zip-city-check,.dossier-check{display:none!important}</style>
+<div class="p6-snap" role="note"><span><strong>Home Dashboard</strong> · read-only snapshot published Oct 28, 2026</span><a href="../project-06.html">← Project 6 overview</a><a href="layer0.html">Hub (Layer 0)</a><span style="opacity:.75">Request forms are hidden: they only work inside Claude. Figures are dated research snapshots, not advice.</span></div>
+
+<meta name="robots" content="noindex"><title>Long-Term Rent Comps</title>
+<meta name="color-scheme" content="light only">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"></noscript>
+
+<style>
+  :root {
+    --paper: #FFFFFF;
+    --paper-raised: #FAFAFB;
+    --ink: #0E0F10;
+    --ink-soft: #3A3D42;
+    --ink-faint: #74787E;
+    --line: #DADCE0;
+    --line-soft: #ECEDEF;
+    --river: #5F497A;
+    --river-strong: #46345E;
+    --river-tint: #E5DFEC;
+    --brass: #8A70A8;
+    --brass-strong: #6B5488;
+    --brass-tint: #F0EBF6;
+    --sage: #2E7D4F;
+    --sage-tint: #D9EAD3;
+    --clay: #6B7178;
+    --clay-tint: #ECEDEF;
+    --amber: #B5760B;
+    --amber-tint: #FBF0DB;
+    --red: #B23A2F;
+    --red-tint: #F8E4E1;
+    --tier2-accent: #B5760B;
+    --tier2-tint: #FBF0DB;
+    --shadow: 0 12px 32px -16px rgba(14,15,16,0.16);
+    --radius-s: 6px;
+    --radius-m: 10px;
+    --radius-l: 16px;
+    --focus: 0 0 0 3px rgba(95,73,122,0.32);
+  }
+  * { box-sizing: border-box; }
+  html { color-scheme: light; background: #FFFFFF; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper) !important;
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+  h1, h2, h3 { font-family: "Fraunces", Georgia, serif; font-weight: 600; text-wrap: balance; margin: 0; }
+  a { color: var(--river); }
+  button { font-family: inherit; }
+  input { font-family: inherit; }
+  ::selection { background: var(--brass-tint); }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+
+  .shell { max-width: 1320px; margin: 0 auto; padding: 0 20px 64px; }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+    gap: 18px; padding: 32px 0 22px; border-bottom: 1px solid var(--line);
+  }
+  .wordmark-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .wordmark { font-size: 30px; letter-spacing: -0.01em; }
+  .wordmark em { font-style: normal; color: var(--brass-strong); border-bottom: 2px solid var(--brass); }
+  .tagline { color: var(--ink-soft); font-size: 14.5px; margin-top: 4px; max-width: 60ch; }
+  .backlink { font-size: 13px; color: var(--ink-faint); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; margin-bottom: 6px; }
+  .backlink:hover { color: var(--river); }
+  .badges { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600;
+    padding: 6px 11px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--paper-raised); color: var(--ink-soft); white-space: nowrap;
+  }
+  .badge.accent { background: var(--river-tint); color: var(--river-strong); border-color: transparent; }
+
+  /* ---------- Nav rail (7-layer roadmap) ---------- */
+  .layout { display: grid; grid-template-columns: 220px 1fr; gap: 32px; padding-top: 26px; align-items: start; }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+  .rail { position: sticky; top: 20px; display: flex; flex-direction: column; gap: 4px; }
+  .rail-item {
+    display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: var(--radius-s);
+    font-size: 13.5px; color: var(--ink-faint); border: 1px solid transparent;
+  }
+  .rail-item .num {
+    width: 20px; height: 20px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; background: var(--clay-tint); color: var(--ink-faint); flex-shrink: 0;
+  }
+  .rail-item.active { background: var(--river-tint); color: var(--river-strong); border-color: transparent; font-weight: 600; }
+  .rail-item.active .num { background: var(--river); color: #fff; }
+  .rail-item.locked { color: #B5B8BD; }
+  .rail-item.locked .num { background: var(--line-soft); color: #B5B8BD; }
+  .rail-item.done .num { background: var(--sage); color: #fff; }
+  .rail-item.done { color: var(--ink-soft); }
+  .rail-item a { color: inherit; text-decoration: none; display: flex; align-items: center; gap: 10px; width: 100%; }
+
+  .main { min-width: 0; }
+
+  /* ---------- At-a-glance box (Goal/Summary/Inputs/Outputs) ---------- */
+  .page-meta-box { border-left: 3px solid var(--river); background: var(--paper-raised); border-radius: var(--radius-s); padding: 12px 16px 13px; margin: 0 0 20px; }
+  .page-meta-box .pmb-label { display: block; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--river-strong); margin-bottom: 7px; font-family: "IBM Plex Sans", sans-serif; }
+  .page-meta-box ul { margin: 0; padding-left: 18px; }
+  .page-meta-box li { font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; margin: 3px 0; }
+  .page-meta-box li b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Intro / methodology ---------- */
+  .intro-card {
+    background: var(--paper-raised); border: 1px solid var(--line); border-radius: var(--radius-l);
+    padding: 22px 24px; margin-bottom: 20px;
+  }
+  .intro-card h2 { font-size: 19px; margin-bottom: 8px; }
+  .intro-card p { color: var(--ink-soft); font-size: 14px; margin: 0 0 10px; max-width: 96ch; }
+  .intro-card p:last-child { margin-bottom: 0; }
+  .caveat-box {
+    margin-top: 14px; padding: 12px 14px; border-radius: var(--radius-m);
+    background: var(--amber-tint); border: 1px solid transparent; font-size: 13px; color: #6B4E0C;
+  }
+  .caveat-box strong { color: #4F3A08; }
+  details.methodology { margin-top: 12px; }
+  details.methodology summary {
+    cursor: pointer; font-size: 13px; font-weight: 600; color: var(--river); list-style: none; display: inline-flex; align-items: center; gap: 6px;
+  }
+  details.methodology summary::-webkit-details-marker { display: none; }
+  details.methodology summary::before { content: "▸"; font-size: 11px; transition: transform 0.15s; }
+  details.methodology[open] summary::before { transform: rotate(90deg); }
+  details.methodology .m-body { padding-top: 12px; font-size: 13.5px; color: var(--ink-soft); }
+  details.methodology .m-body ul { margin: 6px 0 12px; padding-left: 20px; }
+  details.methodology .m-body li { margin-bottom: 5px; }
+  details.methodology .m-body strong { color: var(--ink); }
+
+  /* ---------- Address-check box ---------- */
+  .address-check {
+    background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-l);
+    padding: 20px 24px; margin-bottom: 28px;
+  }
+  .address-check-head h3 { font-size: 16px; }
+  .address-check-head p { margin: 4px 0 0; color: var(--ink-faint); font-size: 12.5px; max-width: 66ch; }
+  .address-check-form { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .address-check-form input {
+    flex: 1 1 320px; padding: 9px 12px; border: 1px solid var(--line); border-radius: var(--radius-s);
+    font-size: 13.5px; color: var(--ink);
+  }
+  .address-check-form input:focus { outline: none; box-shadow: var(--focus); border-color: var(--river); }
+  .address-check-form button {
+    padding: 9px 18px; border-radius: var(--radius-s); border: none; background: var(--river);
+    color: #fff; font-size: 13.5px; font-weight: 600; cursor: pointer;
+  }
+  .address-check-form button:hover { background: var(--river-strong); }
+  .address-check-status { margin-top: 10px; font-size: 12.5px; color: var(--brass-strong); background: var(--brass-tint); border-radius: var(--radius-s); padding: 8px 10px; }
+  .address-check-list { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .address-check-list li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; font-size: 12.5px; padding: 7px 10px; border-radius: var(--radius-s); background: var(--paper-raised); border: 1px solid var(--line-soft); }
+  .address-check-list li.empty { color: var(--ink-faint); background: none; border: none; padding: 4px 2px; }
+  .address-check-list .addr { font-weight: 600; }
+  .address-check-list .status { color: var(--ink-soft); }
+  .address-check-list li.queued .status { color: var(--brass-strong); }
+  .address-check-list li.added .status { color: var(--sage); }
+  .address-check-list li.error .status, .address-check-list li.notfound .status { color: #A6473B; }
+
+  /* ---------- Market tab bar (California / Texas) ---------- */
+  .market-tab-bar { display: flex; gap: 8px; margin-bottom: 22px; flex-wrap: wrap; }
+  .market-tab-btn {
+    display: inline-flex; align-items: center; gap: 7px; padding: 9px 16px; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--paper); color: var(--ink-soft);
+    font-size: 13.5px; font-weight: 600; font-family: inherit; cursor: pointer; transition: border-color 0.15s, background 0.15s;
+  }
+  .market-tab-btn:hover { border-color: var(--river); color: var(--river-strong); }
+  .market-tab-btn:focus-visible { outline: none; box-shadow: var(--focus); }
+  .market-tab-btn.active { background: var(--river); border-color: var(--river); color: #fff; }
+  .market-tab-sub {
+    font-size: 11.5px; font-weight: 700; padding: 1px 8px; border-radius: 999px;
+    background: var(--paper-raised); color: var(--ink-faint);
+  }
+  .market-tab-btn.active .market-tab-sub { background: rgba(255,255,255,0.24); color: #fff; }
+  .market-empty {
+    padding: 40px 20px; text-align: center; color: var(--ink-faint); font-size: 14px;
+    border: 1px dashed var(--line); border-radius: var(--radius-l); margin-bottom: 24px;
+  }
+
+  /* ---------- Subject property section ---------- */
+  .subject-section { margin-bottom: 44px; }
+  .subject-head {
+    display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 14px;
+    padding-bottom: 16px; margin-bottom: 20px; border-bottom: 2px solid var(--ink);
+  }
+  .subject-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--brass-strong); }
+  .subject-title { font-size: 22px; margin-top: 2px; }
+  .subject-sub { font-size: 13px; color: var(--ink-faint); margin-top: 4px; }
+
+  .methodology-flag {
+    display: flex; gap: 10px; align-items: flex-start; background: var(--amber-tint); border: 1px solid var(--amber);
+    border-radius: var(--radius-m); padding: 12px 14px; margin-bottom: 20px; font-size: 13px; line-height: 1.5; color: var(--ink-soft);
+  }
+  .methodology-flag .flag-icon { font-size: 15px; line-height: 1.4; flex-shrink: 0; }
+  .methodology-flag strong { color: var(--ink); }
+
+  .stat-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 22px; }
+  @media (max-width: 980px) { .stat-row { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 640px) { .stat-row { grid-template-columns: repeat(2, 1fr); } }
+  .stat-card {
+    background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-m); padding: 14px 16px;
+  }
+  .stat-card .stat-label { font-size: 11.5px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-faint); }
+  .stat-card .stat-value { font-size: 22px; font-weight: 600; color: var(--ink); margin-top: 4px; font-family: "Fraunces", Georgia, serif; }
+  .stat-card .stat-note { font-size: 11.5px; color: var(--ink-faint); margin-top: 3px; }
+  .stat-card.highlight { background: var(--river-tint); border-color: transparent; }
+  .stat-card.highlight .stat-value { color: var(--river-strong); }
+  .stat-card.tier2 { background: var(--tier2-tint); border-color: transparent; }
+  .stat-card.tier2 .stat-value { color: #6B4E0C; }
+
+  /* comps table */
+  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius-l); background: var(--paper); margin-bottom: 14px; }
+  table.comps { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 880px; }
+  table.comps th {
+    text-align: left; font-size: 11px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase;
+    color: var(--ink-faint); padding: 10px 12px; background: var(--paper-raised); border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+  }
+  table.comps th.num, table.comps td.num { text-align: right; }
+  table.comps td { padding: 11px 12px; border-bottom: 1px solid var(--line-soft); vertical-align: top; white-space: nowrap; }
+  table.comps tbody tr:last-child td { border-bottom: none; }
+  table.comps tbody tr:hover { background: var(--paper-raised); }
+  .comp-name { font-weight: 600; color: var(--ink); }
+  .comp-rank { color: var(--ink-faint); font-size: 12px; margin-right: 6px; }
+  .freshest-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; background: var(--sage-tint); color: var(--sage); padding: 2px 7px; border-radius: 999px; margin-left: 8px; }
+  .closest-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; background: var(--river-tint); color: var(--river-strong); padding: 2px 7px; border-radius: 999px; margin-left: 8px; }
+  .verified-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; background: var(--river-tint); color: var(--river-strong); padding: 2px 7px; border-radius: 999px; margin-left: 6px; }
+  .samezip-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; background: var(--tier2-tint); color: #6B4E0C; padding: 2px 7px; border-radius: 999px; margin-left: 6px; }
+  .table-foot-note { font-size: 12px; color: var(--ink-faint); padding: 2px 12px 10px; }
+
+  /* Tier 2 — lower-spec section divider */
+  .tier2-head {
+    margin-top: 28px; padding-top: 22px; padding-bottom: 16px; margin-bottom: 20px;
+    border-top: 2px solid var(--tier2-accent); border-bottom: 2px solid var(--ink);
+  }
+  .tier2-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tier2-accent); }
+  .tier2-title { font-size: 18px; margin-top: 3px; }
+  .tier2-note { font-size: 13px; color: var(--ink-faint); margin-top: 6px; max-width: 78ch; }
+
+  footer.page-foot { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--ink-faint); }
+
+  /* ---------- Toast ---------- */
+  .toast {
+    position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%); background: var(--river-strong); color: #fff;
+    padding: 10px 16px; border-radius: var(--radius-s); font-size: 13px; z-index: 60; box-shadow: var(--shadow);
+    max-width: 90vw;
+  }
+</style>
+
+<div class="shell">
+  <div class="topbar">
+    <div>
+      <a class="backlink" href="layer3.html">← Layer 3: Sold Comps</a>
+      <div class="wordmark-row">
+        <h1 class="wordmark"><em>Long-Term Rent Comps</em></h1>
+      </div>
+      <p class="tagline" id="tagline">Layer 4 — what a subject property (and a bedroom-down version of it) would rent for long-term, built from active listings on Zillow and Apartments.com near the address.</p>
+    </div>
+    <div class="badges" id="badges">
+      <span class="badge accent">Layer 4 of 7</span>
+      <span class="badge" id="badge-count">1 subject property</span>
+    </div>
+  </div>
+
+  <div class="layout">
+    <nav class="rail" aria-label="Dashboard layers">
+      <div class="rail-item done"><a href="layer1.html"><span class="num">1</span> Investment Ledger</a></div>
+      <div class="rail-item done"><a href="layer2.html"><span class="num">2</span> STR Comps</a></div>
+      <div class="rail-item done"><a href="layer3.html"><span class="num">3</span> Sold Comps</a></div>
+      <div class="rail-item active"><span class="num">4</span> Long-Term Rent Comps</div>
+      <div class="rail-item done"><a href="layer5.html"><span class="num">5</span> Realtor Sourcing</a></div>
+      <div class="rail-item done"><a href="layer6.html"><span class="num">6</span> Off-Market Finder</a></div>
+      <div class="rail-item done"><a href="layer7.html"><span class="num">7</span> STR &amp; ADU Regulations</a></div>
+      <div class="rail-item done"><a href="layer8.html"><span class="num">8</span> Renovation Cost Estimator</a></div>
+      <div class="rail-item done"><a href="layer9.html"><span class="num">9</span> Risk Assessment</a></div>
+      <div class="rail-item done"><a href="layer10.html"><span class="num">10</span> Rental Management Companies</a></div>
+    </nav>
+
+    <div class="main">
+      <div class="page-meta-box">
+        <span class="pmb-label">At a glance</span>
+        <ul>
+          <li><b>Goal:</b> see what a subject property would realistically rent for long-term, so a standard-rental strategy can be weighed against Layer 2's Airbnb numbers and checked against Layer 1's own Net income/mo assumptions, rather than guessing at a rent figure.</li>
+          <li><b>Summary:</b> 8 subject properties covered (5 California, 1 Texas, 2 Arizona/Phoenix), 120 live rental comps total across two spec tiers — 80 at the subject's own bedroom count, 40 one bedroom down — each sourced from Zillow, Apartments.com, or Redfin.</li>
+          <li><b>Inputs:</b> none to start — pick a market tab, or type any address into "Check another subject property" to queue a new one for a full comp sweep.</li>
+          <li><b>Outputs:</b> a ranked comps table per subject at both spec tiers, with $/sqft and gross-yield figures computed against the subject's own value — the basis for Layer 1's Net income/mo on non-STR properties.</li>
+        </ul>
+      </div>
+      <div class="intro-card">
+        <h2>How this was built</h2>
+        <p>For the subject address, I searched <strong>Zillow</strong>, <strong>Apartments.com</strong>, and <strong>Redfin</strong> — three of the largest, most reputable long-term-rental platforms — for currently-listed rentals near 445 O St. Rio Linda's own 95673 zip has very little rental inventory (about 4 active listings at the time of this pull), so I widened the search to Zillow's "Rentals Near 95673," which pulls in the closest surrounding zips: Elverta (95626, directly north), North Sacramento/Hagginwood (95838, directly south), and Natomas (95835, farther south). Listings were prioritized by proximity first, then by how recently each was posted, as a proxy for how close it is to a live, real-world rent.</p>
+        <p>Two spec tiers were collected, per your instruction: <strong>10 "similar spec" comps</strong> matching the subject's own 3 bedrooms (single-family houses and apartments both included), and <strong>5 "lower spec" comps</strong> one bedroom down at 2 bedrooms — useful for sizing up what a smaller unit on the same lot, or a downsized rental strategy, would bring in.</p>
+        <div class="caveat-box">
+          <strong>A caveat on "recently rented."</strong> Unlike sold homes — where county records publish the actual closing price — there is no public database of what a long-term rental actually signed for. Zillow and Apartments.com only show <em>current asking rent</em> on active listings, not confirmed lease terms. This page uses "days since posted" as the best available substitute for recency: a listing posted 1–7 days ago is close to today's real market rent, while one sitting 40+ days may be stale or overpriced. The oldest two comps below (posted 42 and 77 days ago) are kept only because they're the closest geographically — flagged rather than hidden.
+        </div>
+        <details class="methodology">
+          <summary>Full methodology &amp; notes</summary>
+          <div class="m-body">
+            <ul>
+              <li><strong>Sources</strong> — Zillow ("Rentals Near 95673" search, exact-bedroom filter) as the primary source; Apartments.com and Redfin as two independent platforms to spot-check pricing.</li>
+              <li><strong>Cross-verification</strong> — 5 of the 15 comps were independently found on a second platform with matching address and price: 5 Fire Leaf Ct, 7604 16th St, and 5772 Amnest Way on Apartments.com (7604 16th St even carries an Apartments.com "Total Monthly Price · Verified" badge); 1850 Club Center Dr #515 and 6820 7th Ave #11 on Redfin. That's a good sign the Zillow-sourced data reflects real, live market listings rather than stale or duplicate entries.</li>
+              <li><strong>Similar-spec tier (10)</strong> — exact 3-bedroom filter, single-family houses and apartments both eligible, ranked by proximity to 445 O St then recency of posting.</li>
+              <li><strong>Lower-spec tier (5)</strong> — exact 2-bedroom filter, same method. Two of the five are inside Rio Linda's own 95673 zip — the closest possible comps — flagged below.</li>
+              <li><strong>Excluded listing types</strong> — building-level "starting from $X+" apartment-complex cards without a specific unit's price/sqft were skipped in favor of listings with a confirmed unit-level price and square footage, wherever enough of those existed.</li>
+              <li><strong>$/sqft and yield figures</strong> — computed from each comp's own price and sqft, then simple-averaged; the gross rent yield compares annualized median rent to the subject's realtor.com RealEstimate ($365,000, from Layer 3) as a rough back-of-envelope figure only.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div class="address-check" id="address-check">
+        <div class="address-check-head">
+          <h3>Check another subject property</h3>
+          <p id="address-check-desc">Type any address to queue it here — then tell Claude in chat and it'll run the same long-term-rental sweep (10 similar-spec + 5 lower-spec comps from Zillow and Apartments.com) and add it as a new section below.</p>
+        </div>
+        <form class="address-check-form" id="address-check-form">
+          <label for="address-check-input" class="visually-hidden">Address to check</label>
+          <input id="address-check-input" type="text" placeholder="e.g. 1234 Elm St, Rio Linda, CA 95673" autocomplete="off" required>
+          <button type="submit">Check address</button>
+        </form>
+        <div class="address-check-status" id="address-check-status" hidden></div>
+        <ul class="address-check-list" id="address-check-list"></ul>
+      </div>
+
+      <div class="market-tab-bar" id="market-tab-bar" role="tablist" aria-label="Market">
+        <button type="button" class="market-tab-btn active" id="market-tab-CA" role="tab" aria-selected="true" onclick="switchMarket('CA')">California <span class="market-tab-sub" id="market-tab-sub-CA">5</span></button>
+        <button type="button" class="market-tab-btn" id="market-tab-TX" role="tab" aria-selected="false" onclick="switchMarket('TX')">Texas <span class="market-tab-sub" id="market-tab-sub-TX">0</span></button>
+        <button type="button" class="market-tab-btn" id="market-tab-AZ" role="tab" aria-selected="false" onclick="switchMarket('AZ')">Phoenix <span class="market-tab-sub" id="market-tab-sub-AZ">0</span></button>
+      </div>
+
+      <div id="subjects"></div>
+
+      <footer class="page-foot" id="page-foot">
+        Source file: <span class="mono">layer4.html</span>. Rental listings and asking prices are a live-site snapshot from Zillow, Redfin, and Apartments.com — 445 O St and 6316 Hillsdale Blvd taken Aug 27, 2026; 437 Forni Rd taken Sep 2, 2026; 8583 Culpepper Dr taken Sep 10, 2026 (similar-spec tier redefined to 4bd — see methodology note on that subject's card) and re-swept Sep 17, 2026 with Condition, Distance, Past-year rent, School score, and Off-market duration added, ranked nearest-first, plus a net-income estimate table (8583 Culpepper Dr and 8449 Cutler Way); 8449 Cutler Way taken Sep 17, 2026; 1325 E San Angelo Ave, Gilbert, AZ taken Oct 11, 2026 via Redfin (with a partial Zillow cross-check before a bot-detection block, see that subject's own methodology note) — rentals turn over quickly (often days to a few weeks), so re-check periodically rather than treating this as a fixed number.
+      </footer>
+    </div>
+  </div>
+</div>
+
+<script type="application/json" id="ld-state">{"subjects": [{"state": "CA", "address": "445 O St, Rio Linda, CA 95673", "specs": "3bd/2ba \u00b7 1,179 sqft", "beds": 3, "sqft": 1179, "value": 365000, "valueLabel": "realtor.com RealEstimate (from Layer 3)", "similarSpecChecked": 20, "lowerSpecChecked": 22, "similarSpec": [{"address": "7604 16th St, Elverta, CA 95626", "price": 2900, "beds": 3, "baths": 1, "sqft": 950, "type": "House", "daysAgo": 42, "verifiedOn": ["Apartments.com"]}, {"address": "5 Fire Leaf Ct, Sacramento, CA 95838", "price": 3295, "beds": 3, "baths": 3, "sqft": 2142, "type": "House", "daysAgo": null, "verifiedOn": ["Apartments.com"]}, {"address": "4430 Silverton Way, Sacramento, CA 95838", "price": 2675, "beds": 3, "baths": 2, "sqft": 1438, "type": "House", "daysAgo": 21, "verifiedOn": []}, {"address": "244 Delta Leaf Way, Sacramento, CA 95838", "price": 2900, "beds": 3, "baths": 3, "sqft": 1580, "type": "House", "daysAgo": 77, "verifiedOn": []}, {"address": "1882 Zurlo Way, Sacramento, CA 95835", "price": 2595, "beds": 3, "baths": 2, "sqft": 1611, "type": "House", "daysAgo": 1, "verifiedOn": []}, {"address": "5942 Caddington Way, Sacramento, CA 95835", "price": 3150, "beds": 3, "baths": 3, "sqft": 1875, "type": "House", "daysAgo": 2, "verifiedOn": []}, {"address": "5468 Gracen Way, Sacramento, CA 95835", "price": 2690, "beds": 3, "baths": 2, "sqft": 1424, "type": "House", "daysAgo": 5, "verifiedOn": []}, {"address": "5772 Amnest Way, Sacramento, CA 95835", "price": 2550, "beds": 3, "baths": 2.5, "sqft": 1184, "type": "House", "daysAgo": 7, "verifiedOn": ["Apartments.com"]}, {"address": "1850 Club Center Dr #515, Sacramento, CA 95835", "price": 2702, "beds": 3, "baths": 2, "sqft": 1271, "type": "Apartment", "daysAgo": 7, "verifiedOn": ["Redfin"]}, {"address": "1520 Charm Way, Sacramento, CA 95835", "price": 2700, "beds": 3, "baths": 2, "sqft": 1557, "type": "House", "daysAgo": 6, "verifiedOn": []}], "lowerSpec": [{"address": "6044 Marysville Blvd #4, Rio Linda, CA 95673", "price": 1625, "beds": 2, "baths": 1, "sqft": 700, "type": "Apartment", "daysAgo": null, "sameZip": true, "verifiedOn": []}, {"address": "6820 7th Ave APT 11, Rio Linda, CA 95673", "price": 1395, "beds": 2, "baths": 1, "sqft": null, "type": "Apartment", "daysAgo": null, "sameZip": true, "verifiedOn": ["Redfin"]}, {"address": "441 Morrison Ave APT 1, Sacramento, CA 95838", "price": 1600, "beds": 2, "baths": 1, "sqft": 700, "type": "Apartment", "daysAgo": null, "sameZip": false, "verifiedOn": []}, {"address": "719 Morrison Ave APT C, Sacramento, CA 95838", "price": 2000, "beds": 2, "baths": 1, "sqft": 825, "type": "Apartment", "daysAgo": null, "sameZip": false, "verifiedOn": []}, {"address": "3755 Norwood Ave #A, Sacramento, CA 95838", "price": 1650, "beds": 2, "baths": 1, "sqft": 733, "type": "Apartment", "daysAgo": null, "sameZip": false, "verifiedOn": []}]}, {"state": "CA", "address": "6316 Hillsdale Blvd, Sacramento, CA 95842", "specs": "4bd/2ba \u00b7 1,720 sqft", "beds": 4, "sqft": 1720, "value": 375000, "valueLabel": "Zillow list price (from Layer 1)", "valueNote": "contractor special \u2014 interior gutted, needs full rehab; no Layer 3 sold-comp value yet, so yield below is illustrative only", "similarSpecChecked": 23, "lowerSpecChecked": 18, "similarSpec": [{"address": "7005 Woodside Dr, Sacramento, CA 95842", "price": 2800, "beds": 4, "baths": 3, "sqft": 1561, "type": "House", "daysAgo": 17, "verifiedOn": ["Redfin"]}, {"address": "7406 Woodville Ln, Sacramento, CA 95842", "price": 3195, "beds": 4, "baths": 3, "sqft": 1540, "type": "House", "daysAgo": null, "verifiedOn": []}, {"address": "5500 Sunset Oak Ct, Sacramento, CA 95842", "price": 3995, "beds": 4, "baths": 3, "sqft": 2590, "type": "House", "daysAgo": 115, "verifiedOn": []}, {"address": "7326 Salazar Dr, North Highlands, CA 95660", "price": 2995, "beds": 4, "baths": 2, "sqft": 1338, "type": "House", "daysAgo": 15, "verifiedOn": []}, {"address": "6005 N Haven Dr, North Highlands, CA 95660", "price": 2399, "beds": 4, "baths": 1, "sqft": 1047, "type": "House", "daysAgo": 11, "verifiedOn": []}, {"address": "4709 Acclaro Ct, Antelope, CA 95843", "price": 2700, "beds": 4, "baths": 3, "sqft": 2027, "type": "House", "daysAgo": 14, "verifiedOn": []}, {"address": "3964 Grey Livery Way, Antelope, CA 95843", "price": 2980, "beds": 4, "baths": 2.5, "sqft": 2060, "type": "House", "daysAgo": 29, "verifiedOn": []}, {"address": "8256 Manhart Way, Elverta, CA 95626", "price": 2550, "beds": 4, "baths": 2, "sqft": 1298, "type": "House", "daysAgo": 21, "verifiedOn": []}, {"address": "6041 Bach Ct, Citrus Heights, CA 95621", "price": 3250, "beds": 4, "baths": 2, "sqft": 1592, "type": "House", "daysAgo": 14, "verifiedOn": []}, {"address": "6936 Brookcrest Way, Citrus Heights, CA 95621", "price": 2850, "beds": 4, "baths": 2, "sqft": 1799, "type": "House", "daysAgo": 24, "verifiedOn": []}], "lowerSpec": [{"address": "7184 Stanford Oak Dr, Sacramento, CA 95842", "price": 2500, "beds": 3, "baths": 1.5, "sqft": 1054, "type": "House", "daysAgo": 7, "sameZip": true, "verifiedOn": []}, {"address": "6649 Weatherby Way, Sacramento, CA 95842", "price": 2400, "beds": 3, "baths": 1, "sqft": 960, "type": "House", "daysAgo": 8, "sameZip": true, "verifiedOn": []}, {"address": "7059 Sprig Dr, Sacramento, CA 95842", "price": 2695, "beds": 3, "baths": 2, "sqft": 1124, "type": "House", "daysAgo": 8, "sameZip": true, "verifiedOn": ["Redfin", "Apartments.com"]}, {"address": "5545 Malibu Palm Ct, Sacramento, CA 95842", "price": 2600, "beds": 3, "baths": 2.5, "sqft": 1522, "type": "House", "daysAgo": 9, "sameZip": true, "verifiedOn": []}, {"address": "4753 Tacomic Dr, Sacramento, CA 95842", "price": 2495, "beds": 3, "baths": 2, "sqft": 1092, "type": "House", "daysAgo": 9, "sameZip": true, "verifiedOn": ["Redfin", "Apartments.com"]}]}, {"state": "CA", "address": "437 Forni Rd, Placerville, CA 95667", "specs": "3bd/2ba \u00b7 1,896 sqft", "beds": 3, "sqft": 1896, "value": 512000, "valueLabel": "realtor.com RealEstimate (from Layer 3)", "similarSpecChecked": 15, "lowerSpecChecked": 17, "similarSpec": [{"address": "Placer Village, 2789 Ray Lawyer Dr, Placerville, CA 95667", "price": 1450, "beds": 3, "baths": 2, "sqft": 1038, "type": "Apartment", "daysAgo": 3, "verifiedOn": ["Redfin"]}, {"address": "1680 Big Oak Rd, Placerville, CA 95667", "price": 2175, "beds": 3, "baths": 2, "sqft": 1200, "type": "House", "daysAgo": 0, "verifiedOn": ["Redfin"]}, {"address": "506 Skyline Dr, Placerville, CA 95667", "price": 2800, "beds": 3, "baths": 2, "sqft": 1604, "type": "House", "daysAgo": 1, "verifiedOn": ["Redfin"]}, {"address": "841 Oak Crest Cir, Placerville, CA 95667", "price": 3250, "beds": 3, "baths": 2.5, "sqft": 2382, "type": "House", "daysAgo": 1, "verifiedOn": []}, {"address": "975 Coleman St, Placerville, CA 95667", "price": 2300, "beds": 3, "baths": 1, "sqft": 1424, "type": "House", "daysAgo": 22, "verifiedOn": ["Redfin"]}, {"address": "7007 Upper Homestead Way, Placerville, CA 95667", "price": 2550, "beds": 3, "baths": 2, "sqft": 1360, "type": "House", "daysAgo": 22, "verifiedOn": []}, {"address": "6801 Sagittarius Rd, Placerville, CA 95667", "price": 3550, "beds": 3, "baths": 2.5, "sqft": 2240, "type": "House", "daysAgo": 18, "verifiedOn": ["Redfin", "Apartments.com"]}, {"address": "3045 Estepa Dr APT A, Cameron Park, CA 95682", "price": 2550, "beds": 3, "baths": 2.5, "sqft": 1326, "type": "Townhouse", "daysAgo": 1, "verifiedOn": []}, {"address": "3419 La Canada Dr, Cameron Park, CA 95682", "price": 3200, "beds": 3, "baths": 2, "sqft": 1464, "type": "House", "daysAgo": 5, "verifiedOn": []}, {"address": "3427 Bristol Ct, Cameron Park, CA 95682", "price": 3000, "beds": 3, "baths": 2, "sqft": 1344, "type": "House", "daysAgo": 18, "verifiedOn": []}], "lowerSpec": [{"address": "3412 Lode Rd, Placerville, CA 95667", "price": 2400, "beds": 2, "baths": 3, "sqft": 1400, "type": "House", "daysAgo": 2, "sameZip": true, "verifiedOn": []}, {"address": "Placer Village, 2789 Ray Lawyer Dr, Placerville, CA 95667", "price": 1294, "beds": 2, "baths": 1, "sqft": 867, "type": "Apartment", "daysAgo": 3, "sameZip": true, "verifiedOn": ["Redfin"]}, {"address": "920 Pacific St APT 9, Placerville, CA 95667", "price": 1695, "beds": 2, "baths": 1, "sqft": 900, "type": "Apartment", "daysAgo": 6, "sameZip": true, "verifiedOn": []}, {"address": "887 Reservoir St, Placerville, CA 95667", "price": 1650, "beds": 2, "baths": 1, "sqft": 500, "type": "House", "daysAgo": 15, "sameZip": true, "verifiedOn": ["Redfin"]}, {"address": "1241 Cebu Ln, Placerville, CA 95667", "price": 2950, "beds": 2, "baths": 2, "sqft": 833, "type": "House", "daysAgo": 33, "sameZip": true, "verifiedOn": []}]}, {"state": "CA", "address": "8583 Culpepper Dr, Sacramento, CA 95823", "specs": "6bd/3ba \u00b7 2,916 sqft", "beds": 6, "sqft": 2916, "value": 454078, "valueLabel": "realtor.com RealEstimate (from Layer 3)", "valueNote": "unfinished interior, cash/non-conventional-financing-only listing per Layer 1 \u2014 actual achievable rent for this specific property may run below comps shown, which are finished homes", "rentCompBeds": 4, "methodologyNote": "No 6-bedroom rentals are currently listed anywhere in Sacramento County \u2014 confirmed via a county-wide Zillow sweep (0 of 5,577 active rentals have 6+ beds). Even 5-bedroom inventory is essentially nonexistent nearby (only 4 listings turned up within several miles, all in Elk Grove, none in the subject's own zip). Since neither the subject's exact bed count nor one bedroom down has real market data, the similar-spec tier below was redefined to 4-bedroom rentals \u2014 the closest bed count with actual listed inventory \u2014 with the lower-spec tier at 3-bedroom accordingly. Read both tiers as a general size/market gauge for this area rather than a direct match to the subject's 6bd/3ba layout. Update Sep 17, 2026: added Condition (Fully renovated / partially renovated / original clean, read from each listing's own remarks and photos), Distance to subject (straight-line/Haversine), and a Past-year rent column to both tiers' tables, and re-sorted each nearest-first. Past-year rent is inferred from each listing's own Zillow Price History: a \"Listed for rent\" event followed by a \"Listing removed\" event with no explicit \"Rented\" event in between is read as an implied rental at that price, dated to the removal event \u2014 shown only where such a pair fell within roughly the last 12\u201314 months (older listed/removed pairs are treated as too stale to represent last year's rent and left blank). 3 of the 15 comps had a usable recent pair: 7955 Deer Lake Dr ($2,580, implied Aug 2025 \u2014 unchanged from its current Sep 2026 asking price), 101 Kennelford Cir ($2,395, implied Jun 2025 \u2014 also unchanged from its current asking price), and 7639 Stringer Way ($3,400, implied Aug 2025, vs. $3,390 asking now). Several comps had gone off-market since the original sweep (6757 Jujube Ln, 8924 La Margarita Way which has since sold, 9486 Cheverny Way, 7309 Ganache Way) \u2014 their condition was read from listing photos rather than active remarks, and no current price-history table was available for them. Update Sep 17, 2026 (cont'd): the Posted column now shows actual days on market for each active listing (computed from that listing's own \u201cListed for rent\u201d date on its Zillow Price History, against today), rather than the \u201cActive listing\u201d placeholder used when day-count wasn't yet captured. The 5 comps that have since gone off-market (see above) show \u201cOff market\u201d instead. Update Sep 17, 2026 (cont'd): added a School Score column \u2014 the same three GreatSchools ratings (elementary / middle / high, out of 10) Zillow shows in its own \u201cNearby schools\u201d section for each listing, read from each comp's assigned schools on Zillow (or, for the comps that have since gone off-market, from the same GreatSchools-sourced \u201cSchools\u201d section on that address's Redfin page). Update Sep 17, 2026 (cont'd): for the off-market comps, the Posted column now shows how long each listing was live before going off-market \u2014 \u201cOff market (N days)\u201d \u2014 computed as Listing removed date minus Listed for rent date on that address's Zillow (or Redfin, where Zillow no longer shows price history for a de-listed property) price history. Where a \u201cListing removed\u201d event was followed within roughly a month or two by another \u201cListed for rent\u201d event at the same or similar price, that's read as the same listing continuing through a price change rather than a new tenancy, so the span is merged end-to-end: earliest \u201cListed for rent\u201d in the chain to the final \u201cListing removed.\u201d Applied: 8924 La Margarita Way = 53 days (7/19\u20139/9/2026, one price change in between), 9486 Cheverny Way = 16 days (8/26\u20139/11/2026), 7309 Ganache Way = 129 days (5/7\u20139/13/2026). While researching this, 2 of the 5 comps previously flagged off-market turned out to be stale: 6757 Jujube Ln and 4623 Goya Pkwy both still show as active \u201cFOR RENT\u201d listings on Redfin (159 and 184 days on Redfin respectively, matching a merged-listing start of roughly Apr 10 and Mar 17, 2026) even though Zillow had them stripped down to an off-market page. Both have been corrected back to active listings with those day counts, rather than shown as off-market.", "similarSpecChecked": 62, "lowerSpecChecked": 16, "similarSpec": [{"address": "180 Summer Stroll Cir, Sacramento, CA 95823", "price": 3195, "beds": 4, "baths": 2.5, "sqft": 1885, "type": "House", "daysAgo": 14, "verifiedOn": [], "condition": "Original clean", "distanceMi": 2.46, "pastRent": null, "schoolScore": {"elem": 5, "mid": 4, "high": 4}}, {"address": "7955 Deer Lake Dr, Sacramento, CA 95823", "price": 2580, "beds": 4, "baths": 2, "sqft": 1349, "type": "House", "daysAgo": 16, "verifiedOn": ["Zillow"], "condition": "Partially renovated", "distanceMi": 2.16, "pastRent": {"price": 2580, "impliedDate": "2025-08-13"}, "schoolScore": {"elem": 5, "mid": 4, "high": 4}}, {"address": "18 Tearpak Ct, Sacramento, CA 95823", "price": 2600, "beds": 4, "baths": 2, "sqft": 1587, "type": "House", "daysAgo": 17, "verifiedOn": [], "condition": "Fully renovated", "distanceMi": 0.59, "pastRent": null, "schoolScore": {"elem": 6, "mid": 4, "high": 4}}, {"address": "101 Kennelford Cir, Sacramento, CA 95823", "price": 2395, "beds": 4, "baths": 2, "sqft": 1444, "type": "House", "daysAgo": 35, "verifiedOn": [], "condition": "Partially renovated", "distanceMi": 1.32, "pastRent": {"price": 2395, "impliedDate": "2025-06-03"}, "schoolScore": {"elem": 3, "mid": 4, "high": 4}}, {"address": "6757 Jujube Ln, Sacramento, CA 95828", "price": 3380, "beds": 4, "baths": 2.5, "sqft": 1546, "type": "House", "daysAgo": 159, "verifiedOn": [], "condition": "Original clean", "distanceMi": 4.07, "pastRent": null, "schoolScore": {"elem": 3, "mid": 3, "high": 4}}, {"address": "8924 La Margarita Way, Sacramento, CA 95828", "price": 2670, "beds": 4, "baths": 2.5, "sqft": 1734, "type": "House", "daysAgo": null, "verifiedOn": ["Zillow"], "condition": "Original clean", "distanceMi": 3.59, "pastRent": null, "offMarket": true, "schoolScore": {"elem": 7, "mid": 4, "high": 8}, "offMarketDays": 53}, {"address": "8166 Morgan Hill Way, Sacramento, CA 95828", "price": 2500, "beds": 4, "baths": 2, "sqft": 1442, "type": "House", "daysAgo": 43, "verifiedOn": [], "condition": "Partially renovated", "distanceMi": 2.78, "pastRent": null, "schoolScore": {"elem": 6, "mid": 3, "high": 4}}, {"address": "7639 Stringer Way, Sacramento, CA 95829", "price": 3390, "beds": 4, "baths": 3, "sqft": 2227, "type": "House", "daysAgo": 62, "verifiedOn": ["Zillow"], "condition": "Fully renovated", "distanceMi": 6.47, "pastRent": {"price": 3400, "impliedDate": "2025-08-25"}, "schoolScore": {"elem": 10, "mid": 8, "high": 9}}, {"address": "9486 Cheverny Way, Sacramento, CA 95829", "price": 2750, "beds": 4, "baths": 3, "sqft": 2018, "type": "House", "daysAgo": null, "verifiedOn": [], "condition": "Original clean", "distanceMi": 5.57, "pastRent": null, "offMarket": true, "schoolScore": {"elem": 5, "mid": 8, "high": 9}, "offMarketDays": 16}, {"address": "7309 Ganache Way, Sacramento, CA 95829", "price": 3400, "beds": 4, "baths": 2.5, "sqft": 1945, "type": "House", "daysAgo": null, "verifiedOn": [], "condition": "Original clean", "distanceMi": 5.63, "pastRent": null, "offMarket": true, "schoolScore": {"elem": 5, "mid": 8, "high": 9}, "offMarketDays": 129}], "lowerSpec": [{"address": "6811 Hampton Cove Way, Sacramento, CA 95823", "price": 2800, "beds": 3, "baths": 2.5, "sqft": 1432, "type": "House", "daysAgo": 15, "sameZip": true, "verifiedOn": ["Zillow"], "condition": "Original clean", "distanceMi": 0.59, "pastRent": null, "schoolScore": {"elem": 7, "mid": 7, "high": 7}}, {"address": "4623 Goya Pkwy, Sacramento, CA 95823", "price": 2400, "beds": 3, "baths": 2, "sqft": 1242, "type": "House", "daysAgo": 184, "sameZip": true, "verifiedOn": [], "condition": "Original clean", "distanceMi": 3.13, "pastRent": null, "schoolScore": {"elem": 3, "mid": 6, "high": 4}}, {"address": "7853 Monaldo Walk, Sacramento, CA 95823", "price": 2300, "beds": 3, "baths": 2.5, "sqft": 1575, "type": "House", "daysAgo": 13, "sameZip": true, "verifiedOn": [], "condition": "Original clean", "distanceMi": 2.09, "pastRent": null, "schoolScore": {"elem": 5, "mid": 4, "high": 4}}, {"address": "7 Sedley Ct, Sacramento, CA 95823", "price": 2475, "beds": 3, "baths": 3, "sqft": 1953, "type": "House", "daysAgo": 82, "sameZip": true, "verifiedOn": [], "condition": "Original clean", "distanceMi": 0.2, "pastRent": null, "schoolScore": {"elem": 7, "mid": 7, "high": 7}}, {"address": "5520 Muskingham Way, Sacramento, CA 95823", "price": 2650, "beds": 3, "baths": 2, "sqft": 1087, "type": "House", "daysAgo": 28, "sameZip": true, "verifiedOn": [], "condition": "Fully renovated", "distanceMi": 0.47, "pastRent": null, "schoolScore": {"elem": 7, "mid": 7, "high": 7}}], "netIncomeModel": {"purchasePrice": 398000, "tra": "03-117", "adValoremRate": 0.010457, "taxMonthly": 368, "taxNote": "$347/mo ad valorem (1.0457% \u00d7 $398,000 purchase price, TRA 03-117) + $22/mo in other recurring parcel special assessments (citywide landscaping/lighting, library service tax, Laguna Creek maintenance, Maintenance Area 9) \u2014 all confirmed on this parcel's actual 2025-26 Sacramento County tax bill (APN 171-0700-080-000). A one-time $1,387.68 delinquent-utility lien from the prior owner on that same bill is excluded as non-recurring.", "insuranceMonthly": 218, "insuranceNote": "Estimated from Insurance.com's Sacramento ($300K dwelling coverage \u2192 $1,310/yr) and California ($400K dwelling coverage \u2192 $1,772/yr) rate data, interpolated to \u2248$583,200 in dwelling/rebuild coverage (2,916 sqft \u00d7 ~$200/sqft standard-construction rebuild cost). No wildfire surcharge applied \u2014 unlike this dashboard's El Dorado County subjects, this is a flat urban Sacramento lot, not a WUI zone.", "hoaMonthly": 0, "melloRoosMonthly": 10, "melloRoosNote": "Yes \u2014 this parcel carries a Mello-Roos special tax: Elk Grove School District Mello-Roos CFD #1 (direct-levy code 0155), $117.84/yr = $10/mo, confirmed on the actual county tax bill.", "scenarios": [{"label": "Original clean", "rent": 3509, "net": 2913}, {"label": "Partially renovated", "rent": 3348, "net": 2752}, {"label": "Fully renovated", "rent": 3610, "net": 3014}], "methodologyNote": "Rent estimated from this page's own 15 similar-spec + lower-spec comps: a linear regression of rent on sqft and condition (Original clean / Partially renovated / Fully renovated, dummy-coded), fit across all 15 comps (R\u00b2 = 0.33 \u2014 a real amount of unexplained scatter in a 15-comp sample) and applied to the subject's actual 2,916 sqft. Because the subject is larger than every comp (largest comp is 7639 Stringer Way at 2,227 sqft), this is an extrapolation beyond the observed comp size range, not an interpolation \u2014 treat it as a rough planning estimate, not a quote. A flat $/sqft-from-comps approach was tried first and rejected: it implied $4,900\u2013$5,400/mo, which overstates rent because $/sqft reliably falls as home size rises and the comps (1,087\u20132,227 sqft) are all much smaller than the subject. The \"Partially renovated\" scenario pricing below Original clean is a real artifact of the regression (only 3 partially-renovated comps in the sample) rather than a claim that renovating partway reduces rent \u2014 shown as-is rather than smoothed over. All figures assume an all-cash purchase (no mortgage/financing cost in this deduction), per your instruction, and assume the subject is brought to a rentable condition first \u2014 its current as-is unfinished interior (see valueNote above) cannot generate rental income until then."}}, {"state": "CA", "address": "8449 Cutler Way, Sacramento, CA 95828", "specs": "4bd/3ba \u00b7 1,991 sqft", "beds": 4, "sqft": 1991, "value": 429000, "valueLabel": "Zillow / Realtor.com list price", "valueNote": "active for-sale listing (MLS #226114534), not a Layer 3 sold-comp value \u2014 built 1990, built-in pool; evaluated here as a rent-comp subject at your request even though it isn't currently a rental", "methodologyNote": "8449 Cutler Way is an active for-sale listing (MLS #226114534, $429,000, built 1990, built-in pool), not a currently-rented property \u2014 added here as a full new Layer 4 subject at your request, to estimate what this specific house would rent for if purchased. The similar-spec (4bd) and lower-spec (3bd) tiers use the same real-rental-comp methodology as this page's other subjects. Because this subject sits in the same South Sacramento pocket (zips 95823/95828/95829) already swept for 8583 Culpepper Dr, 7 of the 10 similar-spec comps below are reused directly from that subject's already-verified comp pool (same price/condition/school score/past-rent data \u2014 only distance was recomputed relative to this subject); the other 3 similar-spec comps and all 5 lower-spec comps are newly researched via Redfin's zip-filtered rental search. Distance is straight-line (Haversine) from the subject. Condition (Fully renovated / Partially renovated / Original clean) for the 8 newly researched comps is read from each listing's own description text (e.g. \u201ccompletely remodeled\u201d / \u201cupdated kitchen\u201d / no renovation language). School score for those same 8 new comps could not be pulled directly \u2014 GreatSchools' address search returned no results for this pocket of Sacramento County \u2014 so each is shown with its nearest already-scored neighbor's GreatSchools rating as a proxy: 8837 La Margarita Way, 8183 Hanuman Ct, 8818 Somershire Way, 8620 Tiogawoods Dr and 8079 Darien Cir all take the 7/4/8 rating from 8924 La Margarita Way (0.13\u20130.82mi away); 8257 Loyal Dr takes the 10/8/9 rating from 7639 Stringer Way (1.84mi away); 8428 Cassatt Way and 8149 Visalia Way take the 6/3/4 rating from 8166 Morgan Hill Way (0.68mi and 1.14mi away). Treat these as a neighborhood-level approximation, not a school-assignment lookup for the comp's own address. The 8 newly researched comps also don't yet have a verified days-on-market count (shown as \u201cActive listing\u201d) and are verified on Redfin only, unlike some reused comps that were cross-checked on Zillow too. Two lower-spec candidates were screened out as non-representative: 8255 Point Arena Ct ($5,500/mo \u2014 reads as corporate/insurance temp-housing, not a normal lease) and 8186 Devon Park Ct Unit 1 (unit number suggests a duplex/multi-family split, not a comparable single-family lease); 3 more (7721 McClintock Way, 6635 Chandler Dr, 113 Prairie Cir) had too little listing detail to use and were skipped in favor of the 5 more fully-documented comps shown. Update Sep 17, 2026 (cont'd): the Posted column for the 8 newly-researched comps now shows actual days on market instead of the \u201cActive listing\u201d placeholder, computed the same way as 8583 Culpepper Dr's comps \u2014 each listing's own \u201cListed for rent\u201d date on its Redfin price history, against today. Applied: 8837 La Margarita Way = 2 days, 8257 Loyal Dr = 210 days, 8149 Visalia Way = 27 days, 8818 Somershire Way = 9 days, 8620 Tiogawoods Dr = 99 days, 8079 Darien Cir = 6 days. Two of the eight needed a correction similar to the one made on Culpepper Dr's comps: Redfin's own \u201cdays on Redfin\u201d badge for 8183 Hanuman Ct and 8428 Cassatt Way (504 and 433 days respectively) turns out to be cumulative across separate, non-continuous listing cycles for the same address \u2014 both had gone off-market for roughly 10\u201313 months before being relisted. The figures shown instead measure only the current, continuous listing: 8183 Hanuman Ct relisted Aug 18, 2026 (30 days), 8428 Cassatt Way relisted Aug 29, 2026 (19 days). While re-checking these listings directly on Redfin (rather than via search snippets), also caught and fixed a data error: 8183 Hanuman Ct and 8257 Loyal Dr are actually in zip 95829, not 95828 as first recorded \u2014 corrected. All 8 were reconfirmed still actively FOR RENT with unchanged or updated prices (already reflected above) as of this check.", "similarSpecChecked": 10, "lowerSpecChecked": 10, "similarSpec": [{"address": "8166 Morgan Hill Way, Sacramento, CA 95828", "price": 2500, "beds": 4, "baths": 2, "sqft": 1442, "type": "House", "daysAgo": 43, "verifiedOn": [], "condition": "Partially renovated", "distanceMi": 0.42, "pastRent": null, "schoolScore": {"elem": 6, "mid": 3, "high": 4}}, {"address": "8837 La Margarita Way, Sacramento, CA 95828", "price": 2850, "beds": 4, "baths": 2.5, "sqft": 1740, "type": "House", "daysAgo": 2, "verifiedOn": ["Redfin"], "condition": "Original clean", "distanceMi": 1.05, "pastRent": null, "schoolScore": {"elem": 7, "mid": 4, "high": 8}}, {"address": "8183 Hanuman Ct, Sacramento, CA 95829", "price": 2795, "beds": 4, "baths": 2, "sqft": 1715, "type": "House", "daysAgo": 30, "verifiedOn": ["Redfin"], "condition": "Original clean", "distanceMi": 1.34, "pastRent": null, "schoolScore": {"elem": 7, "mid": 4, "high": 8}}, {"address": "101 Kennelford Cir, Sacramento, CA 95823", "price": 2395, "beds": 4, "baths": 2, "sqft": 1444, "type": "House", "daysAgo": 35, "verifiedOn": [], "condition": "Partially renovated", "distanceMi": 1.94, "pastRent": {"price": 2395, "impliedDate": "2025-06-03"}, "schoolScore": {"elem": 3, "mid": 4, "high": 4}}, {"address": "18 Tearpak Ct, Sacramento, CA 95823", "price": 2600, "beds": 4, "baths": 2, "sqft": 1587, "type": "House", "daysAgo": 17, "verifiedOn": [], "condition": "Fully renovated", "distanceMi": 2.37, "pastRent": null, "schoolScore": {"elem": 6, "mid": 4, "high": 4}}, {"address": "8257 Loyal Dr, Sacramento, CA 95829", "price": 3100, "beds": 4, "baths": 2, "sqft": 1744, "type": "House", "daysAgo": 210, "verifiedOn": ["Redfin"], "condition": "Fully renovated", "distanceMi": 2.89, "pastRent": null, "schoolScore": {"elem": 10, "mid": 8, "high": 9}}, {"address": "6757 Jujube Ln, Sacramento, CA 95828", "price": 3380, "beds": 4, "baths": 2.5, "sqft": 1546, "type": "House", "daysAgo": 159, "verifiedOn": [], "condition": "Original clean", "distanceMi": 3.44, "pastRent": null, "schoolScore": {"elem": 3, "mid": 3, "high": 4}}, {"address": "7955 Deer Lake Dr, Sacramento, CA 95823", "price": 2580, "beds": 4, "baths": 2, "sqft": 1349, "type": "House", "daysAgo": 16, "verifiedOn": ["Zillow"], "condition": "Partially renovated", "distanceMi": 3.55, "pastRent": {"price": 2580, "impliedDate": "2025-08-13"}, "schoolScore": {"elem": 5, "mid": 4, "high": 4}}, {"address": "180 Summer Stroll Cir, Sacramento, CA 95823", "price": 3195, "beds": 4, "baths": 2.5, "sqft": 1885, "type": "House", "daysAgo": 14, "verifiedOn": [], "condition": "Original clean", "distanceMi": 3.61, "pastRent": null, "schoolScore": {"elem": 5, "mid": 4, "high": 4}}, {"address": "7639 Stringer Way, Sacramento, CA 95829", "price": 3390, "beds": 4, "baths": 3, "sqft": 2227, "type": "House", "daysAgo": 62, "verifiedOn": ["Zillow"], "condition": "Fully renovated", "distanceMi": 4.04, "pastRent": {"price": 3400, "impliedDate": "2025-08-25"}, "schoolScore": {"elem": 10, "mid": 8, "high": 9}}], "lowerSpec": [{"address": "8428 Cassatt Way, Sacramento, CA 95828", "price": 2550, "beds": 3, "baths": 2, "sqft": 1509, "type": "House", "daysAgo": 19, "sameZip": true, "verifiedOn": ["Redfin"], "condition": "Partially renovated", "distanceMi": 0.6, "pastRent": null, "schoolScore": {"elem": 6, "mid": 3, "high": 4}}, {"address": "8149 Visalia Way, Sacramento, CA 95828", "price": 2495, "beds": 3, "baths": 2, "sqft": 1165, "type": "House", "daysAgo": 27, "sameZip": true, "verifiedOn": ["Redfin"], "condition": "Fully renovated", "distanceMi": 0.74, "pastRent": null, "schoolScore": {"elem": 6, "mid": 3, "high": 4}}, {"address": "8818 Somershire Way, Sacramento, CA 95828", "price": 2900, "beds": 3, "baths": 2, "sqft": 1616, "type": "House", "daysAgo": 9, "sameZip": true, "verifiedOn": ["Redfin"], "condition": "Original clean", "distanceMi": 0.92, "pastRent": null, "schoolScore": {"elem": 7, "mid": 4, "high": 8}}, {"address": "8620 Tiogawoods Dr, Sacramento, CA 95828", "price": 2750, "beds": 3, "baths": 2, "sqft": 1137, "type": "House", "daysAgo": 99, "sameZip": true, "verifiedOn": ["Redfin"], "condition": "Partially renovated", "distanceMi": 0.94, "pastRent": null, "schoolScore": {"elem": 7, "mid": 4, "high": 8}}, {"address": "8079 Darien Cir, Sacramento, CA 95828", "price": 3000, "beds": 3, "baths": 2, "sqft": 1614, "type": "House", "daysAgo": 6, "sameZip": true, "verifiedOn": ["Redfin"], "condition": "Fully renovated", "distanceMi": 0.99, "pastRent": null, "schoolScore": {"elem": 7, "mid": 4, "high": 8}}], "netIncomeModel": {"purchasePrice": 429000, "tra": "051-031", "adValoremRate": 0.010555, "taxMonthly": 389, "taxNote": "$377/mo ad valorem (1.0555% \u00d7 $429,000 purchase price, TRA 051-031) + $12/mo in other recurring parcel special assessments (CSA 1 lighting zone 1, Southgate lighting & landscaping, Southgate Larchmont Countryside, Water & Drainage Studies Zone 13) \u2014 all confirmed on this parcel's actual 2025-26 Sacramento County tax bill (APN 115-0960-049-0000).", "insuranceMonthly": 147, "insuranceNote": "Estimated from Insurance.com's Sacramento ($300K dwelling coverage \u2192 $1,310/yr) and California ($400K dwelling coverage \u2192 $1,772/yr) rate data, interpolated to \u2248$398,200 in dwelling/rebuild coverage (1,991 sqft \u00d7 ~$200/sqft standard-construction rebuild cost). No wildfire surcharge applied \u2014 flat urban Sacramento lot, not a WUI zone.", "hoaMonthly": 0, "melloRoosMonthly": 10, "melloRoosNote": "Yes \u2014 this parcel carries the same Mello-Roos special tax as 8583 Culpepper Dr: Elk Grove School District Mello-Roos CFD (direct-levy code 0155), $117.84/yr = $10/mo, confirmed on the actual county tax bill.", "scenarios": [{"label": "Original clean", "rent": 3193, "net": 2647}, {"label": "Partially renovated", "rent": 2913, "net": 2367}, {"label": "Fully renovated", "rent": 3105, "net": 2559}], "methodologyNote": "Rent estimated the same way as 8583 Culpepper Dr's net-income table: a linear regression of rent on sqft and condition (Original clean / Partially renovated / Fully renovated, dummy-coded), fit across this subject's own 15 similar-spec + lower-spec comps (R\u00b2 = 0.58) and applied to the subject's actual 1,991 sqft \u2014 within the observed comp range (1,137\u20132,227 sqft), so this is an interpolation rather than an extrapolation. All figures assume an all-cash purchase at the $429,000 list price (no mortgage/financing cost in this deduction), and assume the home is already in rentable condition (it's an active, occupied-looking for-sale listing, not a gutted rehab like 8583 Culpepper Dr)."}}, {"state": "TX", "address": "1505 Sagebrush Dr, Round Rock, TX 78681", "specs": "3bd/2ba \u00b7 1,236 sqft", "beds": 3, "sqft": 1236, "value": 266779, "valueLabel": "realtor.com RealEstimate (from Layer 3)", "methodologyNote": "Sourced from Zillow's exact-bedroom-filtered \u201cHouses For Rent\u201d search centered on the subject's own 78681 zip (43 exact-3bd houses and 12 exact-2bd houses surfaced before narrowing). Ranked by real straight-line (Haversine) distance to the subject, computed from Google Maps coordinates for every comp \u2014 not estimated. The lower-spec (2bd) tier required widening into the adjacent 78664 zip: 78681 itself surfaced only one usable 2-bedroom house listing with a disclosed street address (1505 Latigo Trce) after excluding two listings Zillow shows only as \u201c(undisclosed Address)\u201d, which aren't usable as named comps. Bathroom counts for 4 comps (800 Pack Saddle Pass, 3411 Monument Dr, 8618 Columbia Falls Dr, 1505 Latigo Trce) weren't disclosed on Zillow's search-result card and are inferred as 2ba, matching the near-universal norm for every other comp in this size/price range in the same pool \u2014 flagged here rather than presented as confirmed. Posted-date (days on market) for 4 comps (3411 Monument Dr, 313 Greenlawn Blvd, 1505 Latigo Trce, 505 Sierra Cv) wasn't captured before a mid-session browser-tool outage interrupted research; shown as \u201cActive listing\u201d pending a future re-check, the same placeholder this page used for 8449 Cutler Way's newly-researched comps before their exact day-counts were confirmed. 1505 Latigo Trce's 2,320 sqft is unusually large for a 2-bedroom unit (implies just $0.58/sqft, well below every other comp's $1.30\u2013$2.04/sqft) \u2014 kept as the closest available in-zip 2bd candidate but flagged as a likely data-quality issue worth double-checking on a future sweep. Condition, past-year-rent, and School Score columns \u2014 added to 8583 Culpepper Dr and 8449 Cutler Way in a later update rather than at their initial add \u2014 were left off this initial TX sweep for the same reason (a mid-session tool outage) and can be added in a follow-up pass.", "similarSpecChecked": 43, "lowerSpecChecked": 12, "similarSpec": [{"address": "311 Rawhide Loop, Round Rock, TX 78681", "price": 1175, "beds": 3, "baths": 2, "sqft": 1010, "type": "House", "daysAgo": 16, "verifiedOn": [], "distanceMi": 0.31}, {"address": "800 Pack Saddle Pass, Round Rock, TX 78681", "price": 1850, "beds": 3, "baths": 2, "sqft": 1177, "type": "House", "daysAgo": 7, "verifiedOn": [], "distanceMi": 0.41}, {"address": "1509 Taron Dr, Round Rock, TX 78681", "price": 1825, "beds": 3, "baths": 2, "sqft": 1371, "type": "House", "daysAgo": 62, "verifiedOn": [], "distanceMi": 2.07}, {"address": "1404 Peachtree Valley Dr, Round Rock, TX 78681", "price": 1825, "beds": 3, "baths": 2, "sqft": 1439, "type": "House", "daysAgo": 34, "verifiedOn": [], "distanceMi": 2.1}, {"address": "1600 Hollow Tree Blvd, Round Rock, TX 78681", "price": 1850, "beds": 3, "baths": 2.5, "sqft": 1405, "type": "House", "daysAgo": 112, "verifiedOn": [], "distanceMi": 2.35}, {"address": "1708 Wild Horse Ln, Round Rock, TX 78681", "price": 2200, "beds": 3, "baths": 2, "sqft": 1750, "type": "House", "daysAgo": 28, "verifiedOn": [], "distanceMi": 2.96}, {"address": "3411 Monument Dr, Round Rock, TX 78681", "price": 1895, "beds": 3, "baths": 2, "sqft": 1289, "type": "House", "daysAgo": null, "verifiedOn": [], "distanceMi": 3.13}, {"address": "8506 Hillrock Dr, Round Rock, TX 78681", "price": 2300, "beds": 3, "baths": 2, "sqft": 1644, "type": "House", "daysAgo": 44, "verifiedOn": [], "distanceMi": 3.14}, {"address": "8618 Columbia Falls Dr, Round Rock, TX 78681", "price": 2300, "beds": 3, "baths": 2, "sqft": 1872, "type": "House", "daysAgo": 12, "verifiedOn": [], "distanceMi": 3.15}, {"address": "4009 Hillside Dr, Round Rock, TX 78681", "price": 1850, "beds": 3, "baths": 2, "sqft": 988, "type": "House", "daysAgo": 58, "verifiedOn": [], "distanceMi": 3.71}], "lowerSpec": [{"address": "409 Greenlawn Blvd, Round Rock, TX 78664", "price": 1595, "beds": 2, "baths": 2, "sqft": 906, "type": "House", "daysAgo": 13, "sameZip": false, "verifiedOn": [], "distanceMi": 1.42}, {"address": "313 Greenlawn Blvd, Round Rock, TX 78664", "price": 1450, "beds": 2, "baths": 2, "sqft": 906, "type": "House", "daysAgo": null, "sameZip": false, "verifiedOn": [], "distanceMi": 1.45}, {"address": "3126 Jazz St, Round Rock, TX 78664", "price": 1850, "beds": 2, "baths": 2, "sqft": 1557, "type": "House", "daysAgo": 20, "sameZip": false, "verifiedOn": [], "distanceMi": 1.91}, {"address": "1505 Latigo Trce, Round Rock, TX 78681", "price": 1350, "beds": 2, "baths": 2, "sqft": 2320, "type": "House", "daysAgo": null, "sameZip": true, "verifiedOn": [], "distanceMi": 2.35}, {"address": "505 Sierra Cv, Round Rock, TX 78664", "price": 1450, "beds": 2, "baths": 1, "sqft": 1000, "type": "House", "daysAgo": null, "sameZip": false, "verifiedOn": [], "distanceMi": 2.4}]}, {"state": "AZ", "address": "1325 E San Angelo Ave, Gilbert, AZ 85234", "specs": "4bd/2ba \u00b7 1,784 sqft", "beds": 4, "sqft": 1784, "value": 504890, "valueLabel": "Redfin Estimate (from Layer 3)", "valueNote": "Redfin's own single-provider Estimate, not the usual three-provider average \u2014 realtor.com has no Home Value section for this address either; see Layer 3 for detail.", "similarSpecChecked": 20, "lowerSpecChecked": 21, "methodologyNote": "Per Tony's request, added as the page's first Phoenix-market subject, in a new third tab alongside California and Texas. Primary source: Redfin's own zip-filtered \u201cHouses for rent\u201d search for 85234 (54 active house listings, viewed across both result pages), filtered to exact 4-bedroom (similar-spec) and 3-bedroom (lower-spec) matches \u2014 the same exact-bedroom-filter method used elsewhere on this page, with houses only (no apartment-complex floor plans) since the subject itself is a single-family house. Zillow's own 85234 rental search was used as a secondary cross-check and initially returned useful results (confirmed 5 of these 15 comps independently, with matching address, price, beds/baths and sqft, tagged \u201c\u2713 Zillow\u201d below) before triggering a bot-detection challenge partway through the sweep; rather than attempt to get past that challenge, the Zillow side of the research was stopped there and Redfin's listings carried the rest of the sweep \u2014 flagged here rather than silently worked around. Two comps (4627 E Stanford Ave, 3796 E Leah Ln) were also visible on both platforms but with a small asking-price difference ($2,745 Redfin vs. $2,740 Zillow; $3,295 Redfin vs. $3,230 Zillow) \u2014 likely a recent price tick between the two data pulls rather than a different unit; shown at the Redfin price without a verified tag, since the page's verified-tag convention requires an exact price match. Three listings were screened out as non-representative outliers rather than used: 1243 E Artesian Way ($5,000/mo, a private waterfront/dock property \u2014 a premium well outside the neighborhood's normal range), 1817 E Willow Tree Ct ($40,000/mo on a 2,970 sqft house \u2014 almost certainly a listing error), and 4099 E Libra Ave ($3,950/mo on just 1,489 sqft, implying $2.65/sqft vs. this pool's typical $0.93\u2013$1.63/sqft \u2014 reads like a mislabeled furnished/short-term rental rather than a standard annual lease). Unlike the Texas-tab addition (1505 Sagebrush Dr) or the re-swept Culpepper Dr/Cutler Way subjects, no straight-line distance was computed for these comps: 85234 had ample same-zip inventory for both bedroom tiers (20 similar-spec and 21 lower-spec candidates examined across the two platforms), so no zip-widening was needed and every comp shown is already inside the subject's own zip \u2014 distance felt like false precision here rather than a meaningful differentiator. Posted-date (days on market) is shown only for the 7 comps where it was actually captured (the 5 cross-verified Zillow matches plus two single-platform Redfin listings where a days-ago figure happened to be visible); the other 8 show \u201cActive listing\u201d rather than a guessed day-count, the same placeholder convention used for 1505 Sagebrush Dr's uncaptured comps. Update (upgrade to rich format, matching 8449 Cutler Way): per Tony's request to \u201cdo the same thing\u201d done for 8449 Cutler Way, all 15 comps above were enriched with condition, distance, past-rent and school-score data, and a netIncomeModel was added. Condition was read from each listing's own description text using this page's established rubric (explicit full-remodel language \u2192 Fully renovated; explicit partial/refresh language \u2192 Partially renovated; no renovation claim at all, including generic Progress Residential corporate boilerplate \u2192 Original clean); the mix landed at 11 Original clean, 1 Partially renovated, 3 Fully renovated. School scores come from a direct per-address GreatSchools lookup embedded on each comp's own Redfin listing page \u2014 a stronger evidence tier than Cutler Way's own precedent, which needed neighbor-proxy ratings for 8 of its 10 similar-spec comps after GreatSchools' own address search came back empty for that Sacramento pocket; here, every one of the 15 comps got a direct lookup, no proxying needed. Distance is straight-line (Haversine), computed from OpenStreetMap/Nominatim-geocoded coordinates for the subject and all 15 comps. pastRent was pulled from each comp's own Redfin \u201cSale history\u201d tab, reading the prior \u201cListed for Rent\u201d/\u201cRental Removed\u201d cycle where one exists \u2014 found for 13 of the 15 comps (only 3796 E Leah Ln and 314 N Cobblestone St show no earlier rental-listing cycle in Redfin's records, just a sale history, suggesting both were only recently converted to rentals). Several daysAgo figures were also corrected against the original simple-schema pass, which had pulled some day-counts from Zillow search-result cards at a slightly different moment than this re-check read them directly off each listing's own Redfin page: 4627 E Stanford Ave 5\u21924, 39 N Rock St 9\u21928, 4699 E Olney Ave 29\u219228, 1505 E Commerce Ave 30\u219229, and a larger gap at 1539 E Beacon Dr 26\u219236. The 9 comps that previously showed the \u201cActive listing\u201d placeholder now show a real day-count, each read directly off that comp's own Redfin page. One comp needed the same cumulative-relisting correction this page's methodology already documents for Cutler Way's 8183 Hanuman Ct and 8428 Cassatt Way: 2098 E Mallard Ct displayed \u201c731 days on Redfin,\u201d which is cumulative across two non-continuous listing cycles (Oct\u2013Nov 2024, then roughly a 22-month gap, then Sep 2026\u2013present) \u2014 confirmed via that listing's own Sale History tab, which shows the current cycle actually began Sep 4, 2026 (37 days as of this check), corrected here rather than left at the misleading 731.", "similarSpec": [{"address": "4627 E Stanford Ave, Gilbert, AZ 85234", "price": 2745, "beds": 4, "baths": 3, "sqft": 2173, "type": "House", "daysAgo": 4, "verifiedOn": [], "condition": "Original clean", "distanceMi": 4.04, "pastRent": {"price": 2535, "impliedDate": "2025-10-24"}, "schoolScore": {"elem": 9, "mid": 9, "high": 7}}, {"address": "39 N Rock St, Gilbert, AZ 85234", "price": 2695, "beds": 4, "baths": 2, "sqft": 2027, "type": "House", "daysAgo": 8, "verifiedOn": ["Zillow"], "condition": "Original clean", "distanceMi": 1.33, "pastRent": {"price": 2485, "impliedDate": "2024-08-09"}, "schoolScore": {"elem": 9, "mid": null, "high": 6}}, {"address": "3796 E Leah Ln, Gilbert, AZ 85234", "price": 3295, "beds": 4, "baths": 3.5, "sqft": 3549, "type": "House", "daysAgo": 11, "verifiedOn": [], "condition": "Original clean", "distanceMi": 3.01, "pastRent": null, "schoolScore": {"elem": 9, "mid": null, "high": 7}}, {"address": "4699 E Olney Ave, Gilbert, AZ 85234", "price": 2560, "beds": 4, "baths": 3, "sqft": 2292, "type": "House", "daysAgo": 28, "verifiedOn": ["Zillow"], "condition": "Original clean", "distanceMi": 4.23, "pastRent": {"price": 2335, "impliedDate": "2024-10-17"}, "schoolScore": {"elem": 9, "mid": 9, "high": 7}}, {"address": "1534 E Kings Ct, Gilbert, AZ 85234", "price": 3500, "beds": 4, "baths": 2, "sqft": 2203, "type": "House", "daysAgo": 49, "verifiedOn": [], "condition": "Original clean", "distanceMi": 0.23, "pastRent": {"price": 3500, "impliedDate": "2024-07-11"}, "schoolScore": {"elem": 9, "mid": null, "high": 6}}, {"address": "314 N Cobblestone St, Gilbert, AZ 85234", "price": 2599, "beds": 4, "baths": 2.5, "sqft": 2198, "type": "House", "daysAgo": 25, "verifiedOn": [], "condition": "Fully renovated", "distanceMi": 0.97, "pastRent": null, "schoolScore": {"elem": 9, "mid": null, "high": 6}}, {"address": "234 N Heritage Dr, Gilbert, AZ 85234", "price": 2400, "beds": 4, "baths": 2, "sqft": 1530, "type": "House", "daysAgo": 13, "verifiedOn": [], "condition": "Partially renovated", "distanceMi": 1.25, "pastRent": {"price": 2400, "impliedDate": "2025-07-24"}, "schoolScore": {"elem": 9, "mid": null, "high": 6}}, {"address": "2098 E Mallard Ct, Gilbert, AZ 85234", "price": 2399, "beds": 4, "baths": 2.5, "sqft": 2016, "type": "House", "daysAgo": 37, "verifiedOn": [], "condition": "Fully renovated", "distanceMi": 0.8, "pastRent": {"price": 2400, "impliedDate": "2024-11-28"}, "schoolScore": {"elem": 9, "mid": 7, "high": 6}}, {"address": "1040 N Palm St, Gilbert, AZ 85234", "price": 2435, "beds": 4, "baths": 2, "sqft": 1864, "type": "House", "daysAgo": 36, "verifiedOn": [], "condition": "Original clean", "distanceMi": 1.42, "pastRent": {"price": 2435, "impliedDate": "2025-09-13"}, "schoolScore": {"elem": 6, "mid": 5, "high": 6}}, {"address": "3458 E Park Ave, Gilbert, AZ 85234", "price": 2495, "beds": 4, "baths": 2, "sqft": 1781, "type": "House", "daysAgo": 22, "verifiedOn": [], "condition": "Original clean", "distanceMi": 2.86, "pastRent": {"price": 2495, "impliedDate": "2025-10-29"}, "schoolScore": {"elem": 8, "mid": null, "high": 7}}], "lowerSpec": [{"address": "931 N Rock St, Gilbert, AZ 85234", "price": 2549, "beds": 3, "baths": 2, "sqft": 1613, "type": "House", "daysAgo": 1, "sameZip": true, "verifiedOn": ["Zillow"], "condition": "Original clean", "distanceMi": 0.17, "pastRent": {"price": 2549, "impliedDate": "2024-06-01"}, "schoolScore": {"elem": 9, "mid": null, "high": 6}}, {"address": "1539 E Beacon Dr, Gilbert, AZ 85234", "price": 2395, "beds": 3, "baths": 2, "sqft": 1466, "type": "House", "daysAgo": 36, "sameZip": true, "verifiedOn": ["Zillow"], "condition": "Fully renovated", "distanceMi": 0.25, "pastRent": {"price": 2495, "impliedDate": "2025-09-02"}, "schoolScore": {"elem": 9, "mid": null, "high": 6}}, {"address": "1505 E Commerce Ave, Gilbert, AZ 85234", "price": 2425, "beds": 3, "baths": 2.5, "sqft": 1754, "type": "House", "daysAgo": 29, "sameZip": true, "verifiedOn": ["Zillow"], "condition": "Original clean", "distanceMi": 0.85, "pastRent": {"price": 2170, "impliedDate": "2023-10-18"}, "schoolScore": {"elem": 9, "mid": null, "high": 6}}, {"address": "1353 N Jamaica Way, Gilbert, AZ 85234", "price": 2375, "beds": 3, "baths": 2, "sqft": 1604, "type": "House", "daysAgo": 7, "sameZip": true, "verifiedOn": [], "condition": "Original clean", "distanceMi": 1.3, "pastRent": {"price": 2300, "impliedDate": "2023-09-19"}, "schoolScore": {"elem": 9, "mid": 7, "high": 6}}, {"address": "3530 E Park Ave, Gilbert, AZ 85234", "price": 2195, "beds": 3, "baths": 2, "sqft": 1699, "type": "House", "daysAgo": 48, "sameZip": true, "verifiedOn": [], "condition": "Original clean", "distanceMi": 2.93, "pastRent": {"price": 2195, "impliedDate": "2025-03-28"}, "schoolScore": {"elem": 8, "mid": null, "high": 7}}], "netIncomeModel": {"purchasePrice": 504890, "tra": "APN 304-96-761 (Maricopa County)", "adValoremRate": 0.004235, "taxMonthly": 178, "taxNote": "$2,138/yr ($178/mo) \u2014 this parcel's actual 2025 property tax bill (APN 304-96-761, Maricopa County, Subdivision Park Village Unit 2 Lt 1-42), read directly off this address's own Redfin \u201cTax history\u201d table (sourced from county assessor records) \u2014 the same evidentiary tier as 8449 Cutler Way's actual Sacramento County tax bill, not an estimated rate. Arizona taxes on a capped Limited Property Value (LPV) rather than full cash value: this parcel's own LPV was $26,950 as of its last itemized assessment (2022), far below the $504,890 full cash value used elsewhere on this page, because the LPV cap grows slowly year to year. Unlike California's Prop 13-style reassessment-on-sale, Arizona does NOT reset LPV when a property changes hands \u2014 a buyer at $504,890 inherits this same LPV trajectory rather than triggering a jump \u2014 so this actual current bill is a reasonable basis for a new purchase too, not just a reflection of the existing owner's situation. adValoremRate above is this bill's effective rate against full cash value (0.42%) shown for comparability with this page's CA subjects, not a statutory flat rate.", "insuranceMonthly": 158, "insuranceNote": "Estimated from Insurance.com's Gilbert-specific rate ($1,705/yr at $300K dwelling coverage) and a statewide carrier-average scaling factor from $300K to $400K coverage (\u22481.20\u00d7, averaged across 7 carriers' published Arizona rate tables), interpolated to \u2248$357,000 in estimated dwelling/rebuild coverage (1,784 sqft \u00d7 ~$200/sqft standard-construction rebuild cost, the same method used for 8449 Cutler Way) \u2192 \u2248$1,896/yr \u2248 $158/mo. No flood or wildfire surcharge applied \u2014 this parcel's First Street Flood and Fire Factor scores are both 1/10 (minimal risk).", "hoaMonthly": 0, "melloRoosMonthly": 0, "melloRoosNote": "No \u2014 and this needs a bit more explanation than the CA subjects' Mello-Roos fields, since this is the first non-California subject to get a net-income model on this page. California's Mello-Roos has no exact Arizona equivalent; the closer analogue is an Arizona Community Facilities District (CFD), used by some newer Gilbert master-planned communities (e.g. Power Ranch, Seville) to fund infrastructure via a separate secondary-tax line on the county bill. This subject's own subdivision, Park Village (built 1988), predates that financing mechanism in this part of Gilbert, and its Redfin tax history shows a single consolidated tax figure each year with no separate CFD line \u2014 consistent with no CFD applying here. Also confirmed directly: Redfin's own page for this address states \u201cThis Gilbert home in the 85234 zip code has NO HOA,\u201d so hoaMonthly above is a confirmed 0, not an assumption.", "scenarios": [{"label": "Original clean", "rent": 2531, "net": 2195}, {"label": "Partially renovated", "rent": 2523, "net": 2187}, {"label": "Fully renovated", "rent": 2411, "net": 2075}], "methodologyNote": "Same regression method as 8449 Cutler Way: rent regressed on sqft and condition (Original clean / Partially renovated / Fully renovated, dummy-coded), fit across this subject's own 15 similar-spec + lower-spec comps (R\u00b2 = 0.53) and applied to the subject's actual 1,784 sqft \u2014 within the observed comp range (1,466\u20133,549 sqft), so this is an interpolation. One flag worth calling out: the Fully renovated coefficient came out slightly negative in this fit (predicting $120/mo less than Original clean, all else equal), which runs against intuition. This isn't a claim that renovation lowers rent \u2014 it's a data-sparsity artifact: only 3 Fully renovated and 1 Partially renovated comp exist among the 15 (vs. 11 Original clean), and those 3 happen to skew toward smaller/cheaper units in this particular sample. Treat the three scenario numbers as close together rather than as a strongly differentiated renovation premium, unlike Cutler Way's own fit where the condition effect separated more cleanly. All figures assume an all-cash purchase at the $504,890 value (no mortgage/financing cost in this deduction)."}}, {"state": "AZ", "address": "922 E La Jolla Dr, Tempe, AZ 85282", "specs": "4bd (inferred)/3ba \u00b7 2,328 sqft", "beds": 4, "sqft": 2328, "value": 567706, "valueLabel": "realtor.com RealEstimate (from Layer 3)", "valueNote": "Subject is off-market with no sale or list price on Redfin or Zillow; this value is realtor.com's comp-derived RealEstimate from Layer 3 (7 comps), which cross-checked within ~2% of Layer 1's independent dual-AVM estimate ($556,860, averaging Redfin's $545,122 Estimate and Zillow's $568,600 Zestimate). Beds is carried over from Layer 1 as an inference (see methodologyNote) \u2014 Redfin's own public-facts field for this address has always shown beds as \u2014.", "similarSpecChecked": 27, "lowerSpecChecked": 32, "methodologyNote": "Built directly in the rich comp schema (condition, distance, past rent, school score per comp, plus a net-income model), per Tony's \"do the same thing\" precedent already applied to 8583 Culpepper Dr, 8449 Cutler Way, and 1325 E San Angelo Ave \u2014 this subject was added fresh rather than upgraded from a simpler prior version. Comps sourced from Redfin's zip-filtered \"Houses for rent\" search for 85282 (27 four-bed and 32 three-bed house listings reviewed; the 10 similar-spec and 5 lower-spec comps used here are the nearest by real Haversine distance among the candidates actually geocoded). Condition read from each comp's own current rental listing description using this page's established rubric (explicit full-remodel/\"brand new everything\" language \u2192 Fully renovated; explicit partial-update/\"freshly painted\"/\"recently updated\" language \u2192 Partially renovated; no current renovation claim, even where an old sale listing years prior mentions one \u2192 Original clean) \u2014 landed at 5 Original clean, 6 Partially renovated, 4 Fully renovated. School score came from a direct per-address GreatSchools lookup embedded on each comp's own Redfin listing page for all 15, no neighbor-proxying needed. Past rent was read from each comp's own Sale History tab (the most recent complete \"Listed for Rent\"\u2192\"Rental Removed\" cycle prior to the current listing); found for 8 of the 15 \u2014 533 E Pebble Beach Dr's history was excluded as an unreliable source for a single whole-house figure (it mixes whole-house listing cycles with several individual-bedroom sub-listings from the same address, $550\u2013$1,250/mo, too ambiguous to disentangle); 943 E Manhatton Dr, 1134 E Loyola Dr, 1412 E Hermosa Dr, 1503 E Del Rio Dr, 123 E Erie Dr, and 951 W La Jolla Dr show only sale events or a single still-open listing cycle with no distinct prior rental cycle. (Correction: an earlier draft of this note miscounted this as 10 of 15 \u2014 the true count, re-verified directly against each comp's own pastRent field, is 8.) No daysAgo corrections were needed this round \u2014 every comp's \"days on Redfin\" badge, read directly off its own listing page, checked out against its own listing date with no cumulative-relisting artifact like the one documented for Cutler Way's and San Angelo Ave's comps. Zillow cross-verification was not attempted for these 15: Zillow's own page for the subject itself triggered a bot-detection \"Press & Hold\" challenge earlier in this research pass, and per this platform's standing rule against bypassing CAPTCHAs, no further Zillow lookups were attempted this round \u2014 verifiedOn is empty for all 15 comps, a lower evidentiary tier than Cutler Way's or San Angelo Ave's partial Zillow cross-checks, flagged here rather than left unstated. Subject beds carried over from Layer 1 as \"4 (inferred)\" \u2014 Redfin's own public-facts field for 922 E La Jolla Dr has always shown beds as \u2014 (a genuine three-source gap also absent from Zillow and the Maricopa County Assessor), so Layer 1 inferred 4bd from the directly comparable neighboring parcel 928 E La Jolla Dr; that inference is carried forward here rather than re-derived. Full net-income model detail in netIncomeModel below.", "similarSpec": [{"address": "943 E Manhatton Dr, Tempe, AZ 85282", "price": 3095, "beds": 4, "baths": 3.5, "sqft": null, "type": "House", "daysAgo": 61, "verifiedOn": [], "condition": "Original clean", "distanceMi": 0.11, "pastRent": null, "schoolScore": {"elem": 5, "mid": 3, "high": 8}}, {"address": "533 E Pebble Beach Dr, Tempe, AZ 85282", "price": 3150, "beds": 4, "baths": 2, "sqft": 1699, "type": "House", "daysAgo": 74, "verifiedOn": [], "condition": "Partially renovated", "distanceMi": 0.38, "pastRent": null, "schoolScore": {"elem": 5, "mid": 3, "high": 5}}, {"address": "1134 E Loyola Dr, Tempe, AZ 85282", "price": 4100, "beds": 4, "baths": 2, "sqft": null, "type": "House", "daysAgo": 17, "verifiedOn": [], "condition": "Fully renovated", "distanceMi": 0.51, "pastRent": null, "schoolScore": {"elem": 5, "mid": 3, "high": 8}}, {"address": "1412 E Hermosa Dr, Tempe, AZ 85282", "price": 2495, "beds": 4, "baths": 2, "sqft": 1980, "type": "House", "daysAgo": 30, "verifiedOn": [], "condition": "Original clean", "distanceMi": 0.61, "pastRent": null, "schoolScore": {"elem": 5, "mid": 3, "high": 8}}, {"address": "1503 E Del Rio Dr, Tempe, AZ 85282", "price": 4000, "beds": 4, "baths": 2, "sqft": 2200, "type": "House", "daysAgo": 205, "verifiedOn": [], "condition": "Fully renovated", "distanceMi": 0.8, "pastRent": null, "schoolScore": {"elem": 5, "mid": 3, "high": 8}}, {"address": "1400 E Wesleyan Dr, Tempe, AZ 85282", "price": 2600, "beds": 4, "baths": 2, "sqft": 1699, "type": "House", "daysAgo": 31, "verifiedOn": [], "condition": "Fully renovated", "distanceMi": 0.81, "pastRent": {"price": 2750, "impliedDate": "2026-03-19"}, "schoolScore": {"elem": 5, "mid": 3, "high": 8}}, {"address": "123 E Erie Dr, Tempe, AZ 85282", "price": 2845, "beds": 4, "baths": 2, "sqft": null, "type": "House", "daysAgo": 110, "verifiedOn": [], "condition": "Partially renovated", "distanceMi": 0.83, "pastRent": null, "schoolScore": {"elem": 9, "mid": 3, "high": 5}}, {"address": "1409 E Alameda Dr, Tempe, AZ 85282", "price": 2600, "beds": 4, "baths": 2, "sqft": 2000, "type": "House", "daysAgo": 47, "verifiedOn": [], "condition": "Original clean", "distanceMi": 0.87, "pastRent": {"price": 2900, "impliedDate": "2025-06-22"}, "schoolScore": {"elem": 5, "mid": 3, "high": 8}}, {"address": "1416 E Dunbar Dr, Tempe, AZ 85282", "price": 3225, "beds": 4, "baths": 2, "sqft": 1642, "type": "House", "daysAgo": 1, "verifiedOn": [], "condition": "Partially renovated", "distanceMi": 0.9, "pastRent": {"price": 4650, "impliedDate": "2025-08-22"}, "schoolScore": {"elem": 7, "mid": 3, "high": 8}}, {"address": "1604 E El Parque Dr, Tempe, AZ 85282", "price": 4200, "beds": 4, "baths": 2, "sqft": 2000, "type": "House", "daysAgo": 206, "verifiedOn": [], "condition": "Fully renovated", "distanceMi": 1.32, "pastRent": {"price": 4400, "impliedDate": "2026-03-06"}, "schoolScore": {"elem": 5, "mid": 3, "high": 8}}], "lowerSpec": [{"address": "1209 E Hermosa Dr, Tempe, AZ 85282", "price": 2195, "beds": 3, "baths": 2, "sqft": 1528, "type": "House", "daysAgo": 84, "sameZip": true, "verifiedOn": [], "condition": "Original clean", "distanceMi": 0.31, "pastRent": {"price": 2295, "impliedDate": "2025-06-15"}, "schoolScore": {"elem": 5, "mid": 3, "high": 8}}, {"address": "1249 E Bishop Dr, Tempe, AZ 85282", "price": 2895, "beds": 3, "baths": 2, "sqft": 1260, "type": "House", "daysAgo": 142, "sameZip": true, "verifiedOn": [], "condition": "Original clean", "distanceMi": 0.94, "pastRent": {"price": 3300, "impliedDate": "2025-08-11"}, "schoolScore": {"elem": 5, "mid": 3, "high": 8}}, {"address": "22 E Fairmont Dr, Tempe, AZ 85282", "price": 2600, "beds": 3, "baths": 2, "sqft": 1406, "type": "House", "daysAgo": 193, "sameZip": true, "verifiedOn": [], "condition": "Partially renovated", "distanceMi": 0.91, "pastRent": {"price": 2999, "impliedDate": "2023-08-16"}, "schoolScore": {"elem": 9, "mid": 3, "high": 5}}, {"address": "1986 E Palmcroft Dr, Tempe, AZ 85282", "price": 2850, "beds": 3, "baths": 2, "sqft": 1297, "type": "House", "daysAgo": 222, "sameZip": true, "verifiedOn": [], "condition": "Partially renovated", "distanceMi": 1.79, "pastRent": {"price": 3000, "impliedDate": "2026-06-21"}, "schoolScore": {"elem": 4, "mid": 3, "high": 8}}, {"address": "951 W La Jolla Dr, Tempe, AZ 85282", "price": 3500, "beds": 3, "baths": 2, "sqft": 1383, "type": "House", "daysAgo": 389, "sameZip": true, "verifiedOn": [], "condition": "Partially renovated", "distanceMi": 1.54, "pastRent": null, "schoolScore": {"elem": 4, "mid": 2, "high": 5}}], "netIncomeModel": {"purchasePrice": 567706, "tra": "APN 13354559 (Maricopa County)", "adValoremRate": 0.004934, "taxMonthly": 233, "taxNote": "$2,801/yr ($233/mo) \u2014 this parcel's actual 2025 property tax bill (APN 13354559, Maricopa County, Tax Area 031600, Subdivision Cyprus East Unit 2), read directly off this address's own Redfin \u201cTax history\u201d table (sourced from county assessor records) \u2014 the same evidentiary tier as 8449 Cutler Way's and 1325 E San Angelo Ave's actual county tax bills, not an estimated rate. As with San Angelo Ave, Arizona taxes on a capped Limited Property Value (LPV) rather than full cash value, and does NOT reset LPV when a property changes hands (unlike California's Prop 13-style reassessment-on-sale), so this actual current bill is a reasonable basis for a new purchase too. adValoremRate above is this bill's effective rate against the $567,706 Layer 3 RealEstimate (0.49%), shown for comparability with this page's CA subjects, not a statutory flat rate.", "insuranceMonthly": 296, "insuranceNote": "Estimated from Insurance.com's own Tempe-specific rate table (a stronger evidentiary tier than San Angelo Ave's generic statewide scaling factor, since Tempe has its own interpolatable coverage-level table): $3,151/yr at $400,000 dwelling coverage and $4,362/yr at $600,000, interpolated to \u2248$3,548/yr \u2248 $296/mo for \u2248$465,600 in estimated dwelling/rebuild coverage (2,328 sqft \u00d7 ~$200/sqft standard-construction rebuild cost, the same method used for Cutler Way and San Angelo Ave). No flood or wildfire surcharge applied \u2014 this parcel's First Street Fire Factor is 1/10 (minimal risk), though its Flood Factor (4/10, 19-29% 30-year chance) and Heat Factor (9/10) are both higher than San Angelo Ave's, not reflected in this estimate since Insurance.com's table doesn't break out peril-specific riders.", "hoaMonthly": 0, "melloRoosMonthly": 0, "melloRoosNote": "No \u2014 confirmed $0 on both counts. Arizona's rough Mello-Roos analogue, a Community Facilities District (CFD), funds infrastructure in some newer Gilbert/Chandler master-planned communities via a separate secondary-tax line; this subject's subdivision, Cyprus East Unit 2 (built 1967), predates that financing mechanism by decades \u2014 even more clearly than San Angelo Ave's 1988-built Park Village \u2014 and its Redfin tax history shows one consolidated tax figure each year with no separate CFD line. HOA is confirmed $0 across four independent cross-referencing sources for this exact Cyprus East subdivision (a stronger evidentiary tier than San Angelo Ave's single-source Redfin text): The Kay-Grant Group's own Cyprus East listings page states \u201cThis community has no HOA or Association dues!\u201d; Zillow's listing for 3307 S Terrace Rd (same subdivision) shows \u201cHas HOA: No\u201d; Homes.com's listing for 3327 S Terrace Rd shows \u201cNo Home Owners Association\u201d; and Realtor.com's listing for 3620 S Terrace Rd shows \u201cAssociation: No.\u201d", "scenarios": [{"label": "Original clean", "rent": 2909, "net": 2380}, {"label": "Partially renovated", "rent": 3546, "net": 3017}, {"label": "Fully renovated", "rent": 3806, "net": 3277}], "methodologyNote": "Same regression method as Cutler Way and San Angelo Ave: rent regressed on sqft and condition (Original clean / Partially renovated / Fully renovated, dummy-coded), fit across this subject's own comps \u2014 but only 12 of the 15 could be used, since 3 similar-spec comps (943 E Manhatton Dr, 1134 E Loyola Dr, 123 E Erie Dr) have no sqft figure on their own Redfin listing, flagged rather than estimated. R\u00b2 = 0.51 on those 12. Unlike San Angelo Ave's fit, both condition coefficients came out positive and sizable here (Partially renovated +$637/mo, Fully renovated +$897/mo vs. Original clean), a cleaner result. The flag worth calling out for this subject: its actual 2,328 sqft sits OUTSIDE the comp sqft range used in the fit (1,260\u20132,200 sqft) \u2014 this is an extrapolation, not an interpolation like Cutler Way's and San Angelo Ave's fits, so these three scenario numbers carry more uncertainty than this page's other net-income models and should be read as a rough indication of scale rather than a tight estimate. All figures assume an all-cash purchase at the $567,706 Layer 3 RealEstimate (no mortgage/financing cost in this deduction)."}}], "pendingRequests": [], "resolvedRequests": [{"id": 1, "address": "6316 Hillsdale Blvd, Sacramento, CA 95842", "submittedOn": "2026-08-27", "status": "added"}], "lastRefresh": "2026-09-10"}</script>
+
+<script>
+(function () {
+  function $(sel, root) { return (root || document).querySelector(sel); }
+
+  var STATE = JSON.parse(document.getElementById("ld-state").textContent);
+  var SUBJECTS = STATE.subjects;
+  var PENDING_REQUESTS = STATE.pendingRequests;
+  var RESOLVED_REQUESTS = STATE.resolvedRequests;
+  var market = "CA";
+
+  var fmt0 = function (n) { return "$" + Math.round(n).toLocaleString(); };
+  var fmtNum = function (n) { return Math.round(n).toLocaleString(); };
+
+  function median(nums) {
+    var arr = nums.slice().sort(function (a, b) { return a - b; });
+    var mid = Math.floor(arr.length / 2);
+    return arr.length % 2 ? arr[mid] : (arr[mid - 1] + arr[mid]) / 2;
+  }
+  function average(arr) { return arr.reduce(function (a, b) { return a + b; }, 0) / arr.length; }
+
+  function bathsLabel(n) { return n % 1 === 0 ? n : n.toFixed(1); }
+
+  function computeTierSummary(comps) {
+    var prices = comps.map(function (c) { return c.price; });
+    var withSqft = comps.filter(function (c) { return c.sqft; });
+    var ppsf = withSqft.map(function (c) { return c.price / c.sqft; });
+    return {
+      count: comps.length,
+      medianPrice: median(prices),
+      avgPrice: average(prices),
+      avgPpsf: ppsf.length ? average(ppsf) : null,
+      avgSqft: withSqft.length ? average(withSqft.map(function (c) { return c.sqft; })) : null,
+      sqftCoverage: withSqft.length
+    };
+  }
+
+  function rentRow(c, i, mostRecentDays, subjZip, hasCond, hasDist, hasPastRent, hasSchool) {
+    var tags = "";
+    if (hasDist && i === 0) tags += '<span class="closest-tag">Closest</span>';
+    if (c.daysAgo !== null && c.daysAgo === mostRecentDays) tags += '<span class="freshest-tag">Freshest</span>';
+    if (c.verifiedOn && c.verifiedOn.length) tags += '<span class="verified-tag">✓ ' + c.verifiedOn.join(", ") + "</span>";
+    if (c.sameZip) tags += '<span class="samezip-tag">Same zip' + (subjZip ? " " + subjZip : "") + "</span>";
+    var posted = c.offMarket ? ("Off market" + (c.offMarketDays != null ? (" (" + c.offMarketDays + (c.offMarketDays === 1 ? " day)" : " days)")) : "")) : (c.daysAgo === null ? "Active listing" : (c.daysAgo + (c.daysAgo === 1 ? " day on market" : " days on market")));
+    var ppsf = c.sqft ? ("$" + (c.price / c.sqft).toFixed(2) + "/sqft") : "—";
+    var condCell = hasCond ? ('\n      <td>' + (c.condition || "—") + "</td>") : "";
+    var distCell = hasDist ? ('\n      <td class="num mono">' + (c.distanceMi !== undefined && c.distanceMi !== null ? c.distanceMi.toFixed(2) + " mi" : "—") + "</td>") : "";
+    var pastRentCell = hasPastRent ? ('\n      <td class="num mono">' + (c.pastRent ? (fmt0(c.pastRent.price) + "/mo<br><span style=\"color:var(--ink-faint);font-weight:400;font-size:11px;\">implied " + c.pastRent.impliedDate + "</span>") : "—") + "</td>") : "";
+    var schoolCell = hasSchool ? ('\n      <td class="mono">' + (c.schoolScore ? (c.schoolScore.elem + " / " + c.schoolScore.mid + " / " + c.schoolScore.high) : "—") + "</td>") : "";
+    return '\n    <tr>' +
+      '\n      <td><span class="comp-rank">' + (i + 1) + '.</span><span class="comp-name">' + c.address.split(",")[0] + "</span>" + tags + "</td>" +
+      '\n      <td>' + c.address.split(",").slice(1).join(",").trim() + "</td>" +
+      '\n      <td class="num mono">' + fmt0(c.price) + "/mo</td>" +
+      '\n      <td class="num mono">' + ppsf + "</td>" +
+      '\n      <td>' + c.beds + "bd/" + bathsLabel(c.baths) + "ba</td>" +
+      '\n      <td class="num mono">' + (c.sqft ? fmtNum(c.sqft) : "—") + "</td>" +
+      '\n      <td>' + c.type + "</td>" +
+      '\n      <td class="mono">' + posted + "</td>" +
+      condCell + distCell + pastRentCell + schoolCell +
+      "\n    </tr>";
+  }
+
+  function extraTheadCells(hasCond, hasDist, hasPastRent, hasSchool) {
+    var out = "";
+    if (hasCond) out += "\n              <th>Condition</th>";
+    if (hasDist) out += '\n              <th class="num">Distance</th>';
+    if (hasPastRent) out += '\n              <th class="num">Past-year rent</th>';
+    if (hasSchool) out += "\n              <th>School score</th>";
+    return out;
+  }
+
+  function netIncomeSection(nim, subjSqft) {
+    if (!nim) return "";
+    var rows = nim.scenarios.map(function (s) {
+      return '\n            <tr>' +
+        '\n              <td>' + s.label + '</td>' +
+        '\n              <td class="num mono">' + fmt0(s.rent) + '/mo</td>' +
+        '\n              <td class="num mono">-' + fmt0(nim.taxMonthly) + '</td>' +
+        '\n              <td class="num mono">-' + fmt0(nim.insuranceMonthly) + '</td>' +
+        '\n              <td class="num mono">' + (nim.hoaMonthly ? "-" + fmt0(nim.hoaMonthly) : "$0") + '</td>' +
+        '\n              <td class="num mono">-' + fmt0(nim.melloRoosMonthly) + '</td>' +
+        '\n              <td class="num mono" style="font-weight:600;color:var(--river-strong);">' + fmt0(s.net) + '/mo</td>' +
+        '\n            </tr>';
+    }).join("");
+    var nets = nim.scenarios.map(function (s) { return s.net; });
+    var netLow = Math.min.apply(null, nets), netHigh = Math.max.apply(null, nets);
+    var rents = nim.scenarios.map(function (s) { return s.rent; });
+    var rentLow = Math.min.apply(null, rents), rentHigh = Math.max.apply(null, rents);
+    return '\n      <div class="tier2-head" style="border-top-color:var(--sage);">' +
+      '\n        <div class="tier2-eyebrow" style="color:var(--sage);">Net income estimate</div>' +
+      '\n        <h4 class="tier2-title">Estimated rent range and net income, cash purchase (no mortgage)</h4>' +
+      '\n        <p class="tier2-note">Rent estimated from this subject\'s own sqft (' + fmtNum(subjSqft) + ') and a condition scenario, using the comp table above. Net income = rent \u2212 property tax \u2212 insurance \u2212 HOA \u2212 Mello-Roos, assuming an all-cash purchase.</p>' +
+      "\n      </div>" +
+      '\n      <div class="stat-row">' +
+      '\n        <div class="stat-card highlight">' +
+      '\n          <div class="stat-label">Estimated rent range</div>' +
+      '\n          <div class="stat-value">' + fmt0(rentLow) + '\u2013' + fmt0(rentHigh) + '/mo</div>' +
+      '\n          <div class="stat-note">by condition scenario, at ' + fmtNum(subjSqft) + ' sqft</div>' +
+      "\n        </div>" +
+      '\n        <div class="stat-card">' +
+      '\n          <div class="stat-label">Property tax</div>' +
+      '\n          <div class="stat-value">' + fmt0(nim.taxMonthly) + '/mo</div>' +
+      '\n          <div class="stat-note">on a $' + fmtNum(nim.purchasePrice) + ' cash purchase, TRA ' + nim.tra + '</div>' +
+      "\n        </div>" +
+      '\n        <div class="stat-card">' +
+      '\n          <div class="stat-label">Insurance + HOA + Mello-Roos</div>' +
+      '\n          <div class="stat-value">' + fmt0(nim.insuranceMonthly + nim.hoaMonthly + nim.melloRoosMonthly) + '/mo</div>' +
+      '\n          <div class="stat-note">ins ' + fmt0(nim.insuranceMonthly) + ' + HOA ' + fmt0(nim.hoaMonthly) + ' + Mello-Roos ' + fmt0(nim.melloRoosMonthly) + "</div>" +
+      "\n        </div>" +
+      '\n        <div class="stat-card tier2">' +
+      '\n          <div class="stat-label">Net income range</div>' +
+      '\n          <div class="stat-value">' + fmt0(netLow) + '\u2013' + fmt0(netHigh) + '/mo</div>' +
+      '\n          <div class="stat-note">cash-purchase basis, no mortgage</div>' +
+      "\n        </div>" +
+      "\n      </div>" +
+      '\n      <div class="table-wrap">' +
+      '\n        <table class="comps">' +
+      "\n          <thead>" +
+      "\n            <tr>" +
+      "\n              <th>Condition scenario</th>" +
+      '\n              <th class="num">Est. rent</th>' +
+      '\n              <th class="num">Property tax</th>' +
+      '\n              <th class="num">Insurance</th>' +
+      '\n              <th class="num">HOA</th>' +
+      '\n              <th class="num">Mello-Roos</th>' +
+      '\n              <th class="num">Net income</th>' +
+      "\n            </tr>" +
+      "\n          </thead>" +
+      "\n          <tbody>" +
+      rows +
+      "\n          </tbody>" +
+      "\n        </table>" +
+      '\n        <div class="table-foot-note">' + nim.taxNote + "</div>" +
+      '\n        <div class="table-foot-note">' + nim.insuranceNote + "</div>" +
+      '\n        <div class="table-foot-note"><strong>Mello-Roos:</strong> ' + nim.melloRoosNote + "</div>" +
+      '\n        <div class="table-foot-note">' + nim.methodologyNote + "</div>" +
+      "\n      </div>";
+  }
+
+  function renderSubject(subj) {
+    var simComps = subj.similarSpec.slice();
+    var lowComps = subj.lowerSpec.slice();
+    var simHasDist = simComps.length > 0 && simComps[0].distanceMi !== undefined;
+    var lowHasDist = lowComps.length > 0 && lowComps[0].distanceMi !== undefined;
+    if (simHasDist) simComps.sort(function (a, b) { return a.distanceMi - b.distanceMi; });
+    if (lowHasDist) lowComps.sort(function (a, b) { return a.distanceMi - b.distanceMi; });
+    var simHasCond = simComps.length > 0 && simComps[0].condition !== undefined;
+    var lowHasCond = lowComps.length > 0 && lowComps[0].condition !== undefined;
+    var simHasPastRent = simComps.length > 0 && simComps[0].pastRent !== undefined;
+    var lowHasPastRent = lowComps.length > 0 && lowComps[0].pastRent !== undefined;
+    var simHasSchool = simComps.length > 0 && simComps[0].schoolScore !== undefined;
+    var lowHasSchool = lowComps.length > 0 && lowComps[0].schoolScore !== undefined;
+
+    var simSummary = computeTierSummary(simComps);
+    var lowSummary = computeTierSummary(lowComps);
+    var simDaysKnown = simComps.filter(function (c) { return c.daysAgo !== null; }).map(function (c) { return c.daysAgo; });
+    var simMostRecent = simDaysKnown.length ? Math.min.apply(null, simDaysKnown) : null;
+    var lowDaysKnown = lowComps.filter(function (c) { return c.daysAgo !== null; }).map(function (c) { return c.daysAgo; });
+    var lowMostRecent = lowDaysKnown.length ? Math.min.apply(null, lowDaysKnown) : null;
+
+    var subjZip = (subj.address.match(/\b(\d{5})\b/) || [])[1] || "";
+    var simRows = simComps.map(function (c, i) { return rentRow(c, i, simMostRecent, subjZip, simHasCond, simHasDist, simHasPastRent, simHasSchool); }).join("");
+    var lowRows = lowComps.map(function (c, i) { return rentRow(c, i, lowMostRecent, subjZip, lowHasCond, lowHasDist, lowHasPastRent, lowHasSchool); }).join("");
+
+    var annualYield = subj.value ? (simSummary.medianPrice * 12 / subj.value * 100) : null;
+    var stepDownPct = (1 - lowSummary.medianPrice / simSummary.medianPrice) * 100;
+    var simBeds = subj.rentCompBeds || subj.beds;
+    var lowBeds = simBeds - 1;
+
+    return '\n    <section class="subject-section">' +
+      '\n      <div class="subject-head">' +
+      "\n        <div>" +
+      '\n          <div class="subject-eyebrow">Subject property</div>' +
+      '\n          <h3 class="subject-title">' + subj.address + "</h3>" +
+      '\n          <div class="subject-sub">' + subj.specs + (subj.value ? " · " + subj.valueLabel + " " + fmt0(subj.value) : "") + "</div>" +
+      (subj.valueNote ? '\n          <div class="subject-sub" style="margin-top:2px;">' + subj.valueNote + "</div>" : "") +
+      "\n        </div>" +
+      "\n      </div>" +
+      (subj.methodologyNote ? '\n      <div class="methodology-flag"><span class="flag-icon">⚠</span><span><strong>Methodology note for this subject: </strong>' + subj.methodologyNote + "</span></div>" : "") +
+
+      '\n      <div class="stat-row">' +
+      '\n        <div class="stat-card highlight">' +
+      '\n          <div class="stat-label">Similar-spec comps</div>' +
+      '\n          <div class="stat-value">' + simSummary.count + "</div>" +
+      '\n          <div class="stat-note">of ' + subj.similarSpecChecked + " nearby " + simBeds + "bd rentals found</div>" +
+      "\n        </div>" +
+      '\n        <div class="stat-card">' +
+      '\n          <div class="stat-label">Median rent (' + simBeds + "bd)</div>" +
+      '\n          <div class="stat-value">' + fmt0(simSummary.medianPrice) + "/mo</div>" +
+      '\n          <div class="stat-note">avg ' + fmt0(simSummary.avgPrice) + "/mo across all 10</div>" +
+      "\n        </div>" +
+      '\n        <div class="stat-card">' +
+      '\n          <div class="stat-label">Avg. $/sqft rent</div>' +
+      '\n          <div class="stat-value">$' + (simSummary.avgPpsf ? simSummary.avgPpsf.toFixed(2) : "—") + "</div>" +
+      '\n          <div class="stat-note">simple average, ' + simSummary.sqftCoverage + " of 10 comps had sqft listed</div>" +
+      "\n        </div>" +
+      '\n        <div class="stat-card">' +
+      '\n          <div class="stat-label">Avg. comp size</div>' +
+      '\n          <div class="stat-value">' + (simSummary.avgSqft ? fmtNum(simSummary.avgSqft) + " sqft" : "—") + "</div>" +
+      '\n          <div class="stat-note">vs. subject’s ' + fmtNum(subj.sqft) + ' sqft</div>' +
+      "\n        </div>" +
+      '\n        <div class="stat-card">' +
+      '\n          <div class="stat-label">Gross rent yield</div>' +
+      '\n          <div class="stat-value">' + (annualYield ? annualYield.toFixed(1) + "%" : "—") + "</div>" +
+      '\n          <div class="stat-note">median rent × 12 ÷ ' + (subj.value ? subj.valueLabel.replace(/\s*\(from Layer \d\)/, "") : "value") + ' — rough only</div>' +
+      "\n        </div>" +
+      "\n      </div>" +
+
+      '\n      <div class="table-wrap">' +
+      '\n        <table class="comps">' +
+      "\n          <thead>" +
+      "\n            <tr>" +
+      "\n              <th>Comp</th>" +
+      "\n              <th>City / zip</th>" +
+      '\n              <th class="num">Rent</th>' +
+      '\n              <th class="num">$/sqft</th>' +
+      "\n              <th>Beds/baths</th>" +
+      '\n              <th class="num">Sqft</th>' +
+      "\n              <th>Type</th>" +
+      "\n              <th>Posted</th>" +
+      extraTheadCells(simHasCond, simHasDist, simHasPastRent, simHasSchool) +
+      "\n            </tr>" +
+      "\n          </thead>" +
+      "\n          <tbody>" +
+      simRows +
+      "\n          </tbody>" +
+      "\n        </table>" +
+      '\n        <div class="table-foot-note">' + simSummary.count + " similar-spec (" + simBeds + "bd) rentals nearest to " + subj.address.split(",")[0] + ', ranked by proximity then recency of posting. A "✓ Apartments.com" or "✓ Redfin" tag marks listings independently confirmed on that platform with matching address and price.</div>' +
+      "\n      </div>" +
+
+      '\n      <div class="tier2-head">' +
+      '\n        <div class="tier2-eyebrow">Lower-spec tier</div>' +
+      '\n        <h4 class="tier2-title">' + lowSummary.count + " nearby " + lowBeds + "-bedroom rentals — one bedroom down from the " + simBeds + "bd tier</h4>" +
+      '\n        <p class="tier2-note">Same method, filtered to exactly ' + lowBeds + " bedrooms instead of " + simBeds + '. Comps flagged "Same zip" sit in the subject\'s own zip — the closest possible matches.</p>' +
+      "\n      </div>" +
+      '\n      <div class="stat-row">' +
+      '\n        <div class="stat-card tier2">' +
+      '\n          <div class="stat-label">Lower-spec comps</div>' +
+      '\n          <div class="stat-value">' + lowSummary.count + "</div>" +
+      '\n          <div class="stat-note">of ' + subj.lowerSpecChecked + " nearby " + lowBeds + "bd rentals found</div>" +
+      "\n        </div>" +
+      '\n        <div class="stat-card">' +
+      '\n          <div class="stat-label">Median rent (' + lowBeds + "bd)</div>" +
+      '\n          <div class="stat-value">' + fmt0(lowSummary.medianPrice) + "/mo</div>" +
+      '\n          <div class="stat-note">avg ' + fmt0(lowSummary.avgPrice) + "/mo across all 5</div>" +
+      "\n        </div>" +
+      '\n        <div class="stat-card">' +
+      '\n          <div class="stat-label">Avg. $/sqft rent</div>' +
+      '\n          <div class="stat-value">$' + (lowSummary.avgPpsf ? lowSummary.avgPpsf.toFixed(2) : "—") + "</div>" +
+      '\n          <div class="stat-note">' + lowSummary.sqftCoverage + " of 5 comps had sqft listed</div>" +
+      "\n        </div>" +
+      '\n        <div class="stat-card">' +
+      '\n          <div class="stat-label">Avg. comp size</div>' +
+      '\n          <div class="stat-value">' + (lowSummary.avgSqft ? fmtNum(lowSummary.avgSqft) + " sqft" : "—") + "</div>" +
+      '\n          <div class="stat-note">2bd units run smaller, as expected</div>' +
+      "\n        </div>" +
+      '\n        <div class="stat-card">' +
+      '\n          <div class="stat-label">Step-down vs. ' + simBeds + "bd</div>" +
+      '\n          <div class="stat-value">-' + stepDownPct.toFixed(0) + "%</div>" +
+      '\n          <div class="stat-note">median ' + lowBeds + "bd rent vs. median " + simBeds + "bd rent</div>" +
+      "\n        </div>" +
+      "\n      </div>" +
+      '\n      <div class="table-wrap">' +
+      '\n        <table class="comps">' +
+      "\n          <thead>" +
+      "\n            <tr>" +
+      "\n              <th>Comp</th>" +
+      "\n              <th>City / zip</th>" +
+      '\n              <th class="num">Rent</th>' +
+      '\n              <th class="num">$/sqft</th>' +
+      "\n              <th>Beds/baths</th>" +
+      '\n              <th class="num">Sqft</th>' +
+      "\n              <th>Type</th>" +
+      "\n              <th>Posted</th>" +
+      extraTheadCells(lowHasCond, lowHasDist, lowHasPastRent, lowHasSchool) +
+      "\n            </tr>" +
+      "\n          </thead>" +
+      "\n          <tbody>" +
+      lowRows +
+      "\n          </tbody>" +
+      "\n        </table>" +
+      '\n        <div class="table-foot-note">' + lowSummary.count + " lower-spec (" + lowBeds + "bd) rentals nearest to " + subj.address.split(",")[0] + '. "Same zip" marks comps inside the subject\'s own zip.</div>' +
+      "\n      </div>" +
+      netIncomeSection(subj.netIncomeModel, subj.sqft) +
+      "\n    </section>";
+  }
+
+  function renderMarketTabCounts() {
+    var ca = SUBJECTS.filter(function (s) { return (s.state || "CA") === "CA"; }).length;
+    var tx = SUBJECTS.filter(function (s) { return s.state === "TX"; }).length;
+    var az = SUBJECTS.filter(function (s) { return s.state === "AZ"; }).length;
+    var caEl = document.getElementById("market-tab-sub-CA");
+    var txEl = document.getElementById("market-tab-sub-TX");
+    var azEl = document.getElementById("market-tab-sub-AZ");
+    if (caEl) caEl.textContent = ca;
+    if (txEl) txEl.textContent = tx;
+    if (azEl) azEl.textContent = az;
+  }
+
+  function switchMarket(mkt) {
+    market = mkt;
+    var caBtn = document.getElementById("market-tab-CA");
+    var txBtn = document.getElementById("market-tab-TX");
+    var azBtn = document.getElementById("market-tab-AZ");
+    if (caBtn) { caBtn.classList.toggle("active", mkt === "CA"); caBtn.setAttribute("aria-selected", mkt === "CA" ? "true" : "false"); }
+    if (txBtn) { txBtn.classList.toggle("active", mkt === "TX"); txBtn.setAttribute("aria-selected", mkt === "TX" ? "true" : "false"); }
+    if (azBtn) { azBtn.classList.toggle("active", mkt === "AZ"); azBtn.setAttribute("aria-selected", mkt === "AZ" ? "true" : "false"); }
+    renderSubjects();
+  }
+
+  function renderSubjects() {
+    var filtered = SUBJECTS.filter(function (s) { return (s.state || "CA") === market; });
+    document.getElementById("subjects").innerHTML = filtered.length
+      ? filtered.map(renderSubject).join("")
+      : '<div class="market-empty">No ' + (market === "TX" ? "Texas" : market === "AZ" ? "Phoenix" : "California") + ' subject properties yet — add one from the address box above.</div>';
+    var badge = document.getElementById("badge-count");
+    if (badge) badge.textContent = filtered.length + " subject propert" + (filtered.length === 1 ? "y" : "ies");
+    renderMarketTabCounts();
+  }
+
+  window.switchMarket = switchMarket;
+
+  // ---------- Address check (manual "add this address" feature) ----------
+  var toastTimer;
+  function showToast(msg) {
+    var el = $(".toast");
+    if (!el) {
+      el = document.createElement("div");
+      el.className = "toast";
+      document.body.appendChild(el);
+    }
+    el.textContent = msg;
+    el.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.hidden = true; }, 3200);
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function normAddr(s) {
+    return String(s).toLowerCase().replace(/[^a-z0-9]/g, "");
+  }
+
+  function sameAddress(a, b) {
+    var na = normAddr(a), nb = normAddr(b);
+    if (!na || !nb) return false;
+    return na.indexOf(nb) !== -1 || nb.indexOf(na) !== -1;
+  }
+
+  function nextRequestId() {
+    var all = PENDING_REQUESTS.concat(RESOLVED_REQUESTS);
+    var max = all.reduce(function (m, r) { return Math.max(m, r.id || 0); }, 0);
+    return max + 1;
+  }
+
+  function todayStr() {
+    var d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+
+  var REQUEST_STATUS_LABEL = {
+    queued: "⏳ Queued — tell Claude in chat to run the rental-comps sweep",
+    added: "✅ Added — 10 similar-spec + 5 lower-spec rentals built and added above",
+    "already-listed": "ℹ️ Already on this page",
+    notfound: "⚠️ Couldn't find enough nearby rentals for this address",
+    error: "⚠️ Couldn't process this address — try again or check it"
+  };
+
+  function renderRequestList() {
+    var list = document.getElementById("address-check-list");
+    if (!list) return;
+    var items = PENDING_REQUESTS.slice().concat(RESOLVED_REQUESTS.slice(-8).slice().reverse());
+    if (!items.length) {
+      list.innerHTML = '<li class="empty">No address checks yet — try one above.</li>';
+      return;
+    }
+    list.innerHTML = items.map(function (r) {
+      var label = REQUEST_STATUS_LABEL[r.status] || r.status;
+      return '<li class="' + r.status + '"><span class="addr">' + escapeHtml(r.address) + "</span>" +
+        '<span class="status">' + label + (r.reason ? " — " + escapeHtml(r.reason) : "") + "</span></li>";
+    }).join("");
+  }
+
+  function buildPublishHtml() {
+    var clone = document.documentElement.cloneNode(true);
+    Array.prototype.forEach.call(clone.querySelectorAll(".toast"), function (n) { n.parentNode.removeChild(n); });
+    var input = clone.querySelector("#address-check-input");
+    if (input) input.removeAttribute("value");
+    var stateScript = clone.querySelector("#ld-state");
+    if (stateScript) {
+      stateScript.textContent = JSON.stringify({
+        subjects: SUBJECTS,
+        pendingRequests: PENDING_REQUESTS,
+        resolvedRequests: RESOLVED_REQUESTS,
+        lastRefresh: STATE.lastRefresh
+      });
+    }
+    return "<!doctype html>\n" + clone.outerHTML;
+  }
+
+  function publishState() {
+    var statusEl = document.getElementById("address-check-status");
+    if (statusEl) statusEl.hidden = true;
+    if (!window.claude || typeof window.claude.use !== "function") {
+      if (statusEl) {
+        statusEl.hidden = false;
+        statusEl.textContent = "Note: live saving isn't available in this view — open the published page link directly (not a preview) so your request is saved and picked up for processing.";
+      }
+      return;
+    }
+    window.claude.use("artifact").then(function (artifact) {
+      if (!artifact) {
+        if (statusEl) {
+          statusEl.hidden = false;
+          statusEl.textContent = "Note: live saving isn't available in this view — open the published page link directly (not a preview) so your request is saved and picked up for processing.";
+        }
+        return;
+      }
+      return artifact.publish(buildPublishHtml());
+    }).catch(function (err) {
+      if (statusEl) {
+        statusEl.hidden = false;
+        statusEl.textContent = "Note: couldn't save this request automatically (" + (err && err.message ? err.message : "unknown error") + "). It's queued in this browser tab only for now.";
+      }
+    });
+  }
+
+  var addressForm = document.getElementById("address-check-form");
+  if (addressForm) {
+    addressForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var input = document.getElementById("address-check-input");
+      var addr = input.value.trim();
+      if (!addr) return;
+
+      var already = SUBJECTS.some(function (p) { return sameAddress(p.address, addr); });
+      if (already) { showToast("That address already looks like it's on this page."); return; }
+      var dup = PENDING_REQUESTS.some(function (r) { return sameAddress(r.address, addr); });
+      if (dup) { showToast("That address is already queued."); return; }
+
+      PENDING_REQUESTS.push({ id: nextRequestId(), address: addr, submittedOn: todayStr(), status: "queued" });
+      renderRequestList();
+      input.value = "";
+      showToast("Queued — " + addr + " is saved here. Tell Claude in chat to run the rental-comps sweep.");
+      publishState();
+    });
+  }
+
+  renderSubjects();
+  renderRequestList();
+})();
+</script>
+
+
+</body></html>

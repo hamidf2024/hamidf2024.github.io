@@ -1,0 +1,916 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<style>.p6-snap{position:sticky;top:0;z-index:1000;background:#2a2f3a;color:#fff;font:13px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:8px 16px;display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center}.p6-snap a{color:#cfe3ff}.address-check,#criteria-toggle,#dossier-check,#agent-search,.zip-city-check,.dossier-check{display:none!important}</style>
+<div class="p6-snap" role="note"><span><strong>Home Dashboard</strong> · read-only snapshot published Oct 28, 2026</span><a href="../project-06.html">← Project 6 overview</a><a href="layer0.html">Hub (Layer 0)</a><span style="opacity:.75">Request forms are hidden: they only work inside Claude. Figures are dated research snapshots, not advice.</span></div>
+
+<meta name="robots" content="noindex"><title>Sold Comps</title>
+<meta name="color-scheme" content="light only">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"></noscript>
+
+<style>
+  :root {
+    --paper: #FFFFFF;
+    --paper-raised: #FAFAFB;
+    --ink: #0E0F10;
+    --ink-soft: #3A3D42;
+    --ink-faint: #74787E;
+    --line: #DADCE0;
+    --line-soft: #ECEDEF;
+    --river: #5F497A;
+    --river-strong: #46345E;
+    --river-tint: #E5DFEC;
+    --brass: #8A70A8;
+    --brass-strong: #6B5488;
+    --brass-tint: #F0EBF6;
+    --sage: #2E7D4F;
+    --sage-tint: #D9EAD3;
+    --clay: #6B7178;
+    --clay-tint: #ECEDEF;
+    --amber: #B5760B;
+    --amber-tint: #FBF0DB;
+    --red: #B23A2F;
+    --red-tint: #F8E4E1;
+    --manual-accent: #0F766E;
+    --manual-tint: #E6F5F3;
+    --shadow: 0 12px 32px -16px rgba(14,15,16,0.16);
+    --radius-s: 6px;
+    --radius-m: 10px;
+    --radius-l: 16px;
+    --focus: 0 0 0 3px rgba(95,73,122,0.32);
+  }
+  * { box-sizing: border-box; }
+  html { color-scheme: light; background: #FFFFFF; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper) !important;
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+  h1, h2, h3 { font-family: "Fraunces", Georgia, serif; font-weight: 600; text-wrap: balance; margin: 0; }
+  a { color: var(--river); }
+  button { font-family: inherit; }
+  input { font-family: inherit; }
+  ::selection { background: var(--brass-tint); }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+
+  .shell { max-width: 1320px; margin: 0 auto; padding: 0 20px 64px; }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+    gap: 18px; padding: 32px 0 22px; border-bottom: 1px solid var(--line);
+  }
+  .wordmark-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .wordmark { font-size: 30px; letter-spacing: -0.01em; }
+  .wordmark em { font-style: normal; color: var(--brass-strong); border-bottom: 2px solid var(--brass); }
+  .tagline { color: var(--ink-soft); font-size: 14.5px; margin-top: 4px; max-width: 60ch; }
+  .backlink { font-size: 13px; color: var(--ink-faint); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; margin-bottom: 6px; }
+  .backlink:hover { color: var(--river); }
+  .badges { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600;
+    padding: 6px 11px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--paper-raised); color: var(--ink-soft); white-space: nowrap;
+  }
+  .badge.accent { background: var(--river-tint); color: var(--river-strong); border-color: transparent; }
+
+  /* ---------- Nav rail (7-layer roadmap) ---------- */
+  .layout { display: grid; grid-template-columns: 220px 1fr; gap: 32px; padding-top: 26px; align-items: start; }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+  .rail { position: sticky; top: 20px; display: flex; flex-direction: column; gap: 4px; }
+  .rail-item {
+    display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: var(--radius-s);
+    font-size: 13.5px; color: var(--ink-faint); border: 1px solid transparent;
+  }
+  .rail-item .num {
+    width: 20px; height: 20px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; background: var(--clay-tint); color: var(--ink-faint); flex-shrink: 0;
+  }
+  .rail-item.active { background: var(--river-tint); color: var(--river-strong); border-color: transparent; font-weight: 600; }
+  .rail-item.active .num { background: var(--river); color: #fff; }
+  .rail-item.locked { color: #B5B8BD; }
+  .rail-item.locked .num { background: var(--line-soft); color: #B5B8BD; }
+  .rail-item.done .num { background: var(--sage); color: #fff; }
+  .rail-item.done { color: var(--ink-soft); }
+  .rail-item a { color: inherit; text-decoration: none; display: flex; align-items: center; gap: 10px; width: 100%; }
+
+  .main { min-width: 0; }
+
+  /* ---------- At-a-glance box (Goal/Summary/Inputs/Outputs) ---------- */
+  .page-meta-box { border-left: 3px solid var(--river); background: var(--paper-raised); border-radius: var(--radius-s); padding: 12px 16px 13px; margin: 0 0 20px; }
+  .page-meta-box .pmb-label { display: block; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--river-strong); margin-bottom: 7px; font-family: "IBM Plex Sans", sans-serif; }
+  .page-meta-box ul { margin: 0; padding-left: 18px; }
+  .page-meta-box li { font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; margin: 3px 0; }
+  .page-meta-box li b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Intro / methodology ---------- */
+  .intro-card {
+    background: var(--paper-raised); border: 1px solid var(--line); border-radius: var(--radius-l);
+    padding: 22px 24px; margin-bottom: 20px;
+  }
+  .intro-card h2 { font-size: 19px; margin-bottom: 8px; }
+  .intro-card p { color: var(--ink-soft); font-size: 14px; margin: 0 0 10px; max-width: 96ch; }
+  .intro-card p:last-child { margin-bottom: 0; }
+  details.methodology { margin-top: 12px; }
+  details.methodology summary {
+    cursor: pointer; font-size: 13px; font-weight: 600; color: var(--river); list-style: none; display: inline-flex; align-items: center; gap: 6px;
+  }
+  details.methodology summary::-webkit-details-marker { display: none; }
+  details.methodology summary::before { content: "▸"; font-size: 11px; transition: transform 0.15s; }
+  details.methodology[open] summary::before { transform: rotate(90deg); }
+  details.methodology .m-body { padding-top: 12px; font-size: 13.5px; color: var(--ink-soft); }
+  details.methodology .m-body ul { margin: 6px 0 12px; padding-left: 20px; }
+  details.methodology .m-body li { margin-bottom: 5px; }
+  details.methodology .m-body strong { color: var(--ink); }
+
+  /* ---------- Address-check box ---------- */
+  .address-check {
+    background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-l);
+    padding: 20px 24px; margin-bottom: 28px;
+  }
+  .address-check-head h3 { font-size: 16px; }
+  .address-check-head p { margin: 4px 0 0; color: var(--ink-faint); font-size: 12.5px; max-width: 66ch; }
+  .address-check-form { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .address-check-form input {
+    flex: 1 1 320px; padding: 9px 12px; border: 1px solid var(--line); border-radius: var(--radius-s);
+    font-size: 13.5px; color: var(--ink);
+  }
+  .address-check-form input:focus { outline: none; box-shadow: var(--focus); border-color: var(--river); }
+  .address-check-form button {
+    padding: 9px 18px; border-radius: var(--radius-s); border: none; background: var(--river);
+    color: #fff; font-size: 13.5px; font-weight: 600; cursor: pointer;
+  }
+  .address-check-form button:hover { background: var(--river-strong); }
+  .address-check-status { margin-top: 10px; font-size: 12.5px; color: var(--brass-strong); background: var(--brass-tint); border-radius: var(--radius-s); padding: 8px 10px; }
+  .address-check-list { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .address-check-list li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; font-size: 12.5px; padding: 7px 10px; border-radius: var(--radius-s); background: var(--paper-raised); border: 1px solid var(--line-soft); }
+  .address-check-list li.empty { color: var(--ink-faint); background: none; border: none; padding: 4px 2px; }
+  .address-check-list .addr { font-weight: 600; }
+  .address-check-list .status { color: var(--ink-soft); }
+  .address-check-list li.queued .status { color: var(--brass-strong); }
+  .address-check-list li.added .status { color: var(--sage); }
+  .address-check-list li.error .status, .address-check-list li.notfound .status { color: #A6473B; }
+
+  /* ---------- Market tab bar (California / Texas) ---------- */
+  .market-tab-bar { display: flex; gap: 8px; margin-bottom: 22px; flex-wrap: wrap; }
+  .market-tab-btn {
+    display: inline-flex; align-items: center; gap: 7px; padding: 9px 16px; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--paper); color: var(--ink-soft);
+    font-size: 13.5px; font-weight: 600; font-family: inherit; cursor: pointer; transition: border-color 0.15s, background 0.15s;
+  }
+  .market-tab-btn:hover { border-color: var(--river); color: var(--river-strong); }
+  .market-tab-btn:focus-visible { outline: none; box-shadow: var(--focus); }
+  .market-tab-btn.active { background: var(--river); border-color: var(--river); color: #fff; }
+  .market-tab-sub {
+    font-size: 11.5px; font-weight: 700; padding: 1px 8px; border-radius: 999px;
+    background: var(--paper-raised); color: var(--ink-faint);
+  }
+  .market-tab-btn.active .market-tab-sub { background: rgba(255,255,255,0.24); color: #fff; }
+  .market-empty {
+    padding: 40px 20px; text-align: center; color: var(--ink-faint); font-size: 14px;
+    border: 1px dashed var(--line); border-radius: var(--radius-l); margin-bottom: 24px;
+  }
+
+  /* ---------- Subject property section ---------- */
+  .subject-section { margin-bottom: 44px; }
+  .subject-head {
+    display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 14px;
+    padding-bottom: 16px; margin-bottom: 20px; border-bottom: 2px solid var(--ink);
+  }
+  .subject-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--brass-strong); }
+  .subject-title { font-size: 22px; margin-top: 2px; }
+  .subject-sub { font-size: 13px; color: var(--ink-faint); margin-top: 4px; }
+
+  .stat-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 22px; }
+  @media (max-width: 980px) { .stat-row { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 640px) { .stat-row { grid-template-columns: repeat(2, 1fr); } }
+  .stat-card {
+    background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-m); padding: 14px 16px;
+  }
+  .stat-card .stat-label { font-size: 11.5px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-faint); }
+  .stat-card .stat-value { font-size: 22px; font-weight: 600; color: var(--ink); margin-top: 4px; font-family: "Fraunces", Georgia, serif; }
+  .stat-card .stat-note { font-size: 11.5px; color: var(--ink-faint); margin-top: 3px; }
+  .stat-card.highlight { background: var(--river-tint); border-color: transparent; }
+  .stat-card.highlight .stat-value { color: var(--river-strong); }
+
+  .stat-row-cond { display: grid; grid-template-columns: 1fr 1fr 1.6fr 1.6fr; gap: 12px; margin-bottom: 22px; }
+  @media (max-width: 980px) { .stat-row-cond { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 640px) { .stat-row-cond { grid-template-columns: 1fr; } }
+  .cond-card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-m); padding: 14px 16px; }
+  .cond-card .stat-label { font-size: 11.5px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-faint); }
+  .cond-rows { margin-top: 8px; display: flex; flex-direction: column; gap: 5px; }
+  .cond-row { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; font-size: 12.5px; }
+  .cond-row-empty { opacity: 0.45; }
+  .cond-name { color: var(--ink-faint); flex: 1; }
+  .cond-price { font-weight: 600; color: var(--ink); font-family: "Fraunces", Georgia, serif; font-size: 14px; }
+  .cond-n { color: var(--ink-faint); font-size: 11px; }
+  .cond-ppsf { font-weight: 400; color: var(--ink-faint); font-size: 11px; }
+
+  /* comps table */
+  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius-l); background: var(--paper); margin-bottom: 14px; }
+  table.comps { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 880px; }
+  table.comps th {
+    text-align: left; font-size: 11px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase;
+    color: var(--ink-faint); padding: 10px 12px; background: var(--paper-raised); border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+  }
+  table.comps th.num, table.comps td.num { text-align: right; }
+  table.comps td { padding: 11px 12px; border-bottom: 1px solid var(--line-soft); vertical-align: top; white-space: nowrap; }
+  table.comps tbody tr:last-child td { border-bottom: none; }
+  table.comps tbody tr:hover { background: var(--paper-raised); }
+  .comp-name { font-weight: 600; color: var(--ink); }
+  .comp-rank { color: var(--ink-faint); font-size: 12px; margin-right: 6px; }
+  .sold-date { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+  .most-recent-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; background: var(--sage-tint); color: var(--sage); padding: 2px 7px; border-radius: 999px; margin-left: 8px; }
+  .table-foot-note { font-size: 12px; color: var(--ink-faint); padding: 2px 12px 10px; }
+  table.comps.comps-wide { min-width: 1180px; }
+
+  /* nearby active/contingent listings (not counted as sold comps) */
+  .active-listings-note { margin-top: 18px; padding-top: 18px; border-top: 1px dashed var(--line); }
+  .active-listings-head { font-size: 14.5px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .active-listings-sub { font-size: 12.5px; color: var(--ink-faint); margin-bottom: 12px; max-width: 78ch; }
+
+  /* excluded list */
+  details.excluded { margin-top: 6px; margin-bottom: 8px; }
+  details.excluded summary {
+    cursor: pointer; font-size: 13px; font-weight: 600; color: var(--ink-faint); list-style: none; display: inline-flex; align-items: center; gap: 6px;
+  }
+  details.excluded summary::-webkit-details-marker { display: none; }
+  details.excluded summary::before { content: "▸"; font-size: 11px; transition: transform 0.15s; }
+  details.excluded[open] summary::before { transform: rotate(90deg); }
+  .excluded-body { padding-top: 10px; }
+  table.excluded-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  table.excluded-table th { text-align: left; font-size: 10.5px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-faint); padding: 6px 10px; border-bottom: 1px solid var(--line); }
+  table.excluded-table td { padding: 7px 10px; border-bottom: 1px solid var(--line-soft); color: var(--ink-soft); }
+  table.excluded-table td.num { text-align: right; }
+
+  /* Part 2 — Zillow neighborhood map */
+  .part2-head {
+    margin-top: 28px; padding-top: 22px; padding-bottom: 16px; margin-bottom: 20px;
+    border-top: 2px solid var(--manual-accent); border-bottom: 2px solid var(--ink);
+  }
+  .part2-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--manual-accent); }
+  .part2-title { font-size: 18px; margin-top: 3px; }
+  .part2-note { font-size: 13px; color: var(--ink-faint); margin-top: 6px; max-width: 78ch; }
+  .status-pill {
+    display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase;
+    background: var(--manual-tint); color: var(--manual-accent); padding: 2px 8px; border-radius: 999px;
+  }
+
+  /* Methodology deviation callout */
+  .methodology-flag {
+    display: flex; gap: 10px; align-items: flex-start; background: var(--amber-tint); border: 1px solid var(--amber);
+    border-radius: var(--radius-m); padding: 12px 14px; margin-bottom: 20px; font-size: 13px; line-height: 1.5; color: var(--ink-soft);
+  }
+  .methodology-flag .flag-icon { font-size: 15px; line-height: 1.4; flex-shrink: 0; }
+  .methodology-flag strong { color: var(--ink); }
+
+  footer.page-foot { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--ink-faint); }
+
+  /* ---------- Toast ---------- */
+  .toast {
+    position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%); background: var(--river-strong); color: #fff;
+    padding: 10px 16px; border-radius: var(--radius-s); font-size: 13px; z-index: 60; box-shadow: var(--shadow);
+    max-width: 90vw;
+  }
+</style>
+
+<div class="shell">
+  <div class="topbar">
+    <div>
+      <a class="backlink" href="layer2.html">← Layer 2: STR Comps</a>
+      <div class="wordmark-row">
+        <h1 class="wordmark"><em>Sold Comps</em></h1>
+      </div>
+      <p class="tagline" id="tagline">Layer 3 — sold-comps and market value for a subject property, gathered from realtor.com's "Nearby home values" list. Each nearby home's own Property History page was read individually for its real sold price and sold date.</p>
+    </div>
+    <div class="badges" id="badges">
+      <span class="badge accent">Layer 3 of 7</span>
+      <span class="badge" id="badge-count">1 subject property</span>
+    </div>
+  </div>
+
+  <div class="layout">
+    <nav class="rail" aria-label="Dashboard layers">
+      <div class="rail-item done"><a href="layer1.html"><span class="num">1</span> Investment Ledger</a></div>
+      <div class="rail-item done"><a href="layer2.html"><span class="num">2</span> STR Comps</a></div>
+      <div class="rail-item active"><span class="num">3</span> Sold Comps</div>
+      <div class="rail-item done"><a href="layer4.html"><span class="num">4</span> Long-Term Rent Comps</a></div>
+      <div class="rail-item done"><a href="layer5.html"><span class="num">5</span> Realtor Sourcing</a></div>
+      <div class="rail-item done"><a href="layer6.html"><span class="num">6</span> Off-Market Finder</a></div>
+      <div class="rail-item done"><a href="layer7.html"><span class="num">7</span> STR &amp; ADU Regulations</a></div>
+      <div class="rail-item done"><a href="layer8.html"><span class="num">8</span> Renovation Cost Estimator</a></div>
+      <div class="rail-item done"><a href="layer9.html"><span class="num">9</span> Risk Assessment</a></div>
+      <div class="rail-item done"><a href="layer10.html"><span class="num">10</span> Rental Management Companies</a></div>
+    </nav>
+
+    <div class="main">
+      <div class="page-meta-box">
+        <span class="pmb-label">At a glance</span>
+        <ul>
+          <li><b>Goal:</b> see what truly comparable homes near a subject property actually sold for — real closed sales, not asking prices or a single automated estimate — so its market value and any renovation payback can be checked against hard transaction evidence instead of a guess.</li>
+          <li><b>Summary:</b> 13 subject properties covered (5 California, 4 Texas, 4 Arizona/Phoenix), 118 verified sold comps total, each priced from its own realtor.com or Redfin Price History log, plus a secondary Zillow off-market check for extra context.</li>
+          <li><b>Inputs:</b> none to start — pick a market tab, or type any address into "Check another subject property" to queue a new one for a full two-part sweep.</li>
+          <li><b>Outputs:</b> a ranked sold-comps table per subject (price, $/sqft, distance, and condition where available) plus a secondary Zillow off-market comparison — feeding directly into Layer 1's price assumptions and Layer 8's ARV reality checks.</li>
+        </ul>
+      </div>
+      <div class="intro-card">
+        <h2>How this was built (Part 1 — realtor.com)</h2>
+        <p>For the subject address, I opened its realtor.com listing and scrolled to the <strong>Home value</strong> section's <strong>"Nearby home values"</strong> widget, then expanded "See more" for the full list of nearby homes realtor.com surfaces there. That list gives current AVM estimates and specs (beds/baths/sqft/lot), not real sold data — so I then visited each nearby home's own realtor.com page individually and read its <strong>Property history → Price history</strong> section for the actual sold price, sold date, and year built. Only sales from <strong>2020-01-01 to today</strong> qualify as comps; everything sold earlier is excluded (shown collapsed below each table for transparency, not counted in the stats).</p>
+        <details class="methodology">
+          <summary>Full methodology &amp; notes</summary>
+          <div class="m-body">
+            <ul>
+              <li><strong>Source list</strong> — realtor.com's own "Nearby home values" widget for the subject address, fully expanded via "See more."</li>
+              <li><strong>Per-comp verification</strong> — each nearby home's realtor.com detail page was opened separately; sold price/date/year-built come from its Price History log, not the AVM estimate.</li>
+              <li><strong>Qualifying window</strong> — sold 2020-01-01 through today. A home with multiple sales in that window uses its most recent sale.</li>
+              <li><strong>Sort order</strong> — the comps table is ranked by sold date, most recent first.</li>
+              <li><strong>Two street-name corrections</strong> — realtor.com's "Nearby home values" list showed "Coronado Ct" for three nearby homes; that street doesn't exist in Rio Linda. Searching confirmed the correct name is <strong>Coronation Ct</strong> — all three were found and processed under the corrected name.</li>
+              <li><strong>Part 2 — Zillow neighborhood map</strong> — for the subject's Zillow listing, the "Neighborhood: 95673" section shows a map with price bubbles for nearby homes in two colors: yellow "sun" markers (off-market homes, shown with Zillow's own Zestimate or tax-assessed value) and red pins (active/pending listings). Per your instruction, only yellow-marker homes were collected, capped at the 7 closest to the subject. Each was clicked through to its own Zillow page to confirm the exact address, price, specs, and status. These prices are Zillow's estimated values, not realtor.com sold-price data, so they're shown in a separate section below rather than mixed into the Part 1 comps table.</li>
+              <li><strong>Fallback for 6316 Hillsdale Blvd (Sep 5, 2026)</strong> — realtor.com's own "Nearby home values" widget returned no results for this specific listing (a genuine site-side data gap, likely tied to low recent-sale turnover on that immediate block). In its place, comps were pulled from a wider realtor.com "recently sold, single-family, 95842" ZIP-wide sweep, with the same per-comp Price History verification as every other subject. This deviation is flagged directly on that subject's card below, not just here.</li>
+              <li><strong>Fallback for 8449 Cutler Way, Sep 12 2026 sweep (superseded Sep 17, 2026)</strong> — same "Nearby home values" data gap as 6316 Hillsdale Blvd above; comps were originally pulled from a wider realtor.com "recently sold, single-family, 95828" ZIP-wide sweep. This subject's comps table has since been rebuilt with the tighter, closer, multi-platform methodology described in the next two bullets — see that subject's own card for the current data and its full methodology note.</li>
+        <li><strong>Assessing condition</strong> (added Sep 17, 2026, applied so far to 8449 Cutler Way and 8583 Culpepper Dr) — since these homes can't be physically inspected, each comp's condition is read primarily from its own listing's public remarks: explicit renovation language ("renovated," "updated," "turn-key") reads as <strong>Updated/renovated</strong> or <strong>Turn-key/updated</strong>; explicit fixer language ("as-is," "bring your vision," "sold strictly as-is") reads as <strong>Fixer/needs renovation</strong> or, for the most severe cases, <strong>Major fixer</strong>; "well maintained"/"pride of ownership" language with no update claims reads as <strong>Clean original/maintained</strong>; a mix of both (e.g. a new HVAC system but sold as-is) reads as <strong>Mixed/partly updated</strong> or <strong>Maintained/standard resale</strong>. Where remarks are thin, listing photos and the comp's $/sqft relative to the immediate-area median are used as secondary and tertiary checks. Not a substitute for a physical inspection — a read of what the public listing says about itself.</li>
+        <li><strong>Distance from subject &amp; broader sourcing</strong> (added Sep 17, 2026, applied so far to 8449 Cutler Way and 8583 Culpepper Dr) — per your request, sourcing is no longer limited to realtor.com/Zillow: comps are pulled from whichever platform (Redfin, realtor.com, MLS syndicate sites) has the clearest sold record and remarks for that specific address, and each comp's straight-line distance from the subject is computed from geocoded coordinates — not driving directions, which can badly overstate proximity in these cul-de-sac subdivisions (one comp measured 2.5 driving miles via a looping arterial route but only 0.57 straight-line miles away). When this data is present for a subject, its comps table is ranked nearest-to-farthest instead of by sold date, and a separate "nearby active/contingent listings" table appears below the sold comps for context — those haven't closed, so they're never counted in the qualifying-comps stats.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div class="address-check" id="address-check">
+        <div class="address-check-head">
+          <h3>Check another subject property</h3>
+          <p id="address-check-desc">Type any address to queue it here — then tell Claude in chat and it'll run the full sweep for both parts (realtor.com sold comps, plus the closest yellow-marker homes on Zillow's neighborhood map) and add it as a new section below.</p>
+        </div>
+        <form class="address-check-form" id="address-check-form">
+          <label for="address-check-input" class="visually-hidden">Address to check</label>
+          <input id="address-check-input" type="text" placeholder="e.g. 1234 Elm St, Rio Linda, CA 95673" autocomplete="off" required>
+          <button type="submit">Check address</button>
+        </form>
+        <div class="address-check-status" id="address-check-status" hidden></div>
+        <ul class="address-check-list" id="address-check-list"></ul>
+      </div>
+
+      <div class="market-tab-bar" id="market-tab-bar" role="tablist" aria-label="Market">
+        <button type="button" class="market-tab-btn active" id="market-tab-CA" role="tab" aria-selected="true" onclick="switchMarket('CA')">California <span class="market-tab-sub" id="market-tab-sub-CA">5</span></button>
+        <button type="button" class="market-tab-btn" id="market-tab-TX" role="tab" aria-selected="false" onclick="switchMarket('TX')">Texas <span class="market-tab-sub" id="market-tab-sub-TX">1</span></button>
+        <button type="button" class="market-tab-btn" id="market-tab-AZ" role="tab" aria-selected="false" onclick="switchMarket('AZ')">Phoenix <span class="market-tab-sub" id="market-tab-sub-AZ">1</span></button>
+      </div>
+
+      <div id="subjects"></div>
+
+      <footer class="page-foot" id="page-foot">
+        Source file: <span class="mono">layer3.html</span>. Sold prices, dates and specs are a live-site snapshot — 445 O St subject taken Aug 27, 2026; 437 Forni Rd subject taken Sep 2, 2026; 6316 Hillsdale Blvd subject taken Sep 5, 2026 (via fallback ZIP-wide sweep — see methodology note on that subject's card); 8583 Culpepper Dr subject taken Sep 10, 2026 and re-swept Sep 17, 2026 with the same condition/pool/distance columns (see that subject's methodology note); 8449 Cutler Way subject taken Sep 12, 2026 and re-swept Sep 17, 2026 with condition, pool and straight-line distance columns added, sourced across Redfin and realtor.com (see that subject's methodology note) — re-check periodically since new sales post over time.
+      </footer>
+    </div>
+  </div>
+</div>
+
+<script type="application/json" id="ld-state">{"subjects": [{"state": "CA", "address": "445 O St, Rio Linda, CA 95673", "specs": "3bd/2ba · 1,179 sqft · 11,343 sqft lot", "realEstimate": 365000, "candidatesChecked": 24, "comps": [{"address": "7035 Silver Knoll St, Rio Linda, CA 95673", "soldDate": "2026-01-29", "soldPrice": 370000, "pricePerSqft": 344, "beds": 3, "baths": 2, "sqft": 1076, "lot": 6098, "yearBuilt": 1979}, {"address": "433 O St, Rio Linda, CA 95673", "soldDate": "2024-10-11", "soldPrice": 450000, "pricePerSqft": 430, "beds": 3, "baths": 2, "sqft": 1046, "lot": 10454, "yearBuilt": 1981}, {"address": "6931 Coronation Ct, Rio Linda, CA 95673", "soldDate": "2024-08-22", "soldPrice": 505000, "pricePerSqft": 297, "beds": 3, "baths": 2, "sqft": 1700, "lot": 10019, "yearBuilt": 1961}, {"address": "7036 Silver Knoll St, Rio Linda, CA 95673", "soldDate": "2024-07-31", "soldPrice": 500000, "pricePerSqft": 291, "beds": 3, "baths": 2, "sqft": 1717, "lot": 9148, "yearBuilt": 1972}, {"address": "512 Silver Tree Ct, Rio Linda, CA 95673", "soldDate": "2023-05-10", "soldPrice": 435000, "pricePerSqft": 361, "beds": 3, "baths": 2, "sqft": 1204, "lot": 9148, "yearBuilt": 1989}, {"address": "516 Silver Tree Ct, Rio Linda, CA 95673", "soldDate": "2022-06-30", "soldPrice": 512000, "pricePerSqft": 317, "beds": 3, "baths": 2, "sqft": 1614, "lot": 7405, "yearBuilt": 1989}, {"address": "7030 Silver Knoll St, Rio Linda, CA 95673", "soldDate": "2022-06-10", "soldPrice": 360000, "pricePerSqft": 242, "beds": 2, "baths": 2, "sqft": 1485, "lot": 9392, "yearBuilt": 2004}, {"address": "7040 Silver Glen Way, Rio Linda, CA 95673", "soldDate": "2022-03-21", "soldPrice": 375000, "pricePerSqft": 372, "beds": 3, "baths": 1, "sqft": 1008, "lot": 5663, "yearBuilt": 1961}, {"address": "511 Silver Tree Ct, Rio Linda, CA 95673", "soldDate": "2021-12-08", "soldPrice": 390000, "pricePerSqft": 240, "beds": 3, "baths": 2, "sqft": 1625, "lot": 9148, "yearBuilt": 1988}, {"address": "6939 5th St, Rio Linda, CA 95673", "soldDate": "2021-07-26", "soldPrice": 370000, "pricePerSqft": 365, "beds": 3, "baths": 1, "sqft": 1014, "lot": 9583, "yearBuilt": 1960}, {"address": "7006 Rio Linda Blvd, Rio Linda, CA 95673", "soldDate": "2021-06-28", "soldPrice": 365000, "pricePerSqft": 285, "beds": 3, "baths": 1, "sqft": 1280, "lot": 7405, "yearBuilt": 1960}, {"address": "7031 Silver Knoll St, Rio Linda, CA 95673", "soldDate": "2021-01-13", "soldPrice": 435000, "pricePerSqft": 296, "beds": 3, "baths": 2.5, "sqft": 1469, "lot": 8451, "yearBuilt": 1998}, {"address": "7043 Silver Glen Way, Rio Linda, CA 95673", "soldDate": "2020-12-10", "soldPrice": 350000, "pricePerSqft": 271, "beds": 3, "baths": 2, "sqft": 1291, "lot": 6098, "yearBuilt": 1974}, {"address": "6928 5th St, Rio Linda, CA 95673", "soldDate": "2020-10-13", "soldPrice": 280000, "pricePerSqft": 278, "beds": 2, "baths": 1, "sqft": 1008, "lot": 10454, "yearBuilt": 1947}, {"address": "428 O St, Rio Linda, CA 95673", "soldDate": "2020-09-10", "soldPrice": 309000, "pricePerSqft": 163, "beds": 3, "baths": 2, "sqft": 1892, "lot": 15682, "yearBuilt": 1948}, {"address": "7036 Silver Glen Way, Rio Linda, CA 95673", "soldDate": "2020-07-13", "soldPrice": 294000, "pricePerSqft": 292, "beds": 3, "baths": 2, "sqft": 1008, "lot": 6098, "yearBuilt": 1961}, {"address": "501 O St, Rio Linda, CA 95673", "soldDate": "2020-03-17", "soldPrice": 508000, "pricePerSqft": 219, "beds": 3, "baths": 3, "sqft": 2324, "lot": 34412, "yearBuilt": 1959}], "excludedComps": [{"address": "437 O St, Rio Linda, CA 95673", "soldDate": "2017-08-25", "soldPrice": 285000, "yearBuilt": 1981}, {"address": "511 O St, Rio Linda, CA 95673", "soldDate": "2016-12-21", "soldPrice": 200000, "yearBuilt": 1964}, {"address": "7043 Silver Knoll St, Rio Linda, CA 95673", "soldDate": "2019-10-11", "soldPrice": 272500, "yearBuilt": 1970}, {"address": "6936 Coronation Ct, Rio Linda, CA 95673", "soldDate": "2017-04-25", "soldPrice": 200000, "yearBuilt": 1961}, {"address": "6930 Coronation Ct, Rio Linda, CA 95673", "soldDate": "2018-06-25", "soldPrice": 255000, "yearBuilt": 1961}, {"address": "7047 Silver Knoll St, Rio Linda, CA 95673", "soldDate": "2019-12-12", "soldPrice": 290000, "yearBuilt": 1970}, {"address": "7050 Silver Knoll St, Rio Linda, CA 95673", "soldDate": "2018-08-31", "soldPrice": 282000, "yearBuilt": 1970}], "zillowNearby": [{"address": "433 O St, Rio Linda, CA 95673", "price": 450000, "beds": 3, "baths": 2, "sqft": 1046, "lot": 10454, "yearBuilt": 1981, "status": "Closed"}, {"address": "7035 Silver Knoll St, Rio Linda, CA 95673", "price": 370000, "beds": 3, "baths": 2, "sqft": 1076, "lot": 6098, "yearBuilt": 1979, "status": "Closed"}, {"address": "7036 Silver Knoll St, Rio Linda, CA 95673", "price": 500000, "beds": 3, "baths": 2, "sqft": 1717, "lot": 9147, "yearBuilt": 1972, "status": "Sold"}, {"address": "6931 Coronation Ct, Rio Linda, CA 95673", "price": 505000, "beds": 3, "baths": 2, "sqft": 1700, "lot": 10018, "yearBuilt": 1961, "status": "Closed"}, {"address": "6921 5th St, Rio Linda, CA 95673", "price": 407000, "beds": 3, "baths": 1, "sqft": 1014, "lot": 9583, "yearBuilt": 1960, "status": "Sold"}, {"address": "7039 5th Ave, Rio Linda, CA 95673", "price": 497000, "beds": 3, "baths": 2, "sqft": 1614, "lot": 7405, "yearBuilt": 1989, "status": "Closed"}, {"address": "537 Silver Sky Ct, Rio Linda, CA 95673", "price": 505000, "beds": 4, "baths": 2, "sqft": 1614, "lot": 7840, "yearBuilt": 1988, "status": "Closed"}]}, {"state": "CA", "address": "437 Forni Rd, Placerville, CA 95667", "specs": "3bd/2ba · 1,896 sqft · 87,556 sqft lot", "realEstimate": 512000, "candidatesChecked": 24, "comps": [{"address": "555 Cribbs Rd, Placerville, CA 95667", "soldDate": "2024-09-25", "soldPrice": 760000, "pricePerSqft": 356, "beds": 3, "baths": 2, "sqft": 2137, "lot": 44431, "yearBuilt": 1964}, {"address": "14 Avalon St, Placerville, CA 95667", "soldDate": "2024-08-01", "soldPrice": 559000, "pricePerSqft": 544, "beds": 2, "baths": 2, "sqft": 1028, "lot": 10019, "yearBuilt": 2024}, {"address": "530 Cribbs Rd, Placerville, CA 95667", "soldDate": "2024-04-11", "soldPrice": 533000, "pricePerSqft": 284, "beds": 3, "baths": 2, "sqft": 1880, "lot": 123275, "yearBuilt": 1961}, {"address": "424 Cribbs Rd, Placerville, CA 95667", "soldDate": "2024-03-19", "soldPrice": 495000, "pricePerSqft": 263, "beds": 3, "baths": 2, "sqft": 1881, "lot": 105415, "yearBuilt": 1969}, {"address": "540 Forni Rd, Placerville, CA 95667", "soldDate": "2023-03-27", "soldPrice": 650000, "pricePerSqft": 236, "beds": 4, "baths": 3, "sqft": 2755, "lot": 98446, "yearBuilt": 1977}, {"address": "3501 Nordic Way, Placerville, CA 95667", "soldDate": "2022-09-28", "soldPrice": 645000, "pricePerSqft": 385, "beds": 3, "baths": 2, "sqft": 1674, "lot": 43560, "yearBuilt": 1998}, {"address": "2860 Hickory Ln, Placerville, CA 95667", "soldDate": "2022-08-31", "soldPrice": 345000, "pricePerSqft": 482, "beds": 2, "baths": 1, "sqft": 716, "lot": 8712, "yearBuilt": 1936}, {"address": "665 Placerville Dr, Placerville, CA 95667", "soldDate": "2021-11-30", "soldPrice": 680000, "pricePerSqft": 237, "beds": 3, "baths": 2, "sqft": 2864, "lot": 95396, "yearBuilt": 1940}, {"address": "466 Cribbs Rd, Placerville, CA 95667", "soldDate": "2021-06-22", "soldPrice": 706000, "pricePerSqft": 270, "beds": 5, "baths": 3, "sqft": 2616, "lot": 165092, "yearBuilt": 2000}, {"address": "549 Skyline Dr, Placerville, CA 95667", "soldDate": "2020-10-26", "soldPrice": 485000, "pricePerSqft": 269, "beds": 3, "baths": 2, "sqft": 1800, "lot": 25700, "yearBuilt": 1978}, {"address": "196 Panning Way, Placerville, CA 95667", "soldDate": "2020-07-14", "soldPrice": 365000, "pricePerSqft": 289, "beds": 2, "baths": 2, "sqft": 1262, "lot": 16553, "yearBuilt": 1959}, {"address": "537 Midland Dr, Placerville, CA 95667", "soldDate": "2020-06-18", "soldPrice": 552000, "pricePerSqft": 189, "beds": 3, "baths": 2.5, "sqft": 2926, "lot": 49223, "yearBuilt": 1976}], "excludedComps": [{"address": "401 Forni Rd, Placerville, CA 95667", "soldDate": "2018-04-17", "soldPrice": 465000, "yearBuilt": 1972}, {"address": "3076 Gold Nugget Way, Placerville, CA 95667", "soldDate": "2018-02-20", "soldPrice": 380000, "yearBuilt": 1978}, {"address": "3541 Nordic Way, Placerville, CA 95667", "soldDate": "2019-04-19", "soldPrice": 470000, "yearBuilt": 1997}, {"address": "202 Panning Way, Placerville, CA 95667", "soldDate": "2017-03-17", "soldPrice": 224000, "yearBuilt": 1958}, {"address": "543 Skyline Dr, Placerville, CA 95667", "soldDate": "2018-10-02", "soldPrice": 496000, "yearBuilt": 1985}, {"address": "704 Placerville Dr, Placerville, CA 95667", "soldDate": "2023-02-28", "soldPrice": 185000, "yearBuilt": "—"}, {"address": "3101 Gold Nugget Way, Placerville, CA 95667", "soldDate": "2022-08-23", "soldPrice": 50000, "yearBuilt": "—"}, {"address": "640 Placerville Dr, Placerville, CA 95667", "soldDate": "2025-10-02", "soldPrice": 350000, "yearBuilt": 1950}, {"address": "Cribbs Rd, Placerville, CA 95667", "soldDate": "2016-11-21", "soldPrice": 20000, "yearBuilt": "—"}, {"address": "Excalibar, Placerville, CA 95667", "soldDate": "2025-03-05", "soldPrice": 220000, "yearBuilt": "—"}, {"address": "615 Placerville Dr, Placerville, CA 95667", "soldDate": "2022-03-14", "soldPrice": 685000, "yearBuilt": 1967}], "zillowNearby": [{"address": "401 Forni Rd, Placerville, CA 95667", "price": 581600, "beds": 3, "baths": 3, "sqft": 1540, "lot": 45738, "yearBuilt": 1972, "status": "Off Market"}, {"address": "393 Forni Rd, Placerville, CA 95667", "price": 386700, "beds": 1, "baths": 1, "sqft": 824, "lot": 0, "yearBuilt": 1967, "status": "Off Market"}, {"address": "388 Forni Rd, Placerville, CA 95667", "price": 369800, "beds": 2, "baths": 1, "sqft": 828, "lot": 43996, "yearBuilt": 1952, "status": "Off Market"}, {"address": "389 Forni Rd, Placerville, CA 95667", "price": 448400, "beds": 4, "baths": 1, "sqft": 1440, "lot": 39640, "yearBuilt": 1957, "status": "Off Market"}, {"address": "432 Forni Rd, Placerville, CA 95667", "price": 597100, "beds": 2, "baths": 1, "sqft": 777, "lot": 861181, "yearBuilt": 1930, "status": "Off Market"}, {"address": "3076 Gold Nugget Way, Placerville, CA 95667", "price": 518600, "beds": 3, "baths": 2, "sqft": 1639, "lot": 59677, "yearBuilt": 1978, "status": "Off Market"}]}, {"state": "CA", "address": "6316 Hillsdale Blvd, Sacramento, CA 95842", "specs": "4bd/2ba · 1,720 sqft · 7,405 sqft lot", "realEstimate": 494839, "candidatesChecked": 10, "methodologyNote": "Realtor.com's own Nearby Home Values sweep (the Part 1 method used for the other two subjects on this page) returned “We're sorry, no nearby home values are currently available for this home” for this specific listing — a genuine site-side data gap, not a session error. The immediate Hillsdale Blvd/Merton Way block has unusually low turnover (a directly adjacent comp's last sale was 2015, outside the 2020+ qualifying window), which likely explains the empty widget result. Fallback used instead: the 10 most recent single-family sales across the broader 95842 ZIP code (Aug–Sep 2026), each individually verified via its own realtor.com Property History → Price History log — same sourcing rigor as the other subjects, just a wider net. No comps were excluded from this sweep (all 10 examined were qualifying, recent, single-family sales), so the excluded-comps table below is empty for this subject.", "comps": [{"address": "4972 Diablo Dr, Sacramento, CA 95842", "soldDate": "2026-08-28", "soldPrice": 423000, "pricePerSqft": 192, "beds": 4, "baths": 2, "sqft": 2206, "lot": 8276, "yearBuilt": 1967}, {"address": "4814 Monet Way, Sacramento, CA 95842", "soldDate": "2026-08-25", "soldPrice": 425000, "pricePerSqft": 299, "beds": 4, "baths": 2, "sqft": 1422, "lot": 6970, "yearBuilt": 1976}, {"address": "5994 Jeanine Dr, Sacramento, CA 95842", "soldDate": "2026-08-24", "soldPrice": 520000, "pricePerSqft": 307, "beds": 3, "baths": 2, "sqft": 1693, "lot": 10890, "yearBuilt": 1972}, {"address": "6861 Duckling Way, Sacramento, CA 95842", "soldDate": "2026-08-24", "soldPrice": 424777, "pricePerSqft": 377, "beds": 4, "baths": 2, "sqft": 1127, "lot": 6098, "yearBuilt": 1977}, {"address": "5806 Hillsdale Blvd, Sacramento, CA 95842", "soldDate": "2026-08-21", "soldPrice": 410000, "pricePerSqft": 296, "beds": 3, "baths": 2, "sqft": 1386, "lot": 7405, "yearBuilt": 1975}, {"address": "6324 Matterhorn Dr, Sacramento, CA 95842", "soldDate": "2026-08-18", "soldPrice": 492000, "pricePerSqft": 373, "beds": 3, "baths": 2, "sqft": 1320, "lot": 15246, "yearBuilt": 1962}, {"address": "7409 Martignetti Ct, Sacramento, CA 95842", "soldDate": "2026-08-17", "soldPrice": 450000, "pricePerSqft": 328, "beds": 3, "baths": 2, "sqft": 1370, "lot": 5663, "yearBuilt": 1986}, {"address": "5621 Revelstok Dr, Sacramento, CA 95842", "soldDate": "2026-09-03", "soldPrice": 340000, "pricePerSqft": 311, "beds": 3, "baths": 2, "sqft": 1092, "lot": 6970, "yearBuilt": 1972}, {"address": "5713 Revelstok Dr, Sacramento, CA 95842", "soldDate": "2026-08-14", "soldPrice": 385000, "pricePerSqft": 249, "beds": 3, "baths": 2, "sqft": 1544, "lot": 6098, "yearBuilt": 1963}, {"address": "5689 Andrea Blvd, Sacramento, CA 95842", "soldDate": "2026-08-14", "soldPrice": 365000, "pricePerSqft": 307, "beds": 3, "baths": 2, "sqft": 1188, "lot": 5815, "yearBuilt": 1979}], "excludedComps": [], "zillowNearby": [{"address": "6312 Hillsdale Blvd, Sacramento, CA 95842", "price": 468800, "beds": 3, "baths": 2, "sqft": 1656, "lot": 7840, "yearBuilt": 1975, "status": "Off Market"}, {"address": "6320 Hillsdale Blvd, Sacramento, CA 95842", "price": 515700, "beds": 3, "baths": 2, "sqft": 1697, "lot": 7405, "yearBuilt": 1976, "status": "Off Market"}, {"address": "6317 Merton Way, Sacramento, CA 95842", "price": 484600, "beds": 3, "baths": 2, "sqft": 1697, "lot": 6969, "yearBuilt": 1974, "status": "Off Market"}, {"address": "6324 Hillsdale Blvd, Sacramento, CA 95842", "price": 473200, "beds": 3, "baths": 2, "sqft": 1801, "lot": 7405, "yearBuilt": 1976, "status": "Off Market"}, {"address": "6327 Merton Way, Sacramento, CA 95842", "price": 460600, "beds": 4, "baths": 2, "sqft": 1720, "lot": 6969, "yearBuilt": 1974, "status": "Off Market"}, {"address": "6313 Merton Way, Sacramento, CA 95842", "price": 465000, "beds": 3, "baths": 2, "sqft": 1855, "lot": 6969, "yearBuilt": 1976, "status": "Off Market"}, {"address": "6337 Merton Way, Sacramento, CA 95842", "price": 535000, "beds": 3, "baths": 2, "sqft": 1997, "lot": 6969, "yearBuilt": 1976, "status": "Off Market"}]}, {"state": "CA", "address": "8583 Culpepper Dr, Sacramento, CA 95823", "specs": "6bd/3ba · 2,916 sqft · 5,837 sqft lot", "realEstimate": 435354, "candidatesChecked": 11, "comps": [{"address": "8641 Sunnybrae Dr, Sacramento, CA 95823", "soldDate": "2026-08-24", "soldPrice": 393000, "pricePerSqft": 260, "beds": 3, "baths": 2.5, "sqft": 1512, "lot": 6244, "yearBuilt": 1990, "condition": "Fixer / needs renovation", "pool": false, "distanceMi": 0.03}, {"address": "8576 Culpepper Dr, Sacramento, CA 95823", "soldDate": "2022-05-31", "soldPrice": 650000, "pricePerSqft": 260, "beds": 4, "baths": 3, "sqft": 2504, "lot": 5910, "yearBuilt": 1994, "condition": "Turn-key / updated", "pool": true, "distanceMi": 0.04}, {"address": "8599 Culpepper Dr, Sacramento, CA 95823", "soldDate": "2026-03-02", "soldPrice": 535000, "pricePerSqft": 214, "beds": 5, "baths": 3, "sqft": 2504, "lot": 5902, "yearBuilt": 1993, "condition": "Maintained / standard resale", "pool": false, "distanceMi": 0.04}, {"address": "8567 Culpepper Dr, Sacramento, CA 95823", "soldDate": "2020-03-16", "soldPrice": 426000, "pricePerSqft": 170, "beds": 5, "baths": 3, "sqft": 2504, "lot": 6098, "yearBuilt": 1994, "condition": "Mixed / partly updated", "pool": false, "distanceMi": 0.04}, {"address": "8572 Culpepper Dr, Sacramento, CA 95823", "soldDate": "2020-06-01", "soldPrice": 455000, "pricePerSqft": 141, "beds": 8, "baths": 3, "sqft": 3230, "lot": 5972, "yearBuilt": 1994, "condition": "Not stated — inferred from price only", "pool": false, "distanceMi": 0.04}, {"address": "8633 Sunnybrae Dr, Sacramento, CA 95823", "soldDate": "2020-11-24", "soldPrice": 420000, "pricePerSqft": 248, "beds": 4, "baths": 2, "sqft": 1695, "lot": 6464, "yearBuilt": 1990, "condition": "Updated / renovated", "pool": false, "distanceMi": 0.05}, {"address": "8645 Moorefield Way, Sacramento, CA 95823", "soldDate": "2021-10-14", "soldPrice": 550000, "pricePerSqft": 189, "beds": 4, "baths": 3, "sqft": 2916, "lot": 7632, "yearBuilt": 1995, "condition": "Turn-key / updated", "pool": false, "distanceMi": 0.06}, {"address": "8663 Sunnybrae Dr, Sacramento, CA 95823", "soldDate": "2020-11-17", "soldPrice": 351000, "pricePerSqft": 290, "beds": 3, "baths": 2, "sqft": 1210, "lot": 5364, "yearBuilt": 1990, "condition": "Mixed / partly updated", "pool": false, "distanceMi": 0.06}, {"address": "8660 Sunnybrae Dr, Sacramento, CA 95823", "soldDate": "2026-09-14", "soldPrice": 450000, "pricePerSqft": 372, "beds": 3, "baths": 2, "sqft": 1210, "lot": 7613, "yearBuilt": 1990, "condition": "Clean original / maintained", "pool": false, "distanceMi": 0.07}, {"address": "8628 Culpepper Dr, Sacramento, CA 95823", "soldDate": "2024-01-16", "soldPrice": 515000, "pricePerSqft": 271, "beds": 4, "baths": 2.5, "sqft": 1899, "lot": 5775, "yearBuilt": 1990, "condition": "Fixer / needs renovation", "pool": false, "distanceMi": 0.07}, {"address": "8632 Culpepper Dr, Sacramento, CA 95823", "soldDate": "2020-03-30", "soldPrice": 395000, "pricePerSqft": 220, "beds": 3, "baths": 2.5, "sqft": 1796, "lot": 5776, "yearBuilt": 1990, "condition": "Mixed / partly updated", "pool": false, "distanceMi": 0.08}], "excludedComps": [{"address": "3 Rainwood Ct, Sacramento, CA 95823", "soldDate": "2019-02-04", "soldPrice": 305000, "yearBuilt": 1990}, {"address": "8591 Culpepper Dr, Sacramento, CA 95823", "soldDate": "2017-06-30", "soldPrice": 315000, "yearBuilt": 1993}, {"address": "8653 Sunnybrae Dr, Sacramento, CA 95823", "soldDate": "2019-07-30", "soldPrice": 319000, "yearBuilt": 1990}, {"address": "8630 Moorefield Way, Sacramento, CA 95823", "soldDate": "2017-08-16", "soldPrice": 385000, "yearBuilt": 1995}, {"address": "8629 Sunnybrae Dr, Sacramento, CA 95823", "soldDate": "2017-06-16", "soldPrice": 295000, "yearBuilt": 1990}, {"address": "8563 Culpepper Dr, Sacramento, CA 95823", "soldDate": "2019-12-27", "soldPrice": 465000, "yearBuilt": 1994}, {"address": "8644 Sunnybrae Dr, Sacramento, CA 95823", "soldDate": "2017-11-16", "soldPrice": 280000, "yearBuilt": 1990}, {"address": "8650 Sunnybrae Dr, Sacramento, CA 95823", "soldDate": "2016-11-23", "soldPrice": 294000, "yearBuilt": 1990}, {"address": "8 Rainwood Ct, Sacramento, CA 95823", "soldDate": "2017-12-18", "soldPrice": 340000, "yearBuilt": 1990}, {"address": "8640 Moorefield Way, Sacramento, CA 95823", "soldDate": "2018-10-19", "soldPrice": 390000, "yearBuilt": 1994}, {"address": "8620 Culpepper Dr, Sacramento, CA 95823", "soldDate": "2017-01-04", "soldPrice": 281000, "yearBuilt": 1992}, {"address": "8620 Sunnybrae Dr, Sacramento, CA 95823", "soldDate": "2017-03-22", "soldPrice": 260000, "yearBuilt": 1990}, {"address": "6074 Wynnewood Way, Sacramento, CA 95823", "soldDate": "2019-08-27", "soldPrice": 405000, "yearBuilt": 1996}], "methodologyNote": "Re-swept Sep 17, 2026 with the same condition/pool/distance methodology just applied to 8449 Cutler Way (see the condition-assessment rubric and distance methodology in the \"Full methodology & notes\" list above). Unlike Cutler Way, this subject's original Sep 10 sweep already turned out to be a tight, immediate-street cluster (Culpepper Dr, Sunnybrae Dr, Moorefield Way) rather than a wide ZIP sweep, so all 10 of its original comps were kept and re-verified — each one's condition, pool status and straight-line distance were confirmed against its own Redfin listing (cross-checked with realtor.com) rather than rebuilt from scratch. One addition: 8660 Sunnybrae Dr, flagged in the original Sep 10 note as a Pending listing excluded for having no closed sale, closed on Sep 14, 2026 at $450,000 — it now qualifies and has been added as an 11th comp. All 11 comps sit within 0.08 miles of the subject (straight-line), the tightest cluster on this page so far. One notable find: 8576 Culpepper Dr, this set's highest sale at $650,000, turned out to have a private pool and a fully remodeled kitchen — the pool alone plausibly explains much of its premium over the rest of the cluster, a distinction the page couldn't previously surface without a Pool column. The subject itself is confirmed currently Pending at $398,000 (MLS #226111918) on both realtor.com and Redfin — shown next to the RealEstimate above. RealEstimate was refreshed to today's three-provider average (Collateral Analytics $447,000 / Cotality $398,400 / Quantarium $460,661 = $435,354), down from the Sep 10 figure of $454,078. No other active/contingent listing was found close enough to this subject to warrant a separate \"nearby active listings\" section, unlike Cutler Way's Palmer House Dr. The implied-value-vs-RealEstimate gap flagged in the original Sep 10 note (comps implying a value well above both the list price and RealEstimate) persists and is still attributed to the subject's own unfinished interior and cash/non-conventional-financing-only terms, not a data problem — the excluded-comps table below is unchanged from Sep 10 (pre-2020 sales, vacant land, and non-qualifying properties screened out of the original sweep).", "zillowNearby": [{"address": "8587 Culpepper Dr, Sacramento, CA 95823", "price": 558300, "beds": 4, "baths": 3, "sqft": 2436, "lot": 5837, "yearBuilt": 1993, "status": "Off Market"}, {"address": "8579 Culpepper Dr, Sacramento, CA 95823", "price": 598200, "beds": 5, "baths": 3, "sqft": 2504, "lot": 5837, "yearBuilt": 1993, "status": "Off Market"}, {"address": "8591 Culpepper Dr, Sacramento, CA 95823", "price": 503900, "beds": 3, "baths": 2, "sqft": 1458, "lot": 5871, "yearBuilt": 1993, "status": "Off Market"}, {"address": "8575 Culpepper Dr, Sacramento, CA 95823", "price": 599600, "beds": 5, "baths": 3, "sqft": 2504, "lot": 5837, "yearBuilt": 1994, "status": "Off Market"}, {"address": "3 Rainwood Ct, Sacramento, CA 95823", "price": 490700, "beds": 3, "baths": 3, "sqft": 1512, "lot": 9873, "yearBuilt": 1990, "status": "Off Market"}, {"address": "8645 Sunnybrae Dr, Sacramento, CA 95823", "price": 449400, "beds": 3, "baths": 2, "sqft": 1210, "lot": 7143, "yearBuilt": 1990, "status": "Off Market"}, {"address": "5 Rainwood Ct, Sacramento, CA 95823", "price": 502600, "beds": 4, "baths": 2, "sqft": 1695, "lot": 9016, "yearBuilt": 1990, "status": "Off Market"}], "listPrice": 398000, "listStatus": "Pending"}, {"state": "CA", "address": "8449 Cutler Way, Sacramento, CA 95828", "specs": "4bd/3ba · 1,991 sqft · 5,998 sqft lot", "realEstimate": 529041, "candidatesChecked": 9, "methodologyNote": "Re-swept Sep 17, 2026 with a broadened, multi-platform methodology per your request: instead of realtor.com's ZIP-wide fallback sweep (used Sep 12, superseded below), comps were sourced primarily from Redfin's own sold listings for each nearby street in the Countryside/Vintage Park pocket immediately around the subject, with the subject's own current listing and each comp's sold price/date/specs cross-checked against realtor.com and MLS syndicate pages (MetroListPRO, Coldwell Banker). Two new columns were added: \"Condition\" and \"Distance from subject.\" Condition is read from each listing's own public remarks (explicit renovation/fixer language) and, where those are thin, its photos and its $/sqft relative to the immediate-area median — see the condition-assessment rubric in the methodology list above. Distance is straight-line (as-the-crow-flies), computed from each address's geocoded coordinates rather than driving directions — driving distance was tested first and rejected as misleading here (one comp, 8518 Delahye Cir, measured 2.5 driving miles via a looping arterial route but only 0.57 straight-line miles away). The comps table below is now ranked nearest-to-farthest instead of by sold date. The subject itself is confirmed currently active on realtor.com/Redfin at $429,000 (MLS #226114534, 5 days on market as of this sweep), explicitly described in its own listing remarks as \"a clear fixer... sold strictly As-Is; cash or hard money financing only\" — shown next to the RealEstimate above. RealEstimate was refreshed to today's three-provider average (Collateral Analytics $518,000 / Cotality $504,200 / Quantarium $564,924 = $529,041), a small drift from the Sep 12 figure. One nearby listing, 7401 Palmer House Dr (2.18 mi away, a major fixer currently under contract at $350,000), is shown separately below as context since it hasn't closed and so isn't a qualifying comp. This tighter, closer, cross-platform-verified set of 8 sold comps replaces the wider Sep 12 ZIP-wide sweep for this subject; the excluded-comps table is empty since nothing was screened out of this targeted sweep.", "comps": [{"address": "8436 Cutler Way, Sacramento, CA 95828", "soldDate": "2026-09-02", "soldPrice": 520000, "pricePerSqft": 243, "beds": 4, "baths": 3, "sqft": 2144, "lot": 5541, "yearBuilt": 1988, "condition": "Updated / renovated", "pool": false, "distanceMi": 0.04}, {"address": "8437 Yermo Way, Sacramento, CA 95828", "soldDate": "2026-01-09", "soldPrice": 495000, "pricePerSqft": 244, "beds": 4, "baths": 3, "sqft": 2029, "lot": 6203, "yearBuilt": 1989, "condition": "Maintained / standard resale", "pool": false, "distanceMi": 0.06}, {"address": "8469 Hollow Oaks Ct, Sacramento, CA 95828", "soldDate": "2026-04-24", "soldPrice": 500000, "pricePerSqft": 258, "beds": 3, "baths": 2.5, "sqft": 1937, "lot": 6446, "yearBuilt": 1988, "condition": "Clean original / maintained", "pool": false, "distanceMi": 0.1}, {"address": "8017 Spengler Dr, Sacramento, CA 95828", "soldDate": "2026-07-01", "soldPrice": 505000, "pricePerSqft": 276, "beds": 4, "baths": 2, "sqft": 1828, "lot": 5870, "yearBuilt": 1989, "condition": "Turn-key / updated", "pool": false, "distanceMi": 0.19}, {"address": "8440 Amrita Ct, Sacramento, CA 95828", "soldDate": "2026-07-15", "soldPrice": 510000, "pricePerSqft": 251, "beds": 4, "baths": 3, "sqft": 2029, "lot": 6186, "yearBuilt": 1990, "condition": "Maintained / standard resale", "pool": false, "distanceMi": 0.34}, {"address": "8278 Olander Way, Sacramento, CA 95828", "soldDate": "2026-06-26", "soldPrice": 560000, "pricePerSqft": 276, "beds": 4, "baths": 3, "sqft": 2029, "lot": 6545, "yearBuilt": 1990, "condition": "Strongly renovated", "pool": false, "distanceMi": 0.43}, {"address": "8518 Delahye Cir, Sacramento, CA 95828", "soldDate": "2026-05-06", "soldPrice": 490000, "pricePerSqft": 258, "beds": 4, "baths": 3, "sqft": 1900, "lot": 5994, "yearBuilt": 1988, "condition": "Mixed / partly updated", "pool": false, "distanceMi": 0.57}, {"address": "8107 Darien Cir, Sacramento, CA 95828", "soldDate": "2026-09-03", "soldPrice": 455000, "pricePerSqft": 222, "beds": 3, "baths": 2.5, "sqft": 2049, "lot": 10454, "yearBuilt": 1987, "condition": "Fixer / needs renovation", "pool": false, "distanceMi": 0.98}], "excludedComps": [], "zillowNearby": [{"address": "8453 Cutler Way, Sacramento, CA 95828", "price": 467700, "beds": 3, "baths": 2, "sqft": 1567, "lot": 5270, "yearBuilt": 1989, "status": "Off Market"}, {"address": "8139 Pine Oaks Ct, Sacramento, CA 95828", "price": 498800, "beds": 4, "baths": 2, "sqft": 1702, "lot": 6882, "yearBuilt": 1990, "status": "Off Market"}, {"address": "8121 Pine Oaks Ct, Sacramento, CA 95828", "price": 488300, "beds": 4, "baths": 2, "sqft": 1512, "lot": 7299, "yearBuilt": 1990, "status": "Off Market"}, {"address": "8457 Cutler Way, Sacramento, CA 95828", "price": 502100, "beds": 4, "baths": 2, "sqft": 1702, "lot": 6272, "yearBuilt": 1989, "status": "Off Market"}, {"address": "8138 Northern Oak Cir, Sacramento, CA 95828", "price": 558200, "beds": 4, "baths": 3, "sqft": 1991, "lot": 6581, "yearBuilt": 1990, "status": "Off Market"}, {"address": "8125 Pine Oaks Ct, Sacramento, CA 95828", "price": 528100, "beds": 4, "baths": 3, "sqft": 1991, "lot": 5662, "yearBuilt": 1990, "status": "Off Market"}], "listPrice": 429000, "listStatus": "Active", "nearbyActiveListings": [{"address": "7401 Palmer House Dr, Sacramento, CA 95828", "status": "Contingent", "listPrice": 350000, "pricePerSqft": 191, "beds": 4, "baths": 3, "sqft": 1829, "lot": 6970, "yearBuilt": 1978, "condition": "Major fixer (as-is)", "pool": false, "distanceMi": 2.18}]}, {"address": "1505 Sagebrush Dr, Round Rock, TX 78681", "state": "TX", "specs": "3bd/2ba · 1,236 sqft · 7,570 sqft lot", "realEstimate": 266779, "candidatesChecked": 6, "methodologyNote": "Realtor.com's own “Nearby Home Values” widget returned no results for this specific listing — the same site-side data gap already flagged for 6316 Hillsdale Blvd and 8449 Cutler Way's original sweep. In its place, comps were sourced from Redfin's own “Nearby comparable homes” panel for the subject — 6 real, individually verified sold comps, each confirmed via its own Redfin listing page for sold price, specs, condition and year built, per the condition-assessment rubric and multi-platform sourcing approach already applied to 8449 Cutler Way and 8583 Culpepper Dr on Sep 17. Straight-line distance was computed by geocoding each comp's address via Google Maps and applying the haversine formula, not driving directions. All 6 comps sit within 0.75 miles of the subject; 4 are within half a mile, including three right around the corner on the subject's own street cluster (1608 Remuda Cir, 604 Purple Sage Dr, 1812 Wagon Gap Dr) plus 801 Pack Saddle Pass, whose own listing remarks confirm it's “two blocks from Frontier Park” — the same park Layer 2's STR comps for this address are centered on. RealEstimate uses the same three-provider average convention as this page's other recent entries (Collateral Analytics $259,000 / Cotality $275,900 / Quantarium $265,436 = $266,779). Part 2's Zillow neighborhood map showed the newer “Nearby homes” list layout (already noted elsewhere on this page) rather than the older map-with-bubbles UI; the 7 closest homes are all on the subject's own street (1501–1509 and 1504/1506 Sagebrush Dr), each clicked through individually to confirm price, specs and status. Two of the 7 (1507 and 1506 Sagebrush Dr) don't list a bedroom count on Zillow — shown as unstated; 1502 Sagebrush Dr doesn't list a year built and is shown here as 1978, inferred from every other confirmed home on this same block.", "comps": [{"address": "1608 Remuda Cir, Round Rock, TX 78681", "soldDate": "2026-06-12", "soldPrice": 299900, "pricePerSqft": 234, "beds": 3, "baths": 2, "sqft": 1283, "lot": 8223, "yearBuilt": 1977, "condition": "Turn-key / updated", "pool": false, "distanceMi": 0.17}, {"address": "604 Purple Sage Dr, Round Rock, TX 78681", "soldDate": "2026-08-07", "soldPrice": 289000, "pricePerSqft": 203, "beds": 3, "baths": 2, "sqft": 1424, "lot": 12632, "yearBuilt": 1983, "condition": "Maintained / standard resale", "pool": false, "distanceMi": 0.31}, {"address": "1812 Wagon Gap Dr, Round Rock, TX 78681", "soldDate": "2026-07-27", "soldPrice": 275000, "pricePerSqft": 230, "beds": 3, "baths": 2, "sqft": 1194, "lot": 8050, "yearBuilt": 1985, "condition": "Updated / renovated", "pool": false, "distanceMi": 0.36}, {"address": "801 Pack Saddle Pass, Round Rock, TX 78681", "soldDate": "2026-06-22", "soldPrice": 280000, "pricePerSqft": 230, "beds": 3, "baths": 2, "sqft": 1216, "lot": 9018, "yearBuilt": 1978, "condition": "Updated / renovated", "pool": false, "distanceMi": 0.4}, {"address": "400 E Logan St, Round Rock, TX 78664", "soldDate": "2026-05-29", "soldPrice": 275000, "pricePerSqft": 234, "beds": 3, "baths": 2, "sqft": 1174, "lot": 8432, "yearBuilt": 1980, "condition": "Mixed / partly updated", "pool": false, "distanceMi": 0.69}, {"address": "1302 Lawnmont Dr, Round Rock, TX 78664", "soldDate": "2026-03-24", "soldPrice": 194900, "pricePerSqft": 191, "beds": 3, "baths": 2, "sqft": 1022, "lot": 9592, "yearBuilt": 1981, "condition": "Mixed / partly updated", "pool": false, "distanceMi": 0.75}], "excludedComps": [], "zillowNearby": [{"address": "1503 Sagebrush Dr, Round Rock, TX 78681", "price": 297900, "beds": 4, "baths": 2, "sqft": 1264, "lot": 7728, "yearBuilt": 1978, "status": "Off Market"}, {"address": "1507 Sagebrush Dr, Round Rock, TX 78681", "price": 256900, "beds": "—", "baths": 2, "sqft": 1264, "lot": 7451, "yearBuilt": 1978, "status": "Off Market"}, {"address": "1501 Sagebrush Dr, Round Rock, TX 78681", "price": 344100, "beds": 4, "baths": 2, "sqft": 1814, "lot": 7662, "yearBuilt": 1978, "status": "Closed"}, {"address": "1509 Sagebrush Dr, Round Rock, TX 78681", "price": 269900, "beds": 3, "baths": 2, "sqft": 1318, "lot": 7266, "yearBuilt": 1978, "status": "Off Market"}, {"address": "1504 Sagebrush Dr, Round Rock, TX 78681", "price": 291100, "beds": 3, "baths": 2, "sqft": 1566, "lot": 0, "yearBuilt": 1978, "status": "Off Market"}, {"address": "1506 Sagebrush Dr, Round Rock, TX 78681", "price": 257100, "beds": "—", "baths": 2, "sqft": 1299, "lot": 7665, "yearBuilt": 1978, "status": "Off Market"}, {"address": "1502 Sagebrush Dr, Round Rock, TX 78681", "price": 283500, "beds": 3, "baths": 2, "sqft": 1333, "lot": 0, "yearBuilt": 1978, "status": "Off Market"}], "listPrice": 199900, "listStatus": "Pending"}, {"state": "TX", "address": "12026 Lincolnshire Dr, Austin, TX 78758", "specs": "4bd/2.5ba · 2,131 sqft · 7,723 sqft lot", "realEstimate": 642519, "candidatesChecked": 10, "methodologyNote": "Comps were sourced from Redfin's own “Recently sold homes” panel on the subject's listing page rather than this page's usual realtor.com Part 1 pass, since realtor.com is not reachable from this session; all 6 of the panel's comps were individually opened on their own Redfin pages before any figure was trusted. The subject itself just closed Sep 4, 2026 at $650,000, which is $7,481 ABOVE its Redfin Estimate of $642,519 shown above — a reminder that realEstimate here is an automated valuation, not the actual closing price, and both numbers are worth showing side by side. Its own listing description confirms a comprehensive recent remodel (new roof 2021, HVAC 2016/2020, new water heater 2026, all-new appliances, quartz counters, custom tile backsplash, painted cabinets, waterproof vinyl flooring throughout, updated primary suite) in the Gracywoods subdivision of North Austin. Distances are real straight-line haversine distances (R=3958.8mi) computed from Nominatim/OpenStreetMap geocodes of the subject and each comp's exact address, not estimates. Condition evidence was generally strong: 5 of 6 comps had explicit narrative descriptions citing specific renovation scope (kitchen remodels, HVAC, roof, siding, windows) and were classified Partially renovated; one comp (11803 Hyacinth Dr) had thin, ambiguous remarks (“beautifully maintained” plus quartz counters, with the public-records “Year Renovated” field blank) with no explicit update/renovation language, so it is flagged “Not stated — inferred from price only” rather than guessed into a bucket, using its below-median $261/sqft as a last-resort signal only (per this page's convention, this excludes it from condition-bucket stats but it remains a valid distance/price comp, not an excluded one). Pool status: no comp's narrative description mentioned a pool; for 11803 Hyacinth Dr the full structured Property Details grid was retrieved and confirmed no Pool Features entry exists at all, but for the other five comps the deeper Property Details grid could not be reliably re-fetched after a browser-pane rendering glitch mid-session, so pool: false for those five is an inference from the absence of any pool mention in the listing narrative rather than a confirmed empty MLS field — flagged as a data-quality limitation rather than smoothed over. One further flag: 12049 Lincolnshire Dr's page displayed an “Est. Price/Sq.Ft.” computed off its Redfin Estimate rather than its actual $599,000 closing price; pricePerSqft for that comp was instead computed from the real sold price ($599,000 ÷ 2,195 sqft = $273) to stay consistent with how every other comp's pricePerSqft was derived. **Very deep condition-bucket search (same day, per Tony's request):** the original 6-comp sweep left this subject with comps in only the Partially renovated bucket (plus one unclassified), so the “Sold price by condition” stat card showed data for just one of four buckets. A targeted follow-up sweep across the Gracywoods neighborhood and wider 78758 — screening roughly 15 of the cheapest-$/sqft sold single-family listings for a Fixer match, plus the Gracy Woods neighborhood's own “recently sold” page for Original and Fully-renovated candidates — found one genuine Fixer comp (909 W Rundberg Ln, 2.54 mi away in Quail Creek; every closer cheap listing used softer language like “TLC” or “needs updates” rather than the literal word “fixer,” or was excluded as non-representative — one had a disclosed meth-residue remediation history), one Original comp (1101 Huntridge Dr, 0.75 mi, inside Gracywoods itself, “well-maintained” with no renovation claims beyond fresh paint), and two Fully renovated comps (11214 Prairie Dove Cir, 1.01 mi; 12400 Willow Wild Dr, 0.72 mi — both explicit comprehensive remodels, not single-room upgrades). All four condition buckets now have real data. Redfin's URL sort parameters for $/sqft didn't respond reliably this pass (lo-price/hi-price and property-type filters worked; $/sqft-specific sort params were silently dropped), worked around by pulling the neighborhood's own “recently sold” page directly and computing $/sqft manually to triage candidates before reading full remarks.", "comps": [{"address": "12029 Lincolnshire Dr, Austin, TX 78758", "soldDate": "2026-05-28", "soldPrice": 625000, "pricePerSqft": 312, "beds": 3, "baths": 2.5, "sqft": 2002, "lot": 7840, "yearBuilt": 1986, "condition": "Mixed / partly updated — confirmed via listing remarks: kitchen “meticulously reimagined” with quartz counters, upgraded bathrooms, popcorn-ceiling removal, new exterior siding, xeriscape front yard.", "pool": false, "distanceMi": 0.03}, {"address": "12036 Lincolnshire Dr, Austin, TX 78758", "soldDate": "2026-04-17", "soldPrice": 799999, "pricePerSqft": 297, "beds": 4, "baths": 2.5, "sqft": 2695, "lot": 7753, "yearBuilt": 1985, "condition": "Mixed / partly updated — confirmed via listing remarks: “tastefully updated with today's on trend styling”; listing text is notably thin (short, no itemized scope of work), flagged as a lower-confidence read.", "pool": false, "distanceMi": 0.07}, {"address": "12049 Lincolnshire Dr, Austin, TX 78758", "soldDate": "2026-01-15", "soldPrice": 599000, "pricePerSqft": 273, "beds": 4, "baths": 2.5, "sqft": 2195, "lot": 7962, "yearBuilt": 1985, "condition": "Mixed / partly updated — confirmed via listing remarks: HVAC replaced 2022, siding upgraded to Hardiboard, all windows replaced, quartz counters, LVP flooring, marketed as “move-in ready”; a July 2025 appraisal was cited at $700,000 per MLS documents.", "pool": false, "distanceMi": 0.13}, {"address": "11905 Rickem Cv, Austin, TX 78758", "soldDate": "2026-09-03", "soldPrice": 469900, "pricePerSqft": 280, "beds": 3, "baths": 2.5, "sqft": 1678, "lot": 7318, "yearBuilt": 1985, "condition": "Mixed / partly updated — confirmed via listing remarks: “thoughtfully curated modern updates,” updated kitchen (shaker cabinetry, granite, stainless appliances), renovated secondary bathroom, refreshed engineered hardwood, new HVAC & water heater.", "pool": false, "distanceMi": 0.29}, {"address": "1603 Kimmerling Ln, Austin, TX 78758", "soldDate": "2026-06-08", "soldPrice": 499900, "pricePerSqft": 229, "beds": 4, "baths": 2.5, "sqft": 2184, "lot": 6716, "yearBuilt": 1984, "condition": "Mixed / partly updated — confirmed via listing remarks: “beautifully updated home,” remodeled kitchen with quartz counters, tankless water heater, new carpet, fresh paint, new roof shingles (2025).", "pool": false, "distanceMi": 0.31}, {"address": "11803 Hyacinth Dr, Austin, TX 78758", "soldDate": "2026-09-22", "soldPrice": 429000, "pricePerSqft": 261, "beds": 3, "baths": 2, "sqft": 1642, "lot": 7549, "yearBuilt": 1979, "condition": "Not stated — inferred from price only (remarks say “beautifully maintained” with quartz counters but give no explicit renovation scope; public-records “Year Renovated” field is blank; at $261/sqft, the lowest of the six comps, price level suggests a more original/dated interior).", "pool": false, "distanceMi": 0.59}, {"address": "909 W Rundberg Ln, Austin, TX 78758", "soldDate": "2026-05-06", "soldPrice": 219000, "pricePerSqft": 212, "beds": 3, "baths": 1, "sqft": 1032, "lot": 15682, "yearBuilt": 1998, "condition": "Fixer / needs renovation — confirmed via listing remarks: “Opportunity awaits with this fixer-upper in highly desirable Quail Creek! ... Ideal for renovation, expansion, or customization.”", "pool": false, "distanceMi": 2.54}, {"address": "1101 Huntridge Dr, Austin, TX 78758", "soldDate": "2026-08-21", "soldPrice": 395000, "pricePerSqft": 250, "beds": 3, "baths": 2, "sqft": 1580, "lot": 10075, "yearBuilt": 1978, "condition": "Clean original / maintained — confirmed via listing remarks: “A great opportunity to own a well-maintained home in an established neighborhood known for its mature trees...” (freshly painted interior noted; no kitchen/bath renovation claims).", "pool": false, "distanceMi": 0.75}, {"address": "11214 Prairie Dove Cir, Austin, TX 78758", "soldDate": "2026-07-27", "soldPrice": 390000, "pricePerSqft": 349, "beds": 3, "baths": 2, "sqft": 1117, "lot": 6838, "yearBuilt": 1981, "condition": "Fully renovated — confirmed via listing remarks: “Both bathrooms have been completely remodeled... Newer energy-efficient windows, quality improvements throughout & years of attentive maintenance make this home feel wonderfully turnkey.”", "pool": false, "distanceMi": 1.01}, {"address": "12400 Willow Wild Dr, Austin, TX 78758", "soldDate": "2026-08-31", "soldPrice": 475000, "pricePerSqft": 270, "beds": 3, "baths": 2, "sqft": 1760, "lot": 11761, "yearBuilt": 1977, "condition": "Fully renovated — confirmed via listing remarks: “this beautifully remodeled home... The remodeled kitchen serves as the heart of the home... Both bathrooms have been tastefully updated, including... a beautifully remodeled en suite bath.”", "pool": false, "distanceMi": 0.72}], "excludedComps": []}, {"state": "TX", "address": "12006 Fremont Cove, Austin, TX 78727", "specs": "3bd/2ba · 1,595 sqft · 8,019 sqft lot", "realEstimate": 565787, "candidatesChecked": 7, "methodologyNote": "Comps were pulled directly from the subject's own Redfin “Recently sold homes” panel (5 homes) — Redfin generates this panel per-property rather than from one universal list, confirmed by spot-checking a couple of the comps' own pages, which each showed an overlapping but non-identical five-home set; only the subject-page panel was used. Note: Redfin's own address field spells this street “Fremont Cv” (abbreviated), not “Fremont Cove” — confirmed as the same property via the matching property ID, kept here under the spelling given. The subject itself is off-market: last sold (closed) in May 2024 after being listed at $600,000, with the actual closing price redacted (shown as “*”) in Redfin's own sale-history table — the current $565,787 figure is a Redfin Estimate, not a transaction price. The subject's own listing description from that 2024 sale describes a “meticulously remodeled” kitchen (quartz counters, stainless appliances) and updated primary/guest baths, plus a 250 sq ft detached shed/office — i.e. the subject itself reads as a renovated 1978 ranch, not original condition. Each comp's own Redfin page was visited individually for year built, lot size, and remarks-based condition. Two comps (12002 Saxony Ln and 4305 Yucatan Ln) have remarks heavy with “remodeled”/“turnkey”/“fully remodeled kitchen” language and were bucketed Fully renovated; two (4209 Red Cloud Dr and 3706 Skipton Dr) document systems upgrades (roof, HVAC, siding) without an explicit interior gut-remodel description and were bucketed Partially renovated; 12015 Carmel Park Ln explicitly markets itself as “turn-key” despite mixed signals (“diamond in the rough,” “a cosmetic tweak or two”) and was bucketed accordingly. Only one comp's remarks mention a pool — 12002 Saxony Ln's backyard “cowboy pool” (a stock-tank pool) — no comp's Property Details carried a structured “Pool Features” field, consistent with 1980s North Austin/Milwood tract housing not having built-in pools as standard. Distances are real haversine (R=3958.8mi) computed from Nominatim-geocoded lat/lon for the subject and each comp, not Redfin's own display, which doesn't show a distance figure on this panel type. Data-quality flags: Redfin's own sale-history tables redact dollar amounts with “*” for several historical sales (pre-2024), so only the MLS-sourced closed/list prices on each comp's current listing could be used; 3706 Skipton Dr shows a 1,705 sq ft MLS/listing size at the top of its page but a 1,629 sq ft county public-record size further down (the MLS figure was used, since it reconciles with the page's displayed $/sqft); 12015 Carmel Park Ln's public tax record lists 3.0 baths against 2 full baths in the listing's own room detail (2 baths used, matching the comp panel and room-level detail); and a couple of comps show minor header-vs-public-facts lot-size rounding differences (a few dozen sq ft) between MLS acreage and county parcel data — the MLS/listing figure was used in each case. All five comps are in Milwood/North Austin; four sit in 78727 and one (4209 Red Cloud Dr) is in the adjacent 78759 zip but was retained since it appeared organically in the subject's own comp panel. **Very deep condition-bucket search (same day, per Tony's request):** the original 5-comp sweep left this subject with comps only in Fully renovated and Partially renovated, so the “Sold price by condition” stat card showed data for just two of four buckets. A follow-up pass traversed the Redfin “comparable homes” chains from the subject and all 5 existing comps (each sold listing surfaces ~5 more nearby sold comps), screening roughly 20 additional Milwood-area addresses — most used “updated/renovated/turn-key” language (Milwood is heavily flipped, which is itself the reason those two buckets were easy to fill and Fixer/Original were not). Found one genuine Fixer comp (12103 Wycliff Ln, 0.19 mi, same immediate Milwood pocket — “good bones and plenty of potential,” no kitchen/bath updates, sold well below the $350–370/sqft the renovated Milwood comps fetch) and one Original comp (3403 Palomar Ln, 1.25 mi, a wider 78727/Northwood pocket but the same school zone as the subject — flagged as farther than the 0.2–0.5mi core-Milwood comps — “move-in ready” with zero renovation claims). A second, closer comp for each bucket could not be found without forcing a weak match: several cheap outliers (1907 Mirabeau St, 2209 Cedar Branch Dr, 12807 Widge Dr) had plain remarks but no explicit fixer/as-is/original language, and one strong fixer-flavored listing (13108 Lamplight Village Ave) was rejected because Redfin never disclosed its actual closed sale price (Texas is a non-disclosure state and this particular sale wasn't revealed).", "comps": [{"address": "12015 Carmel Park Ln, Austin, TX 78727", "soldDate": "2026-08-14", "soldPrice": 430000, "pricePerSqft": 276, "beds": 3, "baths": 2, "sqft": 1560, "lot": 8786, "yearBuilt": 1980, "condition": "Turn-key / updated — confirmed via listing remarks: marketed as an ‘impeccable turn-key home’ with new granite counters, LED lighting, and a full energy-system overhaul, though remarks also flag room for ‘a cosmetic tweak or two,’ suggesting the renovation is more cosmetic than a full gut.", "pool": false, "distanceMi": 0.07}, {"address": "12002 Saxony Ln, Austin, TX 78727", "soldDate": "2026-08-10", "soldPrice": 615000, "pricePerSqft": 357, "beds": 3, "baths": 2, "sqft": 1721, "lot": 8668, "yearBuilt": 1978, "condition": "Fully renovated — confirmed via listing remarks: described as ‘impeccably remodeled’ with an all-new designer kitchen (quartzite waterfall island, six-burner range), a remodeled primary suite, and new flooring throughout.", "pool": true, "distanceMi": 0.11}, {"address": "4305 Yucatan Ln, Austin, TX 78727", "soldDate": "2026-04-06", "soldPrice": 575000, "pricePerSqft": 342, "beds": 3, "baths": 2, "sqft": 1680, "lot": 7449, "yearBuilt": 1978, "condition": "Fully renovated — confirmed via listing remarks: marketed as a ‘turnkey opportunity’ with a ‘fully remodeled kitchen,’ new windows, HVAC/ductwork, and Hardie siding throughout.", "pool": false, "distanceMi": 0.21}, {"address": "3706 Skipton Dr, Austin, TX 78727", "soldDate": "2026-06-05", "soldPrice": 599900, "pricePerSqft": 352, "beds": 3, "baths": 2, "sqft": 1705, "lot": 7736, "yearBuilt": 1981, "condition": "Partially renovated — confirmed via listing remarks: a ‘beautifully updated property’ citing a new roof, windows, siding, tankless water heater, and a one-year-old HVAC system, but no mention of a full kitchen/bath gut remodel.", "pool": false, "distanceMi": 0.38}, {"address": "4209 Red Cloud Dr, Austin, TX 78759", "soldDate": "2026-09-04", "soldPrice": 565000, "pricePerSqft": 344, "beds": 3, "baths": 2, "sqft": 1643, "lot": 7405, "yearBuilt": 1983, "condition": "Partially renovated — confirmed via listing remarks: ‘thoughtfully upgraded... updated HVAC and ductwork’ with a new 2025 roof and Hardie siding, but no interior kitchen/bath remodel described.", "pool": false, "distanceMi": 0.41}, {"address": "12103 Wycliff Ln, Austin, TX 78727", "soldDate": "2026-05-26", "soldPrice": 369000, "pricePerSqft": 279, "beds": 3, "baths": 2, "sqft": 1321, "lot": 7339, "yearBuilt": 1978, "condition": "Fixer / needs renovation — confirmed via listing remarks: ‘With good bones and plenty of potential this home provides freedom to add own style without paying extra for someone else’s choices’ (no kitchen/bath updates; only roof/HVAC in 2016 and baseboards in 2019 touched; sold well below renovated-Milwood $/sqft).", "pool": false, "distanceMi": 0.19}, {"address": "3403 Palomar Ln, Austin, TX 78727", "soldDate": "2026-07-10", "soldPrice": 485000, "pricePerSqft": 283, "beds": 3, "baths": 2, "sqft": 1714, "lot": 7126, "yearBuilt": 1982, "condition": "Clean original / maintained — confirmed via listing remarks: ‘move-in ready... hardwood floors... warm and welcoming kitchen showcases a clean mix of stainless and classic white appliances paired with butcher-block-style countertops’ — no renovation, update, or remodel claims anywhere in the listing.", "pool": false, "distanceMi": 1.25}], "excludedComps": []}, {"state": "TX", "address": "4409 Molokai Dr, Austin, TX 78749", "specs": "3bd/2ba · 1,298 sqft · 7,710 sqft lot", "realEstimate": 477559, "candidatesChecked": 9, "methodologyNote": "Comps were pulled from Redfin's own “Recently sold homes” comparable panel on the subject's page (all 6 shown, none skipped), with each comp's own Redfin detail page then opened individually for year built, lot size, condition language, and pool status. The subject itself is off-market (last transaction: listed $450,000 Mar 2021, closed $450,000 Apr 9, 2021 per Unlock MLS #9605098, about 40% below the current $477,559 Redfin Estimate); its own 2021 listing remarks describe it as a “stunning updated” one-story remodel with waterproof vinyl flooring, quartz kitchen counters, and an updated primary/hall bath — i.e. partially renovated at the time of its last sale, in the Legend Oaks/Maple Run area of Southwest Austin. Distances are real haversine (R=3958.8mi) computed from Nominatim-geocoded lat/lon for the subject and each comp (not Redfin's own display, which doesn't show distance). Data-quality flags: (1) 7701 Wakefield Dr's $199,900 sale is a genuine low outlier, not a data error — its own remarks explicitly call it “a true fixer-upper... offered as-is”; (2) none of the 6 comps' Property Details panels listed any pool feature, so despite this zip code's reputation for pools, this particular comp set (all 1980s Legend Oaks/Maple Run/Woodstone Village starter homes) is pool-free across the board; (3) two comps (4006 Jaffna Cv and 7701 Whitsun Dr) had thin, boilerplate-only remarks with no explicit renovation language, so condition was inferred from price-per-sqft relative to the set's median plus secondary cues (dated laminate counters; “renovation opportunity” marketing language) per this page's price-inferred fallback convention; (4) minor lot-size discrepancies (tens to low-hundreds of sqft) appeared between Redfin's top-of-page quick facts and its separate “Public facts” panel for several properties (e.g. subject 7,710 vs 7,693 sqft) — the quick-facts figure was used consistently for all 7 properties. **Very deep condition-bucket search (same day, per Tony's request):** the original 6-comp sweep left this subject with comps in Partially renovated and Fixer (plus two unclassified), so the “Sold price by condition” stat card showed data for just two of four buckets. A follow-up pass through the Legend Oaks/Maple Run/Woodstone Village sold listings found two Fully renovated comps (3810 Leafield Dr, 0.56 mi — “a fully remodeled... thoughtfully updated living space... upgrades throughout”; 8103 Washita Dr, 0.30 mi — “Turn-key... updated with beautiful stone countertops, tile, new flooring, water heater, siding, paint inside and out”) and one Original comp (4811 Alta Loma Dr, 0.53 mi — “exceptionally well-maintained” with no renovation or update claims anywhere in the listing; its own geocoded point lands in an adjacent micro-pocket (“Twin Creeks”) rather than core Maple Run, though Redfin's own listing copy markets it as Maple Run-area and it's still the closest Original match found). All four condition buckets now have real data. The two previously “Not stated” comps (4006 Jaffna Cv, 7701 Whitsun Dr) were not re-examined this pass — that re-check was optional and secondary to filling the two empty buckets, which took priority.", "comps": [{"address": "7912 Tiffany Dr, Austin, TX 78749", "soldDate": "2026-06-18", "soldPrice": 399999, "pricePerSqft": 326, "beds": 3, "baths": 2, "sqft": 1226, "lot": 5680, "yearBuilt": 1986, "condition": "Mixed / partly updated — confirmed via listing remarks: “thoughtfully curated updates including LVP flooring... a beautifully reimagined fireplace with bold, checkered tile.”", "pool": false, "distanceMi": 0.2}, {"address": "7912 Turquoise Trl, Austin, TX 78749", "soldDate": "2026-05-13", "soldPrice": 435000, "pricePerSqft": 346, "beds": 3, "baths": 2, "sqft": 1259, "lot": 6882, "yearBuilt": 1984, "condition": "Mixed / partly updated — confirmed via listing remarks: “updated kitchen... updated finishes, while secondary bathroom [is] nearby updated.”", "pool": false, "distanceMi": 0.31}, {"address": "7701 Wakefield Dr, Austin, TX 78749", "soldDate": "2026-09-14", "soldPrice": 199900, "pricePerSqft": 179, "beds": 3, "baths": 2, "sqft": 1119, "lot": 8825, "yearBuilt": 1982, "condition": "Fixer / needs renovation — confirmed via listing remarks: “a true fixer-upper with enormous potential... offered as-is.”", "pool": false, "distanceMi": 0.5}, {"address": "4006 Jaffna Cv, Austin, TX 78749", "soldDate": "2026-08-19", "soldPrice": 295000, "pricePerSqft": 202, "beds": 3, "baths": 2, "sqft": 1458, "lot": 7405, "yearBuilt": 1982, "condition": "Not stated — inferred from price only (remarks are boilerplate offer-process language only, no renovation details given; inferred from price-per-sqft, $202, the lowest fully-finished home in the set, and dated laminate counters noted in interior features).", "pool": false, "distanceMi": 0.51}, {"address": "4009 Alexandria Dr, Austin, TX 78749", "soldDate": "2026-10-01", "soldPrice": 360000, "pricePerSqft": 228, "beds": 3, "baths": 2, "sqft": 1581, "lot": 6185, "yearBuilt": 1984, "condition": "Mixed / partly updated — confirmed via listing remarks: “extensive updates... primary shower has been beautifully renovated with tile, dual showerheads.”", "pool": false, "distanceMi": 0.54}, {"address": "7701 Whitsun Dr, Austin, TX 78749", "soldDate": "2026-08-17", "soldPrice": 355900, "pricePerSqft": 242, "beds": 3, "baths": 2, "sqft": 1469, "lot": 7753, "yearBuilt": 1979, "condition": "Not stated — inferred from price only (remarks pitch this as a renovation opportunity — “looking to personalize, renovate, or add value... renovation project” — rather than describing a completed update; inferred from price-per-sqft, $242, below the comp set's median).", "pool": false, "distanceMi": 0.72}, {"address": "3810 Leafield Dr, Austin, TX 78749", "soldDate": "2026-07-06", "soldPrice": 590000, "pricePerSqft": 367, "beds": 3, "baths": 2, "sqft": 1609, "lot": 6481, "yearBuilt": 1980, "condition": "Fully renovated — confirmed via listing remarks: ‘a fully remodeled, one-story home in the highly desirable Woodstone Village neighborhood... thoughtfully updated living space... stylish interior finishes and upgrades throughout’ (new roof 2025, new windows).", "pool": false, "distanceMi": 0.56}, {"address": "8103 Washita Dr, Austin, TX 78749", "soldDate": "2026-05-14", "soldPrice": 450000, "pricePerSqft": 295, "beds": 3, "baths": 2, "sqft": 1524, "lot": 6621, "yearBuilt": 1986, "condition": "Fully renovated — confirmed via listing remarks: ‘Turn-key and carpet free, cul-de-sac charmer in Maple Run... updated with beautiful stone countertops, tile, new flooring, water heater, siding, paint inside and out.’", "pool": false, "distanceMi": 0.3}, {"address": "4811 Alta Loma Dr, Austin, TX 78749", "soldDate": "2026-06-18", "soldPrice": 427900, "pricePerSqft": 299, "beds": 3, "baths": 2, "sqft": 1429, "lot": 5593, "yearBuilt": 1991, "condition": "Clean original / maintained — confirmed via listing remarks: ‘this exceptionally well-maintained one-story home offers comfort and charm throughout’ — no renovation or update claims anywhere in the listing (kitchen/fireplace/fencing described as existing features, not upgrades).", "pool": false, "distanceMi": 0.53}], "excludedComps": []}, {"state": "AZ", "address": "922 E La Jolla Dr, Tempe, AZ 85282", "specs": "4bd (inferred)/3ba · 2,328 sqft · 9,365 sqft lot", "realEstimate": 567706, "candidatesChecked": 13, "methodologyNote": "Realtor.com's own “Nearby Home Values” widget worked for this subject (unlike several other subjects on this page) — 26 nearby homes listed after expanding “See more.” 13 of the 26 were individually checked via their own Property History → Price History log, prioritizing the immediate same-block cluster on this subject's own street (La Jolla Dr) plus the two parallel streets one block over (Laguna Dr, Manhatton Dr) rather than working outward through the full list — 7 qualified (sold 2020-01-01 or later), 6 were excluded (all sold 2016–2017, shown collapsed below). Data-quality flag: La Jolla Dr and Manhatton Dr are Single Family parcels like the subject, while every Laguna Dr property checked is a Townhome on a notably smaller lot (built 1969 vs. the subject's 1966–1967 era) — a genuine sub-market distinction within this otherwise tight cluster. Kept as comps for their proximity (all three Laguna Dr comps sit within 0.042 mi) but flagged here rather than silently treated as equivalent to the single-family comps. Data-quality flag: two qualifying comps (927 E La Jolla Dr, 934 E Manhatton Dr) have no bed/bath count on realtor.com — the same public-record gap already encountered for the subject itself on Layer 1 (resolved there by inferring from 928 E La Jolla Dr, which is comp 1 on this table). Condition was inferred from each comp's sold price per sqft relative to this comp set's own median ($227/sqft) rather than from listing remarks, since realtor.com does not retain marketing-copy text for homes that sold years ago off-MLS — consistent with this page's own established fallback for thin-remarks subjects. One exception: 929 E Laguna Dr's condition is confirmed rather than inferred — its own Price History shows it was bought for $305,000 on 2023-03-24 and resold for $510,000 just under six months later on 2023-09-15, a classic flip pattern, so it's marked Turn-key/updated on direct evidence. Pool status was checked via each comp's MLS “Pool Features” field and permit history (pool/spa construction permits), not physical inspection: 3 of the 7 qualifying comps show pool evidence (928 E La Jolla Dr — permit applied 1996; 927 E La Jolla Dr — Pool Features: Type Unknown; 934 E Manhatton Dr — permit applied 1998), consistent with the subject's own confirmed private pool. Straight-line distance was computed by geocoding each comp's address via Google Maps and applying the haversine formula — this is the tightest comp cluster found on this page so far, all 7 within 0.015–0.088 miles. RealEstimate uses realtor.com's own three-provider average (Collateral Analytics $642,000 / Cotality $519,430 / Quantarium $541,689 = $567,706), which cross-checks closely with Layer 1's independent dual-AVM figure for this same subject ($556,860, averaging Redfin's and Zillow's own estimates) — about 2% apart despite being computed from entirely different AVM providers. Part 2 — Zillow note: the site's UI has moved on again since this page's last Zillow-sourced entry. Both the original yellow-marker neighborhood map and the newer “Nearby homes” list format (used for 1505 Sagebrush Dr) are gone from this subject's page; in their place Zillow now surfaces a “Comparable homes” carousel — recently-sold homes selected by feature similarity (beds/baths/location/sqft), not pure proximity. It returned 5 homes; 2 (913 E Laguna Dr, 928 E La Jolla Dr) duplicate Part 1 sold comps above and are shown here anyway for completeness rather than silently dropped, alongside 3 new addresses from slightly farther blocks (1066 E Carson Dr, 1717 E Pebble Beach Dr, 2425 S Newberry Rd) that Zillow's algorithm surfaced but that did not appear in realtor.com's own nearby-values list. Follow-up research (same day): the page's condition-aware “Sold price by condition” / “Implied value by condition” stat cards exclude any comp whose condition was only price-inferred, which initially left the Original and Partially renovated buckets empty for this subject — 6 of the 7 qualifying comps had been price-inferred only. Went back to each comp's own listing remarks (Redfin, since realtor.com doesn't surface description text for these older/off-market listings) rather than leaving the inference standing: 928 E LA Jolla Dr's listing describes new flooring, fresh interior paint, updated bathroom vanities, modern light fixtures, and an updated pool — real but partial updates, reclassified Mixed/partly updated. 927 E LA Jolla Dr's listing describes a remodel over the prior 4 years (new roof, interior/exterior paint, dual-pane windows, A/C & heater, attic insulation), marketed move-in ready — reclassified Updated/renovated. 945 E Laguna Dr had no listing remarks available (an Opendoor-sourced, currently off-market Redfin Estimate page), so its own sale history was used instead: Opendoor bought it for $424,500 on 2021-07-16 and resold it for $440,500 on 2021-10-08, under 3 months later — a ~3.8% markup too small to indicate a renovation (unlike 929 E Laguna Dr's confirmed flip at a 67% markup) — corroborated by listing photos showing original, dated kitchen cabinetry and fixtures; reclassified Clean original/maintained. With this, every one of the 7 qualifying comps now carries a real (not price-inferred) condition read, and the condition-aware stat cards populate across all four buckets: Original (945 E Laguna Dr, n=1, $440,500 / $227/sqft), Partially renovated (928 E LA Jolla Dr + 927 E LA Jolla Dr, n=2, avg $535,000 / $228/sqft), Fixer (913 E Laguna Dr + 934 E Manhatton Dr, n=2, avg $417,500 / $170/sqft), and Fully renovated (929 E Laguna Dr's confirmed flip + 940 E Manhatton Dr, n=2, avg $551,500 / $332/sqft).", "comps": [{"address": "928 E LA Jolla Dr, Tempe, AZ 85282", "soldDate": "2026-04-23", "soldPrice": 585000, "pricePerSqft": 253, "beds": 4, "baths": 3, "sqft": 2312, "lot": 10890, "yearBuilt": 1966, "condition": "Mixed / partly updated — confirmed via listing remarks: new flooring, fresh interior paint, updated bathroom vanities, modern light fixtures, and an updated pool (kitchen cabinetry not described as updated)", "pool": true, "distanceMi": 0.015}, {"address": "927 E LA Jolla Dr, Tempe, AZ 85282", "soldDate": "2022-05-06", "soldPrice": 485000, "pricePerSqft": 204, "beds": "—", "baths": "—", "sqft": 2374, "lot": 8577, "yearBuilt": 1966, "condition": "Updated / renovated — confirmed via listing remarks: remodeled over the past 4 years (new roof, interior/exterior paint, dual-pane windows, A/C & heater, additional attic insulation), marketed move-in ready", "pool": true, "distanceMi": 0.029}, {"address": "929 E Laguna Dr, Tempe, AZ 85282", "soldDate": "2023-09-15", "soldPrice": 510000, "pricePerSqft": 275, "beds": 3, "baths": 2, "sqft": 1855, "lot": 5449, "yearBuilt": 1969, "condition": "Turn-key / updated — confirmed flip: bought $305,000 on 2023-03-24, resold $510,000 less than 6 months later", "pool": false, "distanceMi": 0.024}, {"address": "945 E Laguna Dr, Tempe, AZ 85282", "soldDate": "2021-10-08", "soldPrice": 440500, "pricePerSqft": 227, "beds": 3, "baths": 2, "sqft": 1938, "lot": 7414, "yearBuilt": 1969, "condition": "Clean original / maintained — confirmed via Opendoor resale pattern (bought $424,500 Jul 16, 2021, resold $440,500 Oct 8, 2021, a ~3.8% gain inconsistent with a renovation) and listing photos showing original, dated kitchen cabinetry and fixtures", "pool": false, "distanceMi": 0.042}, {"address": "913 E Laguna Dr, Tempe, AZ 85282", "soldDate": "2026-08-27", "soldPrice": 415000, "pricePerSqft": 173, "beds": 3, "baths": 3, "sqft": 2396, "lot": 4691, "yearBuilt": 1969, "condition": "Fixer / needs renovation — inferred from price only", "pool": false, "distanceMi": 0.042}, {"address": "940 E Manhatton Dr, Tempe, AZ 85282", "soldDate": "2024-09-05", "soldPrice": 593000, "pricePerSqft": 388, "beds": 4, "baths": 2, "sqft": 1530, "lot": 8712, "yearBuilt": 1966, "condition": "Turn-key / updated — inferred from price only (71% above comp-set median $/sqft)", "pool": false, "distanceMi": 0.088}, {"address": "934 E Manhatton Dr, Tempe, AZ 85282", "soldDate": "2020-08-10", "soldPrice": 420000, "pricePerSqft": 167, "beds": "—", "baths": "—", "sqft": 2519, "lot": 8777, "yearBuilt": 1966, "condition": "Fixer / needs renovation — inferred from price only", "pool": true, "distanceMi": 0.074}], "excludedComps": [{"address": "903 E la Jolla Dr, Tempe, AZ 85282", "soldDate": "2017-01-03", "soldPrice": 300000, "yearBuilt": 1966}, {"address": "941 E Laguna Dr, Tempe, AZ 85282", "soldDate": "2017-03-27", "soldPrice": 245000, "yearBuilt": 1969}, {"address": "909 E Laguna Dr, Tempe, AZ 85282", "soldDate": "2017-09-27", "soldPrice": 275000, "yearBuilt": 1969}, {"address": "920 E Manhatton Dr, Tempe, AZ 85282", "soldDate": "2017-10-02", "soldPrice": 349000, "yearBuilt": 1965}, {"address": "930 E Manhatton Dr, Tempe, AZ 85282", "soldDate": "2016-12-29", "soldPrice": 305000, "yearBuilt": 1966}, {"address": "915 E Manhatton Dr, Tempe, AZ 85282", "soldDate": "2017-08-23", "soldPrice": 312000, "yearBuilt": 1966}], "zillowNearby": [{"address": "913 E Laguna Dr, Tempe, AZ 85282", "price": 415000, "beds": 3, "baths": 3, "sqft": 2396, "lot": 4691, "yearBuilt": 1969, "status": "Sold"}, {"address": "928 E LA Jolla Dr, Tempe, AZ 85282", "price": 585000, "beds": 4, "baths": 3, "sqft": 2312, "lot": 10890, "yearBuilt": 1966, "status": "Sold"}, {"address": "1066 E Carson Dr, Tempe, AZ 85282", "price": 540000, "beds": 4, "baths": 3, "sqft": 2264, "lot": 7889, "yearBuilt": 1971, "status": "Sold"}, {"address": "1717 E Pebble Beach Dr, Tempe, AZ 85282", "price": 610000, "beds": 4, "baths": 3, "sqft": 2470, "lot": 9004, "yearBuilt": 1969, "status": "Sold"}, {"address": "2425 S Newberry Rd, Tempe, AZ 85282", "price": 525000, "beds": 4, "baths": 3, "sqft": 1998, "lot": 9370, "yearBuilt": 1963, "status": "Sold"}]}, {"state": "AZ", "address": "1325 E San Angelo Ave, Gilbert, AZ 85234", "specs": "4bd/2ba · 1,784 sqft · 6,312 sqft lot", "realEstimate": 504890, "candidatesChecked": 7, "methodologyNote": "realtor.com has no “Nearby Home Values” widget for this subject — its page is a thin, public-record-only listing (same pattern seen on 6316 Hillsdale Blvd and the original 8449 Cutler Way sweep). Fallback source: Redfin's own “Recently sold homes” comparable-homes panel on this subject's own page, which returned exactly 6 homes (all sold 2026, 0.07–1.4 mi away). Each was clicked through to its own Redfin listing to read condition from remarks + photos (no price-only inference was needed this time — all 6 had usable remarks) and to check pool status the same way. Distance was read off Google Maps route-miles for each address pair, not geocoded straight-line/haversine like 922 E La Jolla Dr — a methodology difference from that subject, noted here rather than silently mixed in. Evidence-tier addition: this pass surfaced Redfin's structured “Property Condition” field — a field on the listing's own Property Details panel, distinct from and more authoritative than free-text remarks or photos when present — as a stronger evidence source for this page's condition-assessment rubric (primary: listing remarks; secondary: the structured “Property Condition” field when present; tertiary: photos; quaternary: price-relative-to-median inference, which this page's classifier excludes from bucket stats). Follow-up completed: all 6 of the subject's own Redfin-panel candidates are now fully verified. 1358 N Sailors Way's lot size (7,131 sqft) and year built (1991) are now confirmed — Original, no renovation language in remarks and no structured “Property Condition” field present. 1314 E Mineral Rd's lot size (6,199 sqft), year built (1988), and pool (confirmed true) are now in — but completing its record also surfaced a correction to this page's own earlier read: Redfin's structured “Property Condition” field explicitly tags this home “Fixer.” This page had classified it “Original” earlier this session based only on remarks (“fresh paint, carpet, turf yard”) and photos (dated oak cabinetry) — a remarks/photo-only read that missed the structured field, now corrected to Fixer. All 6 Redfin-panel candidates are qualifying comps as of this pass — none excluded. No comps predate 2020 in this result set (Redfin's algorithm only surfaced 2026 sales), so excludedComps is empty for this subject — not because an exhaustive sweep found nothing older, but because this particular source didn't surface anything older.\n\nFixer-condition deep search: with the Fixer bucket otherwise resting on a single corrected comp, a targeted ZIP 85234 sweep (Redfin, sold-last-6-months houses with 3+ beds, sorted by $/sqft ascending) was run to check for a better or closer Fixer-tagged sale, cross-validated with a size-narrowed re-run (max 2,300 sqft, closer to the subject's own 1,784 sqft) that surfaced no additional fixer/as-is/cash-only listings — confirming no closer or better-sized Fixer candidate was missed. The sweep's standout was 708 E Hearne Way (sold August 2026), whose own structured “Property Condition” field also says “Fixer,” corroborated by remarks (“CASH BUYERS ONLY,” “Bring your vision,” sold “AS IS”). Added as a 7th qualifying comp (candidatesChecked now 7: the subject's original 6-candidate Redfin panel plus this one ZIP-wide sweep find). Its lot size uses Redfin's structured “Lot Size Area” field (14,532 sqft) rather than the page's rounded acreage summary (0.33 acres ≈ 14,375 sqft), for consistency with how lot sizes are sourced elsewhere on this page; Google Maps offered two route options for its distance (2.0 mi via N Lindsay Rd, or 2.2 mi “best route” via E Guadalupe Rd and N Lindsay Rd) — the shorter 2.0 mi figure was used, consistent with how route-mile ties were broken for this subject's other comps. The Fixer bucket now has n=2 (1314 E Mineral Rd, $490,000; 708 E Hearne Way, $520,000), both substantially larger than the subject (2,060 and 2,940 sqft vs. the subject's 1,784 sqft) — flagged since Fixer-bucket implied-value-per-sqft comparisons should be read with that size gap in mind. RealEstimate deviation: realtor.com has no three-provider Home Value section for this subject either, so this uses Redfin's own single Estimate ($504,890, range $480,000–$581,000) rather than the usual Collateral Analytics / Cotality / Quantarium average — a single-provider figure, flagged as such. Part 2 — Zillow note: skipped for this subject. Zillow is currently serving this address as an active for-rent listing ($5,750/mo furnished) rather than an off-market/for-sale listing, so its usual Neighborhood map / “Nearby homes” sold-comp module isn't present — only rental-focused “Similar homes for rent” widgets show. Redfin's own “Nearby similar homes” panel exists as a rough substitute (mostly active list prices: 156 N Nielson St $550,000, 1001 N Burk St $499,900, 1244 E Harvard Ave $499,999, plus two non-comparable luxury outliers at $1.25M and $1.55M, and one Mesa home at $439,900), but it isn't actually Zillow data and isn't sold-comp evidence the way Part 2 normally provides, so it wasn't forced into the Zillow-labeled section — omitted rather than mislabeled. Beds/baths resolution: Redfin's own structured field shows “— bd • 3 ba” for the subject (stale/incomplete public-record data), but its own listing remarks say “4 bedroom/2 bath,” and Zillow's Facts & Features for the current rental listing confirm Bedrooms: 4 / Bathrooms: 2 / Full bathrooms: 2 — used 4bd/2ba, matching Layer 1's existing record. Renovation-status timeline: Layer 1 tags this property “original” / \"renovated\": false per county records, reflecting its condition at its 4/21/2023 sale — and this subject's own 2023-era Redfin remarks (“Great 4 bedroom/2 bath home in a cul-de-sac... French doors lead out to private pool... Tile floors... Vaulted ceilings”, no renovation language) and that era's listing photos (plain oak cabinetry, white appliances, builder-grade fireplace) support that read as of the sale date. Since then, under its current owner, the home has been renovated: it's now marketed as a furnished rental with a listing description reading “Stunning fully Remodeled... chef's kitchen... custom cabinetry... quartz countertops... elegantly designed bathrooms.” This isn't a contradiction between Layer 1 and this entry — it's a timeline: original at the 2023 sale (the transaction Layer 1's price field is keyed to), renovated sometime after by the new owner. Worth flagging to Tony directly: Layer 1's “renovated: false” tag is accurate as of the last sale but may understate the property's current as-is condition if Layer 1 is ever used to estimate a current resale value, since the home is off-market and this renovation postdates the only transaction on record.", "comps": [{"address": "1131 N Pebble Beach Dr, Gilbert, AZ 85234", "soldDate": "2026-05-06", "soldPrice": 550000, "pricePerSqft": 308, "beds": 4, "baths": 2, "sqft": 1784, "lot": 6233, "yearBuilt": 1988, "condition": "Fully renovated — confirmed via listing remarks (“Fully remodeled modern Gilbert home”) and photos: white shaker cabinetry, quartz countertops, premium stainless appliances, plus a 2023 HVAC", "pool": false, "distanceMi": 0.07}, {"address": "1157 E San Remo Ave, Gilbert, AZ 85234", "soldDate": "2026-09-28", "soldPrice": 515000, "pricePerSqft": 307, "beds": 4, "baths": 2, "sqft": 1680, "lot": 6887, "yearBuilt": 1988, "condition": "Partially renovated — confirmed via listing remarks (“wonderfully upgraded”); owned solar and a private pool", "pool": true, "distanceMi": 0.4}, {"address": "1134 N Saint Elena St, Gilbert, AZ 85234", "soldDate": "2026-06-19", "soldPrice": 510000, "pricePerSqft": 261, "beds": 4, "baths": 2, "sqft": 1954, "lot": 6517, "yearBuilt": 1989, "condition": "Original — remarks describe only “move-in ready” with no renovation language; listing photos show original dark wood cabinetry and tile consistent with as-built condition", "pool": false, "distanceMi": 0.7}, {"address": "849 N Granite St, Gilbert, AZ 85234", "soldDate": "2026-09-02", "soldPrice": 500000, "pricePerSqft": 257, "beds": 4, "baths": 2, "sqft": 1949, "lot": 6599, "yearBuilt": 1991, "condition": "Partially renovated — confirmed via listing remarks: fresh interior/exterior paint, updated flooring and landscaping, granite counters, painted (not replaced) cabinets, newer 2022 AC", "pool": false, "distanceMi": 0.4}, {"address": "1358 N Sailors Way, Gilbert, AZ 85234", "soldDate": "2026-08-21", "soldPrice": 455000, "pricePerSqft": 251, "beds": 4, "baths": 2, "sqft": 1813, "lot": 7131, "yearBuilt": 1991, "condition": "Original — remarks are generic with no renovation claims and no explicit Redfin “Property Condition” field is present; photos consistent with as-built, unremodeled condition", "pool": false, "distanceMi": 0.7}, {"address": "1314 E Mineral Rd, Gilbert, AZ 85234", "soldDate": "2026-08-26", "soldPrice": 490000, "pricePerSqft": 238, "beds": 4, "baths": 2, "sqft": 2060, "lot": 6199, "yearBuilt": 1988, "condition": "Fixer — Redfin's structured “Property Condition” field explicitly says “Fixer”; corrects this page's earlier remarks/photo-only read of “Original” (based on “fresh paint, carpet, turf yard” remarks and dated-oak-cabinet photos), which missed this stronger structured field — see methodology note", "pool": true, "distanceMi": 1.4}, {"address": "708 E Hearne Way, Gilbert, AZ 85234", "soldDate": "2026-08-07", "soldPrice": 520000, "pricePerSqft": 177, "beds": 4, "baths": 2, "sqft": 2940, "lot": 14532, "yearBuilt": 1989, "condition": "Fixer — Redfin's structured “Property Condition” field says “Fixer”, corroborated by remarks (“CASH BUYERS ONLY,” “Bring your vision,” sold “AS IS”)", "pool": false, "distanceMi": 2.0}], "excludedComps": [], "zillowNearby": []}, {"state": "AZ", "address": "344 S Golden Key Dr, Gilbert, AZ 85233", "specs": "4bd/2ba · 1,858 sqft · 6,447 sqft lot", "realEstimate": 505356, "candidatesChecked": 26, "methodologyNote": "Redfin's own “Recently sold homes” comparable-homes panel on this subject's own page returned exactly 6 homes (all sold June–August 2026, 0.09–0.56 mi away) — the same fallback source already established for 1325 E San Angelo Ave on this page, used here even though realtor.com does offer a “Nearby Home Values” widget for this subject (26 nearby homes), because that widget shows only current RealEstimate figures rather than recent sold prices, requiring the same per-candidate Property History → Price History verification pass already completed for 922 E La Jolla Dr; Redfin's panel instead surfaced 6 genuinely recent (within the last ≈ 4.5 months), tightly-clustered real sold comps directly, so it was used as the primary source rather than duplicating that per-candidate sweep. Each of the 6 was clicked through to its own Redfin listing page to read condition from listing photos (public MLS remarks text was not accessible this session — this session's content-extraction tooling systematically blocked remarks-field text on every comp checked, a genuine tool limitation rather than a missing data point — so condition rests on listing photos plus, where present, Redfin's own structured public-record fields) and to confirm pool status via Redfin's structured “Pool Information”/“Private Pool” amenity field when present. Distance was computed as true Haversine distance from the subject's own geocoded coordinates (pulled from this subject's own Redfin page, matching the coordinates already established on Layers 1 and 2) to each comp's own listing coordinates — not route-miles. All 6 candidates qualified (sold 2026, single-family, no vacant land) — none excluded. RealEstimate: realtor.com's own three-provider RealEstimate section is present for this subject (Collateral Analytics $532,000, Cotality $505,800, Quantarium $478,269) — averaged to $505,356, consistent with this page's standard convention when all three providers are available. Data-quality flags, carried over from Layer 1/Layer 2 and repeated here for completeness: Redfin's own “Public record” field and realtor.com's Property Details both show 3 total baths for the subject, against the 2-bath (4bd/2ba) figure this ledger uses elsewhere (sourced from MLS/Zillow); and an older MLS remnant shows 1,948 sqft against the 1,858 sqft county figure used here. Neither conflict is resolved — both are documented rather than picked. Part 2 (Zillow): skipped for this subject. Zillow currently serves this address as a simplified off-market page (Zestimate $485,600) without the Neighborhood price-bubble/“Nearby homes” map module that Part 2 normally draws from in this session — omitted rather than forced from a different, non-equivalent module. Fixer-bucket research pass (October 22, 2026): per Tony's request to find a house for all conditions with a complete table, this subject's Fixer bucket (previously empty, n=0) was filled following the same very-deep condition-bucket research standard already used for the three Texas subjects on this page (Lincolnshire Dr, Fremont Cove, Molokai Dr) — screen the cheapest-$/sqft recently-sold candidates, verify each individually against its own real listing, and document a genuine search effort rather than force a weak match. Within the subject's own immediate corridor (the Madera Parc/Lago Estancia block along Golden Key Dr/Smoke Tree Rd/Sagebrush St), roughly 15 candidates from realtor.com's “Nearby Home Values” widget were screened for low current-estimate value as a Fixer signal; the cheapest-looking ones were individually verified and ruled out rather than used: 349 S Golden Key Dr (sold 2022, $230/sqft) is now a Progress Residential institutional short-term-rental property — its Zillow listing description is generic rental boilerplate, not real sale-condition evidence, and its price likely reflects a bulk/investor acquisition discount rather than poor condition; 490 W Smoke Tree Rd (realtor.com shows a 2022 sale at $300,000/$183 per sqft, though Redfin's own listing page for the same address shows an older, seemingly stale 2016 sale at $255,000 — a source discrepancy flagged rather than resolved) is currently marketed as a furnished short-term rental, and its own Zillow listing description explicitly reads “Nicely remodeled” with new flooring, new appliances and designer finishes — the opposite of fixer condition; 332 S Golden Key Dr (sold 2019, $184/sqft) looked like the cheapest in-subdivision candidate by price alone, but its real Zillow listing remarks explicitly describe seller-completed pre-sale updates (“painting interior/exterior, adding new appliances, kitchen back-splash, window coverings, backyard remodel”) — genuine evidence of updated condition, not a fixer, despite the low price. No candidate in this immediate corridor that sold within the 2025–2026 recency window of the subject's other 6 comps was cheap enough to plausibly qualify as a fixer. The search was then widened ZIP-wide (85233), using Redfin's own sold-in-the-last-year filter sorted by $/sqft ascending (386 single-family sales) rather than realtor.com's AVM-based widget. The three cheapest 2025–2026 sales city-wide (479 W Leah Ave at $95/sqft, 1951 S Spartan St at $134/sqft, and 109 W Bruce Ave at $156/sqft) were each individually checked and ruled out: all three are recorded via Redfin as “Public Records” sales with no accompanying MLS/ARMLS listing for that specific transaction, carry real listing remarks only from stale listings 15–20+ years old (not reflective of current condition), and each sold 47–57% below Redfin's own automated value estimate for the home — a pattern consistent with non-arm's-length transfers (e.g. family, trust, or estate transfers, or off-market investor-to-investor deals) rather than genuine market-rate fixer sales, so none were used despite their very low price. The next-cheapest ZIP-wide candidate with a complete, genuine MLS record — 355 S Bay Shore Blvd, in the Islands subdivision, sold Sep 15, 2026 for $400,000 ($175/sqft), built 1994 — was used instead: its own ARMLS listing (#7065378) explicitly reads “Investor Special. Home to be sold in As-is condition. Seller has never occupied the home,” directly confirmed fixer-condition evidence, and it sold only 11% below Redfin's own automated estimate (a plausible as-is discount, not a red-flag gap). It is farther from the subject (1.03 mi) than the other 6 comps (0.09–0.56 mi, all within the immediate Madera Parc/Lago Estancia block) — a distance deviation accepted and flagged here, following the same ZIP-wide-fallback convention already used elsewhere on this page (e.g. 6316 Hillsdale Blvd), rather than forcing a same-block match the evidence didn't support. candidatesChecked below reflects the original 6 qualifying comps plus roughly 20 additional candidates individually screened and ruled out during this Fixer-bucket search.", "comps": [{"address": "466 W Smoke Tree Rd, Gilbert, AZ 85233", "soldDate": "2026-06-18", "soldPrice": 600000, "pricePerSqft": 309, "beds": 4, "baths": 2.5, "sqft": 1944, "lot": 6059, "yearBuilt": 1993, "condition": "Fully renovated — confirmed via listing photos: a large waterfall-edge quartz island, two-tone sage-and-white shaker cabinetry, modern pendant lighting, and an updated laundry room with a butcher-block folding counter. Note: this comp is a two-story floor plan, unlike the subject's single story — flagged as a layout difference rather than excluded, since it's otherwise the closest comp in this set by a wide margin.", "pool": true, "distanceMi": 0.093}, {"address": "458 W Smoke Tree Rd, Gilbert, AZ 85233", "soldDate": "2026-06-11", "soldPrice": 505000, "pricePerSqft": 308, "beds": 3, "baths": 2, "sqft": 1642, "lot": 6443, "yearBuilt": 1992, "condition": "Partially renovated — confirmed via listing photos: stainless-steel kitchen appliances and granite-look countertops alongside the home's retained, unreplaced dark hardwood-style flooring and a decoratively updated (iron-accented) primary bath — not a full gut remodel. (Wording adjusted October 22, 2026 from this comp's prior phrasing, which happened to trip this page's condition-bucket keyword classifier into the wrong bucket — same underlying photo evidence, no change in substance.)", "pool": true, "distanceMi": 0.103}, {"address": "407 W Sagebrush St, Gilbert, AZ 85233", "soldDate": "2026-08-07", "soldPrice": 641590, "pricePerSqft": 302, "beds": 4, "baths": 2, "sqft": 2123, "lot": 8586, "yearBuilt": 1992, "condition": "Fully renovated — confirmed via listing photos: premium twilight-staged interior, a dedicated game room with a pool table, and a resort-style backyard (pool, built-in firepit, string lighting) — the most upgraded comp in this set, consistent with its highest sold price.", "pool": true, "distanceMi": 0.254}, {"address": "519 W Comstock Dr, Gilbert, AZ 85233", "soldDate": "2026-08-12", "soldPrice": 545000, "pricePerSqft": 279, "beds": 4, "baths": 2, "sqft": 1953, "lot": 6504, "yearBuilt": 1988, "condition": "Fully renovated — confirmed via listing photos: a waterfall-edge marble-look kitchen island, dark wood cabinetry, designer pendant lighting, and turfed low-maintenance backyard landscaping.", "pool": false, "distanceMi": 0.352}, {"address": "655 W Silver Creek Rd, Gilbert, AZ 85233", "soldDate": "2026-08-18", "soldPrice": 570000, "pricePerSqft": 276, "beds": 5, "baths": 2, "sqft": 2068, "lot": 6255, "yearBuilt": 1990, "condition": "Fully renovated — confirmed via listing photos: white marble-look porcelain tile flooring, white shaker cabinetry, and an updated primary bath with a dual vanity; pool confirmed via Redfin's own structured “Pool Information” field (Private Pool, Pool Features: Outdoor).", "pool": true, "distanceMi": 0.365}, {"address": "851 W Palo Verde St, Gilbert, AZ 85233", "soldDate": "2026-08-07", "soldPrice": 472000, "pricePerSqft": 247, "beds": 4, "baths": 2, "sqft": 1908, "lot": 6290, "yearBuilt": 1994, "condition": "Original — confirmed via Redfin's structured public-record “Physical Condition” field (Average) plus its current for-rent listing photos: original oak cabinetry and white appliances in the kitchen, builder-grade finishes throughout. Data-quality note: this home sold Aug 7, 2026 and is now being re-marketed as a rental by its new owner — its original sale listing's own MLS remarks were not accessible this session, so condition rests on the structured public-record field and the current rental listing's photos rather than the original sale listing's marketing copy.", "pool": false, "distanceMi": 0.556}, {"address": "355 S Bay Shore Blvd, Gilbert, AZ 85233", "soldDate": "2026-09-15", "soldPrice": 400000, "pricePerSqft": 175, "beds": 4, "baths": 3, "sqft": 2280, "lot": 7000, "yearBuilt": 1994, "condition": "Fixer / needs renovation — confirmed via real MLS listing remarks (ARMLS #7065378, via Redfin): “Investor Special. Home to be sold in As-is condition. Seller has never occupied the home. Buyer to Verify all facts.” — the most direct, primary-tier fixer evidence of any comp on this page, not a price-only inference. Sold 11% below Redfin's own automated estimate ($449,682) — a modest, plausible as-is discount, unlike several far-cheaper candidates ruled out during this same search (see methodology note).", "pool": false, "distanceMi": 1.029}], "excludedComps": [], "zillowNearby": []}, {"state": "AZ", "address": "4638 W Park Ave, Chandler, AZ 85226", "specs": "3bd (Tony-supplied, unconfirmed)/2ba · 1,342 sqft · 15,473 sqft lot", "realEstimate": 440504, "candidatesChecked": 10, "methodologyNote": "Companion to this same address's Layer 1 (id 65) and Layer 2 additions, both added Oct 21, 2026 — a scheduled Maricopa County pre-auction foreclosure (Trustee Sale #131820-AZ, set for Nov 19, 2026, not yet cleared), priced on Layer 1 at Tony's explicit $380,000 override rather than an AVM figure. Part 1 source: unlike several other subjects on this page, realtor.com's own “Nearby Home Values” widget worked cleanly for this address — 25 nearby homes listed after expanding “See more.” 10 of the 25 were individually checked via their own Property History → Price History log, prioritizing the subject's own street (W Park Ave) plus the two immediately adjoining parallel streets (W Gail Dr, W Gary Dr) and one block further (W Orchid Ln) rather than working outward through the full list — 7 qualified (sold 2020-01-01 or later); 3 were excluded (all sold 2017–2019, shown collapsed below). This is the tightest comp cluster found on this page so far: true Haversine distance (geocoded via Nominatim/OpenStreetMap, matching the subject's own coordinates already established on Layers 1 and 2) puts all 7 comps within 0.016–0.085 miles — the same immediate Corona Village subdivision block as the subject. Condition: where a comp's own Zillow listing retained real marketing-description text (read via its page's structured JSON-LD listing description, not the usual innerText extraction, which is blocked by this session's content-extraction tooling for MLS remarks), that real evidence was used (3 of 7 comps); the remaining 4 had only a generic auto-generated Zillow description with no renovation language, so their condition falls back to this page's established quaternary tier — inferred from sold price per sqft relative to this comp set's own median ($347/sqft) — flagged per-comp rather than treated as equivalent to the confirmed reads. Pool: checked the same way (structured listing description text); only 1 of 7 comps (4634 W Park Ave) shows pool evidence (“sparkling pool that has been recently acid washed”) — the other 6 have no pool mentioned, recorded as an inferred absence rather than confirmed no-pool. Data-quality flag, carried over from Layer 1/Layer 2: realtor.com's own “Pool Features” field for the subject itself reads “Type Unknown,” distinct from Layer 1's confirmed-via-Assessor pool — both are accurate for what they each measure (a structured-data gap vs. the county's own parcel record) and neither is corrected here. Beds flag, also carried over: realtor.com's own property-details panel for the subject shows no bedroom count at all (only “Total Bath(s): 2, Total Rooms: 5”); beds=3 on this page matches Layer 1's figure, which is Tony-supplied (“consider 3 bedrooms for it”, 2026-10-21) rather than an independently confirmed county/MLS record — flagged, not silently treated as confirmed. RealEstimate: realtor.com's own three-provider average — Collateral Analytics $478,000, Cotality $413,500, Quantarium $430,013 → $440,504. Part 2 (Zillow) skipped — flagged, not faked. Zillow currently serves this address through a “Nearby homes” off-market carousel (8 cards across 2 pages, all tagged “Off Market”) rather than the yellow-marker neighborhood map or the older “Nearby homes” price-table format this page's Part 2 is normally built against — the carousel's cards carry price, beds, baths and a rounded sqft figure but no lot size or year built, so slotting them into Part 2's table would mean fabricating two fields per row. Rather than do that, Part 2 is omitted for this subject, the same convention already used for 1325 E San Angelo Ave and 344 S Golden Key Dr when their Zillow pages served a non-matching module. One of the 8 carousel cards (4634 W Park Ave) is the same address as Part 1's nearest sold comp above — noted here rather than silently duplicated.", "comps": [{"address": "4634 W Park Ave, Chandler, AZ 85226", "soldDate": "2023-07-06", "soldPrice": 497000, "pricePerSqft": 347, "beds": 3, "baths": 2, "sqft": 1434, "lot": 11761, "yearBuilt": 1983, "condition": "Mixed / partly updated — confirmed via the listing's own description: fresh interior paint, new laminate floors and baseboards, a newer roof under warranty; not a full gut remodel (kitchen/bath not described as updated)", "pool": true, "distanceMi": 0.016}, {"address": "4633 W Park Ave, Chandler, AZ 85226", "soldDate": "2021-01-22", "soldPrice": 346100, "pricePerSqft": 273, "beds": 3, "baths": 2, "sqft": 1267, "lot": 7906, "yearBuilt": 1983, "condition": "Fixer / needs renovation — inferred from price only (21% below this comp set's $347/sqft median)", "pool": false, "distanceMi": 0.049}, {"address": "4640 W Gail Dr, Chandler, AZ 85226", "soldDate": "2025-06-10", "soldPrice": 475000, "pricePerSqft": 369, "beds": 3, "baths": 2, "sqft": 1288, "lot": 7693, "yearBuilt": 1982, "condition": "Fully renovated — confirmed via the listing's own description: new quartz countertops, white shaker cabinets, brand-new oak-look luxury vinyl plank flooring throughout, updated bathrooms", "pool": false, "distanceMi": 0.063}, {"address": "4703 W Gail Dr, Chandler, AZ 85226", "soldDate": "2022-10-27", "soldPrice": 425000, "pricePerSqft": 330, "beds": 3, "baths": 2, "sqft": 1288, "lot": 8150, "yearBuilt": 1982, "condition": "Clean original / maintained — confirmed via the listing's own description: fresh neutral paint, tile flooring, no renovation language", "pool": false, "distanceMi": 0.067}, {"address": "4640 W Gary Dr, Chandler, AZ 85226", "soldDate": "2025-02-06", "soldPrice": 474000, "pricePerSqft": 353, "beds": 3, "baths": 2, "sqft": 1342, "lot": 7819, "yearBuilt": 1983, "condition": "Fully renovated — confirmed via the listing's own description: brand-new granite countertops, fresh interior/exterior paint, energy-efficient insulation, move-in ready", "pool": false, "distanceMi": 0.071}, {"address": "4624 W Gail Dr, Chandler, AZ 85226", "soldDate": "2023-07-21", "soldPrice": 460000, "pricePerSqft": 357, "beds": 3, "baths": 2, "sqft": 1288, "lot": 7806, "yearBuilt": 1982, "condition": "Maintained / standard resale — inferred from price only (3% above comp-set median)", "pool": false, "distanceMi": 0.082}, {"address": "4639 W Orchid Ln, Chandler, AZ 85226", "soldDate": "2020-06-18", "soldPrice": 340000, "pricePerSqft": 253, "beds": 3, "baths": 2, "sqft": 1342, "lot": 7719, "yearBuilt": 1981, "condition": "Fixer / needs renovation — inferred from price only (27% below comp-set median)", "pool": false, "distanceMi": 0.085}], "excludedComps": [{"address": "4636 W Gail Dr, Chandler, AZ 85226", "soldDate": "2018-10-25", "soldPrice": 265000, "yearBuilt": 1982}, {"address": "4622 W Park Ave, Chandler, AZ 85226", "soldDate": "2019-07-01", "soldPrice": 246000, "yearBuilt": 1983}, {"address": "4648 W Gary Dr, Chandler, AZ 85226", "soldDate": "2017-09-05", "soldPrice": 265000, "yearBuilt": 1983}]}], "pendingRequests": [], "resolvedRequests": [], "lastRefresh": "2026-09-18"}</script>
+
+<script>
+(function () {
+  function $(sel, root) { return (root || document).querySelector(sel); }
+
+  var STATE = JSON.parse(document.getElementById("ld-state").textContent);
+  var SUBJECTS = STATE.subjects;
+  var PENDING_REQUESTS = STATE.pendingRequests;
+  var RESOLVED_REQUESTS = STATE.resolvedRequests;
+  var market = "CA";
+  var TODAY = STATE.lastRefresh || "2026-08-27";
+  var TODAY_YEAR = parseInt(TODAY.slice(0, 4), 10);
+
+  var fmt0 = function (n) { return "$" + Math.round(n).toLocaleString(); };
+  var fmtNum = function (n) { return Math.round(n).toLocaleString(); };
+
+  function median(nums) {
+    var arr = nums.slice().sort(function (a, b) { return a - b; });
+    var mid = Math.floor(arr.length / 2);
+    return arr.length % 2 ? arr[mid] : (arr[mid - 1] + arr[mid]) / 2;
+  }
+  function average(arr) { return arr.reduce(function (a, b) { return a + b; }, 0) / arr.length; }
+
+  function fmtDate(iso) {
+    var d = new Date(iso + "T00:00:00");
+    return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  }
+
+  function bathsLabel(n) { return typeof n !== "number" ? n : (n % 1 === 0 ? n : n.toFixed(1)); }
+
+  var CONDITION_BUCKETS = ["Fixer", "Original", "Partially renovated", "Fully renovated"];
+
+  function conditionBucket(cond) {
+    if (!cond) return null;
+    var c = cond.toLowerCase();
+    if (c.indexOf("fixer") !== -1) return "Fixer";
+    if (c.indexOf("turn-key") !== -1 || c.indexOf("turnkey") !== -1 || c.indexOf("strongly renovated") !== -1 || c.indexOf("fully renovated") !== -1) return "Fully renovated";
+    if (c.indexOf("not stated") !== -1 || c.indexOf("inferred") !== -1) return null;
+    if (c.indexOf("original") !== -1 || c.indexOf("standard resale") !== -1) return "Original";
+    if (c.indexOf("updated") !== -1 || c.indexOf("renovated") !== -1 || c.indexOf("mixed") !== -1 || c.indexOf("partly") !== -1 || c.indexOf("partial") !== -1) return "Partially renovated";
+    return null;
+  }
+
+  function computeConditionBreakdown(comps, subjSqft) {
+    var byBucket = {};
+    CONDITION_BUCKETS.forEach(function (b) { byBucket[b] = []; });
+    var unclassified = 0;
+    comps.forEach(function (c) {
+      var b = conditionBucket(c.condition);
+      if (b) byBucket[b].push(c);
+      else unclassified++;
+    });
+    var allPrices = comps.map(function (c) { return c.soldPrice; });
+    var allPpsf = comps.map(function (c) { return c.pricePerSqft; });
+    var avgAllPpsf = average(allPpsf);
+    var rows = [{
+      label: "Average (all)",
+      count: comps.length,
+      price: median(allPrices),
+      ppsf: avgAllPpsf,
+      impliedValue: subjSqft ? avgAllPpsf * subjSqft : null
+    }];
+    CONDITION_BUCKETS.forEach(function (b) {
+      var bucketComps = byBucket[b];
+      if (bucketComps.length === 0) {
+        rows.push({ label: b, count: 0 });
+        return;
+      }
+      var bPrices = bucketComps.map(function (c) { return c.soldPrice; });
+      var bPpsf = bucketComps.map(function (c) { return c.pricePerSqft; });
+      var bAvgPpsf = average(bPpsf);
+      rows.push({
+        label: b,
+        count: bucketComps.length,
+        price: average(bPrices),
+        ppsf: bAvgPpsf,
+        impliedValue: subjSqft ? bAvgPpsf * subjSqft : null
+      });
+    });
+    return { rows: rows, unclassified: unclassified };
+  }
+
+  function condCardRows(rows, valueKey) {
+    return rows.map(function (r) {
+      if (r.count === 0) {
+        return (
+          '\n            <div class="cond-row cond-row-empty">' +
+          '\n              <span class="cond-name">' + r.label + "</span>" +
+          '\n              <span class="cond-price">\u2014</span>' +
+          "\n            </div>"
+        );
+      }
+      var val = valueKey === "price" ? fmt0(r.price) : (r.impliedValue ? fmt0(r.impliedValue) : "\u2014");
+      var ppsfNote = (valueKey === "impliedValue" && r.ppsf) ? (' <span class="cond-ppsf">($' + Math.round(r.ppsf) + "/sqft)</span>") : "";
+      return (
+        '\n            <div class="cond-row">' +
+        '\n              <span class="cond-name">' + r.label + "</span>" +
+        '\n              <span class="cond-price">' + val + ppsfNote + "</span>" +
+        '\n              <span class="cond-n">n=' + r.count + "</span>" +
+        "\n            </div>"
+      );
+    }).join("");
+  }
+
+  function statRowHtml(summary, subj) {
+    if (!summary.hasCond || !summary.conditionBreakdown) {
+      return (
+        '\n      <div class="stat-row">' +
+      '\n        <div class="stat-card highlight">' +
+      '\n          <div class="stat-label">Qualifying comps</div>' +
+      '\n          <div class="stat-value">' + summary.count + "</div>" +
+      '\n          <div class="stat-note">of ' + subj.candidatesChecked + " nearby homes checked, sold 2020–today</div>" +
+      "\n        </div>" +
+      '\n        <div class="stat-card">' +
+      '\n          <div class="stat-label">Median sold price</div>' +
+      '\n          <div class="stat-value">' + fmt0(summary.medianPrice) + "</div>" +
+      '\n          <div class="stat-note">across all qualifying comps</div>' +
+      "\n        </div>" +
+      '\n        <div class="stat-card">' +
+      '\n          <div class="stat-label">Avg. $/sqft</div>' +
+      '\n          <div class="stat-value">$' + Math.round(summary.avgPpsf) + "</div>" +
+      '\n          <div class="stat-note">simple average across comps</div>' +
+      "\n        </div>" +
+      '\n        <div class="stat-card">' +
+      '\n          <div class="stat-label">Avg. comp size &amp; age</div>' +
+      '\n          <div class="stat-value">' + fmtNum(summary.avgSqft) + " sqft</div>" +
+      '\n          <div class="stat-note">avg age ' + Math.round(summary.avgAge) + " yrs</div>" +
+      "\n        </div>" +
+      '\n        <div class="stat-card">' +
+      '\n          <div class="stat-label">Implied value @ avg $/sqft</div>' +
+      '\n          <div class="stat-value">' + (summary.impliedValue ? fmt0(summary.impliedValue) : "—") + "</div>" +
+      '\n          <div class="stat-note">avg $/sqft × subject’s ' + fmtNum(summary.subjSqft) + ' sqft — rough only, ignores lot &amp; condition</div>' +
+      "\n        </div>" +
+      "\n      </div>"
+      );
+    }
+    var cb = summary.conditionBreakdown;
+    return (
+      '\n      <div class="stat-row-cond">' +
+      '\n        <div class="stat-card highlight">' +
+      '\n          <div class="stat-label">Qualifying comps</div>' +
+      '\n          <div class="stat-value">' + summary.count + "</div>" +
+      '\n          <div class="stat-note">of ' + subj.candidatesChecked + " nearby homes checked, sold 2020\u2013today</div>" +
+      "\n        </div>" +
+      '\n        <div class="stat-card">' +
+      '\n          <div class="stat-label">Avg. comp size &amp; age</div>' +
+      '\n          <div class="stat-value">' + fmtNum(summary.avgSqft) + " sqft</div>" +
+      '\n          <div class="stat-note">avg age ' + Math.round(summary.avgAge) + " yrs</div>" +
+      "\n        </div>" +
+      '\n        <div class="cond-card">' +
+      '\n          <div class="stat-label">Sold price by condition</div>' +
+      '\n          <div class="cond-rows">' + condCardRows(cb.rows, "price") + "\n          </div>" +
+      '\n          <div class="stat-note">median (all) &amp; avg (by condition)</div>' +
+      "\n        </div>" +
+      '\n        <div class="cond-card">' +
+      '\n          <div class="stat-label">Implied value by condition</div>' +
+      '\n          <div class="cond-rows">' + condCardRows(cb.rows, "impliedValue") + "\n          </div>" +
+      '\n          <div class="stat-note">avg $/sqft per condition \u00d7 subject\u2019s ' + fmtNum(summary.subjSqft) + " sqft</div>" +
+      "\n        </div>" +
+      "\n      </div>"
+    );
+  }
+
+  function computeSummary(subj) {
+    var hasDistance = subj.comps.length > 0 && subj.comps[0].distanceMi !== undefined;
+    var comps = subj.comps.slice().sort(function (a, b) {
+      return hasDistance ? (a.distanceMi - b.distanceMi) : b.soldDate.localeCompare(a.soldDate);
+    });
+    var hasCond = comps.length > 0 && comps[0].condition !== undefined;
+    var prices = comps.map(function (c) { return c.soldPrice; });
+    var ppsf = comps.map(function (c) { return c.pricePerSqft; });
+    var sqfts = comps.map(function (c) { return c.sqft; });
+    var ages = comps.map(function (c) { return TODAY_YEAR - c.yearBuilt; });
+    var avgPpsf = average(ppsf);
+    var subjSqft = parseInt((subj.specs.match(/([\d,]+)\s*sqft/) || [])[1] ? (subj.specs.match(/([\d,]+)\s*sqft/) || [])[1].replace(/,/g, "") : 0, 10);
+    return {
+      comps: comps,
+      count: comps.length,
+      medianPrice: median(prices),
+      avgPpsf: avgPpsf,
+      avgSqft: average(sqfts),
+      avgAge: average(ages),
+      impliedValue: subjSqft ? avgPpsf * subjSqft : null,
+      subjSqft: subjSqft,
+      hasDistance: hasDistance,
+      hasCond: hasCond,
+      conditionBreakdown: hasCond ? computeConditionBreakdown(comps, subjSqft) : null
+    };
+  }
+
+  function renderSubject(subj) {
+    var summary = computeSummary(subj);
+    var subjShortAddr = subj.address.split(",")[0];
+    var subjZipMatch = subj.address.match(/(\d{5})\s*$/);
+    var subjZip = subjZipMatch ? subjZipMatch[1] : "";
+
+    var rows = summary.comps.map(function (c, i) {
+      var recentTag = i === 0 ? ('<span class="most-recent-tag">' + (summary.hasDistance ? "Closest" : "Most recent") + '</span>') : "";
+      var extraCells = summary.hasCond ?
+        ('\n      <td>' + (c.condition || "Not stated — inferred from price only") + "</td>" +
+         '\n      <td>' + (c.pool ? "Yes" : "No") + "</td>" +
+         '\n      <td class="num mono">' + (c.distanceMi !== undefined ? c.distanceMi.toFixed(2) + " mi" : "—") + "</td>") : "";
+      return '\n    <tr>' +
+        '\n      <td><span class="comp-rank">' + (i + 1) + '.</span><span class="comp-name">' + c.address.split(",")[0] + "</span>" + recentTag + "</td>" +
+        '\n      <td class="sold-date">' + fmtDate(c.soldDate) + "</td>" +
+        '\n      <td class="num mono">' + fmt0(c.soldPrice) + "</td>" +
+        '\n      <td class="num mono">$' + c.pricePerSqft + "/sqft</td>" +
+        '\n      <td>' + c.beds + "bd/" + bathsLabel(c.baths) + "ba</td>" +
+        '\n      <td class="num mono">' + fmtNum(c.sqft) + "</td>" +
+        '\n      <td class="num mono">' + fmtNum(c.lot) + "</td>" +
+        '\n      <td class="num mono">' + c.yearBuilt + " (" + (TODAY_YEAR - c.yearBuilt) + " yrs)</td>" +
+        extraCells +
+        "\n    </tr>";
+    }).join("");
+
+    var excludedRows = subj.excludedComps.map(function (c) {
+      return '\n      <tr>' +
+        '\n        <td>' + c.address.split(",")[0] + "</td>" +
+        '\n        <td class="mono">' + fmtDate(c.soldDate) + "</td>" +
+        '\n        <td class="num mono">' + fmt0(c.soldPrice) + "</td>" +
+        '\n        <td class="num mono">' + c.yearBuilt + "</td>" +
+        "\n      </tr>";
+    }).join("");
+
+    var activeListings = subj.nearbyActiveListings || [];
+    var activeRows = activeListings.map(function (c, i) {
+      return '\n        <tr>' +
+        '\n          <td><span class="comp-rank">' + (i + 1) + '.</span><span class="comp-name">' + c.address.split(",")[0] + "</span></td>" +
+        '\n          <td><span class="status-pill">' + c.status + "</span></td>" +
+        '\n          <td class="num mono">' + fmt0(c.listPrice) + "</td>" +
+        '\n          <td class="num mono">$' + c.pricePerSqft + "/sqft</td>" +
+        '\n          <td>' + c.beds + "bd/" + bathsLabel(c.baths) + "ba</td>" +
+        '\n          <td class="num mono">' + fmtNum(c.sqft) + "</td>" +
+        '\n          <td>' + (c.condition || "—") + "</td>" +
+        '\n          <td>' + (c.pool ? "Yes" : "No") + "</td>" +
+        '\n          <td class="num mono">' + (c.distanceMi !== undefined ? c.distanceMi.toFixed(2) + " mi" : "—") + "</td>" +
+        "\n        </tr>";
+    }).join("");
+
+    var zillowNearby = subj.zillowNearby || [];
+    var zillowAvg = zillowNearby.length
+      ? Math.round(zillowNearby.reduce(function (s, c) { return s + c.price; }, 0) / zillowNearby.length)
+      : null;
+    var zillowRows = zillowNearby.map(function (c, i) {
+      return '\n      <tr>' +
+        '\n        <td><span class="comp-rank">' + (i + 1) + '.</span><span class="comp-name">' + c.address.split(",")[0] + "</span></td>" +
+        '\n        <td class="num mono">' + fmt0(c.price) + "</td>" +
+        '\n        <td>' + c.beds + "bd/" + bathsLabel(c.baths) + "ba</td>" +
+        '\n        <td class="num mono">' + fmtNum(c.sqft) + "</td>" +
+        '\n        <td class="num mono">' + fmtNum(c.lot) + "</td>" +
+        '\n        <td class="num mono">' + c.yearBuilt + " (" + (TODAY_YEAR - c.yearBuilt) + " yrs)</td>" +
+        '\n        <td><span class="status-pill">' + c.status + "</span></td>" +
+        "\n      </tr>";
+    }).join("");
+
+    return '\n    <section class="subject-section">' +
+      '\n      <div class="subject-head">' +
+      "\n        <div>" +
+      '\n          <div class="subject-eyebrow">Subject property</div>' +
+      '\n          <h3 class="subject-title">' + subj.address + "</h3>" +
+      '\n          <div class="subject-sub">' + subj.specs + " · realtor.com RealEstimate " + fmt0(subj.realEstimate) + (subj.listStatus ? (' · <strong>' + subj.listStatus + '</strong> listing ' + fmt0(subj.listPrice)) : "") + "</div>" +
+      "\n        </div>" +
+      "\n      </div>" +
+      (subj.methodologyNote ? (
+        '\n      <div class="methodology-flag"><span class="flag-icon">⚠</span><span><strong>Methodology note for this subject: </strong>' + subj.methodologyNote + "</span></div>"
+      ) : "") +
+      statRowHtml(summary, subj) +
+      '\n      <div class="table-wrap">' +
+      '\n        <table class="comps' + (summary.hasCond ? " comps-wide" : "") + '">' +
+      "\n          <thead>" +
+      "\n            <tr>" +
+      "\n              <th>Comp</th>" +
+      "\n              <th>Sold date</th>" +
+      '\n              <th class="num">Sold price</th>' +
+      '\n              <th class="num">$/sqft</th>' +
+      "\n              <th>Beds/baths</th>" +
+      '\n              <th class="num">Home sqft</th>' +
+      '\n              <th class="num">Lot sqft</th>' +
+      '\n              <th class="num">Year built (age)</th>' +
+      (summary.hasCond ? ("\n              <th>Condition</th>" + "\n              <th>Pool</th>" + '\n              <th class="num">Distance</th>') : "") +
+      "\n            </tr>" +
+      "\n          </thead>" +
+      "\n          <tbody>" +
+      rows +
+      "\n          </tbody>" +
+      "\n        </table>" +
+      '\n        <div class="table-foot-note">' + (summary.hasDistance ? "Ranked nearest-to-farthest from the subject (straight-line distance). Sold price/date/specs verified against each comp’s own listing on Redfin, realtor.com or its MLS syndicate page — not the AVM estimate." : "Ranked by sold date, most recent first. Sold price/date/year-built read from each comp’s own realtor.com Property history → Price history log, not the AVM estimate.") + "</div>" +
+      "\n      </div>" +
+      (subj.excludedComps.length ? (
+        '\n      <details class="excluded">' +
+        '\n        <summary>' + subj.excludedComps.length + " nearby homes excluded (pre-2020 sale, vacant land, or non-single-family) — shown for transparency</summary>" +
+        '\n        <div class="excluded-body">' +
+        '\n          <table class="excluded-table">' +
+        "\n            <thead><tr><th>Address</th><th>Sold date</th><th>Sold price</th><th>Year built</th></tr></thead>" +
+        "\n            <tbody>" + excludedRows + "</tbody>" +
+        "\n          </table>" +
+        "\n        </div>" +
+        "\n      </details>"
+      ) : "") +
+      (activeListings.length ? (
+        '\n      <div class="active-listings-note">' +
+        '\n        <div class="active-listings-head">Nearby active/contingent listings (not counted as sold comps)</div>' +
+        '\n        <div class="active-listings-sub">' + activeListings.length + " nearby listing" + (activeListings.length === 1 ? "" : "s") + " that " + (activeListings.length === 1 ? "hasn’t" : "haven’t") + " closed yet — shown for context only, excluded from the qualifying-comps stats above.</div>" +
+        '\n        <div class="table-wrap">' +
+        '\n          <table class="comps">' +
+        "\n            <thead>" +
+        "\n              <tr>" +
+        "\n                <th>Address</th>" +
+        "\n                <th>Status</th>" +
+        '\n                <th class="num">List price</th>' +
+        '\n                <th class="num">$/sqft</th>' +
+        "\n                <th>Beds/baths</th>" +
+        '\n                <th class="num">Home sqft</th>' +
+        "\n                <th>Condition</th>" +
+        "\n                <th>Pool</th>" +
+        '\n                <th class="num">Distance</th>' +
+        "\n              </tr>" +
+        "\n            </thead>" +
+        "\n            <tbody>" + activeRows + "</tbody>" +
+        "\n          </table>" +
+        "\n        </div>" +
+        "\n      </div>"
+      ) : "") +
+      (zillowNearby.length ? (
+        '\n      <div class="part2-head">' +
+        '\n        <div class="part2-eyebrow">Part 2 · Zillow neighborhood map</div>' +
+        '\n        <h4 class="part2-title">' + zillowNearby.length + " closest yellow-marker home" + (zillowNearby.length === 1 ? "" : "s") + " on Zillow&rsquo;s Neighborhood: " + subjZip + " map</h4>" +
+        '\n        <p class="part2-note">On the subject&rsquo;s Zillow listing, the Neighborhood section shows a map (or, on newer Zillow layouts, a "Nearby homes" list) with price bubbles for nearby homes. Yellow "sun" markers / "Off Market" tags are off-market homes (Zillow&rsquo;s own estimate — a Zestimate or tax-assessed value, not a live listing); red pins / "Sold" or "For sale" tags mark active, pending or recently-sold listings and were excluded per your instruction. These are the ' + zillowNearby.length + " yellow-marker homes closest to " + subjShortAddr + ", ranked nearest first, each clicked through to its own Zillow page to confirm the exact address.</p>" +
+        "\n      </div>" +
+        '\n      <div class="stat-row">' +
+        '\n        <div class="stat-card highlight">' +
+        '\n          <div class="stat-label">Yellow-marker homes</div>' +
+        '\n          <div class="stat-value">' + zillowNearby.length + "</div>" +
+        '\n          <div class="stat-note">closest to the subject, capped at 7 per your instruction</div>' +
+        "\n        </div>" +
+        '\n        <div class="stat-card">' +
+        '\n          <div class="stat-label">Average price</div>' +
+        '\n          <div class="stat-value">' + fmt0(zillowAvg) + "</div>" +
+        '\n          <div class="stat-note">Zestimate / tax-assessed value, not a sold price</div>' +
+        "\n        </div>" +
+        "\n      </div>" +
+        '\n      <div class="table-wrap">' +
+        '\n        <table class="comps">' +
+        "\n          <thead>" +
+        "\n            <tr>" +
+        "\n              <th>Address</th>" +
+        '\n              <th class="num">Price</th>' +
+        "\n              <th>Beds/baths</th>" +
+        '\n              <th class="num">Home sqft</th>' +
+        '\n              <th class="num">Lot sqft</th>' +
+        '\n              <th class="num">Year built (age)</th>' +
+        "\n              <th>Status</th>" +
+        "\n            </tr>" +
+        "\n          </thead>" +
+        "\n          <tbody>" +
+        zillowRows +
+        "\n          </tbody>" +
+        "\n        </table>" +
+        '\n        <div class="table-foot-note">Ranked nearest-to-farthest from ' + subjShortAddr + " on the map. Prices are Zillow&rsquo;s estimated value for each off-market home, not realtor.com sold-price data — kept as a separate section rather than mixed into the Part 1 comps table above.</div>" +
+        "\n      </div>"
+      ) : "") +
+      "\n    </section>";
+  }
+
+  function renderMarketTabCounts() {
+    var ca = SUBJECTS.filter(function (s) { return (s.state || "CA") === "CA"; }).length;
+    var tx = SUBJECTS.filter(function (s) { return s.state === "TX"; }).length;
+    var az = SUBJECTS.filter(function (s) { return s.state === "AZ"; }).length;
+    var caEl = document.getElementById("market-tab-sub-CA");
+    var txEl = document.getElementById("market-tab-sub-TX");
+    var azEl = document.getElementById("market-tab-sub-AZ");
+    if (caEl) caEl.textContent = ca;
+    if (txEl) txEl.textContent = tx;
+    if (azEl) azEl.textContent = az;
+  }
+
+  function switchMarket(mkt) {
+    market = mkt;
+    var caBtn = document.getElementById("market-tab-CA");
+    var txBtn = document.getElementById("market-tab-TX");
+    var azBtn = document.getElementById("market-tab-AZ");
+    if (caBtn) { caBtn.classList.toggle("active", mkt === "CA"); caBtn.setAttribute("aria-selected", mkt === "CA" ? "true" : "false"); }
+    if (txBtn) { txBtn.classList.toggle("active", mkt === "TX"); txBtn.setAttribute("aria-selected", mkt === "TX" ? "true" : "false"); }
+    if (azBtn) { azBtn.classList.toggle("active", mkt === "AZ"); azBtn.setAttribute("aria-selected", mkt === "AZ" ? "true" : "false"); }
+    renderSubjects();
+  }
+
+  var MARKET_NAMES = { CA: "California", TX: "Texas", AZ: "Phoenix" };
+  function renderSubjects() {
+    var filtered = SUBJECTS.filter(function (s) { return (s.state || "CA") === market; });
+    document.getElementById("subjects").innerHTML = filtered.length
+      ? filtered.map(renderSubject).join("")
+      : '<div class="market-empty">No ' + (MARKET_NAMES[market] || "California") + ' subject properties yet — add one from the address box above.</div>';
+    var badge = document.getElementById("badge-count");
+    if (badge) badge.textContent = filtered.length + " subject propert" + (filtered.length === 1 ? "y" : "ies");
+    renderMarketTabCounts();
+  }
+
+  window.switchMarket = switchMarket;
+
+  // ---------- Address check (manual "add this address" feature) ----------
+  var toastTimer;
+  function showToast(msg) {
+    var el = $(".toast");
+    if (!el) {
+      el = document.createElement("div");
+      el.className = "toast";
+      document.body.appendChild(el);
+    }
+    el.textContent = msg;
+    el.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.hidden = true; }, 3200);
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function normAddr(s) {
+    return String(s).toLowerCase().replace(/[^a-z0-9]/g, "");
+  }
+
+  function sameAddress(a, b) {
+    var na = normAddr(a), nb = normAddr(b);
+    if (!na || !nb) return false;
+    return na.indexOf(nb) !== -1 || nb.indexOf(na) !== -1;
+  }
+
+  function nextRequestId() {
+    var all = PENDING_REQUESTS.concat(RESOLVED_REQUESTS);
+    var max = all.reduce(function (m, r) { return Math.max(m, r.id || 0); }, 0);
+    return max + 1;
+  }
+
+  function todayStr() {
+    var d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+
+  var REQUEST_STATUS_LABEL = {
+    queued: "⏳ Queued — tell Claude in chat to run the sold-comps sweep",
+    added: "✅ Added — both parts built and added above",
+    "already-listed": "ℹ️ Already on this page",
+    notfound: "⚠️ Couldn't find enough nearby sold comps for this address",
+    error: "⚠️ Couldn't process this address — try again or check it"
+  };
+
+  function renderRequestList() {
+    var list = document.getElementById("address-check-list");
+    if (!list) return;
+    var items = PENDING_REQUESTS.slice().concat(RESOLVED_REQUESTS.slice(-8).slice().reverse());
+    if (!items.length) {
+      list.innerHTML = '<li class="empty">No address checks yet — try one above.</li>';
+      return;
+    }
+    list.innerHTML = items.map(function (r) {
+      var label = REQUEST_STATUS_LABEL[r.status] || r.status;
+      return '<li class="' + r.status + '"><span class="addr">' + escapeHtml(r.address) + "</span>" +
+        '<span class="status">' + label + (r.reason ? " — " + escapeHtml(r.reason) : "") + "</span></li>";
+    }).join("");
+  }
+
+  function buildPublishHtml() {
+    var clone = document.documentElement.cloneNode(true);
+    Array.prototype.forEach.call(clone.querySelectorAll(".toast"), function (n) { n.parentNode.removeChild(n); });
+    var input = clone.querySelector("#address-check-input");
+    if (input) input.removeAttribute("value");
+    var stateScript = clone.querySelector("#ld-state");
+    if (stateScript) {
+      stateScript.textContent = JSON.stringify({
+        subjects: SUBJECTS,
+        pendingRequests: PENDING_REQUESTS,
+        resolvedRequests: RESOLVED_REQUESTS,
+        lastRefresh: STATE.lastRefresh
+      });
+    }
+    return "<!doctype html>\n" + clone.outerHTML;
+  }
+
+  function publishState() {
+    var statusEl = document.getElementById("address-check-status");
+    if (statusEl) statusEl.hidden = true;
+    if (!window.claude || typeof window.claude.use !== "function") {
+      if (statusEl) {
+        statusEl.hidden = false;
+        statusEl.textContent = "Note: live saving isn't available in this view — open the published page link directly (not a preview) so your request is saved and picked up for processing.";
+      }
+      return;
+    }
+    window.claude.use("artifact").then(function (artifact) {
+      if (!artifact) {
+        if (statusEl) {
+          statusEl.hidden = false;
+          statusEl.textContent = "Note: live saving isn't available in this view — open the published page link directly (not a preview) so your request is saved and picked up for processing.";
+        }
+        return;
+      }
+      return artifact.publish(buildPublishHtml());
+    }).catch(function (err) {
+      if (statusEl) {
+        statusEl.hidden = false;
+        statusEl.textContent = "Note: couldn't save this request automatically (" + (err && err.message ? err.message : "unknown error") + "). It's queued in this browser tab only for now.";
+      }
+    });
+  }
+
+  var addressForm = document.getElementById("address-check-form");
+  if (addressForm) {
+    addressForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var input = document.getElementById("address-check-input");
+      var addr = input.value.trim();
+      if (!addr) return;
+
+      var already = SUBJECTS.some(function (p) { return sameAddress(p.address, addr); });
+      if (already) { showToast("That address already looks like it's on this page."); return; }
+      var dup = PENDING_REQUESTS.some(function (r) { return sameAddress(r.address, addr); });
+      if (dup) { showToast("That address is already queued."); return; }
+
+      PENDING_REQUESTS.push({ id: nextRequestId(), address: addr, submittedOn: todayStr(), status: "queued" });
+      renderRequestList();
+      input.value = "";
+      showToast("Queued — " + addr + " is saved here. Tell Claude in chat to run the Part 1 + Part 2 sweep.");
+      publishState();
+    });
+  }
+
+  renderSubjects();
+  renderRequestList();
+})();
+</script>
+
+
+</body></html>
+</body></html>

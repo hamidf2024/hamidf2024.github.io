@@ -1,0 +1,710 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<style>.p6-snap{position:sticky;top:0;z-index:1000;background:#2a2f3a;color:#fff;font:13px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:8px 16px;display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center}.p6-snap a{color:#cfe3ff}.address-check,#criteria-toggle,#dossier-check,#agent-search,.zip-city-check,.dossier-check{display:none!important}</style>
+<div class="p6-snap" role="note"><span><strong>Home Dashboard</strong> · read-only snapshot published Oct 28, 2026</span><a href="../project-06.html">← Project 6 overview</a><a href="layer0.html">Hub (Layer 0)</a><span style="opacity:.75">Request forms are hidden: they only work inside Claude. Figures are dated research snapshots, not advice.</span></div>
+
+<meta name="robots" content="noindex"><title>Home Dashboard Hub</title>
+<meta name="color-scheme" content="light only">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Non-blocking web-font load: the page must paint white/black immediately even if this
+     never resolves (blocked network, ad-blocker, offline). media=print + onload swap keeps
+     it off the critical rendering path; noscript covers JS-disabled viewers. -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"></noscript>
+
+<style>
+  :root {
+    --paper: #FFFFFF;
+    --paper-raised: #FAFAFB;
+    --ink: #0E0F10;
+    --ink-soft: #3A3D42;
+    --ink-faint: #74787E;
+    --line: #DADCE0;
+    --line-soft: #ECEDEF;
+    /* purple — primary accent, shared with every other layer on this dashboard */
+    --river: #5F497A;
+    --river-strong: #46345E;
+    --river-tint: #E5DFEC;
+    --brass: #8A70A8;
+    --brass-strong: #6B5488;
+    --brass-tint: #F0EBF6;
+    --sage: #2E7D4F;
+    --sage-tint: #D9EAD3;
+    --clay: #6B7178;
+    --clay-tint: #ECEDEF;
+    --amber: #B5760B;
+    --amber-tint: #FBF0DB;
+    --red: #B23A2F;
+    --red-tint: #F8E4E1;
+    --gold: #9C7A1E;
+    --gold-tint: #F5EFD9;
+    /* hub accent — a warm bronze used only for the "0" badge and this page's own nav marker,
+       so Layer 0 reads as the foundation the other 10 sit on rather than an 11th peer layer */
+    --hub: #9C6B1E;
+    --hub-strong: #7A5215;
+    --hub-tint: #F6ECD9;
+    --shadow: 0 12px 32px -16px rgba(14,15,16,0.16);
+    --radius-s: 6px;
+    --radius-m: 10px;
+    --radius-l: 16px;
+    --focus: 0 0 0 3px rgba(95,73,122,0.32);
+  }
+
+  * { box-sizing: border-box; }
+  html { color-scheme: light; background: #FFFFFF; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper) !important;
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+  h1, h2, h3 { font-family: "Fraunces", Georgia, serif; font-weight: 600; text-wrap: balance; margin: 0; }
+  a { color: var(--river); }
+  button { font-family: inherit; }
+  ::selection { background: var(--brass-tint); }
+
+  .shell { max-width: 1320px; margin: 0 auto; padding: 0 20px 64px; }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+    gap: 18px; padding: 32px 0 22px; border-bottom: 1px solid var(--line);
+  }
+  .wordmark-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .wordmark { font-size: 30px; letter-spacing: -0.01em; }
+  .wordmark em { font-style: normal; color: var(--hub-strong); border-bottom: 2px solid var(--hub); }
+  .tagline { color: var(--ink-soft); font-size: 14.5px; margin-top: 4px; max-width: 58ch; }
+  .badges { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600;
+    padding: 6px 11px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--paper-raised); color: var(--ink-soft); white-space: nowrap;
+  }
+  .badge.accent { background: var(--hub-tint); color: var(--hub-strong); border-color: transparent; }
+  .badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--sage); }
+
+  /* ---------- Layout: nav + content ---------- */
+  .layout { display: grid; grid-template-columns: 232px 1fr; gap: 28px; margin-top: 28px; align-items: start; }
+  .layout > .content { min-width: 0; }
+  @media (max-width: 880px) { .layout { grid-template-columns: 1fr; } }
+
+  .layers-nav {
+    display: flex; flex-direction: column; gap: 4px; position: sticky; top: 16px;
+    border-right: 1px solid var(--line-soft); padding-right: 18px;
+  }
+  @media (max-width: 880px) {
+    .layers-nav { position: static; flex-direction: row; overflow-x: auto; border-right: none;
+      border-bottom: 1px solid var(--line-soft); padding: 0 0 12px; gap: 8px; }
+  }
+  .layers-nav .eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-faint); margin-bottom: 6px; font-weight: 600; }
+  @media (max-width: 880px) { .layers-nav .eyebrow { display: none; } }
+
+  .layer-item {
+    display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: var(--radius-s);
+    border: 1px solid transparent; background: none; text-align: left; cursor: pointer; color: var(--ink-soft);
+    font-size: 13.5px; width: 100%; white-space: nowrap; text-decoration: none;
+  }
+  .layer-item.linked:hover { background: var(--paper-raised); color: var(--river-strong); }
+  .layer-item.linked .lock { color: var(--river); }
+  @media (max-width: 880px) { .layer-item { width: auto; flex: 0 0 auto; } }
+  .layer-item:focus-visible { outline: none; box-shadow: var(--focus); }
+  .layer-item .num {
+    font-family: "IBM Plex Mono", monospace; font-size: 11px; width: 20px; height: 20px; border-radius: 5px;
+    display: inline-flex; align-items: center; justify-content: center; flex: none;
+    background: var(--paper-raised); border: 1px solid var(--line); color: var(--ink-faint);
+  }
+  .layer-item .label { flex: 1; }
+  .layer-item .lock { color: var(--ink-faint); font-size: 13px; flex: none; }
+  .layer-item.active { background: var(--hub-tint); color: var(--hub-strong); font-weight: 600; }
+  .layer-item.active .num { background: var(--hub); border-color: var(--hub); color: #fff; }
+
+  /* ---------- Tab switcher ---------- */
+  .tab-bar { display: flex; gap: 4px; border-bottom: 2px solid var(--ink); margin-bottom: 20px; }
+  .tab-btn {
+    appearance: none; border: none; background: none; cursor: pointer; font: inherit;
+    padding: 10px 16px; font-size: 14px; font-weight: 600; color: var(--ink-faint);
+    border-bottom: 2px solid transparent; margin-bottom: -2px; transition: color 0.12s;
+  }
+  .tab-btn:hover { color: var(--ink-soft); }
+  .tab-btn.active { color: var(--hub-strong); border-bottom-color: var(--hub); }
+  .tab-btn .tab-btn-sub { display: block; font-size: 11px; font-weight: 500; color: var(--ink-faint); margin-top: 1px; }
+  .tab-panel[hidden] { display: none !important; }
+
+  /* ---------- Platform Overview tab ---------- */
+  .overview-intro { color: var(--ink-soft); font-size: 14px; max-width: 78ch; margin-bottom: 20px; }
+
+  /* ---------- Roadmap block diagram ---------- */
+  .roadmap-figure {
+    margin: 0 0 24px; padding: 18px 20px 16px; border: 1px solid var(--line);
+    border-radius: var(--radius-l); background: var(--paper-raised);
+  }
+  .roadmap-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .roadmap-figure svg { display: block; width: 100%; min-width: 900px; height: auto; font-family: "IBM Plex Sans", system-ui, sans-serif; }
+  .roadmap-figure figcaption { font-size: 12.5px; color: var(--ink-faint); margin-top: 12px; max-width: 86ch; line-height: 1.5; }
+  .roadmap-chip { cursor: pointer; }
+  .roadmap-chip rect { transition: fill 0.12s ease, stroke 0.12s ease; }
+  .roadmap-chip:hover rect { fill: var(--river-tint); stroke: var(--river-strong); }
+  .roadmap-chip:focus-visible rect { outline: none; stroke: var(--river-strong); stroke-width: 2; }
+  .overview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .layer-card {
+    border: 1px solid var(--line); border-radius: var(--radius-m); padding: 18px 20px;
+    background: var(--paper-raised); display: flex; flex-direction: column; gap: 12px;
+  }
+  .layer-card-head { display: flex; align-items: center; gap: 12px; }
+  .layer-card-num {
+    font-family: "IBM Plex Mono", monospace; font-size: 15px; font-weight: 600; width: 32px; height: 32px;
+    border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; flex: none;
+    background: var(--river-tint); border: 1px solid transparent; color: var(--river-strong);
+  }
+  .layer-card h3 { font-size: 16.5px; line-height: 1.25; flex: 1; }
+  .layer-card-status { font-size: 11px; font-weight: 600; color: var(--sage); white-space: nowrap; }
+  .layer-card .objective { color: var(--ink-soft); font-size: 13.5px; margin: 0; }
+  .layer-card .outputs-label { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-faint); font-weight: 600; margin: 2px 0 -4px; }
+  .layer-card ul.outputs { margin: 0; padding-left: 17px; font-size: 12.8px; color: var(--ink-soft); display: flex; flex-direction: column; gap: 5px; }
+  .layer-card ul.outputs li::marker { color: var(--brass); }
+  .layer-card-link {
+    margin-top: auto; align-self: flex-start; font-size: 12.5px; font-weight: 600; text-decoration: none;
+    color: var(--river-strong); display: inline-flex; align-items: center; gap: 5px;
+  }
+  .layer-card-link:hover { text-decoration: underline; }
+
+  /* ---------- Property Dossier tab ---------- */
+  .dossier-intro-card {
+    border: 1px solid var(--line); border-radius: var(--radius-l); background: var(--paper-raised);
+    padding: 22px 24px; margin-bottom: 22px;
+  }
+  .dossier-intro-card h2 { font-size: 21px; margin-bottom: 8px; }
+  .dossier-intro-card p { color: var(--ink-soft); font-size: 13.8px; max-width: 82ch; margin: 0 0 10px; }
+  .dossier-legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 10px; }
+  .dossier-legend-item { display: flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--ink-soft); }
+  .dossier-legend-dot { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+
+  .dossier-property-card {
+    border: 1px solid var(--line); border-radius: var(--radius-l); padding: 22px 24px 24px;
+    margin-bottom: 24px; background: var(--paper); box-shadow: var(--shadow);
+  }
+  .dossier-property-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 14px; }
+  .dossier-property-head h2 { font-size: 22px; }
+  .dossier-property-head .addr-meta { font-size: 13px; color: var(--ink-faint); font-family: "IBM Plex Mono", monospace; }
+  .dossier-context { color: var(--ink-soft); font-size: 13.3px; margin: 8px 0 0; max-width: 88ch; }
+  .dossier-coverage-summary { display: flex; gap: 16px; margin: 14px 0 4px; flex-wrap: wrap; }
+  .coverage-stat { font-size: 12.5px; color: var(--ink-soft); display: flex; align-items: center; gap: 6px; }
+  .coverage-stat b { font-family: "IBM Plex Mono", monospace; font-size: 14px; color: var(--ink); }
+
+  .dossier-layer-list { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+  .dossier-layer-row {
+    display: grid; grid-template-columns: 168px 1fr; gap: 6px 16px; padding: 13px 16px;
+    border: 1px solid var(--line-soft); border-radius: var(--radius-m); align-items: start;
+  }
+  .dossier-layer-row.status-evaluated { border-left: 3px solid var(--sage); }
+  .dossier-layer-row.status-partial { border-left: 3px solid var(--amber); }
+  .dossier-layer-row.status-none { border-left: 3px solid var(--line); background: var(--paper-raised); }
+  @media (max-width: 660px) { .dossier-layer-row { grid-template-columns: 1fr; } }
+
+  .dl-head { display: flex; flex-direction: column; gap: 6px; }
+  .dl-name { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 13.5px; }
+  .dl-name .num { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--ink-faint); }
+  .status-pill {
+    display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600;
+    padding: 3px 9px; border-radius: 999px; width: fit-content;
+  }
+  .status-pill.evaluated { background: var(--sage-tint); color: #1E5A38; }
+  .status-pill.partial { background: var(--amber-tint); color: var(--amber); }
+  .status-pill.none { background: var(--clay-tint); color: var(--clay); }
+  .dl-open { font-size: 11.5px; color: var(--river-strong); text-decoration: none; font-weight: 600; }
+  .dl-open:hover { text-decoration: underline; }
+
+  .dl-body .dl-summary { font-size: 13.3px; color: var(--ink); margin: 0 0 6px; }
+  .dl-body ul.dl-points { margin: 0; padding-left: 17px; font-size: 12.6px; color: var(--ink-soft); display: flex; flex-direction: column; gap: 4px; }
+  .dl-body ul.dl-points li::marker { color: var(--brass); }
+  .dl-none-note { font-size: 12.8px; color: var(--ink-faint); font-style: italic; }
+
+  /* ---------- Buy-decision verdict banner ---------- */
+  .dossier-verdict {
+    display: flex; gap: 12px; align-items: flex-start; margin-top: 14px; padding: 14px 16px;
+    background: var(--hub-tint); border: 1px solid transparent; border-radius: var(--radius-m);
+  }
+  .dossier-verdict .dv-icon { font-size: 17px; line-height: 1.4; flex: none; }
+  .dossier-verdict .dv-label { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.07em; font-weight: 700; color: var(--hub-strong); margin-bottom: 4px; }
+  .dossier-verdict p { margin: 0; font-size: 13.4px; color: var(--ink); line-height: 1.55; }
+
+  /* ---------- Per-layer key results (decision numbers) ---------- */
+  .dl-key-results {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;
+    margin: 2px 0 12px; padding: 12px 14px; background: var(--paper-raised); border-radius: var(--radius-s);
+  }
+  .kr-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-faint); font-weight: 600; margin-bottom: 3px; }
+  .kr-value { font-family: "IBM Plex Mono", monospace; font-size: 15px; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; line-height: 1.25; }
+  .kr-note { font-size: 11px; color: var(--ink-faint); margin-top: 3px; line-height: 1.4; }
+
+  /* ---------- Check another address ---------- */
+  .dossier-check { border-top: 1px dashed var(--line); margin-top: 8px; padding-top: 22px; }
+  .dossier-check-head h3 { font-size: 16px; margin-bottom: 4px; }
+  .dossier-check-head p { color: var(--ink-soft); font-size: 13px; max-width: 70ch; margin: 0 0 14px; }
+  .dossier-check-form { display: flex; gap: 10px; flex-wrap: wrap; }
+  .dossier-check-form input {
+    flex: 1; min-width: 240px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius-s);
+    font: inherit; font-size: 13.5px; background: var(--paper);
+  }
+  .dossier-check-form input:focus-visible { outline: none; box-shadow: var(--focus); border-color: var(--river); }
+  .btn {
+    appearance: none; border: 1px solid var(--line); background: var(--paper); color: var(--ink);
+    border-radius: var(--radius-s); padding: 10px 16px; font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer;
+  }
+  .btn:hover { background: var(--paper-raised); }
+  .btn.primary { background: var(--river); border-color: var(--river); color: #fff; }
+  .btn.primary:hover { background: var(--river-strong); }
+  .dossier-check-status { margin-top: 10px; font-size: 12.8px; color: var(--ink-soft); background: var(--paper-raised); border-radius: var(--radius-s); padding: 9px 12px; }
+  ul.dossier-check-list { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  ul.dossier-check-list li { font-size: 12.8px; color: var(--ink-soft); display: flex; align-items: center; gap: 8px; }
+  ul.dossier-check-list .q { font-weight: 600; color: var(--ink); }
+
+  /* ---------- Toast ---------- */
+  .toast {
+    position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%);
+    padding: 10px 16px; border-radius: var(--radius-s); font-size: 13px; z-index: 60; box-shadow: var(--shadow);
+    max-width: 90vw; background: var(--river-strong); color: #fff;
+  }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+
+<div class="shell">
+  <header class="topbar">
+    <div class="wordmark-row-wrap">
+      <div class="wordmark-row">
+        <h1 class="wordmark">Home Dashboard <em>Hub</em></h1>
+      </div>
+      <p class="tagline">Layer 0 — the front door to the platform. One tab indexes what every layer is for and what it produces; the other pulls together, per property, exactly what this dashboard has (and hasn't) already evaluated.</p>
+    </div>
+    <div class="badges">
+      <span class="badge accent">Layer 0 · Platform Hub</span>
+      <span class="badge"><span class="dot"></span>10 of 10 layers live</span>
+      <span class="badge" id="asof-badge">last refreshed Sep 5, 2026</span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="layers-nav" aria-label="Platform layers">
+      <div class="eyebrow">Platform layers</div>
+      <button class="layer-item active" data-layer="0" aria-current="page">
+        <span class="num">0</span><span class="label">Platform Hub</span>
+      </button>
+      <a class="layer-item linked" data-layer="1" href="layer1.html">
+        <span class="num">1</span><span class="label">Investment Screening</span><span class="lock">↗</span>
+      </a>
+      <a class="layer-item linked" data-layer="2" href="layer2.html">
+        <span class="num">2</span><span class="label">Airbnb Comps</span><span class="lock">↗</span>
+      </a>
+      <a class="layer-item linked" data-layer="3" href="layer3.html">
+        <span class="num">3</span><span class="label">Sold Comps</span><span class="lock">↗</span>
+      </a>
+      <a class="layer-item linked" data-layer="4" href="layer4.html">
+        <span class="num">4</span><span class="label">Long-Term Rent Comps</span><span class="lock">↗</span>
+      </a>
+      <a class="layer-item linked" data-layer="5" href="layer5.html">
+        <span class="num">5</span><span class="label">Realtor Sourcing</span><span class="lock">↗</span>
+      </a>
+      <a class="layer-item linked" data-layer="6" href="layer6.html">
+        <span class="num">6</span><span class="label">Off-Market Finder</span><span class="lock">↗</span>
+      </a>
+      <a class="layer-item linked" data-layer="7" href="layer7.html">
+        <span class="num">7</span><span class="label">STR &amp; ADU Regulations</span><span class="lock">↗</span>
+      </a>
+      <a class="layer-item linked" data-layer="8" href="layer8.html">
+        <span class="num">8</span><span class="label">Renovation Cost Estimator</span><span class="lock">↗</span>
+      </a>
+      <a class="layer-item linked" data-layer="9" href="layer9.html">
+        <span class="num">9</span><span class="label">Risk Assessment</span><span class="lock">↗</span>
+      </a>
+      <a class="layer-item linked" data-layer="10" href="layer10.html">
+        <span class="num">10</span><span class="label">Rental Management Companies</span><span class="lock">↗</span>
+      </a>
+    </nav>
+
+    <main class="content">
+      <div class="tab-bar" role="tablist" aria-label="Layer 0 sections">
+        <button class="tab-btn active" id="tab-btn-overview" type="button" role="tab" aria-selected="true" aria-controls="tab-panel-overview">Platform Overview<span class="tab-btn-sub">What each of the 10 layers is for, and what it outputs</span></button>
+        <button class="tab-btn" id="tab-btn-dossier" type="button" role="tab" aria-selected="false" aria-controls="tab-panel-dossier">Property Dossier<span class="tab-btn-sub">Everything this dashboard already knows about one address</span></button>
+      </div>
+
+      <div class="tab-panel" id="tab-panel-overview" role="tabpanel" aria-labelledby="tab-btn-overview">
+        <p class="overview-intro">Ten layers, each a standalone research page, each answering one question about a prospective investment property. Together they cover screening, rental income (short- and long-term), market value, deal sourcing, regulation, renovation cost, risk, and property management. Click any card to open that layer.</p>
+        <div class="roadmap-wrap" id="roadmap-wrap"></div>
+        <div class="overview-grid" id="overview-grid"></div>
+      </div>
+
+      <div class="tab-panel" id="tab-panel-dossier" role="tabpanel" aria-labelledby="tab-btn-dossier" hidden>
+        <div class="dossier-intro-card">
+          <h2>What has this dashboard already done for this address?</h2>
+          <p>For a given property, this pulls together the summary and key points from every layer that has actually evaluated it — and says plainly when a layer hasn't touched it yet, rather than leaving that blank. Two properties are pre-built below since they're the platform's most-tracked subjects; use the box at the bottom to queue any other address, ZIP, or city.</p>
+          <div class="dossier-legend">
+            <span class="dossier-legend-item"><span class="dossier-legend-dot" style="background:var(--sage)"></span>Evaluated — a real scored entry exists on that layer</span>
+            <span class="dossier-legend-item"><span class="dossier-legend-dot" style="background:var(--amber)"></span>Partial — the layer covers the market, not this specific address</span>
+            <span class="dossier-legend-item"><span class="dossier-legend-dot" style="background:var(--line)"></span>No record — this address hasn't been run through that layer</span>
+          </div>
+        </div>
+
+        <div id="dossier-entries"></div>
+
+        <div class="dossier-check" id="dossier-check">
+          <div class="dossier-check-head">
+            <h3>Check another address</h3>
+            <p>Type any address, ZIP, or city and queue it here — then tell Claude in chat to pull its cross-layer dossier together the same way.</p>
+          </div>
+          <form class="dossier-check-form" id="dossier-check-form">
+            <label for="dossier-check-input" class="visually-hidden">Address, ZIP, or city to look up</label>
+            <input id="dossier-check-input" type="text" placeholder="e.g. 445 O St, Rio Linda CA, or 95842" autocomplete="off" required>
+            <button type="submit" class="btn primary">Queue lookup</button>
+          </form>
+          <div class="dossier-check-status" id="dossier-check-status" hidden></div>
+          <ul class="dossier-check-list" id="dossier-check-list"></ul>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script type="application/json" id="ld-layer0-state">{"generated": "2026-10-25", "lastRefresh": "2026-10-25", "layers": [{"num": 1, "name": "Investment Ledger", "short": "Investment Screening", "url": "layer1.html", "status": "v74 \u00b7 live", "objective": "Screen prospective investment properties against a hard buy-criteria bar across three markets, judge whether any given ZIP, city, or address is a hot rental market, and read where each market is headed next.", "outputs": ["Investment Ledger split into California (26 comps), Texas (28 comps), and Arizona (11 comps) sub-tabs, each with its own adjustable buy-criteria bar and a rank badge above every score", "Rental Market Evaluator (LTR &amp; STR, split CA/TX) and a Best ZIP Codes tab \u2014 11 Sacramento-metro areas scored across six weighted factors, plus live TX/AZ tabs", "Market Factor Outlook (24-factor past &amp; future read across all 9 CA/TX/AZ metros) and Market Forecasting \u2014 backtested FHFA house-price forecasts with confidence bands and a 12-model scorecard", "Every California, Texas, and Arizona property now carries a live-pulled EJSCREEN People of Color percentile alongside its Demographic Index percentile"]}, {"num": 2, "name": "STR Comps", "short": "Airbnb Comps", "url": "layer2.html", "status": "v37 \u00b7 live", "objective": "Benchmark short-term (Airbnb) rental performance for a subject property against its nearest comparable listings, across every market this platform tracks.", "outputs": ["153 Airbnb comps across 40 subject properties (12 California, 20 Texas, 8 Arizona)", "Live calendar reads \u2192 occupancy % and high/low nightly price for each comp", "Blended occupancy, blended nightly rate, and an estimated monthly/annual STR revenue run-rate per subject", "Opens with a single \u201cAt a glance\u201d box explaining why STR comps matter alongside Layer 1's long-term-rent figures"]}, {"num": 3, "name": "Sold Comps / Market Value", "short": "Sold Comps", "url": "layer3.html", "status": "v18 \u00b7 live", "objective": "Establish a defensible current market value for a subject property from recent comparable sales, not a listing price.", "outputs": ["realtor.com sold-comp sweep per subject \u2014 qualifying comps (sold 2020\u2013today), median price, avg $/sqft, implied value", "Zillow \u201cNearby homes\u201d off-market (Zestimate-based) comparison set", "13 subject properties covered across three market tabs (California, Texas, Arizona)", "Opens with a single \u201cAt a glance\u201d box (Goal/Summary/Inputs/Outputs)"]}, {"num": 4, "name": "Long-Term Rental Comps", "short": "Long-Term Rent Comps", "url": "layer4.html", "status": "v23 \u00b7 live", "objective": "Determine realistic long-term rental income for a subject property from comparable active listings.", "outputs": ["Same-bedroom + lower-bedroom rental comps per subject, cross-verified across Zillow / Apartments.com / Redfin", "Median &amp; average rent, avg $/sqft, and an implied gross rental yield per subject", "8 subject properties covered across California / Texas / Phoenix market tabs", "Opens with a single \u201cAt a glance\u201d box (Goal/Summary/Inputs/Outputs)"]}, {"num": 5, "name": "Realtor &amp; Off-Market Deal Sourcing", "short": "Realtor Sourcing", "url": "layer5.html", "status": "v14 \u00b7 live", "objective": "Identify and score real-estate agents best suited to sourcing off-market and investment deals in a given ZIP, plus two seller-focused reference guides.", "outputs": ["8-factor, 100-point Off-Market Acquisition Score rubric \u2014 5 ZIPs scored, plus a \u201csearch a specific realtor by name\u201d tool", "Low-Commission Selling guide \u2014 a standalone reference for a seller weighing a discount brokerage", "Get Your Own License guide \u2014 a standalone reference for becoming your own listing agent", "Three separate \u201cAt a glance\u201d boxes, one per genuinely distinct feature sharing this tab bar"]}, {"num": 6, "name": "Off-Market Sourcing Platforms", "short": "Off-Market Finder", "url": "layer6.html", "status": "v6 \u00b7 live", "objective": "Catalog reliable channels for sourcing off-market inventory in a market, and surface real current leads.", "outputs": ["100 sourced channels across 25 categories, each ranked best-first with its own step-by-step guide", "3 city tabs (Sacramento CA, Phoenix AZ, Austin TX), each with its own ranked top-10 leads table", "A tab-level step-by-step playbook for a single buyer in each market", "Opens with a single \u201cAt a glance\u201d box (Goal/Summary/Inputs/Outputs)"]}, {"num": 7, "name": "STR, ADU &amp; LTR Rules &amp; Regulations", "short": "STR &amp; ADU Regulations", "url": "layer7.html", "status": "v10 \u00b7 live", "objective": "Determine the actual legal ceiling on a subject property's rental strategy \u2014 STR, ADU, and ordinary long-term rental \u2014 under its verified jurisdiction.", "outputs": ["Jurisdiction confirmed directly on the county's own parcel viewer for every subject (never assumed from ZIP)", "STR Score, ADU Score, and LTR Score (each /100) with sourced, tagged rule cards", "4 addresses scored across California / Texas market tabs", "Opens with a single \u201cAt a glance\u201d box (Goal/Summary/Inputs/Outputs)"]}, {"num": 8, "name": "Renovation Cost Estimator", "short": "Renovation Cost Estimator", "url": "layer8.html", "status": "v11 \u00b7 live", "objective": "Build a defensible renovation budget for a fixer-upper subject property, and reality-check it against nearby finished-home comps.", "outputs": ["3 scored subjects across California / Texas / Arizona market tabs, each with lean / recommended / high-end strategy budgets", "3 reference-toolkit tabs (Phoenix, Sacramento, Austin) \u2014 scope-rate tables, bid-priority contractor directories, sourced evidence logs", "Tab bar shown as two rows \u2014 scored properties, then reference toolkits", "Each row opens with its own \u201cAt a glance\u201d box (one shared box for the scored properties, a separate accurate box for each toolkit)"]}, {"num": 9, "name": "Risk Assessment", "short": "Risk Assessment", "url": "layer9.html", "status": "v7 \u00b7 live", "objective": "Score a subject property's natural-hazard, crime, and other property-specific risk exposure on one consistent scale.", "outputs": ["7 natural-hazard categories (flood, wildfire-direct, wildfire smoke, extreme heat, earthquake, wind, drought) rated Low/Moderate/High/Severe with sourced reasoning", "Crime &amp; public-safety rate/grade/percentile table, using the correct law-enforcement jurisdiction (not just the nearest city name)", "6 scored subjects across California / Texas market tabs", "Opens with a single \u201cAt a glance\u201d box (Goal/Summary/Inputs/Outputs)"]}, {"num": 10, "name": "Rental Management Companies", "short": "Rental Management Companies", "url": "layer10.html", "status": "v3 \u00b7 live", "objective": "Identify and score property-management companies serving a subject property's ZIP or city.", "outputs": ["9-factor weighted rating rubric (specialization, fees, maintenance response, leasing performance, screening, reporting, reviews, licensing, contract flexibility)", "Ranked company cards with fee, strengths, and \u201cworth asking about\u201d concerns side by side", "Every company checked against the relevant state's public license lookup where a license number exists", "15 companies scored across 3 covered subjects (California / Texas market tabs); opens with a single \u201cAt a glance\u201d box"]}], "methodNote": "Pulled directly from this dashboard's own maintained project record (not re-derived) \u2014 each layer's coverage below reflects what that layer has actually published as of the date shown, not what it could theoretically do. \u201cEvaluated\u201d means the address (or, for a couple of layers, the address's own ZIP) has a real scored entry on that layer's live page. \u201cPartial\u201d means the layer covers the market generally but hasn't scored this specific address. \u201cNo record\u201d means this address hasn't been run through that layer at all \u2014 not a gap to worry about, just work that hasn't been done yet.", "dossier": [{"id": "hillsdale", "address": "6316 Hillsdale Blvd", "city": "Sacramento", "state": "CA", "zip": "95842", "context": "4bd/2ba, 1,720 sqft \u201ccontractor special\u201d fixer-upper, built 1976, unincorporated Sacramento County (confirmed on the county's own parcel viewer \u2014 not City of Sacramento). The platform's most-evaluated subject: live on 8 of the 10 layers.", "verdict": "Clears Layer 1's current buy bar (Investment Score 64/100 recomputed against today's 17-comp ledger with default equal weights) with a positive all-cash net income (\u2248+$2,002/mo, \u22486.4% cap rate). The STR/ADU/LTR legal ceiling is solid (71/78/77) once the correct county jurisdiction is used instead of a shared research thread's City-of-Sacramento assumption. The real open questions: wildfire smoke and extreme heat both rate Severe, Foothill Farms crime sits in the bottom decile nationally, and Layer 8's renovation math (purchase + recommended reno \u2248 $594K all-in) sits above two informal nearby finished-home comps (~$470\u2013481K) \u2014 worth a tighter comp sweep before committing to that scope, especially now that Layer 3 has real sold comps for this ZIP to sharpen it with. Also worth noting: this listing's status has ping-ponged \u2014 Active per Layer 1's Aug 26 check, then Layer 8 independently found it Pending by Sep 3, then a fresh cross-check on Sep 5 (via Layer 3's fallback sold-comps pull) found it Active again on both Zillow and realtor.com. Whether that's a re-listing, a stale read somewhere, or one of the two earlier checks being wrong isn't resolved \u2014 Layer 1's own ledger hasn't been re-synced to match.", "layers": [{"num": 1, "status": "evaluated", "summary": "Tracked in the Investment Ledger as id 9 \u2014 $375,000, 4bd/2ba, active listing as of Layer 1's last check (Aug 26) \u2014 and is the worked example on the new Rental Market Evaluator tab.", "keyResults": [{"label": "List price", "value": "$375,000"}, {"label": "Status", "value": "Active / For Sale", "note": "checked Aug 26; Layer 8 found it Pending by Sep 3; a fresh Sep 5 check (Zillow + realtor.com, via Layer 3) found it Active again at $375,000 \u2014 not yet re-synced on this ledger"}, {"label": "Investment Score", "value": "64 / 100", "note": "recomputed today against the full 17-comp ledger, default equal weights; Layer 2's cross-reference note still cites 71 \u2014 a stale figure from when the ledger was smaller, since the score is relative to the whole list and shifts as comps are added"}, {"label": "Net income/mo (all-cash)", "value": "+$2,002"}, {"label": "Implied cap rate", "value": "\u22486.4%/yr"}, {"label": "$/sqft", "value": "$218"}], "points": ["All-cash net-income model computed from Sacramento County's real Tax Rate Area (TRA 59-037, 1.1785%) and a Sacramento-specific insurance estimate ($130/mo)", "Rental Market Evaluator corrected a shared research thread's STR-jurisdiction assumption: the thread assumed City of Sacramento rules, but this parcel is unincorporated county \u2014 a materially different rulebook (verified against Layer 7)"]}, {"num": 2, "status": "evaluated", "summary": "One of the platform's original 3 seed subjects for STR comps (alongside 8641 Sunnybrae Dr and 2043 Las Coches Way).", "keyResults": [{"label": "Blended occupancy", "value": "33.5%"}, {"label": "Blended nightly rate", "value": "$322"}, {"label": "Est. monthly STR revenue", "value": "$3,274"}, {"label": "Est. annual STR run-rate", "value": "$39,300"}], "points": ["4 comps, all reasonably comparable in size (3\u20134bd entire-homes) to this 4bd/2ba subject", "Blended across the 4 comps' next 3 months of live calendar data (Sept\u2013Nov 2026)"]}, {"num": 3, "status": "evaluated", "summary": "Third Layer 3 subject, added Sep 5 via a documented fallback methodology \u2014 realtor.com's usual per-address widget returned no data for this listing.", "keyResults": [{"label": "Median sold price", "value": "$423,889"}, {"label": "Avg $/sqft", "value": "$304"}, {"label": "Implied value", "value": "\u2248$522,708"}, {"label": "RealEstimate", "value": "$494,839", "note": "averaged from realtor.com's 3 AVMs: Collateral Analytics $495,000 / Cotality $487,097 / Quantarium $502,420"}], "points": ["Methodology deviation, flagged directly on the Layer 3 page: realtor.com's own \u201cNearby home values\u201d widget returned no results for this specific listing (unusually low recent-sale turnover on the immediate Hillsdale Blvd/Merton Way block) \u2014 comps instead pulled from a wider 95842 ZIP-wide \u201crecently sold\u201d sweep, verified with the same per-comp Price History rigor", "10 of 10 examined sales qualified (sold 2020\u2013today, single-family) \u2014 nothing excluded from this sweep", "This Sep 5 site check also found the listing Active/For Sale at $375,000 on both Zillow and realtor.com \u2014 see Layer 1's row for the Active-vs-Pending discrepancy this surfaced"]}, {"num": 4, "status": "evaluated", "summary": "Added as subject 2 (chat request, Aug 27) \u2014 10 similar-spec (4bd) + 5 lower-spec (3bd) rental comps in 95842.", "keyResults": [{"label": "Median 4bd rent", "value": "$2,915/mo", "note": "avg $2,971/mo, avg $/sqft $1.83, avg 1,685 sqft"}, {"label": "Median 3bd rent (step-down)", "value": "$2,500/mo"}, {"label": "Illustrative gross yield (vs. list price)", "value": "\u22489.3%/yr", "note": "vs. the $375,000 Zillow list price \u2014 the original figure, kept for reference"}, {"label": "Gross yield vs. Layer 3 value", "value": "\u22487.2%/yr", "note": "recomputed here against Layer 3's new RealEstimate ($494,839, added Sep 5) \u2014 a real sold-comp-based figure; not yet re-published on Layer 4's own page"}], "points": ["Median 4bd rent $2,915/mo, median 3bd rent $2,500/mo", "The original \u22489.3% gross yield was illustrative (computed against list price, since Layer 3 had no value at the time); now that Layer 3 has a real value (added Sep 5), the more defensible figure is \u22487.2%/yr \u2014 Layer 4's own page hasn't been re-run with it yet"]}, {"num": 5, "status": "partial", "summary": "Realtor sourcing was initiated for ZIP 95842 \u2014 this property's own ZIP \u2014 but no evaluation was run against the address itself.", "points": ["21 agents screened, 10 scored; top result Suneet Agarwal, 67/100", "3 of the 10 candidates license-verified directly on the CA DRE"]}, {"num": 6, "status": "partial", "summary": "Covered only as part of the general Sacramento-wide off-market sourcing directory \u2014 not evaluated as this specific address.", "points": ["The directory (30 sources, 6 categories) applies to the Sacramento market broadly, including this ZIP", "One separately-sourced live lead (7409 Mirage Ct) shares this property's 95842 ZIP but is a different parcel"]}, {"num": 7, "status": "evaluated", "summary": "Subject 1. Jurisdiction confirmed on Sacramento County's parcel viewer: APN 220-0560-062-0000, zoned RD-5, FEMA Flood Zone X.", "keyResults": [{"label": "STR Score", "value": "71 / 100"}, {"label": "ADU Score", "value": "78 / 100"}, {"label": "LTR Score", "value": "77 / 100"}, {"label": "Jurisdiction", "value": "Unincorporated Sacramento Co."}], "points": ["The existing pre-2020 house is the STR-eligible structure \u2014 a brand-new ADU can never itself be short-term-rented under county rules", "Sacramento County's Rental Housing Inspection Program (RHIP) applies (~$16/unit/yr); likely qualifies for the Tenant Protection Act's single-family exemption if ownership/lease terms are handled correctly"]}, {"num": 8, "status": "evaluated", "summary": "The subject property for the full Renovation Cost Estimator build.", "points": ["3 strategies: Investor/rental $150\u2013180K \u00b7 Owner-occupant (recommended) $200\u2013230K \u00b7 High-end $260\u2013310K+", "Recommended target budget $219,000 (16-line-item $195,500 subtotal + 12% contingency)", "Headline caution: purchase ($375K) + recommended reno ($219K) = $594K all-in, above two informal nearby finished-home comps at $470K/$481K", "Found the Zillow listing had moved from Active to Pending (Sep 3) \u2014 but Layer 3's Sep 5 check found it back to Active on both Zillow and realtor.com; neither Layer 1 nor Layer 8 has been re-synced to match"]}, {"num": 9, "status": "evaluated", "summary": "Subject 1. Flood, wildfire-direct, and wind all rate Low; wildfire smoke and extreme heat both rate Severe.", "keyResults": [{"label": "Wildfire (direct)", "value": "Low"}, {"label": "Wildfire smoke / heat", "value": "Severe / Severe", "note": "\u224834 unhealthy-air days/yr; \u22487 days/yr &gt;102\u00b0F now, \u224815 projected in 30 yrs"}, {"label": "Flood", "value": "Low", "note": "FEMA Zone X"}, {"label": "Crime (Foothill Farms)", "value": "Grade D-", "note": "7.13 violent crimes/1,000, 8th percentile nationally"}], "points": ["Other flagged risks: an unexplained property-tax reassessment jump ($189,363\u2192$473,382\u2192$482,848, High) and the property's vacant/stripped-for-renovation status (Moderate, cross-linked to Layer 8)"]}, {"num": 10, "status": "evaluated", "summary": "Subject 1 \u2014 6 rental-management companies rated on the 9-factor rubric.", "points": ["Tower Bridge Property Management ranks #1 (8.3/10) on fee &amp; reviews, but an independent BBB check found a C- rating with an unanswered complaint the original research thread never surfaced", "Keyrenter Sacramento's fee corrected to a verified 7% (the source thread had flagged its own 8% figure as uncertain)"]}]}, {"id": "forni", "address": "437 Forni Rd", "city": "Placerville", "state": "CA", "zip": "95667", "context": "3bd/2ba, 1,896 sqft, built 1936, unincorporated El Dorado County (confirmed on the county's GIS parcel viewer). An off-market outlier below Layer 1's buy bar, but evaluated across most of the platform's other layers.", "verdict": "Tagged \u2717 Below Layer 1's buy bar (fails on year built and price; Investment Score 56/100) with the platform's thinnest cap rate of the two subjects (\u22484.8%/yr). Where it actually wins is regulation: the best STR/ADU/LTR ceiling scored anywhere on the platform (72/76/81), including no rental-registration/inspection program at all for ordinary long-term rental, unlike Sacramento County's RHIP. But wildfire is the dominant risk \u2014 rated High even though the raw hazard model only reads 5/10, because county-wide mapping puts most of El Dorado County in a Very High Fire Hazard Severity Zone \u2014 and it's compounded by an unverified septic system, unpermitted structures, and 1936-era construction, all High-risk items that would normally need direct verification at inspection before an offer. The Layer 2 STR revenue estimate below should be read with real caution: its comps skew to larger 4\u20135bd/6\u201310bed luxury homes, well above this 3bd/2ba subject.", "layers": [{"num": 1, "status": "evaluated", "summary": "Added (id 13) via chat request, Sep 2 \u2014 tagged \u2718 Below buy bar: fails on year built (1936 vs. the 1975 cutoff) and price ($515,700 vs. the $450K cap).", "keyResults": [{"label": "Price (Zestimate)", "value": "$515,700", "note": "off-market \u2014 no active listing; last sold $390,000 on 1/5/2021"}, {"label": "Status", "value": "Off-market"}, {"label": "Investment Score", "value": "56 / 100", "note": "recomputed today against the full 17-comp ledger, default equal weights \u2014 matches the figure already cited on Layer 2"}, {"label": "Net income/mo (all-cash)", "value": "+$2,070"}, {"label": "Implied cap rate", "value": "\u22484.8%/yr"}, {"label": "$/sqft", "value": "$272"}], "points": ["Property tax sourced from the parcel's real current bill via El Dorado County's eProp Tax portal (1.0407% combined rate, $447/mo)", "Rent uses Zillow/Trulia's Rent Zestimate ($2,747/mo); insurance is a rough approximation ($230/mo), not a bindable quote"]}, {"num": 2, "status": "evaluated", "summary": "Manual add, Sep 2 \u2014 4 STR comps gathered.", "keyResults": [{"label": "Blended occupancy", "value": "49.4%"}, {"label": "Blended nightly rate", "value": "$546"}, {"label": "Est. monthly STR revenue", "value": "$8,217"}, {"label": "Est. annual STR run-rate", "value": "$98,600"}], "points": ["Caution: the 4 comps skew notably larger than the subject (a 4bd/6bed and a 5bd/10bed luxury comp are both included) \u2014 these figures likely overstate what a plain 3bd/2ba house would actually earn as an STR", "One comp enforces a flat 5-night minimum stay across its whole calendar; required switching to a coordinate-bounded map search after Airbnb's free-text city-wide search failed to render price pins"]}, {"num": 3, "status": "evaluated", "summary": "Second subject, v3 \u2014 12 qualifying realtor.com sold comps out of 24 checked.", "keyResults": [{"label": "Median sold price", "value": "$555,500"}, {"label": "Avg $/sqft", "value": "$317"}, {"label": "Implied value", "value": "\u2248$601,032"}, {"label": "Off-market comp avg", "value": "$483,700", "note": "6 Zillow \u201cOff Market\u201d comparison homes"}], "points": ["12 of 24 nearby homes qualified (sold 2020\u2013today); the rest split between pre-2020 sales, vacant land, non-SFR sales, and one unsold active land listing"]}, {"num": 4, "status": "evaluated", "summary": "Third subject, v3 \u2014 10 similar-spec (3bd) comps using Layer 3's real sold-comp-based value (not illustrative).", "keyResults": [{"label": "Median 3bd rent", "value": "$2,675/mo", "note": "avg $2,683/mo, avg $/sqft $1.77, avg 1,538 sqft"}, {"label": "Median 2bd rent (step-down)", "value": "$1,695/mo"}, {"label": "Gross rent yield", "value": "\u22486.3%/yr", "note": "vs. Layer 3's $512,000 realtor.com RealEstimate \u2014 a real sold-comp-based value, not illustrative"}], "points": ["One comp (6801 Sagittarius Rd) triple-confirmed across Zillow, Redfin, and Apartments.com"]}, {"num": 5, "status": "none", "summary": "Not covered \u2014 Layer 5's two scored areas are 95842 (Sacramento) and 94526 (Danville), not 95667 (Placerville / El Dorado County).", "points": []}, {"num": 6, "status": "partial", "summary": "Not covered by the directory, which is scoped to the Sacramento, CA market \u2014 El Dorado County's off-market channels haven't been researched.", "points": []}, {"num": 7, "status": "evaluated", "summary": "Subject 2. Jurisdiction confirmed on El Dorado County's GIS parcel viewer: APN 323-58-0014, zoned R2A (2-acre minimum).", "keyResults": [{"label": "STR Score", "value": "72 / 100"}, {"label": "ADU Score", "value": "76 / 100"}, {"label": "LTR Score", "value": "81 / 100", "note": "highest LTR score of any subject on the platform"}, {"label": "Jurisdiction", "value": "Unincorporated El Dorado Co."}], "points": ["El Dorado County's two-tier VHR/HHR STR permit system, gated mainly by a real West Slope permit waitlist", "Standout LTR finding: unincorporated El Dorado County has no rental-registration/inspection program at all, unlike Sacramento County's RHIP"]}, {"num": 8, "status": "none", "summary": "Not covered \u2014 the Renovation Cost Estimator's only scored subject so far is 6316 Hillsdale Blvd.", "points": []}, {"num": 9, "status": "evaluated", "summary": "Subject 2. Flood and crime both rate comparatively favorably; wildfire is the dominant concern.", "keyResults": [{"label": "Wildfire", "value": "High", "note": "raw First Street model reads only 5/10 \u2014 rated High anyway since county mapping shows 60%+ of El Dorado County in a Very High Fire Hazard Severity Zone"}, {"label": "Flood", "value": "Low / favorable"}, {"label": "Crime (Placerville proxy)", "value": "Grade D+", "note": "4.22 violent crimes/1,000, 27th percentile \u2014 El Dorado Co. Sheriff is the real jurisdiction, Placerville PD is the best available proxy"}, {"label": "Other High-risk flags", "value": "Insurance availability, septic, unpermitted structures, 1936 construction"}], "points": ["A real discrepancy caught, not resolved silently: the source research thread describes this parcel's zoning as \u201cRE-5\u201d; Layer 7's own verified GIS lookup found R2A \u2014 the page defers to Layer 7 and notes the conflict"]}, {"num": 10, "status": "evaluated", "summary": "Subject 2 \u2014 4 companies, sourced entirely independently since the original research thread only covered the Sacramento property.", "points": ["Placerville Realty, Inc. ranks #1 (7.8/10) on service-area breadth and verified licensing, though it publishes no fee schedule", "Aborn Powers has the most transparent itemized pricing (8.9%) of any Placerville-area company, but no DRE license number could be found anywhere on its own site \u2014 flagged as the one company here where licensing couldn't be checked at all"]}]}], "pendingRequests": [], "resolvedRequests": []}</script>
+
+<script>
+(function () {
+  "use strict";
+  var $ = function (sel, root) { return (root || document).querySelector(sel); };
+  var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
+
+  var STATE = JSON.parse($("#ld-layer0-state").textContent);
+  var LAYERS = STATE.layers;
+  var METHOD_NOTE = STATE.methodNote;
+  var DOSSIER = STATE.dossier;
+  var PENDING = STATE.pendingRequests || [];
+  var RESOLVED = STATE.resolvedRequests || [];
+  var LAST_REFRESH = STATE.lastRefresh;
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function normAddr(s) {
+    return String(s).toLowerCase().replace(/[^a-z0-9]/g, "");
+  }
+  function sameAddress(a, b) {
+    var na = normAddr(a), nb = normAddr(b);
+    if (!na || !nb) return false;
+    return na.indexOf(nb) !== -1 || nb.indexOf(na) !== -1;
+  }
+  function todayStr() {
+    var d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+  function nextRequestId() {
+    var all = PENDING.concat(RESOLVED);
+    var max = all.reduce(function (m, r) { return Math.max(m, r.id || 0); }, 0);
+    return max + 1;
+  }
+
+  // ---------- Toast ----------
+  var toastTimer;
+  function showToast(msg) {
+    var el = $(".toast");
+    if (!el) {
+      el = document.createElement("div");
+      el.className = "toast";
+      document.body.appendChild(el);
+    }
+    el.textContent = msg;
+    el.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.hidden = true; }, 3200);
+  }
+
+  // ---------- Roadmap block diagram ----------
+  var ROADMAP_STAGES = [
+    { title: "① Find a Property", nums: [1, 5, 6] },
+    { title: "② Evaluate the Property", nums: [2, 3, 4, 7, 8, 9] },
+    { title: "③ Manage After Purchase", nums: [10] },
+    { title: "④ This Hub", nums: [] }
+  ];
+  var ROADMAP_ARROWS = ["candidate address", "goes under contract", "status rolls up"];
+
+  function renderRoadmap() {
+    var wrap = $("#roadmap-wrap");
+    if (!wrap) return;
+
+    var colW = 240, colGap = 100, chipH = 30, chipGap = 8, headerH = 30, headerTop = 10;
+    var colX = [0, colW + colGap, (colW + colGap) * 2, (colW + colGap) * 3];
+    var totalW = colX[3] + colW;
+    var chipTop = headerTop + headerH + 18;
+    var maxChips = Math.max.apply(null, ROADMAP_STAGES.map(function (s) { return s.nums.length; }));
+    var stackH = Math.max(maxChips * (chipH + chipGap) - chipGap, 46);
+    var totalH = chipTop + stackH + 10;
+
+    var parts = [];
+
+    ROADMAP_STAGES.forEach(function (stage, i) {
+      var cx = colX[i], cy = headerTop, isHub = i === 3;
+      parts.push(
+        '<rect x="' + cx + '" y="' + cy + '" width="' + colW + '" height="' + headerH + '" rx="7" fill="' +
+          (isHub ? "var(--hub-tint)" : "var(--river-tint)") + '" stroke="' + (isHub ? "var(--hub-strong)" : "var(--river)") + '" stroke-width="1"></rect>' +
+        '<text x="' + (cx + colW / 2) + '" y="' + (cy + headerH / 2 + 4) + '" text-anchor="middle" font-size="12" font-weight="700" fill="' +
+          (isHub ? "var(--hub-strong)" : "var(--river-strong)") + '">' + escapeHtml(stage.title) + '</text>'
+      );
+      if (i < 3) {
+        var ax1 = cx + colW, ax2 = colX[i + 1], ay = cy + headerH / 2;
+        parts.push(
+          '<line x1="' + ax1 + '" y1="' + ay + '" x2="' + (ax2 - 8) + '" y2="' + ay + '" stroke="var(--ink-faint)" stroke-width="1.3"></line>' +
+          '<polygon points="' + (ax2 - 8) + "," + (ay - 4) + " " + ax2 + "," + ay + " " + (ax2 - 8) + "," + (ay + 4) + '" fill="var(--ink-faint)"></polygon>' +
+          '<text x="' + ((ax1 + ax2) / 2) + '" y="' + (ay - 7) + '" text-anchor="middle" font-size="9" fill="var(--ink-faint)">' + escapeHtml(ROADMAP_ARROWS[i]) + '</text>'
+        );
+      }
+    });
+
+    ROADMAP_STAGES.forEach(function (stage, i) {
+      var cx = colX[i];
+      if (i === 3) {
+        var h = 46, y = chipTop;
+        parts.push(
+          '<g>' +
+            '<rect x="' + cx + '" y="' + y + '" width="' + colW + '" height="' + h + '" rx="7" fill="var(--hub-tint)" stroke="var(--hub-strong)" stroke-width="1.5"></rect>' +
+            '<circle cx="' + (cx + 22) + '" cy="' + (y + h / 2) + '" r="10" fill="var(--hub-strong)"></circle>' +
+            '<text x="' + (cx + 22) + '" y="' + (y + h / 2 + 4) + '" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff">0</text>' +
+            '<text x="' + (cx + 42) + '" y="' + (y + h / 2 - 2) + '" font-size="11.5" font-weight="700" fill="var(--hub-strong)">You are here</text>' +
+            '<text x="' + (cx + 42) + '" y="' + (y + h / 2 + 12) + '" font-size="9.5" fill="var(--ink-soft)">Dossier pulls every layer together</text>' +
+          '</g>'
+        );
+        return;
+      }
+      stage.nums.forEach(function (num, j) {
+        var l = LAYERS[num - 1];
+        var y = chipTop + j * (chipH + chipGap);
+        parts.push(
+          '<a href="' + l.url + '" target="_blank" rel="noopener" class="roadmap-chip">' +
+            '<rect x="' + cx + '" y="' + y + '" width="' + colW + '" height="' + chipH + '" rx="6" fill="var(--paper)" stroke="var(--river)" stroke-width="1.2"></rect>' +
+            '<circle cx="' + (cx + 18) + '" cy="' + (y + chipH / 2) + '" r="9" fill="var(--river-tint)"></circle>' +
+            '<text x="' + (cx + 18) + '" y="' + (y + chipH / 2 + 3.5) + '" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--river-strong)">' + num + '</text>' +
+            '<text x="' + (cx + 34) + '" y="' + (y + chipH / 2 + 4) + '" font-size="11.5" fill="var(--ink)">' + l.short + '</text>' +
+          '</a>'
+        );
+      });
+    });
+
+    var aria = "Roadmap of the 10 layers: Find a Property using Layers 1, 5 and 6, then Evaluate the Property using Layers 2, 3, 4, 7, 8 and 9, then Manage After Purchase using Layer 10, with every stage rolling up into this hub.";
+
+    wrap.innerHTML =
+      '<figure class="roadmap-figure">' +
+        '<div class="roadmap-scroll">' +
+          '<svg viewBox="0 0 ' + totalW + ' ' + totalH + '" role="img" aria-label="' + escapeHtml(aria) + '">' +
+            parts.join("") +
+          '</svg>' +
+        '</div>' +
+        '<figcaption>How the 10 layers fit together: sourcing and screening (1, 5, 6) feed into property-level evaluation (2, 3, 4, 7, 8, 9), then into management (10) once purchased &mdash; every stage rolls up into this hub’s Property Dossier. Click any box to open that layer, or scroll sideways on a narrow screen.</figcaption>' +
+      '</figure>';
+  }
+
+  // ---------- Platform Overview ----------
+  function renderOverview() {
+    var grid = $("#overview-grid");
+    grid.innerHTML = LAYERS.map(function (l) {
+      return (
+        '<div class="layer-card">' +
+          '<div class="layer-card-head">' +
+            '<span class="layer-card-num">' + l.num + '</span>' +
+            '<h3>' + l.name + '</h3>' +
+          '</div>' +
+          '<div class="layer-card-status">' + escapeHtml(l.status) + '</div>' +
+          '<p class="objective">' + l.objective + '</p>' +
+          '<div class="outputs-label">Major outputs</div>' +
+          '<ul class="outputs">' + l.outputs.map(function (o) { return '<li>' + o + '</li>'; }).join("") + '</ul>' +
+          '<a class="layer-card-link" href="' + l.url + '" target="_blank" rel="noopener">Open Layer ' + l.num + ' ↗</a>' +
+        '</div>'
+      );
+    }).join("");
+  }
+
+  // ---------- Property Dossier ----------
+  var STATUS_LABEL = { evaluated: "Evaluated", partial: "Partial", none: "No record" };
+
+  function renderDossierEntry(entry) {
+    var counts = { evaluated: 0, partial: 0, none: 0 };
+    entry.layers.forEach(function (l) { counts[l.status] = (counts[l.status] || 0) + 1; });
+
+    var rows = entry.layers.map(function (l) {
+      var layerMeta = LAYERS[l.num - 1];
+      var body;
+      if (l.status === "none") {
+        body = '<div class="dl-body"><p class="dl-none-note">' + escapeHtml(l.summary) + '</p></div>';
+      } else {
+        var pts = (l.points || []).map(function (p) { return '<li>' + p + '</li>'; }).join("");
+        var kr = (l.keyResults || []).map(function (k) {
+          return (
+            '<div class="kr">' +
+              '<div class="kr-label">' + escapeHtml(k.label) + '</div>' +
+              '<div class="kr-value">' + escapeHtml(k.value) + '</div>' +
+              (k.note ? '<div class="kr-note">' + k.note + '</div>' : "") +
+            '</div>'
+          );
+        }).join("");
+        body = (
+          '<div class="dl-body">' +
+            (kr ? '<div class="dl-key-results">' + kr + '</div>' : "") +
+            '<p class="dl-summary">' + l.summary + '</p>' +
+            (pts ? '<ul class="dl-points">' + pts + '</ul>' : "") +
+          '</div>'
+        );
+      }
+      return (
+        '<div class="dossier-layer-row status-' + l.status + '">' +
+          '<div class="dl-head">' +
+            '<div class="dl-name"><span class="num">L' + l.num + '</span>' + layerMeta.short + '</div>' +
+            '<span class="status-pill ' + l.status + '">' + STATUS_LABEL[l.status] + '</span>' +
+            '<a class="dl-open" href="' + layerMeta.url + '" target="_blank" rel="noopener">Open Layer ' + l.num + ' ↗</a>' +
+          '</div>' +
+          body +
+        '</div>'
+      );
+    }).join("");
+
+    return (
+      '<div class="dossier-property-card">' +
+        '<div class="dossier-property-head">' +
+          '<h2>' + escapeHtml(entry.address) + '</h2>' +
+          '<span class="addr-meta">' + escapeHtml(entry.city) + ', ' + escapeHtml(entry.state) + ' ' + escapeHtml(entry.zip) + '</span>' +
+        '</div>' +
+        '<p class="dossier-context">' + entry.context + '</p>' +
+        (entry.verdict ?
+          '<div class="dossier-verdict">' +
+            '<span class="dv-icon">🧭</span>' +
+            '<div><div class="dv-label">Buy-decision snapshot</div><p>' + entry.verdict + '</p></div>' +
+          '</div>' : "") +
+        '<div class="dossier-coverage-summary">' +
+          '<span class="coverage-stat"><b>' + counts.evaluated + '</b> of 10 layers evaluated</span>' +
+          (counts.partial ? '<span class="coverage-stat"><b>' + counts.partial + '</b> partial</span>' : "") +
+          (counts.none ? '<span class="coverage-stat"><b>' + counts.none + '</b> no record</span>' : "") +
+        '</div>' +
+        '<div class="dossier-layer-list">' + rows + '</div>' +
+      '</div>'
+    );
+  }
+
+  function renderDossier() {
+    $("#dossier-entries").innerHTML = DOSSIER.map(renderDossierEntry).join("");
+  }
+
+  var REQUEST_STATUS_LABEL = {
+    queued: "⏳ Queued — tell Claude in chat to research it",
+    done: "✅ Dossier built — see above",
+    error: "⚠️ Couldn't build a dossier — try again"
+  };
+
+  function renderCheckList() {
+    var list = $("#dossier-check-list");
+    var all = RESOLVED.concat(PENDING).sort(function (a, b) { return (b.id || 0) - (a.id || 0); });
+    if (!all.length) { list.innerHTML = ""; return; }
+    list.innerHTML = all.map(function (r) {
+      return '<li><span class="q">' + escapeHtml(r.query) + '</span> — ' + (REQUEST_STATUS_LABEL[r.status] || r.status) + ' <span style="color:var(--ink-faint)">(' + escapeHtml(r.submittedOn) + ')</span></li>';
+    }).join("");
+  }
+
+  // ---------- Tab switching ----------
+  var TAB_IDS = ["overview", "dossier"];
+  function switchTab(which) {
+    TAB_IDS.forEach(function (id) {
+      var active = id === which;
+      $("#tab-btn-" + id).classList.toggle("active", active);
+      $("#tab-btn-" + id).setAttribute("aria-selected", String(active));
+      $("#tab-panel-" + id).hidden = !active;
+    });
+  }
+  TAB_IDS.forEach(function (id) {
+    $("#tab-btn-" + id).addEventListener("click", function () { switchTab(id); });
+  });
+
+  // ---------- Publish (viewer-submitted "check another address" queue) ----------
+  function buildPublishHtml() {
+    var clone = document.documentElement.cloneNode(true);
+    Array.prototype.forEach.call(clone.querySelectorAll(".toast"), function (n) { n.parentNode.removeChild(n); });
+    var input = clone.querySelector("#dossier-check-input");
+    if (input) input.removeAttribute("value");
+    var stateScript = clone.querySelector("#ld-layer0-state");
+    if (stateScript) {
+      stateScript.textContent = JSON.stringify({
+        generated: STATE.generated,
+        lastRefresh: LAST_REFRESH,
+        layers: LAYERS,
+        methodNote: METHOD_NOTE,
+        dossier: DOSSIER,
+        pendingRequests: PENDING,
+        resolvedRequests: RESOLVED
+      });
+    }
+    return "<!doctype html>\n" + clone.outerHTML;
+  }
+
+  function publishState(statusSelector) {
+    var statusEl = $(statusSelector || "#dossier-check-status");
+    if (statusEl) statusEl.hidden = true;
+    if (!window.claude || typeof window.claude.use !== "function") {
+      if (statusEl) {
+        statusEl.hidden = false;
+        statusEl.textContent = "Note: live saving isn't available in this view — open the published page link directly (not a preview) so your request is saved and picked up.";
+      }
+      return;
+    }
+    window.claude.use("artifact").then(function (artifact) {
+      if (!artifact) {
+        if (statusEl) {
+          statusEl.hidden = false;
+          statusEl.textContent = "Note: live saving isn't available in this view — open the published page link directly (not a preview) so your request is saved and picked up.";
+        }
+        return;
+      }
+      return artifact.publish(buildPublishHtml());
+    }).catch(function (err) {
+      if (statusEl) {
+        statusEl.hidden = false;
+        statusEl.textContent = "Note: couldn't save this request automatically (" + (err && err.message ? err.message : "unknown error") + "). It's queued in this browser tab only for now.";
+      }
+    });
+  }
+
+  var checkForm = $("#dossier-check-form");
+  if (checkForm) {
+    checkForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var input = $("#dossier-check-input");
+      var query = input.value.trim();
+      if (!query) return;
+
+      var already = DOSSIER.some(function (en) {
+        return normAddr(en.address) === normAddr(query);
+      });
+      if (already) { showToast("That address already has a full dossier above."); return; }
+      var dup = PENDING.some(function (r) { return normAddr(r.query) === normAddr(query); });
+      if (dup) { showToast("That's already queued for a dossier."); return; }
+
+      PENDING.push({ id: nextRequestId(), query: query, submittedOn: todayStr(), status: "queued" });
+      renderCheckList();
+      input.value = "";
+      showToast("Queued — " + query + " is saved here. Tell Claude in chat to build its cross-layer dossier.");
+      publishState("#dossier-check-status");
+    });
+  }
+
+  // ---------- Init ----------
+  $("#asof-badge").textContent = "last refreshed " + LAST_REFRESH;
+  renderRoadmap();
+  renderOverview();
+  renderDossier();
+  renderCheckList();
+})();
+</script>
+
+</body></html>
