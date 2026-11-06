@@ -205,8 +205,13 @@
       </div>
     </div>
     <div class="card" style="margin-top:16px;border-left:4px solid var(--warn)">
-      <h3>Still missing: historical intraday option quotes</h3>
-      <p style="margin-bottom:0">No free, reliable source has years of minute-by-minute option bid/ask prices. The cheapest route starts with <strong>Alpaca</strong> ($99 a month: stock minute bars since 2016, option data since Feb 2024, and live option quotes recorded from now on), then Cboe end-of-day option data since 2012 and Databento quotes for the test period. Buying data is the next decision.</p>
+      <h3>Still missing: historical intraday option quotes &mdash; and a cheap way to get them</h3>
+      <p>A wider search of 15 sources (including GitHub, Kaggle and community databases) found two low-cost routes:</p>
+      <ul>
+        <li><strong>OptionsDX</strong>: full option chains every 15 minutes with bid/ask, implied volatility and Greeks, for SPY (2010&ndash;2023), QQQ, NVDA, AAPL and TSLA, at <strong>$5 per year of data</strong> &mdash; about $250 for all five. End-of-day data is free.</li>
+        <li><strong>DoltHub</strong>: a free community database of daily option prices for about 2,300 stocks from 2019 to today (a sample of each chain).</li>
+      </ul>
+      <p style="margin-bottom:0">Alpaca ($99 a month) fills 2024&ndash;2026. The largest free option datasets once on GitHub have been taken down. Buying the OptionsDX data is the next decision.</p>
     </div>
   </section>
 
