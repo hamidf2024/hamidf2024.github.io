@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Project 13 Research — Hamid Faghidi</title>
+<meta name="description" content="Project 13 research phase: developing new models for day-trading small caps that run in the first 15 minutes. Goal, method, results so far and what comes next.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+.verdict{display:inline-block;font-weight:700;font-size:12px;letter-spacing:.02em;padding:3px 10px;border-radius:999px}
+.verdict.no{background:color-mix(in srgb,var(--bad,#b4443b) 14%,transparent);color:var(--bad,#b4443b)}
+.verdict.run{background:color-mix(in srgb,var(--warn) 16%,transparent);color:var(--warn)}
+.verdict.base{background:var(--line);color:var(--muted)}
+.why li{margin-bottom:8px}
+td.neg{color:var(--bad,#b4443b)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../">Hamid Faghidi</a>
+  <nav><a href="../#categories">Projects</a><a href="./">AI Trading</a></nav>
+</div></header>
+
+<main class="wrap">
+  <div class="crumbs" style="padding-top:20px"><a href="../">Home</a><span class="sep">/</span><a href="./">AI Trading</a><span class="sep">/</span><a href="project-13.html">Project 13</a><span class="sep">/</span><span>Research</span></div>
+  <section class="hero" style="padding-top:28px">
+    <div class="eyebrow">Project 13 &middot; Research phase &middot; New model development</div>
+    <h1>Project 13 Research: Building a New Model</h1>
+    <p class="lede">A dedicated phase for one job: develop new models that pick day trades in stocks running hard at the open, and test them so honestly that a good result can be trusted. The first original model was rejected, and the reason why points to what the next one needs.</p>
+    <p style="margin-top:14px"><span class="tag warn">Status: cycle 1 done, no model passes yet</span> <span class="tag muted">Started Nov 6, 2026</span> <span class="tag muted">Last updated Nov 6, 2026</span></p>
+    <nav class="toc" aria-label="On this page"><a href="#goal">Goal vs today</a><a href="#method">How it works</a><a href="#cycle1">Cycle 1 result</a><a href="#why">Why it failed</a><a href="#registry">Model registry</a><a href="#next">Next</a><a href="project-13.html">&larr; Project 13</a></nav>
+  </section>
+
+  <section aria-label="At a glance">
+    <div class="statstrip">
+      <div class="primary"><div class="k">Major goal</div><div class="v">20%</div><div class="s">per week, or more than 75% per month</div></div>
+      <div><div class="k">Needed per trade</div><div class="v sm">+3.7%</div><div class="s">one trade per morning, after costs</div></div>
+      <div><div class="k">Best model today</div><div class="v sm">−0.96%</div><div class="s">per trade, 2019–2024</div></div>
+      <div><div class="k">Perfect pick</div><div class="v sm">+2.68%</div><div class="s">ceiling with a +5% target</div></div>
+      <div><div class="k">Models tested</div><div class="v sm">3</div><div class="s">A1, base transformer, boosting</div></div>
+      <div><div class="k">Unseen data</div><div class="v sm">22 months</div><div class="s">Jan 2025 – Nov 2026, held out</div></div>
+    </div>
+  </section>
+
+  <section id="goal">
+    <h2>Goal vs today</h2>
+    <div class="card">
+      <div class="chart-title"><h3>Average net return per trade, long trade at 10:00 (2019–2024, 0.5% cost per side)</h3></div>
+      <p class="chart-note">Each model trades its top-ranked stocks. "Perfect pick" is the best stock every morning in hindsight. The last bar is what the 20%-per-week goal needs with one trade per morning.</p>
+      <div id="goalchart"></div>
+      <p style="font-size:13px;color:var(--muted);margin:18px 0 0">"Trade all" = every screened stock; "B0" = base transformer; "Goal needs" = +3.7% per trade for 20% a week. Even a perfect pick falls short with a +5% target, so later designs need bigger targets (10–20%+) or more than one good trade a day. On 44% of mornings at least one screened stock rises 20% or more after 09:45, so the opportunity is in the data. Sustaining 20% a week would be extraordinary; full-account trades also need a maximum weekly loss and drawdown limit before any live use.</p>
+    </div>
+  </section>
+
+  <section id="method">
+    <h2>How the research works</h2>
+    <div class="card">
+      <h3>Two separate paths, the same five steps</h3>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Step</th><th>Path A: original design from scratch</th><th>Path B: combine strengths of existing models</th></tr></thead>
+        <tbody>
+          <tr><td>1. Define success</td><td colspan="2">At least +0.5% per trade after 0.5% cost, profitable in 5 of 6 development years and on unseen data; then the major goal</td></tr>
+          <tr><td>2. Baseline</td><td>Rule strategy S8, gradient boosting, a small transformer, a GRU</td><td>The same, plus each reviewed model run on our data</td></tr>
+          <tr><td>3. Hypothesis</td><td>New mechanisms from problems we saw: cross-stock attention, regime gate, fade-state inputs, cost-aware output</td><td>Combinations: patch tokens + market-context gating, tree features as tokens, pretrained forecasts</td></tr>
+          <tr><td>4. Test one change</td><td>New mechanism vs the standard transformer</td><td>Each borrowed part on and off; vs its sources and a simple blend</td></tr>
+          <tr><td>5. Refine and scale</td><td colspan="2">Keep what passes, drop what adds nothing, grow only after a gate review</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="grid g3" style="margin-top:16px">
+      <div class="card"><h3>Unseen data</h3><p>Jan 2025 – Nov 2026 is never used to build or choose a model. Development uses 2016–2024; each finished model gets one week-by-week run on the unseen period.</p></div>
+      <div class="card"><h3>Fair tests</h3><p>A plan written before each run, one change at a time, a leakage checklist, at least 3 random seeds, costs of 0.25%, 0.5% and 1%, and every result kept, including failures.</p></div>
+      <div class="card"><h3>Decision gates</h3><p>G0 setup &rarr; G1 plan &rarr; G2 beats baselines on 2019–2024 &rarr; G3 holds on unseen data &rarr; G4 forward test. A model must pass each in order.</p></div>
+    </div>
+  </section>
+
+  <section id="cycle1">
+    <h2>Cycle 1 result: model A1</h2>
+    <div class="card" style="border-left:4px solid var(--warn)">
+      <div class="eyebrow" style="margin-bottom:8px">Verdict</div>
+      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0">A1, a transformer that compares every stock running the same morning, was <strong>rejected</strong>. It beat the same model without that layer in only 3 of 6 years, and no model made money in any year.</p>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>The trade and the test</h3>
+      <p>Long at the 10:00 open, +5% target, −3% stop, out by 10:30, on stocks that ran 10%+ in the first 15 minutes. The design was chosen on 2016–2018 only. Each model was trained on earlier years and tested on 2019–2024, one year at a time.</p>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Model</th><th>Trades</th><th>Per $1,000 at 0.5% cost</th><th>Profitable years</th><th>2019</th><th>2020</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th></tr></thead>
+        <tbody>
+          <tr><td><strong>A1</strong> same-morning transformer</td><td class="num">1,759</td><td class="num neg">−$9.39</td><td class="num">0 / 6</td><td class="num neg">−9.9</td><td class="num neg">−8.7</td><td class="num neg">−10.7</td><td class="num neg">−13.6</td><td class="num neg">−9.0</td><td class="num neg">−10.2</td></tr>
+          <tr><td>B0 same, without the cross-stock layer</td><td class="num">2,500</td><td class="num neg">−$9.32</td><td class="num">0 / 6</td><td class="num neg">−5.0</td><td class="num neg">−10.0</td><td class="num neg">−15.6</td><td class="num neg">−10.8</td><td class="num neg">−10.2</td><td class="num neg">−8.6</td></tr>
+          <tr><td>Gradient boosting</td><td class="num">1,757</td><td class="num neg">−$8.89</td><td class="num">0 / 6</td><td class="num neg">−7.0</td><td class="num neg">−10.9</td><td class="num neg">−10.2</td><td class="num neg">−12.1</td><td class="num neg">−1.2</td><td class="num neg">−9.2</td></tr>
+          <tr><td>Trade every stock</td><td class="num">14,329</td><td class="num neg">−$11.49</td><td class="num">0 / 6</td><td class="num neg">−9.4</td><td class="num neg">−12.1</td><td class="num neg">−13.6</td><td class="num neg">−12.2</td><td class="num neg">−10.4</td><td class="num neg">−11.0</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Yearly columns are net per $1,000 trade at 0.5% cost. A1 minus B0 per trade: 95% interval −1.42 to +1.29, which includes zero.</p>
+    </div>
+  </section>
+
+  <section id="why">
+    <h2>Why it failed</h2>
+    <div class="grid g2">
+      <div class="card">
+        <h3>What the diagnosis found</h3>
+        <ol class="why">
+          <li><strong>The models learn how much a stock will move, not which way.</strong> Ranked by expected profit they pick quiet stocks that lose a little; ranked by chance of hitting the target they pick volatile ones that also hit the stop more.</li>
+          <li><strong>The cross-stock layer had nothing to work with.</strong> A1's rankings within a morning matched the base model's (correlation 0.93). Both found the morning's best stock less often than random.</li>
+          <li><strong>The money is there, the inputs can't see it.</strong> A perfect top-10% pick makes +$39.60 per trade; the models' picks gained only about 0.1% before a 1% round-trip cost.</li>
+          <li><strong>The trade-count rule was unstable</strong> (17 to 1,180 trades a year), so the next test picks the top stock each morning.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>What it changes</h3>
+        <p>A smarter architecture cannot create direction information that isn't in the inputs. The next version therefore changes the <strong>information</strong>, not the model: each stock's multi-day history.</p>
+        <p style="margin-bottom:0">One condition did hold up: stocks that had already faded at least 10% from their high lost much less (−$4.5 vs −$10.1 per trade), so it stays part of the design.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="registry">
+    <h2>Model registry</h2>
+    <div class="card">
+      <div class="table-scroll"><table>
+        <thead><tr><th>Version</th><th>Model</th><th>Trade</th><th>Result (development years)</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>L0</td><td>Boosting, transformers, GRU</td><td>Long at 09:45, +10% / −5%</td><td>No profitable subset, 2016–2025</td><td><span class="verdict no">Rejected</span></td></tr>
+          <tr><td>T1</td><td>Gradient boosting</td><td>Short at 09:45, +15% / −5%</td><td>+$16,242 (2020–2025), but +$393 at 0.5% cost on recent data</td><td><span class="verdict no">Fails cost test</span></td></tr>
+          <tr><td>B0</td><td>Base transformer</td><td>Long at 10:00, +5% / −3%</td><td>−$9.32 per trade, 0 / 6 years</td><td><span class="verdict base">Baseline</span></td></tr>
+          <tr><td>T2 &middot; A1</td><td>Same-morning cross-stock transformer</td><td>Long at 10:00, +5% / −3%</td><td>−$9.39 per trade, 0 / 6 years</td><td><span class="verdict no">Rejected</span></td></tr>
+          <tr><td>T3 &middot; A5</td><td>B0 and boosting + multi-day context</td><td>Long at 10:00, +5% / −3%</td><td>Plan written; waiting for daily price data</td><td><span class="verdict run">In progress</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <section id="next">
+    <h2>Next</h2>
+    <div class="grid g2">
+      <div class="card">
+        <h3>A5: multi-day context</h3>
+        <p style="margin-bottom:0">Adds what the first 30 minutes cannot show: how many days the stock has been running, distance from its 20- and 60-day highs, previous days' returns and closes, and today's volume against normal. Each morning the model trades only its single top-ranked stock. It passes only if it beats the same model without context in at least 4 of 6 years, by a margin that is clearly above zero.</p>
+      </div>
+      <div class="card">
+        <h3>Then: designs that can reach the goal</h3>
+        <p style="margin-bottom:0">If multi-day context gives the models direction, the next design keeps it and allows bigger targets (10–20%+) and more than one trade a day, since a +5% target caps even a perfect pick below the goal.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="disclosure">
+    <h2>Disclosures</h2>
+    <p class="disclosure">All results are hypothetical backtests on historical data with modeled costs; no real orders were placed. Past results do not predict future returns. Nothing here is investment advice.</p>
+    <p style="margin-top:12px"><a href="project-13.html">&larr; Back to Project 13</a></p>
+  </section>
+</main>
+<footer><div class="wrap">&copy; 2026 Hamid Faghidi &middot; Trading results are hypothetical backtests. Nothing on this site is investment advice.</div></footer>
+<script src="../charts.js"></script>
+<script>
+(function(){
+var G=[["Trade all",-1.15],["Boosting",-0.89],["B0",-0.93],["A1",-0.94],["Perfect pick",2.68],["Goal needs",3.71]];
+function pct(v){return (v<0?'−':'')+Math.abs(v).toFixed(1)+'%';}
+function draw(){var narrow=window.innerWidth<600;
+ barChart(document.getElementById('goalchart'),G.map(function(d){return{label:d[0],value:d[1],tip:d[0]+': '+(d[1]>=0?'+':'−')+Math.abs(d[1]).toFixed(2)+'% per trade'}}),{height:260,rotate:narrow,fmt:pct});}
+draw();var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,150)});
+})();
+</script>
+</body>
+</html>

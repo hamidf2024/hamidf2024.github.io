@@ -21,6 +21,14 @@
 td.th{font-size:12px;color:var(--muted)}
 @media (max-width:760px){.tiers{grid-template-columns:1fr}}
 @media (max-width:600px){.phase{grid-template-columns:minmax(0,1fr) 70px 54px}}
+.research-link{display:block;text-decoration:none;color:inherit;border-left:4px solid var(--accent);transition:box-shadow .15s,transform .15s}
+.research-link:hover,.research-link:focus-visible{box-shadow:0 6px 20px rgba(0,0,0,.08);transform:translateY(-1px)}
+.research-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:14px 0}
+.research-stats div{border-top:1px solid var(--line);padding-top:8px}
+.research-stats span{display:block;font-size:12px;color:var(--muted)}
+.research-stats strong{font-family:var(--serif);font-size:20px}
+.research-cta{font-weight:600;color:var(--accent)}
+@media (max-width:600px){.research-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
@@ -37,7 +45,7 @@ td.th{font-size:12px;color:var(--muted)}
     <p class="lede">Can you profit from US stocks that run <strong>+20% above the open in the first 15 minutes</strong>? Nineteen rule strategies read the first three 5-minute candles and buy at 09:45. Each was frozen and replayed on fresh data, then checked against ten years of history (2016–2025). A gradient-boosting model then tested the opposite trade, shorting the fade.</p>
     <p style="margin-top:12px;max-width:680px"><strong>Major goal:</strong> at least <strong>20% return per week</strong>, or more than 75% per month, on trading capital. With the whole account in each trade and one trade per morning, that needs about +3.7% net per trade (+2.7% for the monthly goal). Today the best long model averages −0.96% per trade, and even a perfect pick on the current +5%-target trade averages +2.68%, so the research now aims at designs with bigger targets or more than one good trade per day.</p>
     <p style="margin-top:14px"><span class="tag warn">Status: research, no proven edge after costs</span> <span class="tag muted">Started Nov 3, 2026</span> <span class="tag muted">Last updated Nov 6, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#method">Method</a><a href="#strategies">Rule strategies</a><a href="#history">10-year check</a><a href="#short">Short model</a><a href="#benchmark">Benchmark</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
+    <nav class="toc" aria-label="On this page"><a href="#method">Method</a><a href="#strategies">Rule strategies</a><a href="#history">10-year check</a><a href="#short">Short model</a><a href="#benchmark">Benchmark</a><a href="#research">Research</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
   </section>
 
   <section aria-label="At a glance">
@@ -57,6 +65,22 @@ td.th{font-size:12px;color:var(--muted)}
       <div class="eyebrow" style="margin-bottom:8px">Main conclusion</div>
       <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0">Buying these stocks at 09:45 has no lasting edge: it lost money in every year from 2016 to 2025, whatever the rules, targets or model. The stocks usually <em>fade</em> after the opening run. A model that shorts the fade made money on weeks it never saw, but the edge is thin and depends on cheap borrowing.</p>
     </div>
+  </section>
+
+  <section id="research">
+    <h2>Research phase</h2>
+    <a class="card research-link" href="project-13-research.html" aria-label="Open the Project 13 research summary">
+      <div class="eyebrow" style="margin-bottom:8px">New model development &middot; started Nov 6, 2026</div>
+      <h3 style="margin-top:0">Building a new model toward 20% a week</h3>
+      <p>Two research paths (an original design and a blend of existing models), Jan 2025 – Nov 2026 held out as unseen data, and a pass/fail gate at every step. The first original model, a transformer that compares all stocks running the same morning, was rejected: −$9.39 per $1,000 trade at 0.5% cost, no profitable year in 2019–2024. The diagnosis showed the models see how much a stock will move but not which way, so the next model (A5) adds each stock's multi-day history.</p>
+      <div class="research-stats">
+        <div><span>Goal</span><strong>20% / week</strong></div>
+        <div><span>Needed per trade</span><strong>+3.7%</strong></div>
+        <div><span>Best model today</span><strong>−0.96%</strong></div>
+        <div><span>Next model</span><strong>A5, in progress</strong></div>
+      </div>
+      <span class="research-cta">Open the research summary &rarr;</span>
+    </a>
   </section>
 
   <section id="method">
