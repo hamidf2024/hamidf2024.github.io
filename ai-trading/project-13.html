@@ -35,7 +35,7 @@ td.th{font-size:12px;color:var(--muted)}
     <div class="eyebrow">Project 13 &middot; Intraday momentum &middot; Small caps &middot; Rules + machine learning</div>
     <h1>Project 13: High-Run Stock Day Trading</h1>
     <p class="lede">Can you profit from US stocks that run <strong>+20% above the open in the first 15 minutes</strong>? Nineteen rule strategies read the first three 5-minute candles and buy at 09:45. Each was frozen and replayed on fresh data, then checked against ten years of history (2016–2025). A gradient-boosting model then tested the opposite trade, shorting the fade.</p>
-    <p style="margin-top:14px"><span class="tag warn">Status: research, no proven edge after costs</span> <span class="tag muted">Started Nov 3, 2026</span> <span class="tag muted">Last updated Nov 4, 2026</span></p>
+    <p style="margin-top:14px"><span class="tag warn">Status: research, no proven edge after costs</span> <span class="tag muted">Started Nov 3, 2026</span> <span class="tag muted">Last updated Nov 6, 2026</span></p>
     <nav class="toc" aria-label="On this page"><a href="#method">Method</a><a href="#strategies">Rule strategies</a><a href="#history">10-year check</a><a href="#short">Short model</a><a href="#benchmark">Benchmark</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
   </section>
 
@@ -181,8 +181,9 @@ td.th{font-size:12px;color:var(--muted)}
       <div class="card">
         <h3>Next steps</h3>
         <ol class="steps">
-          <li><strong>Path 1, buy after the fade</strong>: enter between 09:50 and 10:15 only after a pullback and bounce, using the data already collected.</li>
-          <li><strong>Path 2, hold longer</strong>: test midday or close exits with full-day bars.</li>
+          <li><strong>Research phase (started Nov 6)</strong>: new models are developed on two separate paths. Path A designs original mechanisms from scratch; Path B combines the strengths of existing models. Each path follows five steps: define success, build a baseline, form a hypothesis, test one change at a time, refine and scale.</li>
+          <li><strong>First design, buy after the fade</strong> (long only): enter between 09:50 and 10:15 after a pullback and bounce. First ideas: attention across all stocks screened the same morning, a market-regime gate, and patch tokens plus market-context gating.</li>
+          <li><strong>Fair tests and gates</strong>: a leakage checklist, three scorecards (prediction, trading after costs, operational), at least 3 seeds, and gates G0–G4 before any model reaches paper trading.</li>
           <li><strong>Paper-trade the short model</strong> with a broker that has locates (IBKR or TradeZero), recording real fees.</li>
         </ol>
         <p style="font-size:13px;color:var(--muted);margin:8px 0 0">To pass, a design must average at least +0.5% per trade at 0.5% cost per side, be profitable in at least 6 of 7 test years, and stay positive in the weekly test.</p>
@@ -228,8 +229,8 @@ function draw(){var narrow=window.innerWidth<600;
  barChart(document.getElementById('strat'),ST.map(function(d){return{label:d[0],value:d[1],tip:d[0]+': '+(d[1]>=0?'+':'')+usd(d[1])}}),{height:260,rotate:narrow,fmt:usd});
  barChart(document.getElementById('shortm'),SM.map(function(d){return{label:d[0],value:d[1],tip:d[0]+': '+(d[1]>=0?'+':'')+usd(d[1])}}),{height:240,rotate:true,fmt:usd});}
 draw();var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,150)});
-var phases=[["1 · Reproduce ChatGPT phase (S1–S6)",1,0],["2 · Build and freeze S7–S19",1,0],["3 · Fresh-period tests (Oct 2025 – Aug 2026)",1,0],["4 · 10-year history + ML models",1,0],["5 · New design (buy after fade) & paper trading",0,1]];var host=document.getElementById('phases');
-phases.forEach(function(p){var r=document.createElement('div');r.className='phase';r.innerHTML='<div>'+p[0]+'</div><div class="sbar"><i class="d" style="width:'+(p[1]?100:0)+'%"></i><i class="p" style="width:'+(p[2]?100:0)+'%"></i></div><div class="n">'+(p[1]?'Done':'Next')+'</div>';host.appendChild(r);});
+var phases=[["1 · Reproduce ChatGPT phase (S1–S6)",1,0],["2 · Build and freeze S7–S19",1,0],["3 · Fresh-period tests (Oct 2025 – Aug 2026)",1,0],["4 · 10-year history + ML models",1,0],["5 · Research phase: new model development (Path A / Path B)",0,1,"Now"],["6 · Forward test of models that pass",0,0,"Later"]];var host=document.getElementById('phases');
+phases.forEach(function(p){var r=document.createElement('div');r.className='phase';r.innerHTML='<div>'+p[0]+'</div><div class="sbar"><i class="d" style="width:'+(p[1]?100:0)+'%"></i><i class="p" style="width:'+(p[2]?100:0)+'%"></i></div><div class="n">'+(p[1]?'Done':(p[3]||'Next'))+'</div>';host.appendChild(r);});
 })();
 </script>
 </body>
