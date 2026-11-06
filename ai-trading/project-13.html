@@ -182,11 +182,11 @@ td.th{font-size:12px;color:var(--muted)}
         <h3>Next steps</h3>
         <ol class="steps">
           <li><strong>Research phase (started Nov 6)</strong>: new models are developed on two separate paths. Path A designs original mechanisms from scratch; Path B combines the strengths of existing models. Each path follows five steps: define success, build a baseline, form a hypothesis, test one change at a time, refine and scale.</li>
-          <li><strong>First design, buy after the fade</strong> (long only): enter between 09:50 and 10:15 after a pullback and bounce. First ideas: attention across all stocks screened the same morning, a market-regime gate, and patch tokens plus market-context gating.</li>
-          <li><strong>Fair tests and gates</strong>: a leakage checklist, three scorecards (prediction, trading after costs, operational), at least 3 seeds, and gates G0–G4 before any model reaches paper trading.</li>
+          <li><strong>Cycle 1 result (Nov 6)</strong>: the first original model, a transformer that compares all stocks running the same morning, was tested on a long trade (buy 10:00, +5% target, −3% stop). It was <strong>rejected</strong>: −$9.39 per $1,000 trade at 0.5% cost, no profitable year in 2019–2024. Why: the models learn how much a stock will move, not which way. Next: add direction information (multi-day context) and a per-morning top-k rule.</li>
+          <li><strong>Fair tests and gates</strong>: a leakage checklist, three scorecards (prediction, trading after costs, operational), at least 3 seeds, and gates G0–G4. <strong>Jan 2025 – Nov 2026 is held out as unseen data</strong> for every model; development uses 2016–2024 only.</li>
           <li><strong>Paper-trade the short model</strong> with a broker that has locates (IBKR or TradeZero), recording real fees.</li>
         </ol>
-        <p style="font-size:13px;color:var(--muted);margin:8px 0 0">To pass, a design must average at least +0.5% per trade at 0.5% cost per side, be profitable in at least 6 of 7 test years, and stay positive in the weekly test.</p>
+        <p style="font-size:13px;color:var(--muted);margin:8px 0 0">To pass, a design must average at least +0.5% per trade at 0.5% cost per side, be profitable in at least 5 of 6 development years (2019–2024), and stay positive in the week-by-week test on unseen data (Jan 2025 – Nov 2026).</p>
       </div>
       <div class="card">
         <h3>Main risks</h3>
