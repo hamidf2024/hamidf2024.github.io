@@ -72,12 +72,12 @@ td.th{font-size:12px;color:var(--muted)}
     <a class="card research-link" href="project-13-research.html" aria-label="Open the Project 13 research summary">
       <div class="eyebrow" style="margin-bottom:8px">New model development &middot; started Nov 6, 2026</div>
       <h3 style="margin-top:0">Building a new model toward 20% a week</h3>
-      <p>Two research paths (an original design and a blend of existing models), Jan 2025 – Nov 2026 held out as unseen data, and a pass/fail gate at every step. The first original model, a transformer that compares all stocks running the same morning, was rejected: −$9.39 per $1,000 trade at 0.5% cost, no profitable year in 2019–2024. The diagnosis showed the models see how much a stock will move but not which way, so the next model (A5) adds each stock's multi-day history.</p>
+      <p>Two research paths (an original design and a blend of existing models), Jan 2025 – Nov 2026 held out as unseen data, and a pass/fail gate at every step. Two cycles so far, both rejected: a transformer that compares all stocks running the same morning, then the same models with each stock's multi-day history. Both lost about −$9.7 per $1,000 trade at 0.5% cost, with no profitable year in 2019–2024. The diagnosis: price and volume history shows how much a stock will move, not which way. Next: news and catalyst information (A6).</p>
       <div class="research-stats">
         <div><span>Goal</span><strong>20% / week</strong></div>
         <div><span>Needed per trade</span><strong>+3.7%</strong></div>
         <div><span>Best model today</span><strong>−0.96%</strong></div>
-        <div><span>Next model</span><strong>A5, in progress</strong></div>
+        <div><span>Next model</span><strong>A6, news</strong></div>
       </div>
       <span class="research-cta">Open the research summary &rarr;</span>
     </a>
@@ -207,7 +207,7 @@ td.th{font-size:12px;color:var(--muted)}
         <h3>Next steps</h3>
         <ol class="steps">
           <li><strong>Research phase (started Nov 6)</strong>: new models are developed on two separate paths. Path A designs original mechanisms from scratch; Path B combines the strengths of existing models. Each path follows five steps: define success, build a baseline, form a hypothesis, test one change at a time, refine and scale.</li>
-          <li><strong>Cycle 1 result (Nov 6)</strong>: the first original model, a transformer that compares all stocks running the same morning, was tested on a long trade (buy 10:00, +5% target, −3% stop). It was <strong>rejected</strong>: −$9.39 per $1,000 trade at 0.5% cost, no profitable year in 2019–2024. Why: the models learn how much a stock will move, not which way. Next: add direction information (multi-day context) and a per-morning top-k rule.</li>
+          <li><strong>Research results (Nov 6)</strong>: two original models tested on a long trade (buy 10:00, +5% / −3%) and both <strong>rejected</strong>: a same-morning cross-stock transformer, then multi-day context. Both about −$9.7 per $1,000 trade at 0.5% cost, no profitable year in 2019–2024. Price and volume history predicts the size of the move, not its direction. Next: news and catalysts (A6). <a href="project-13-research.html">Research summary &rarr;</a></li>
           <li><strong>Fair tests and gates</strong>: a leakage checklist, three scorecards (prediction, trading after costs, operational), at least 3 seeds, and gates G0–G4. <strong>Jan 2025 – Nov 2026 is held out as unseen data</strong> for every model; development uses 2016–2024 only.</li>
           <li><strong>Paper-trade the short model</strong> with a broker that has locates (IBKR or TradeZero), recording real fees.</li>
         </ol>
