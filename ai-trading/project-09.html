@@ -19,6 +19,14 @@
 .arch{background:#fff;border-radius:10px;padding:10px;text-align:center}
 .arch img{max-width:100%;height:auto;max-height:640px}
 @media (max-width:600px){.phase{grid-template-columns:minmax(0,1fr) 80px 40px}}
+.research-link{display:block;text-decoration:none;color:inherit;border-left:4px solid var(--accent);transition:box-shadow .15s,transform .15s}
+.research-link:hover,.research-link:focus-visible{box-shadow:0 6px 20px rgba(0,0,0,.08);transform:translateY(-1px)}
+.research-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:14px 0}
+.research-stats div{border-top:1px solid var(--line);padding-top:8px}
+.research-stats span{display:block;font-size:12px;color:var(--muted)}
+.research-stats strong{font-family:var(--serif);font-size:20px}
+.research-cta{font-weight:600;color:var(--accent)}
+@media (max-width:600px){.research-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
@@ -33,8 +41,8 @@
     <div class="eyebrow">Project 9 &middot; Quantitative research &middot; Options &middot; Machine learning</div>
     <h1>Project 9: AI Option Trading</h1>
     <p class="lede">A research-first project to find which machine-learning models and frameworks can trade listed options at a profit after real costs. So far: a reviewed study of 20 models, 20 success factors and 5 frameworks, an audit of a working ML options system, and a first experiment ready to run. The goal is to <strong>grow the whole account after all costs</strong>, testing a target of <strong>more than 1% a trading day</strong>. Win rate is tracked, not chased.</p>
-    <p style="margin-top:14px"><span class="tag warn">Status: research &amp; design &middot; no backtests yet</span> <span class="tag muted">Started Sep 27, 2026</span> <span class="tag muted">Last updated Oct 29, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#findings">Findings</a><a href="#reference">Reference system</a><a href="#experiment">First experiment</a><a href="#frameworks">Frameworks</a><a href="#benchmark">Benchmark</a><a href="#approach">Approach</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
+    <p style="margin-top:14px"><span class="tag warn">Status: research &amp; design &middot; no backtests yet</span> <span class="tag muted">Started Sep 27, 2026</span> <span class="tag muted">Last updated Nov 6, 2026</span></p>
+    <nav class="toc" aria-label="On this page"><a href="#findings">Findings</a><a href="#reference">Reference system</a><a href="#experiment">First experiment</a><a href="#research">Research</a><a href="#frameworks">Frameworks</a><a href="#benchmark">Benchmark</a><a href="#approach">Approach</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
   </section>
 
   <section aria-label="At a glance">
@@ -156,6 +164,22 @@
       </table></div>
       <p style="font-size:13px;color:var(--muted);margin:10px 0 0">These limits pull against the 1% target: with 5% of the account in options, a 1% day needs a 20% gain on the premium. Evidence, not looser limits, will settle that.</p>
     </div>
+  </section>
+
+  <section id="research">
+    <h2>Research track</h2>
+    <a class="card research-link" href="project-09-research.html" aria-label="Open the Project 9 research track">
+      <div class="eyebrow" style="margin-bottom:8px">New model development &middot; started Nov 6, 2026</div>
+      <h3 style="margin-top:0">Finding a better options model</h3>
+      <p>A permanent research track beside the build plan. Two paths: design an original model from the options problem, or combine the strengths of existing models. Both follow the same five steps, face the same honest test with real bid/ask costs and a sealed final period, and must pass six gates. Only a reproduced winner moves into the build.</p>
+      <div class="research-stats">
+        <div><span>Paths</span><strong>2</strong></div>
+        <div><span>Ideas to test</span><strong>4</strong></div>
+        <div><span>Models listed</span><strong>12</strong></div>
+        <div><span>Next gate</span><strong>R0</strong></div>
+      </div>
+      <span class="research-cta">Open the research track &rarr;</span>
+    </a>
   </section>
 
   <section id="frameworks">
@@ -305,7 +329,7 @@ function draw(){
  barChart(document.getElementById('refpnl'),REF.map(function(d){return{label:d.label,value:d.value,tip:d.label+': '+(d.value<0?'-$':'$')+Math.abs(d.value).toLocaleString()}}),{height:240,rotate:window.innerWidth<600,fmt:function(v){return (v<0?'-$':'$')+Math.round(Math.abs(v)/1000)+'k'}});
  barChart(document.getElementById('cost'),COST.map(function(d){return{label:d.label,value:d.value,tip:d.label+': Sharpe '+f2(d.value)}}),{height:260,rotate:true,fmt:f1});}
 draw();var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,150)});
-var phases=[["0 · Research review (models, factors, frameworks)",1,0,0],["1 · Verify key papers",0,1,0],["2 · Strategy × model grid",0,0,1],["3 · Data vendor & dataset",0,0,1],["4 · Targets & regime thresholds",0,0,1],["5 · Baselines (Elastic Net, VRP, overlay)",0,0,1],["6 · XGBoost / LightGBM, then LSTM",0,0,1],["7 · Regime engine, Transformer/GNN, RL",0,0,1],["8 · Multiple-testing checks & paper trading",0,0,1],["9 · Benchmark track (papers, Cboe PUT/BXM)",0,0,10],["10 · Build: define → data → baselines → models → paper → pilot → scale",0,1,7]];var host=document.getElementById('phases');
+var phases=[["0 · Research review (models, factors, frameworks)",1,0,0],["1 · Verify key papers",0,1,0],["2 · Strategy × model grid",0,0,1],["3 · Data vendor & dataset",0,0,1],["4 · Targets & regime thresholds",0,0,1],["5 · Baselines (Elastic Net, VRP, overlay)",0,0,1],["6 · XGBoost / LightGBM, then LSTM",0,0,1],["7 · Regime engine, Transformer/GNN, RL",0,0,1],["8 · Multiple-testing checks & paper trading",0,0,1],["9 · Benchmark track (papers, Cboe PUT/BXM)",0,0,10],["10 · Build: define → data → baselines → models → paper → pilot → scale",0,1,7],["R · Research track: new-model discovery (new)",0,1,6]];var host=document.getElementById('phases');
 phases.forEach(function(p){var tot=p[1]+p[2]+p[3];var r=document.createElement('div');r.className='phase';r.innerHTML='<div>'+p[0]+'</div><div class="sbar"><i class="d" style="width:'+(100*p[1]/tot)+'%"></i><i class="p" style="width:'+(100*p[2]/tot)+'%"></i></div><div class="n">'+(p[1]?'Done':p[2]?'Partial':'—')+'</div>';host.appendChild(r);});
 })();
 </script>

@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Project 9 Research — Hamid Faghidi</title>
+<meta name="description" content="Project 9 research track: how new option-trading models are found or invented and tested. Two paths, five steps each, gates R0–R5, a sealed final test and a starting model inventory.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+.verdict{display:inline-block;font-weight:700;font-size:12px;letter-spacing:.02em;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.verdict.done{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
+.verdict.wait{background:var(--line);color:var(--muted)}
+.gates{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-top:6px}
+.gates div{border-top:3px solid var(--line);padding-top:8px;font-size:14px}
+.gates div.on{border-top-color:var(--accent)}
+.gates b{display:block;font-family:var(--serif);font-size:18px}
+.gates span{color:var(--muted);font-size:13px}
+@media (max-width:760px){.gates{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../">Hamid Faghidi</a>
+  <nav><a href="../#categories">Projects</a><a href="./">AI Trading</a></nav>
+</div></header>
+
+<main class="wrap">
+  <div class="crumbs" style="padding-top:20px"><a href="../">Home</a><span class="sep">/</span><a href="./">AI Trading</a><span class="sep">/</span><a href="project-09.html">Project 9</a><span class="sep">/</span><span>Research</span></div>
+  <section class="hero" style="padding-top:28px">
+    <div class="eyebrow">Project 9 &middot; Research track &middot; New model development</div>
+    <h1>Project 9 Research: Finding a Better Options Model</h1>
+    <p class="lede">A permanent track with one job: find or invent models that move the project toward its goal of growing the account more than 1% a trading day, and test them so strictly that a good result can be trusted. It runs beside the build plan, uses the same data and trade simulator, and only a model that survives every gate moves into the build.</p>
+    <p style="margin-top:14px"><span class="tag warn">Status: framework set up, cycle 1 not started</span> <span class="tag muted">Started Nov 6, 2026</span> <span class="tag muted">Last updated Nov 6, 2026</span></p>
+    <nav class="toc" aria-label="On this page"><a href="#paths">Two paths</a><a href="#contract">The test</a><a href="#ideas">Path A ideas</a><a href="#inventory">Path B models</a><a href="#gates">Gates</a><a href="#next">Next</a><a href="project-09.html">&larr; Project 9</a></nav>
+  </section>
+
+  <section aria-label="At a glance">
+    <div class="statstrip">
+      <div class="primary"><div class="k">Aim</div><div class="v">&gt;1%</div><div class="s">account growth a day, to be tested</div></div>
+      <div><div class="k">Paths</div><div class="v sm">2</div><div class="s">original design &middot; build on existing</div></div>
+      <div><div class="k">Ideas to test</div><div class="v sm">4</div><div class="s">Path A seed hypotheses</div></div>
+      <div><div class="k">Models listed</div><div class="v sm">12</div><div class="s">Path B starting inventory</div></div>
+      <div><div class="k">First cycle</div><div class="v sm">10 wks</div><div class="s">about 200 research hours</div></div>
+      <div><div class="k">Models tested</div><div class="v sm">0</div><div class="s">waiting for option data</div></div>
+    </div>
+  </section>
+
+  <section id="paths">
+    <h2>Two paths, the same five steps</h2>
+    <div class="card">
+      <div class="table-scroll"><table>
+        <thead><tr><th>Step</th><th>Path A: original design</th><th>Path B: build on existing models</th></tr></thead>
+        <tbody>
+          <tr><td>1. Define success</td><td colspan="2">Net account return per day after all costs, under a fixed trading rule, on data the model never saw; beat simple rules and the strongest existing model; stay inside the risk limits</td></tr>
+          <tr><td>2. Baseline</td><td>Simple rules, a linear model, gradient boosting and a small standard transformer; study where they fail</td><td>The same, plus each listed model run on our data and profiled for strengths and weaknesses</td></tr>
+          <tr><td>3. Hypothesis</td><td>A new mechanism aimed at a failure we saw, with the result that would disprove it written down first</td><td>A combination of strengths that should work together, and why it might not</td></tr>
+          <tr><td>4. Test one change</td><td>Each mechanism on its own, against a same-size model without it</td><td>Each borrowed part on and off; vs its source models and a simple blend</td></tr>
+          <tr><td>5. Refine and scale</td><td colspan="2">Keep what holds across seeds and periods, drop what adds nothing, grow only after a gate review; one finalist per path</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <section id="contract">
+    <h2>The test every model faces</h2>
+    <div class="grid g3">
+      <div class="card"><h3>Same task</h3><p>SPY and QQQ options, 7&ndash;21 days to expiry, a decision every 15 minutes, a 60-minute hold. The model scores contracts; a fixed rule trades the best one only if its predicted edge clears costs, otherwise it stays out.</p></div>
+      <div class="card"><h3>Honest fills</h3><p>Buy at the ask, sell at the bid, plus fees, slippage and delay, tested again at higher costs. Every input is time-stamped so nothing from the future leaks in.</p></div>
+      <div class="card"><h3>One sealed test</h3><p>The most recent 12 months of data stay locked until each path has frozen one finalist. They are opened once, then the result is rerun from scratch.</p></div>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Every run is logged, failures included, and results are adjusted for how many models were tried. A result can be supported, unsupported, inconclusive or invalid.</p>
+  </section>
+
+  <section id="ideas">
+    <h2>Path A: first ideas to test</h2>
+    <div class="card">
+      <div class="table-scroll"><table>
+        <thead><tr><th>#</th><th>Idea</th><th>What would disprove it</th></tr></thead>
+        <tbody>
+          <tr><td>A1</td><td><strong>See the whole option chain at once.</strong> Treat every contract as a token so the model compares strikes and expiries instead of scoring each alone.</td><td>A same-size model that scores contracts one by one does as well.</td></tr>
+          <tr><td>A2</td><td><strong>Learn costs and when to sit out.</strong> Train directly on profit after the spread, with a built-in &ldquo;don&rsquo;t trade&rdquo; output.</td><td>Net daily return and trade count don&rsquo;t improve under the same costs.</td></tr>
+          <tr><td>A3</td><td><strong>Adapt memory to volatility.</strong> When markets turn fast, rely less on older minutes.</td><td>The gain doesn&rsquo;t come from regime changes, or vanishes across periods.</td></tr>
+          <tr><td>A4</td><td><strong>Don&rsquo;t depend on rare big winners.</strong> Penalise relying on a few huge trades, for steadier days.</td><td>Average return falls more than day-to-day swings shrink.</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">A4 comes from the reference system we reviewed, which made about 85% of its displayed profit from positions opened on one day. Cycle 1 tests at most two of these.</p>
+    </div>
+  </section>
+
+  <section id="inventory">
+    <h2>Path B: models to learn from</h2>
+    <p style="color:var(--muted);margin:-6px 0 14px">A starting list, not a ranking. Each is profiled and run on our task before any of its parts are reused.</p>
+    <div class="grid g2">
+      <div class="card">
+        <h3>Proven on option data</h3>
+        <ul>
+          <li><strong>Gradient-boosted trees</strong> on option features: profitable after costs in a 1996&ndash;2020 study (Bali et al.)</li>
+          <li><strong>LSTM with a turnover penalty</strong>: kept a Sharpe ratio of 0.69 at 50 bps cost vs 0.39 without (Tan et al.)</li>
+          <li><strong>Tree-based volatility forecasts</strong>: 13% lower error on one-month implied volatility (Federal Reserve)</li>
+          <li><strong>Surface and chain models</strong> (CNN, graph networks) and <strong>deep hedging</strong>, for later</li>
+          <li><strong>The reference system</strong>: separate &ldquo;gain&rdquo; and &ldquo;tradability&rdquo; outputs</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>General forecasting models</h3>
+        <ul>
+          <li><strong>TimesFM-3</strong> (Google, 2026): many series at once, gives ranges not just points; non-commercial checkpoint</li>
+          <li><strong>Chronos-2</strong> (Amazon): uses related series and extra inputs without retraining</li>
+          <li><strong>TiRex 2</strong> (NXAI): compact recurrent forecaster</li>
+          <li><strong>Toto 2</strong> (Datadog): not yet independently checked</li>
+          <li><strong>PatchTST</strong> and <strong>TFT</strong>: proven transformer designs</li>
+        </ul>
+        <p style="font-size:13px;color:var(--muted);margin:10px 0 0">These forecast prices, not option profit, and finance studies show general benchmark rankings don&rsquo;t carry over. So each is re-ranked on our own test.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="gates">
+    <h2>Gates</h2>
+    <div class="card">
+      <div class="gates">
+        <div class="on"><b>R0</b><span>Task, limits and minimum useful gain set</span></div>
+        <div><b>R1</b><span>Data checked: timing, no leakage, replay</span></div>
+        <div><b>R2</b><span>Baselines and model profiles; test frozen</span></div>
+        <div><b>R3</b><span>Experiments done; one finalist per path</span></div>
+        <div><b>R4</b><span>Sealed test, run once</span></div>
+        <div><b>R5</b><span>Clean rerun; graduate, revise or stop</span></div>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin:14px 0 0">Highlighted: next gate. A model must pass each in order. A finalist that is reproduced moves into the build plan as a challenger (stage 10.4), then paper trading. A negative or inconclusive result is recorded and still counts.</p>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>Status</h3>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Item</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Framework, templates, model list and experiment log set up</td><td><span class="verdict done">Done Nov 6</span></td></tr>
+          <tr><td>R0: cycle 1 brief, budget and minimum useful gain</td><td><span class="verdict wait">Waiting for owner decisions</span></td></tr>
+          <tr><td>R1: historical option quotes bought and checked</td><td><span class="verdict wait">Waiting for data</span></td></tr>
+          <tr><td>R2&ndash;R5: baselines, experiments, sealed test</td><td><span class="verdict wait">Not started</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <section id="next">
+    <h2>Next</h2>
+    <div class="grid g2">
+      <div class="card"><h3>Decide the limits</h3><p style="margin-bottom:0">Account size, drawdown and daily-loss limits, starting broker, data budget, and the research budget for compute and time. These set gate R0.</p></div>
+      <div class="card"><h3>Get the data</h3><p style="margin-bottom:0">Compare small samples of historical option quotes from two or three vendors, then buy one dataset. The baselines and both paths start as soon as it passes the data check.</p></div>
+    </div>
+  </section>
+
+  <section id="disclosure">
+    <h2>Disclosures</h2>
+    <p class="disclosure">No model has been trained or tested yet. Figures for other studies are their authors&rsquo; own, from different markets, periods and costs. Model names are listed for research only. Nothing here is investment advice.</p>
+    <p style="margin-top:12px"><a href="project-09.html">&larr; Back to Project 9</a></p>
+  </section>
+</main>
+<footer><div class="wrap">&copy; 2026 Hamid Faghidi &middot; Trading results are hypothetical backtests. Nothing on this site is investment advice.</div></footer>
+</body>
+</html>
