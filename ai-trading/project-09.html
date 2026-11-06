@@ -41,8 +41,8 @@
     <div class="eyebrow">Project 9 &middot; Quantitative research &middot; Options &middot; Machine learning</div>
     <h1>Project 9: AI Option Trading</h1>
     <p class="lede">A research-first project to find which machine-learning models and frameworks can trade listed options at a profit after real costs. So far: a reviewed study of 20 models, 20 success factors and 5 frameworks, an audit of a working ML options system, and a first experiment ready to run. The goal is to <strong>grow the whole account after all costs</strong>, testing a target of <strong>more than 2% a trading day</strong>. Win rate is tracked, not chased.</p>
-    <p style="margin-top:14px"><span class="tag warn">Status: research &amp; design &middot; no backtests yet</span> <span class="tag muted">Started Sep 27, 2026</span> <span class="tag muted">Last updated Nov 6, 2026 &middot; goal raised to 2% a day</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#findings">Findings</a><a href="#reference">Reference system</a><a href="#experiment">First experiment</a><a href="#research">Research</a><a href="#frameworks">Frameworks</a><a href="#benchmark">Benchmark</a><a href="#approach">Approach</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
+    <p style="margin-top:14px"><span class="tag warn">Status: research &amp; design &middot; no backtests yet</span> <span class="tag muted">Started Sep 27, 2026</span> <span class="tag muted">Last updated Nov 6, 2026</span></p>
+    <nav class="toc" aria-label="On this page"><a href="#findings">Findings</a><a href="#reference">Reference system</a><a href="#experiment">First experiment</a><a href="#research">Research</a><a href="#data">Data</a><a href="#frameworks">Frameworks</a><a href="#benchmark">Benchmark</a><a href="#approach">Approach</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
   </section>
 
   <section aria-label="At a glance">
@@ -129,7 +129,7 @@
       <div class="card">
         <div class="table-scroll"><table>
           <tbody>
-            <tr><td>Markets</td><td>SPY and QQQ options (one shared risk bucket)</td></tr>
+            <tr><td>Markets</td><td>SPY and QQQ first, then options on the 150 most-traded underlyings</td></tr>
             <tr><td>Trades</td><td>Buy calls or puts; debit spreads as a second test</td></tr>
             <tr><td>Expiry</td><td>7&ndash;21 days out, delta 0.35&ndash;0.60</td></tr>
             <tr><td>Timing</td><td>Decide every 15 minutes, hold 60 minutes, close same day</td></tr>
@@ -180,6 +180,34 @@
       </div>
       <span class="research-cta">Open the research track &rarr;</span>
     </a>
+  </section>
+
+  <section id="data">
+    <h2>Data</h2>
+    <p style="color:var(--muted);margin:-6px 0 14px">Collected Nov 6, 2026 from official and exchange sources, checked, and kept locally (licensed for personal use). The project now covers options on a wide range of stocks, not only SPY and QQQ.</p>
+    <div class="grid g2">
+      <div class="card">
+        <h3>What we have</h3>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Dataset</th><th>Source</th><th>Coverage</th></tr></thead>
+          <tbody>
+            <tr><td>Daily prices and dividends</td><td>Nasdaq</td><td>150 underlyings, Nov 2016 &ndash; Nov 2026, 350,015 days, no gaps</td></tr>
+            <tr><td>Option chain snapshot</td><td>Nasdaq</td><td>564,890 contracts on 392 underlyings, Nov 6</td></tr>
+            <tr><td>Volatility indices</td><td>Cboe</td><td>VIX (from 1990), VIX1D, VIX9D, VIX3M, VIX6M, VVIX, SKEW, VXN</td></tr>
+            <tr><td>Interest rates</td><td>Federal Reserve (FRED)</td><td>1- and 3-month Treasury bills, SOFR</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="card">
+        <h3>The universe: Liquid-150</h3>
+        <p>The 150 underlyings with the most open option contracts, picked from 404 candidates: SPY, QQQ, IWM, DIA and 146 large stocks (49 technology, 26 consumer, 15 finance, 15 health care and more).</p>
+        <p style="margin-bottom:0">Option costs vary widely: the typical gap between bid and ask is <strong>10.6%</strong> of the option&rsquo;s price, from 1.4% on SPY to over 60% on the least liquid names. Costs will be modelled per stock.</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px;border-left:4px solid var(--warn)">
+      <h3>Still missing: historical intraday option quotes</h3>
+      <p style="margin-bottom:0">No free, reliable source has years of minute-by-minute option bid/ask prices. The cheapest route starts with <strong>Alpaca</strong> ($99 a month: stock minute bars since 2016, option data since Feb 2024, and live option quotes recorded from now on), then Cboe end-of-day option data since 2012 and Databento quotes for the test period. Buying data is the next decision.</p>
+    </div>
   </section>
 
   <section id="frameworks">
@@ -283,7 +311,7 @@
       <div class="card">
         <h3>Main challenges</h3>
         <ul>
-          <li><span class="tag bad">Data</span> Option quotes with clean bid/ask history cost money; the vendor isn't chosen yet.</li>
+          <li><span class="tag bad">Data</span> Free data is collected; years of intraday option bid/ask prices still need a paid vendor.</li>
           <li><span class="tag warn">Costs</span> Option spreads are wide, and published edges shrink fast as costs rise.</li>
           <li><span class="tag warn">Overfitting</span> Every model and setting tried is logged and corrected for before any result counts.</li>
           <li><span class="tag warn">Target vs risk</span> 2% a day is far above any published result; the risk limits may make it unreachable.</li>
