@@ -116,10 +116,11 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
         <p class="att-why" id="a13why"><strong>Why:</strong> pre-training made the model rank ordinary moments slightly better in every year, but the trade uses only the rarest, strongest moments of stocks that ran 10%+, which look little like the broad stocks it pre-trained on; those picks got worse (+0.22% before costs vs A11's +0.76%). <strong>Lesson:</strong> judge and train models on how their top picks perform, not on average ranking.</p>
       </article>
       <article class="card attempt" id="att5">
-        <div class="att-head"><span class="att-n">Attempt 5</span><span class="verdict run">Waiting for data</span></div>
-        <h3>A12 &middot; Model on gap-up holders</h3>
-        <p><strong>Idea:</strong> the one stock set with momentum: gap-ups of 10% or more that hold their gap and break their opening range. A model picks among them so the chosen trades clear costs. Needs that set's data for 2019–2026.</p>
-        <dl class="att-res"><div><dt>2019–2024</dt><dd>download pending</dd></div><div><dt>Unseen</dt><dd>—</dd></div></dl>
+        <div class="att-head"><span class="att-n">Attempt 5</span><span class="verdict no">Rejected</span></div>
+        <h3>A12 &middot; Breakout quality on gap-up holders</h3>
+        <p><strong>Idea:</strong> the one stock set with momentum: gap-ups of 10% or more that hold their gap and break their opening range. A transformer reads the minutes up to the breakout and judges whether it is a good one.</p>
+        <dl class="att-res"><div><dt>2019–2024</dt><dd class="neg">−$3.94 per $1,000 &middot; +$1.06 at 0.25%</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
+        <p class="att-why"><strong>Why:</strong> the model clearly separates good breakouts from bad ones: it gains +$8.08 per trade over taking every breakout, the first improvement over a baseline that is statistically reliable, and its ranking is twice as strong as on stocks that ran 10%+. But the average breakout lost money before costs in 2019–2024, so picking the better half only reaches +0.61%. <strong>Next:</strong> trade only the breakouts it is most sure of.</p>
       </article>
       <article class="card attempt" id="att4">
         <div class="att-head"><span class="att-n">Attempt 4</span><span class="verdict no">Rejected</span></div>
@@ -481,11 +482,12 @@ var MODELS=[
  {n:"#2 A10",stage:3,name:"Meta-Labeled Timing Transformer",idea:"The transformer proposes; a judge trained on earlier years decides.",dev:0.276,un:-0.980,v:["no","Failed unseen test"],lesson:"Part of the edge was lagging prices in thin moments; train on executable prices."},
  {n:"#3 A11",stage:3,name:"Tradeable-Price Timing Transformer",idea:"A10's design trained only on prices that could really be traded, in actively traded moments.",dev:-0.245,un:null,v:["no","Rejected"],lesson:"The honest timing edge in these stocks (+0.7% before costs) is smaller than the cost of trading."},
  {n:"#4 D3",stage:3,name:"New stock sets (no model)",idea:"1,080 long designs on opening flushes, gap-ups that hold, gap-down reversals and liquid stocks in play.",dev:-0.33,un:null,v:["no","Rejected"],lesson:"Only gap-ups that hold keep rising (+0.68% before costs), still below cost.",note:"best design, 2016–2018"},
- {n:"#5 A12",stage:3,name:"Model on gap-up holders",idea:"Select among gap-ups that hold and break their opening range, so the best trades clear costs.",dev:null,un:null,v:["run","Waiting for data"],lesson:"—"},
+ {n:"#5 A12",stage:3,name:"Model on gap-up holders",idea:"Select among gap-ups that hold and break their opening range, so the best trades clear costs.",dev:-0.394,un:null,v:["no","Rejected"],lesson:"First reliable gain over its baseline (+0.81% per trade); the average breakout faded after 2018, so selection must be stricter."},
+ {n:"#8 A12-v2",stage:3,name:"Gap-up holders, stricter selection",idea:"A12 trading only the breakouts it is most sure of, with the threshold chosen on each validation year.",dev:null,un:null,v:["run","Next"],lesson:"—"},
  {n:"#7 A14",stage:3,name:"Tail-Asymmetry Transformer",idea:"Chance of a 2%+ rise minus chance of a 2%+ fall in the next hour, so volatility cancels and only the direction of big moves counts.",dev:-0.527,un:null,v:["no","Rejected"],lesson:"Even the best moments of stocks that ran 10%+ barely rise on real prices: this stock set is exhausted for long trades."},
  {n:"#6 A13",stage:3,name:"Pretrained candle transformer",idea:"Learns how candles behave from 50,000 unlabelled stock-days (2016–2018), then learns the honest timing task. Inspired by finance foundation models (Kronos).",dev:-0.780,un:null,v:["no","Rejected"],lesson:"Better average ranking, worse top picks: for one trade a day only the extreme tail counts."}
 ];
-var STATUS="Attempt 5 (A12, gap-up holders) waits for data (39 of 95 months) · M1 not yet confirmed";
+var STATUS="Attempt 8 (A12-v2) next · M1 not yet confirmed";
 /* ======================================================================================================== */
 function money(v){return v===null?"—":(v<0?"−$":"+$")+Math.abs(v*10).toFixed(2);}
 function cls(v){return v===null?"":(v>0?"pos":"neg");}
