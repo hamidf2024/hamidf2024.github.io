@@ -13,6 +13,12 @@
 .verdict.no{background:color-mix(in srgb,var(--bad,#b4443b) 14%,transparent);color:var(--bad,#b4443b)}
 .verdict.run{background:color-mix(in srgb,var(--warn) 16%,transparent);color:var(--warn)}
 .verdict.base{background:var(--line);color:var(--muted)}
+.loopcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:16px}
+.attempt h3{margin:6px 0 10px}.att-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.att-n{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.att-res{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px}
+.att-res dt{font-size:12px;color:var(--muted)}.att-res dd{margin:2px 0 0;font-weight:700}.att-res dd.pos{color:var(--good,#2f7d4f)}.att-res dd.neg{color:var(--bad,#b4443b)}
+.att-why{font-size:14px;margin-bottom:0}.muted-card{opacity:.85}
 .verdict.ok{background:color-mix(in srgb,var(--good,#2f7d4f) 16%,transparent);color:var(--good,#2f7d4f)}
 .why li{margin-bottom:8px}
 td.neg{color:var(--bad,#b4443b)}td.pos{color:var(--good,#2f7d4f)}
@@ -29,18 +35,18 @@ td.neg{color:var(--bad,#b4443b)}td.pos{color:var(--good,#2f7d4f)}
   <section class="hero" style="padding-top:28px">
     <div class="eyebrow">Project 13 &middot; Research phase &middot; New model development</div>
     <h1>Project 13 Research: Building a New Model</h1>
-    <p class="lede">A dedicated phase for one job: develop new models that pick day trades in stocks running hard at the open, and test them so honestly that a good result can be trusted. Seven cycles so far, all rejected by their own pass/fail rules. The first five showed no edge for long trades at a fixed time. The sixth changed the question, from <em>which</em> stock to buy at 10:00 to <em>when</em> to buy during the day, and came within about 0.2% per trade of breaking even. The seventh (A9) tried to learn when to sell as well, and taught a new lesson about how a buy decision should be made.</p>
-    <p style="margin-top:14px"><span class="tag warn">Status: A10 failed its unseen test; M1 not yet reached; loop continues</span> <span class="tag muted">Started Nov 6, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#goal">Goal vs today</a><a href="#method">How it works</a><a href="#cycle1">Cycle 1</a><a href="#cycle2">Cycle 2</a><a href="#cycle3">Cycle 3</a><a href="#cycle4">Cycle 4</a><a href="#cycle5">Cycle 5</a><a href="#cycle6">Cycle 6</a><a href="#cycle7">Cycle 7</a><a href="#loop">Loop to M1</a><a href="#why">Why it failed</a><a href="#compare">Compare models</a><a href="#registry">Model registry</a><a href="#next">Next</a><a href="project-13.html">&larr; Project 13</a></nav>
+    <p class="lede">A dedicated phase for one job: develop new models that pick long day trades in stocks running hard at the open, and test them so honestly that a good result can be trusted. It has run in three stages: <strong>fixed-time models</strong> (cycles 1–5, no edge), <strong>timing models</strong> that decide <em>when</em> to buy during the day (cycles 6–7, close to break even), and since Nov 7 a <strong>continuous loop</strong> that designs, tests and learns until a model reaches the first milestone (M1, break even after costs) and holds on unseen data.</p>
+    <p style="margin-top:14px"><span class="tag warn" id="statustag">Status: loop attempt 3 (A11) running; M1 not yet confirmed</span> <span class="tag muted">Started Nov 6, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
+    <nav class="toc" aria-label="On this page"><a href="#goal">Goal vs today</a><a href="#loop">Loop to M1</a><a href="#method">How it works</a><a href="#history">Earlier cycles</a><a href="#compare">Compare models</a><a href="#registry">Model registry</a><a href="#next">Next</a><a href="project-13.html">&larr; Project 13</a></nav>
   </section>
 
   <section aria-label="At a glance">
     <div class="statstrip">
       <div class="primary"><div class="k">Major goal</div><div class="v">20%</div><div class="s">per week, or more than 75% per month</div></div>
-      <div><div class="k">Needed per trade</div><div class="v sm">+3.7%</div><div class="s">one trade per morning, after costs</div></div>
-      <div><div class="k">Best model today</div><div class="v sm">−0.96%</div><div class="s">per trade, 2019–2024</div></div>
-      <div><div class="k">Perfect pick</div><div class="v sm">+2.68%</div><div class="s">ceiling with a +5% target</div></div>
-      <div><div class="k">Models tested</div><div class="v sm">8</div><div class="s">A1, A5 (×2), A6 (×2), A7, baselines</div></div>
+      <div><div class="k">First milestone (M1)</div><div class="v sm">&gt; 0%</div><div class="s">net per trade at 0.5% cost, real fills</div></div>
+      <div><div class="k">Best on 2019–2024</div><div class="v sm">+0.28%</div><div class="s">A10, but failed unseen data</div></div>
+      <div><div class="k">Best confirmed</div><div class="v sm">none yet</div><div class="s">no model has passed unseen data</div></div>
+      <div><div class="k">Models tested</div><div class="v sm">15</div><div class="s">incl. 3 loop attempts</div></div>
       <div><div class="k">Unseen data</div><div class="v sm">22 months</div><div class="s">Jan 2025 – Nov 2026, held out</div></div>
     </div>
   </section>
@@ -70,6 +76,44 @@ td.neg{color:var(--bad,#b4443b)}td.pos{color:var(--good,#2f7d4f)}
     </div>
   </section>
 
+  <section id="loop">
+    <h2>Loop to the first milestone</h2>
+    <div class="card">
+      <p style="margin-top:0">Since Nov 7, 2026 the research runs as a continuous loop: learn from every model so far and from outside research, design a new model, write its plan before running it, test it on 2019–2024 at real fills, record why it worked or not, and repeat. A model that reaches M1 on 2019–2024 gets one test on the unseen data (Jan 2025 – Nov 2026); only a pass there counts. Every attempt is counted, so a lucky result is not mistaken for an edge, and the view of the problem changes when progress stalls.</p>
+      <div class="chart-title"><h3>Net return per trade at 0.5% cost, real fills</h3></div>
+      <p class="chart-note">Timing models only. "dev" = development years 2019–2024; "unseen" = Jan 2025 – Nov 2026. Above zero = milestone M1.</p>
+      <div id="loopchart"></div>
+    </div>
+    <div class="loopcards">
+      <article class="card attempt" id="att3">
+        <div class="att-head"><span class="att-n">Attempt 3</span><span class="verdict run" id="a11badge">Training</span></div>
+        <h3>A11 &middot; Tradeable-Price Timing Transformer</h3>
+        <p><strong>Idea:</strong> A10's lesson applied to the data itself: every training label uses prices a trader would really get, and a moment counts only if the stock traded at least 50 times in the 5 minutes before it. The model also sees how actively each bar traded.</p>
+        <dl class="att-res" id="a11res"><div><dt>2019–2024</dt><dd>running</dd></div><div><dt>Unseen</dt><dd>—</dd></div></dl>
+        <p class="att-why" id="a11why">Results will appear here when the run finishes.</p>
+      </article>
+      <article class="card attempt">
+        <div class="att-head"><span class="att-n">Attempt 2</span><span class="verdict no">Failed unseen test</span></div>
+        <h3>A10 &middot; Meta-Labeled Timing Transformer</h3>
+        <p><strong>Idea:</strong> the transformer proposes trades; a second model, trained only on earlier years, judges which proposals pay after costs (price level, gap, opening run, distance from VWAP, whether the stock is trading).</p>
+        <dl class="att-res"><div><dt>2019–2024</dt><dd class="pos">+$2.76 per $1,000 &middot; M1</dd></div><div><dt>Unseen</dt><dd class="neg">−$9.80 &middot; 0 / 8 quarters</dd></div></dl>
+        <p class="att-why"><strong>Why:</strong> most of the paper gain came from thinly traded moments, where the recorded price lags and then jumps when the next trade prints. It looks like a predictable rise but cannot be bought. <strong>Lesson:</strong> build training labels from real, executable prices.</p>
+      </article>
+      <article class="card attempt">
+        <div class="att-head"><span class="att-n">Attempt 1</span><span class="verdict no">Rejected (0.03% short)</span></div>
+        <h3>A9-v2 &middot; A9 with a direction-only entry</h3>
+        <p><strong>Idea:</strong> keep A9's multi-horizon model and its "sell when the outlook turns negative" exit, but buy on the 60-minute direction-only score with A8's first-signal rule.</p>
+        <dl class="att-res"><div><dt>2019–2024</dt><dd class="neg">−$0.34 per $1,000</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
+        <p class="att-why"><strong>Why:</strong> fixing the buy rule alone moved A9 from −$9.50 to −$0.34. Trades started 10:00–11:00 lost and losers were held longer than winners. <strong>Lesson:</strong> decision rules matter as much as the model.</p>
+      </article>
+      <article class="card attempt muted-card">
+        <div class="att-head"><span class="att-n">Before the loop</span><span class="verdict base">Reference</span></div>
+        <h3>A8 and A9 (cycles 6 and 7)</h3>
+        <p>A8 changed the question to <em>when</em> to buy: −$1.79 per trade (real fills). A9 added "when to sell" but ranked on volatility-scaled gains: −$9.50. Details in <a href="#history">earlier cycles</a>.</p>
+      </article>
+    </div>
+  </section>
+
   <section id="method">
     <h2>How the research works</h2>
     <div class="card">
@@ -90,6 +134,11 @@ td.neg{color:var(--bad,#b4443b)}td.pos{color:var(--good,#2f7d4f)}
       <div class="card"><h3>Fair tests</h3><p>A plan written before each run, one change at a time, a leakage checklist, at least 3 random seeds, costs of 0.25%, 0.5% and 1%, and every result kept, including failures.</p></div>
       <div class="card"><h3>Decision gates</h3><p>G0 setup &rarr; G1 plan &rarr; G2 beats baselines on 2019–2024 &rarr; G3 holds on unseen data &rarr; G4 forward test. A model must pass each in order.</p></div>
     </div>
+  </section>
+
+  <section id="history" style="padding-bottom:0">
+    <h2>Earlier cycles</h2>
+    <p style="color:var(--muted);max-width:760px">How the research got here: five cycles of fixed-time models that found no long edge, then two timing models (A8, A9) that came close to break even. Each cycle's result and lesson feed the loop above.</p>
   </section>
 
   <section id="cycle1">
@@ -283,22 +332,6 @@ td.neg{color:var(--bad,#b4443b)}td.pos{color:var(--good,#2f7d4f)}
     </div>
   </section>
 
-  <section id="loop">
-    <h2>Loop to the first milestone</h2>
-    <div class="card">
-      <p>Since Nov 7, 2026 the research runs as a continuous loop until a model reaches M1: learn from every model so far and from outside research, design a new model, test it on 2019–2024 at real fills, record why it worked or not, and repeat. Every attempt is counted, so a lucky result is not mistaken for an edge, and a model that reaches M1 must then hold on the unseen data (Jan 2025 – Nov 2026).</p>
-      <div class="table-scroll"><table>
-        <thead><tr><th>Attempt</th><th>Model</th><th>Per $1,000 trade at 0.5%</th><th>At 0.25%</th><th>Before costs</th><th>Positive years</th><th>Milestone</th></tr></thead>
-        <tbody>
-          <tr><td>2</td><td><strong>A10: Meta-Labeled Timing Transformer</strong>. A9 proposes trades; a second model, trained only on earlier years, judges which proposals pay after costs</td><td class="num pos"><strong>+$2.76</strong></td><td class="num pos">+$7.78</td><td class="num pos">+$12.84</td><td class="num">4 / 6</td><td><span class="verdict no">M1 on 2019–2024; failed unseen (−$9.80)</span></td></tr>
-          <tr><td>1</td><td>A9-v2: A9's predictions, buy on the 60-minute direction-only score, sell when the outlook turns negative</td><td class="num neg">−$0.34</td><td class="num pos">+$4.67</td><td class="num pos">+$9.71</td><td class="num">3 / 6</td><td><span class="verdict no">none (0.03% short)</span></td></tr>
-        </tbody>
-      </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Attempt 1 fixed A9's buy rule only, and moved it from −$9.50 to −$0.34 per trade, the best long result so far. What still blocks M1: trades started between 10:00 and 11:00 lose, and losing trades are held longer than winners. Attempt 2 (A10) added a judge that learns from past proposals which ones pay: cheap vs expensive stocks, the gap and opening run, how stretched the price is from VWAP, and whether the stock is actually trading at the entry moment. It is the first long model to make money after 0.5% costs on 2019–2024, but its 95% range (−$1.51 to +$6.89) still includes zero, so the unseen test decided.</p>
-      <p style="margin:12px 0 0"><strong>Unseen test (Jan 2025 – Nov 2026): failed.</strong> −$9.80 per trade at 0.5% cost, 0 of 8 quarters positive. The transformer's ranking still worked on recorded prices, but most of the paper gain came from moments when the stock was barely trading: the recorded price lags, then jumps when the next trade prints, which looks like a predictable rise but cannot be bought. Lesson: build the training labels from real, executable prices only. That is the next attempt.</p>
-    </div>
-  </section>
-
   <section id="compare">
     <h2>All models compared</h2>
     <div class="card">
@@ -381,6 +414,7 @@ td.neg{color:var(--bad,#b4443b)}td.pos{color:var(--good,#2f7d4f)}
 <script src="../charts.js"></script>
 <script>
 (function(){
+var LP=[["A8 (cycle 6)",-0.179],["A9 (cycle 7)",-0.950],["#1 A9-v2",-0.034],["#2 A10 dev",0.276],["#2 A10 unseen",-0.980]];
 var C=[["A10*",0.276],["A9-v2*",-0.034],["A8 timing*",-0.179],["Boost (A8 task)*",-0.551],["A9 dyn exit*",-0.950],["A1",-0.911],["A6 (news)",-0.934],["B0",-0.960],["Boost + ctx",-0.965],["Boosting",-0.969],["A5 (ctx)",-0.982],["A7 + news",-0.996],["Boost + news",-0.997],["A7",-1.041],["A7 + ctx",-1.045],["Trade all",-1.149],["M1 break even",0]];
 var G=[["Trade all",-1.15],["Boosting",-0.89],["B0",-0.93],["A1",-0.94],["A5",-0.91],["A6",-0.89],["A7",-0.91],["Perfect pick",2.68],["Goal needs",3.71]];
 function pct(v){return (v<0?'−':'')+Math.abs(v).toFixed(1)+'%';}
@@ -388,6 +422,8 @@ function draw(){var narrow=window.innerWidth<600;
  barChart(document.getElementById('goalchart'),G.map(function(d){return{label:d[0],value:d[1],tip:d[0]+': '+(d[1]>=0?'+':'−')+Math.abs(d[1]).toFixed(2)+'% per trade'}}),{height:260,rotate:narrow,fmt:pct});}
 draw();
 function drawC(){var narrow=window.innerWidth<700;barChart(document.getElementById('cmpchart'),C.map(function(d){return{label:d[0],value:d[1],tip:d[0]+': '+(d[1]>=0?'+':'−')+Math.abs(d[1]).toFixed(2)+'% per trade'}}),{height:280,rotate:true,fmt:pct});}
+function drawL(){barChart(document.getElementById('loopchart'),LP.map(function(d){return{label:d[0],value:d[1],tip:d[0]+': '+(d[1]>=0?'+':'−')+Math.abs(d[1]).toFixed(2)+'% per trade'}}),{height:240,rotate:window.innerWidth<700,fmt:pct});}
+drawL();window.addEventListener('resize',function(){clearTimeout(window.__l);window.__l=setTimeout(drawL,150)});
 drawC();window.addEventListener('resize',function(){clearTimeout(window.__c);window.__c=setTimeout(drawC,150)});
 var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,150)});
 })();
