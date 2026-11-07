@@ -32,8 +32,8 @@
     <div class="eyebrow">Project 9 &middot; Research track &middot; New model development</div>
     <h1>Project 9 Research: Finding a Better Options Model</h1>
     <p class="lede">A permanent track with one job: find or invent models that move the project toward its goal of growing the account more than 5% a trading day, and test them so strictly that a good result can be trusted. It runs beside the build plan, uses the same data and trade simulator, and only a model that survives every gate moves into the build.</p>
-    <p style="margin-top:14px"><span class="tag warn">Status: framework set up, cycle 1 not started</span> <span class="tag muted">Started Nov 6, 2026</span> <span class="tag muted">Last updated Nov 6, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#paths">Two paths</a><a href="#contract">The test</a><a href="#ideas">Path A ideas</a><a href="#inventory">Path B models</a><a href="#gates">Gates</a><a href="#next">Next</a><a href="project-09.html">&larr; Project 9</a></nav>
+    <p style="margin-top:14px"><span class="tag warn">Status: daily baselines tested; cycle 1 waits for intraday data</span> <span class="tag muted">Started Nov 6, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
+    <nav class="toc" aria-label="On this page"><a href="#paths">Two paths</a><a href="#contract">The test</a><a href="#ideas">Path A ideas</a><a href="#inventory">Path B models</a><a href="#gates">Gates</a><a href="#lessons">Lessons</a><a href="#next">Next</a><a href="project-09.html">&larr; Project 9</a></nav>
   </section>
 
   <section aria-label="At a glance">
@@ -43,7 +43,7 @@
       <div><div class="k">Ideas to test</div><div class="v sm">4</div><div class="s">Path A seed hypotheses</div></div>
       <div><div class="k">Models listed</div><div class="v sm">12</div><div class="s">Path B starting inventory</div></div>
       <div><div class="k">First cycle</div><div class="v sm">10 wks</div><div class="s">about 200 research hours</div></div>
-      <div><div class="k">Models tested</div><div class="v sm">0</div><div class="s">waiting for option data</div></div>
+      <div><div class="k">Models tested</div><div class="v sm">6</div><div class="s">on daily SPY/QQQ data, Nov 7</div></div>
     </div>
   </section>
 
@@ -100,7 +100,7 @@
           <li><strong>LSTM with a turnover penalty</strong>: kept a Sharpe ratio of 0.69 at 50 bps cost vs 0.39 without (Tan et al.)</li>
           <li><strong>Tree-based volatility forecasts</strong>: 13% lower error on one-month implied volatility (Federal Reserve)</li>
           <li><strong>Surface and chain models</strong> (CNN, graph networks) and <strong>deep hedging</strong>, for later</li>
-          <li><strong>The reference system</strong>: separate &ldquo;gain&rdquo; and &ldquo;tradability&rdquo; outputs</li>
+          <li><strong>The reference system</strong>: separate &ldquo;gain&rdquo; and &ldquo;tradability&rdquo; outputs &mdash; <em>rebuilt and tested Nov 7 (5&times;200 network): below the linear model on daily data; the tradability output helped a little</em></li>
         </ul>
       </div>
       <div class="card">
@@ -137,11 +137,23 @@
         <tbody>
           <tr><td>Framework, templates, model list and experiment log set up</td><td><span class="verdict done">Done Nov 6</span></td></tr>
           <tr><td>R0: cycle 1 brief, budget and minimum useful gain</td><td><span class="verdict wait">Waiting for owner decisions</span></td></tr>
-          <tr><td>R1: historical option quotes bought and checked</td><td><span class="verdict wait">Waiting for data</span></td></tr>
-          <tr><td>R2&ndash;R5: baselines, experiments, sealed test</td><td><span class="verdict wait">Not started</span></td></tr>
+          <tr><td>Daily option data (2008&ndash;2026) collected and checked</td><td><span class="verdict done">Done Nov 7</span></td></tr>
+          <tr><td>Daily baselines and model profiles: rules, linear model, LightGBM, neural nets, reference-network rebuild (EXP-01D, -2, -M14)</td><td><span class="verdict done">Done Nov 7</span></td></tr>
+          <tr><td>R1: historical <em>intraday</em> option quotes bought and checked</td><td><span class="verdict wait">Waiting for data</span></td></tr>
+          <tr><td>R2&ndash;R5: intraday baselines, experiments, sealed test</td><td><span class="verdict wait">Not started</span></td></tr>
         </tbody>
       </table></div>
     </div>
+  </section>
+
+  <section id="lessons">
+    <h2>What the daily tests taught us (Nov 7, 2026)</h2>
+    <div class="card"><ul style="margin-bottom:0">
+      <li><strong>Every model must beat &ldquo;always buy a call&rdquo;, not just zero.</strong> Over 2016&ndash;2025, simply holding calls for 5 days made +7.4% per trade; our best model made +7.9%.</li>
+      <li><strong>Separate market direction from options skill.</strong> The best model&rsquo;s gain disappeared once the next-day SPY/QQQ move was removed. This check is now part of every test.</li>
+      <li><strong>Bigger models need more data.</strong> LightGBM and both neural networks overfit after one pass through ~435,000 daily examples. Larger designs wait for intraday data.</li>
+      <li><strong>Costs set the holding period.</strong> Paying the bid/ask spread every day erases most signals; holding 2&ndash;5 days pays it less often.</li>
+    </ul></div>
   </section>
 
   <section id="next">
@@ -154,7 +166,7 @@
 
   <section id="disclosure">
     <h2>Disclosures</h2>
-    <p class="disclosure">No model has been trained or tested yet. Figures for other studies are their authors&rsquo; own, from different markets, periods and costs. Model names are listed for research only. Nothing here is investment advice.</p>
+    <p class="disclosure">Models so far have been tested only on daily, simulated SPY/QQQ data; no result is a proven edge. Figures for other studies are their authors&rsquo; own, from different markets, periods and costs. Model names are listed for research only. Nothing here is investment advice.</p>
     <p style="margin-top:12px"><a href="project-09.html">&larr; Back to Project 9</a></p>
   </section>
 </main>
