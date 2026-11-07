@@ -30,7 +30,7 @@ td.neg{color:var(--bad,#b4443b)}td.pos{color:var(--good,#2f7d4f)}
     <div class="eyebrow">Project 13 &middot; Research phase &middot; New model development</div>
     <h1>Project 13 Research: Building a New Model</h1>
     <p class="lede">A dedicated phase for one job: develop new models that pick day trades in stocks running hard at the open, and test them so honestly that a good result can be trusted. Seven cycles so far, all rejected by their own pass/fail rules. The first five showed no edge for long trades at a fixed time. The sixth changed the question, from <em>which</em> stock to buy at 10:00 to <em>when</em> to buy during the day, and came within about 0.2% per trade of breaking even. The seventh (A9) tried to learn when to sell as well, and taught a new lesson about how a buy decision should be made.</p>
-    <p style="margin-top:14px"><span class="tag warn">Status: M1 reached on development years (A10, +0.28% per trade); unseen test running</span> <span class="tag muted">Started Nov 6, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
+    <p style="margin-top:14px"><span class="tag warn">Status: A10 failed its unseen test; M1 not yet reached; loop continues</span> <span class="tag muted">Started Nov 6, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
     <nav class="toc" aria-label="On this page"><a href="#goal">Goal vs today</a><a href="#method">How it works</a><a href="#cycle1">Cycle 1</a><a href="#cycle2">Cycle 2</a><a href="#cycle3">Cycle 3</a><a href="#cycle4">Cycle 4</a><a href="#cycle5">Cycle 5</a><a href="#cycle6">Cycle 6</a><a href="#cycle7">Cycle 7</a><a href="#loop">Loop to M1</a><a href="#why">Why it failed</a><a href="#compare">Compare models</a><a href="#registry">Model registry</a><a href="#next">Next</a><a href="project-13.html">&larr; Project 13</a></nav>
   </section>
 
@@ -66,7 +66,7 @@ td.neg{color:var(--bad,#b4443b)}td.pos{color:var(--good,#2f7d4f)}
           <tr><td>M5 Weekly goal</td><td class="num">≥ +3.7%</td><td class="num">≈ +20%</td><td class="num">≈ +115%</td><td><span class="verdict base">Major goal</span></td></tr>
         </tbody>
       </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">A10 reached M1 on the development years (+0.28% per trade at 0.5% cost, real fills, 2019–2024). It counts only if it also holds on the unseen data (Jan 2025 – Nov 2026), which is being tested now.</p>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">A10 reached M1 on the development years (+0.28% per trade at 0.5% cost, real fills, 2019–2024) but <strong>failed on the unseen data</strong> (Jan 2025 – Nov 2026): −0.98% per trade, no quarter positive. So M1 is still the first target.</p>
     </div>
   </section>
 
@@ -290,11 +290,12 @@ td.neg{color:var(--bad,#b4443b)}td.pos{color:var(--good,#2f7d4f)}
       <div class="table-scroll"><table>
         <thead><tr><th>Attempt</th><th>Model</th><th>Per $1,000 trade at 0.5%</th><th>At 0.25%</th><th>Before costs</th><th>Positive years</th><th>Milestone</th></tr></thead>
         <tbody>
-          <tr><td>2</td><td><strong>A10: Meta-Labeled Timing Transformer</strong>. A9 proposes trades; a second model, trained only on earlier years, judges which proposals pay after costs</td><td class="num pos"><strong>+$2.76</strong></td><td class="num pos">+$7.78</td><td class="num pos">+$12.84</td><td class="num">4 / 6</td><td><span class="verdict ok">M1 (development years)</span></td></tr>
+          <tr><td>2</td><td><strong>A10: Meta-Labeled Timing Transformer</strong>. A9 proposes trades; a second model, trained only on earlier years, judges which proposals pay after costs</td><td class="num pos"><strong>+$2.76</strong></td><td class="num pos">+$7.78</td><td class="num pos">+$12.84</td><td class="num">4 / 6</td><td><span class="verdict no">M1 on 2019–2024; failed unseen (−$9.80)</span></td></tr>
           <tr><td>1</td><td>A9-v2: A9's predictions, buy on the 60-minute direction-only score, sell when the outlook turns negative</td><td class="num neg">−$0.34</td><td class="num pos">+$4.67</td><td class="num pos">+$9.71</td><td class="num">3 / 6</td><td><span class="verdict no">none (0.03% short)</span></td></tr>
         </tbody>
       </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Attempt 1 fixed A9's buy rule only, and moved it from −$9.50 to −$0.34 per trade, the best long result so far. What still blocks M1: trades started between 10:00 and 11:00 lose, and losing trades are held longer than winners. Attempt 2 (A10) added a judge that learns from past proposals which ones pay: cheap vs expensive stocks, the gap and opening run, how stretched the price is from VWAP, and whether the stock is actually trading at the entry moment. It is the first long model to make money after 0.5% costs on 2019–2024, but its 95% range (−$1.51 to +$6.89) still includes zero, so the unseen test decides.</p>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Attempt 1 fixed A9's buy rule only, and moved it from −$9.50 to −$0.34 per trade, the best long result so far. What still blocks M1: trades started between 10:00 and 11:00 lose, and losing trades are held longer than winners. Attempt 2 (A10) added a judge that learns from past proposals which ones pay: cheap vs expensive stocks, the gap and opening run, how stretched the price is from VWAP, and whether the stock is actually trading at the entry moment. It is the first long model to make money after 0.5% costs on 2019–2024, but its 95% range (−$1.51 to +$6.89) still includes zero, so the unseen test decided.</p>
+      <p style="margin:12px 0 0"><strong>Unseen test (Jan 2025 – Nov 2026): failed.</strong> −$9.80 per trade at 0.5% cost, 0 of 8 quarters positive. The transformer's ranking still worked on recorded prices, but most of the paper gain came from moments when the stock was barely trading: the recorded price lags, then jumps when the next trade prints, which looks like a predictable rise but cannot be bought. Lesson: build the training labels from real, executable prices only. That is the next attempt.</p>
     </div>
   </section>
 
@@ -309,7 +310,7 @@ td.neg{color:var(--bad,#b4443b)}td.pos{color:var(--good,#2f7d4f)}
       <div class="table-scroll"><table>
         <thead><tr><th>Model</th><th>Inputs</th><th>Per $1,000 trade</th><th>Win rate</th><th>vs its baseline (95% interval)</th><th>Years better</th><th>Milestone</th></tr></thead>
         <tbody>
-          <tr><td><strong>A10 Meta-Labeled Timing Transformer*</strong></td><td>Whole day + judge</td><td class="num pos">+$2.76</td><td class="num">57.0%</td><td class="num">+3.10 vs A9-v2 (−2.84 to +9.11)</td><td class="num">5 / 6</td><td><span class="verdict ok">M1</span></td></tr>
+          <tr><td><strong>A10 Meta-Labeled Timing Transformer*</strong></td><td>Whole day + judge</td><td class="num pos">+$2.76</td><td class="num">57.0%</td><td class="num">+3.10 vs A9-v2 (−2.84 to +9.11)</td><td class="num">5 / 6</td><td><span class="verdict no">M1 dev only; failed unseen</span></td></tr>
           <tr><td><strong>A9-v2 direction-only entry*</strong></td><td>Whole day, 5 horizons</td><td class="num neg">−$0.34</td><td class="num">53.1%</td><td class="num">+1.45 vs A8 (−4.13 to +6.88)</td><td class="num">4 / 6</td><td><span class="verdict no">none</span></td></tr>
           <tr><td><strong>A8 Intraday Timing Transformer*</strong></td><td>Whole day, 5-minute bars</td><td class="num neg">−$1.79</td><td class="num">47.6%</td><td class="num">+3.71 vs boosting (−0.98 to +8.31)</td><td class="num">3 / 6</td><td><span class="verdict no">none</span></td></tr>
           <tr><td>A9 Optimal-Stopping, dynamic exit*</td><td>Whole day, 5 horizons</td><td class="num neg">−$9.50</td><td class="num">46.3%</td><td class="num">−7.71 vs A8 (−14.28 to −1.17)</td><td class="num">2 / 6</td><td><span class="verdict no">none</span></td></tr>
@@ -327,7 +328,7 @@ td.neg{color:var(--bad,#b4443b)}td.pos{color:var(--good,#2f7d4f)}
           <tr><td><em>Trade every stock (no model)</em></td><td>—</td><td class="num neg">−$11.49</td><td class="num">24.1%</td><td></td><td></td><td><span class="verdict no">none</span></td></tr>
         </tbody>
       </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Every model beats trading every stock by about $1–2.40 per trade, mostly by avoiding the most volatile stocks. No model is yet reliably better than the model it changes (every interval includes zero). A10 is the first to reach M1 on 2019–2024; its unseen test decides whether it counts. *Timing-model rows use their own trade (first strong moment of the day; A8 sells after 30 minutes, A9 and A10 when the outlook turns negative) at real fills. This table is refreshed after every new model.</p>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Every model beats trading every stock by about $1–2.40 per trade, mostly by avoiding the most volatile stocks. No model is yet reliably better than the model it changes (every interval includes zero). A10 was the first to reach M1 on 2019–2024 but failed on the unseen data (−$9.80 per trade, 2025–2026). *Timing-model rows use their own trade (first strong moment of the day; A8 sells after 30 minutes, A9 and A10 when the outlook turns negative) at real fills. This table is refreshed after every new model.</p>
     </div>
   </section>
 
@@ -349,7 +350,7 @@ td.neg{color:var(--bad,#b4443b)}td.pos{color:var(--good,#2f7d4f)}
           <tr><td>T7 &middot; A8</td><td>Intraday Timing Transformer (causal, direction-only target)</td><td>Long at the first strong moment of the day, out 30 minutes later</td><td>−$1.79 per trade at 0.5%, +$3.21 at 0.25% (real fills); best long model so far</td><td><span class="verdict no">Rejected</span></td></tr>
           <tr><td>T8 &middot; A9</td><td>Multi-Horizon Optimal-Stopping Transformer</td><td>Long at the best multi-horizon outlook; sell when re-scored outlook turns negative</td><td>−$9.50 per trade at 0.5% (real fills); worse than A8</td><td><span class="verdict no">Rejected</span></td></tr>
           <tr><td>T8b &middot; A9-v2</td><td>A9 with a direction-only entry (loop attempt 1)</td><td>Long at the first strong 60-minute signal; sell when the outlook turns negative</td><td>−$0.34 per trade at 0.5%, +$4.67 at 0.25% (real fills); best so far</td><td><span class="verdict no">Rejected (M1 missed by 0.03%)</span></td></tr>
-          <tr><td>T9 &middot; A10</td><td>Meta-Labeled Timing Transformer (loop attempt 2)</td><td>A9 proposes; a judge trained on earlier years picks the first proposal it expects to pay</td><td>+$2.76 per trade at 0.5%, +$7.78 at 0.25% (real fills); M1 on 2019–2024</td><td><span class="verdict run">Unseen test running</span></td></tr>
+          <tr><td>T9 &middot; A10</td><td>Meta-Labeled Timing Transformer (loop attempt 2)</td><td>A9 proposes; a judge trained on earlier years picks the first proposal it expects to pay</td><td>+$2.76 per trade at 0.5% on 2019–2024 (M1); unseen 2025–2026: −$9.80, 0/8 quarters</td><td><span class="verdict no">Rejected at unseen test</span></td></tr>
           <tr><td>D3</td><td>Long only on four new stock sets, out before the close</td><td>Opening flush, gap-up holders, gap-down reversal, stocks in play</td><td>Data ready (2016–2018)</td><td><span class="verdict run">Next in the loop</span></td></tr>
         </tbody>
       </table></div>
