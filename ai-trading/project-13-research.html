@@ -101,12 +101,18 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
     <h2>Current loop: until the first milestone</h2>
     <p class="howread" style="max-width:780px">Since Nov 7, 2026 the research runs as a loop: learn from every model and from outside research, design a new model, write its plan before running it, test it on 2019–2024 at real fills, record why it worked or not, and repeat. A model reaching M1 gets one test on unseen data; only a pass there counts. The view of the problem changes when progress stalls.</p>
     <div class="loopcards">
+      <article class="card attempt" id="att4">
+        <div class="att-head"><span class="att-n">Attempt 4</span><span class="verdict run">Next</span></div>
+        <h3>D3 &middot; New stock sets</h3>
+        <p><strong>Idea:</strong> change of view: keep honest prices, change the stocks. Four new sets from a scan of about 6,600 stocks (2016–2018): stocks that flush at the open, gap-ups that hold, gap-downs that reverse, and liquid stocks in play.</p>
+        <dl class="att-res"><div><dt>2016–2018 design years</dt><dd>starting</dd></div><div><dt>Unseen</dt><dd>—</dd></div></dl>
+      </article>
       <article class="card attempt" id="att3">
-        <div class="att-head"><span class="att-n">Attempt 3</span><span class="verdict run" id="a11badge">Training</span></div>
+        <div class="att-head"><span class="att-n">Attempt 3</span><span class="verdict no" id="a11badge">Rejected</span></div>
         <h3>A11 &middot; Tradeable-Price Timing Transformer</h3>
         <p><strong>Idea:</strong> A10's lesson applied to the data itself: every training label uses prices a trader would really get, and a moment counts only if the stock traded at least 50 times in the 5 minutes before it. The model also sees how actively each bar traded.</p>
-        <dl class="att-res" id="a11res"><div><dt>2019–2024</dt><dd>running</dd></div><div><dt>Unseen</dt><dd>—</dd></div></dl>
-        <p class="att-why" id="a11why">Results will appear here when the run finishes.</p>
+        <dl class="att-res" id="a11res"><div><dt>2019–2024</dt><dd class="neg">−$2.45 per $1,000</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
+        <p class="att-why" id="a11why"><strong>Why:</strong> with honest prices, the recorded and real results agree exactly, and they show the true size of the timing edge: about +0.7% per trade before costs, against a 1% round trip. Even the most confident moments gain under +0.8%. <strong>Lesson:</strong> a better model of the same stocks cannot close this gap; the next attempt changes the stocks.</p>
       </article>
       <article class="card attempt">
         <div class="att-head"><span class="att-n">Attempt 2</span><span class="verdict no">Failed unseen test</span></div>
@@ -169,7 +175,7 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
 
   <section id="next">
     <h2>Next</h2>
-    <div class="card" id="nextcard"><p style="margin:0">Loop attempt 3 (A11) trains the A10 design only on prices that could really be traded, in moments when the stock trades actively. If it reaches M1 on 2019–2024, it gets its single unseen test. The new universe data (2016–2018, four new stock sets) is ready for the D3 study as another angle.</p></div>
+    <div class="card" id="nextcard"><p style="margin:0">Loop attempt 4 (D3) changes the stocks rather than the model: on honest prices, it tests long designs on four new stock sets drawn from a scan of about 6,600 stocks (2016–2018). A set with a real edge after costs gets more years of data and a model; anything reaching M1 then gets its single unseen test.</p></div>
   </section>
 
   <section id="details">
@@ -451,9 +457,10 @@ var MODELS=[
  {n:"A9",stage:2,name:"Multi-Horizon Optimal-Stopping",idea:"Predicts five horizons; also decides when to sell.",dev:-0.950,un:null,v:["no","Rejected"],lesson:"Never rank trades on volatility-scaled gains."},
  {n:"#1 A9-v2",stage:3,name:"A9 with a direction-only entry",idea:"A9's model, buys on the 60-minute direction-only score.",dev:-0.034,un:null,v:["no","0.03% short of M1"],lesson:"The decision rule matters as much as the model."},
  {n:"#2 A10",stage:3,name:"Meta-Labeled Timing Transformer",idea:"The transformer proposes; a judge trained on earlier years decides.",dev:0.276,un:-0.980,v:["no","Failed unseen test"],lesson:"Part of the edge was lagging prices in thin moments; train on executable prices."},
- {n:"#3 A11",stage:3,name:"Tradeable-Price Timing Transformer",idea:"A10's design trained only on prices that could really be traded, in actively traded moments.",dev:null,un:null,v:["run","Running"],lesson:"—"}
+ {n:"#3 A11",stage:3,name:"Tradeable-Price Timing Transformer",idea:"A10's design trained only on prices that could really be traded, in actively traded moments.",dev:-0.245,un:null,v:["no","Rejected"],lesson:"The honest timing edge in these stocks (+0.7% before costs) is smaller than the cost of trading."},
+ {n:"#4 D3",stage:3,name:"New stock sets",idea:"Change the stocks, not the model: opening flush, gap-ups that hold, gap-down reversals, liquid stocks in play.",dev:null,un:null,v:["run","Next"],lesson:"—"}
 ];
-var STATUS="Loop attempt 3 (A11) running · M1 not yet confirmed";
+var STATUS="Loop attempt 4 (new stock sets) next · M1 not yet confirmed";
 /* ======================================================================================================== */
 function money(v){return v===null?"—":(v<0?"−$":"+$")+Math.abs(v*10).toFixed(2);}
 function cls(v){return v===null?"":(v>0?"pos":"neg");}
