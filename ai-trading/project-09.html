@@ -32,6 +32,7 @@
 .mlc .ax{font-size:11px;fill:var(--muted)}
 .mlc .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12px;line-height:1.45;padding:6px 9px;border-radius:6px;white-space:nowrap;opacity:0;transition:opacity .08s;z-index:2}
 .mlc .tip.on{opacity:1}
+.dqg{display:grid;grid-template-columns:1fr 1fr;gap:22px}@media (max-width:700px){.dqg{grid-template-columns:1fr}}
 .p9s{--s1:#1f6fb2;--s2:#c8741a;--s3:#3b8a3e;--s4:#b0333a;--s5:#7a4fb0;--s6:#8a6d3b;--s7:#5f6b73;--s8:#c2185b;--s9:#00838f}
 @media (prefers-color-scheme:dark){.p9s{--s1:#6aa9e6;--s2:#e6a259;--s3:#7fc77f;--s4:#ec7f86;--s5:#b897e6;--s6:#cfae74;--s7:#a3adb5;--s8:#f06b9f;--s9:#4dd0e1}}
 .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:6px 0 14px}
@@ -304,7 +305,7 @@
       </div>
     </div>
     <div class="card" style="margin-top:16px;border-left:4px solid var(--warn)">
-      <h3>Still missing: historical intraday option quotes &mdash; and a cheap way to get them</h3>
+      <h3>Intraday option quotes: sources checked &mdash; QuantConnect chosen</h3>
       <p>Two searches of more than 25 sources (vendors, GitHub, Kaggle, community databases) found these routes:</p>
       <ul>
         <li><strong>OptionsDX</strong>: full option chains every 15 minutes with bid/ask, implied volatility and Greeks, for SPY and QQQ <strong>2016&ndash;2023</strong> (30-minute data goes back to 2010), at <strong>$5 per year of data</strong> &mdash; about $80 for both. End-of-day data is free. The vendor doesn&rsquo;t name its source or guarantee accuracy, so we check it against independent data before use.</li>
@@ -317,6 +318,38 @@
         <li><strong>DoltHub</strong> (downloaded in full): a free community database of daily option prices. For our 150 underlyings it holds 18.3 million contracts since 2019, about three expiries per stock per day. Its S&amp;P 500 volatility tracks Cboe&rsquo;s VIX closely (correlation 0.98 over 1,226 days); it covers about 60% of trading days in 2020&ndash;23 and every day since 2025, and implausible days are flagged automatically.</li>
       </ul>
       <p style="margin-bottom:0">Daily data is now covered: end-of-day chains for SPY, QQQ and IWM back to 2008 and SPX back to 2010. Our checks rate them research-grade (quotes on 95&ndash;100% of trading days, prices consistent within about 0.2%, S&amp;P 500 volatility tracking VIX at 0.98). That is enough to build and test <strong>daily</strong> models now. The first experiment&rsquo;s 15-minute version still needs intraday quotes: OptionsDX 15-minute chains for SPY and QQQ 2016&ndash;2023 (about $80), spot-checked against exchange-grade Databento data &mdash; or, at no data cost, on QuantConnect&rsquo;s free exchange-grade minute quotes (2012&ndash;today). Alpaca does <em>not</em> sell historical option bid/ask, so it serves as the broker and for recording live quotes from now on.</p>
+    </div>
+      <div class="card p9s" style="margin-top:16px" id="dq">
+      <h3>Intraday data quality, 2012&ndash;2026 (QuantConnect, SPY and QQQ options)</h3>
+      <p class="chart-note">Our own audit, run Nov 7, 2026 on the exact options the intraday experiment trades (near the money, 7&ndash;21 days to expiry). Millions of quotes checked, four snapshots a day plus every minute for freshness and timing. Data currently runs to early August 2026.</p>
+      <div class="dqg">
+        <div><div class="chart-title"><h3>Quotes with both a bid and an ask (%)</h3></div>
+          <div class="legend"><span style="--c:var(--s1)">SPY</span><span style="--c:var(--s2)">QQQ</span></div>
+          <div id="dq1" class="mlc"></div></div>
+        <div><div class="chart-title"><h3>Stale quotes: stock moved, option quote didn&rsquo;t (%)</h3></div>
+          <div class="legend"><span style="--c:var(--s1)">SPY</span><span style="--c:var(--s2)">QQQ</span></div>
+          <div id="dq2" class="mlc"></div></div>
+        <div><div class="chart-title"><h3>Do option and stock prices move in the same minute? (correlation)</h3></div>
+          <div class="legend"><span style="--c:var(--s3)">Same minute</span><span style="--c:var(--s4)">Stock one minute earlier</span><span style="--c:var(--s5)">Stock one minute later</span></div>
+          <div id="dq3" class="mlc"></div>
+          <p class="chart-note" style="margin:6px 0 0">SPY. High same-minute and near-zero earlier/later correlation means the time stamps line up.</p></div>
+        <div><div class="chart-title"><h3>Calls vs puts consistency: median put&ndash;call parity gap (basis points)</h3></div>
+          <div class="legend"><span style="--c:var(--s1)">SPY</span><span style="--c:var(--s2)">QQQ</span></div>
+          <div id="dq4" class="mlc"></div>
+          <p class="chart-note" style="margin:6px 0 0">1 basis point = 0.01% of the stock price. A few cents: from our simple dividend and rate assumptions, not bad quotes.</p></div>
+      </div>
+      <div class="dqg" style="margin-top:16px">
+        <div><div class="chart-title"><h3>Independent check: gap to an end-of-day file (%)</h3></div>
+          <div id="dq5"></div>
+          <p class="chart-note" style="margin:6px 0 0">Median difference, SPY at-the-money calls on the first trading day of each month (162 months). Explained by the two sources&rsquo; different snapshot times.</p></div>
+        <div><h3 style="margin-top:4px">Gaps</h3>
+          <ul style="margin:0;padding-left:18px">
+            <li><strong>2012:</strong> almost no weekly expiries, so ~73 days have no option in the 7&ndash;21-day window (training-only year).</li>
+            <li><strong>2013&ndash;2026:</strong> about a dozen whole days missing, incl. two sell-off days (Feb 8 and Oct 10, 2018); skipped and counted.</li>
+            <li><strong>Crossed quotes or prices below intrinsic value:</strong> essentially none.</li>
+          </ul>
+          <p style="margin:10px 0 0"><strong>Verdict: reliable enough for the intraday experiment.</strong> Optional extra: a same-minute check against exchange data (Databento).</p></div>
+      </div>
     </div>
   </section>
 
@@ -380,7 +413,7 @@
 
   <section id="approach">
     <h2>Approach</h2>
-    <div class="grid g2">
+    <div class="dqg">
       <div class="card">
         <h3>Recommended system: 10 layers</h3>
         <div class="arch"><img src="img/p9-architecture.png" alt="Recommended ML options system: data, features, forecasts, regime engine, strategy selector, sizing and hedging, cost gate, risk limits, execution and monitoring" loading="lazy" width="576" height="608"></div>
@@ -507,6 +540,39 @@ drawG();window.addEventListener('resize',function(){clearTimeout(window._g);wind
 draw();var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,150)});
 var phases=[["0 · Research review (models, factors, frameworks)",1,0,0],["1 · Verify key papers",0,1,0],["2 · Strategy × model grid",0,0,1],["3 · Data vendor & dataset",0,1,0],["4 · Targets & regime thresholds",0,0,1],["5 · Baselines (Elastic Net, VRP, overlay)",0,1,0],["6 · XGBoost / LightGBM, then LSTM",0,1,0],["7 · Regime engine, Transformer/GNN, RL",0,0,1],["8 · Multiple-testing checks & paper trading",0,0,1],["9 · Benchmark track (papers, Cboe PUT/BXM)",0,0,10],["10 · Build: define → data → baselines → models → paper → pilot → scale",1,2,5],["R · Research track: new-model discovery (new)",0,1,6]];var host=document.getElementById('phases');
 phases.forEach(function(p){var tot=p[1]+p[2]+p[3];var r=document.createElement('div');r.className='phase';r.innerHTML='<div>'+p[0]+'</div><div class="sbar"><i class="d" style="width:'+(100*p[1]/tot)+'%"></i><i class="p" style="width:'+(100*p[2]/tot)+'%"></i></div><div class="n">'+(p[1]?'Done':p[2]?'Partial':'—')+'</div>';host.appendChild(r);});
+})();
+</script>
+
+<script>
+(function(){
+var Y=['2012','2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'];
+var D={y:Y,
+two_spy:[99.0,99.7,99.4,100,100,100,100,100,100,99.9,100,100,100,100,100],two_qqq:[90.8,92.8,99.4,99.6,99.2,99.6,100,100,100,100,100,100,100,100,100],
+st_spy:[0.0,0.1,0.1,0.3,0.0,0.0,0.1,0.0,0.1,0.1,0.2,0.2,0.1,0.2,0.2],st_qqq:[1.1,0.0,0.1,0.3,0.2,0.1,0.1,0.1,0.2,0.1,2.4,0.3,0.2,0.9,2.7],
+c0:[.95,.95,.96,.92,.96,.92,.93,.96,.96,.94,.97,.96,.95,.94,.94],cm:[-.02,-.01,-.02,.03,0,-.01,-.02,-.02,-.01,-.02,0,-.01,0,0,-.01],cp:[-.03,-.01,-.03,0,-.02,-.02,-.01,0,.03,.01,.01,0,.02,.01,-.01],
+pp_spy:[3.4,3.3,3.1,2.7,2.8,3.7,3.2,2.6,4.5,5.4,4.2,3.1,4.1,3.9,4.3],pp_qqq:[2.0,0.9,1.2,1.2,1.1,0.8,1.0,1.0,1.2,1.7,1.4,2.0,2.4,2.4,2.3]};
+function qlc(host,series,o){host.innerHTML='';var W=host.clientWidth||560,H=o.h||200,L=40,R=8,T=8,B=24,n=Y.length,lo=o.min,hi=o.max;
+var NS='http://www.w3.org/2000/svg',svg=document.createElementNS(NS,'svg');svg.setAttribute('viewBox','0 0 '+W+' '+H);host.appendChild(svg);
+function el(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);svg.appendChild(e);return e}
+var cs=getComputedStyle(host),line=getComputedStyle(document.documentElement).getPropertyValue('--line').trim();
+var x=function(i){return L+(W-L-R)*i/(n-1)},y=function(v){return T+(H-T-B)*(1-(v-lo)/(hi-lo))};
+o.ticks.forEach(function(v){el('line',{x1:L,x2:W-R,y1:y(v),y2:y(v),stroke:line,'stroke-width':1});var t=el('text',{x:L-5,y:y(v)+4,'text-anchor':'end',class:'ax'});t.textContent=o.fmt(v)});
+for(var i=0;i<n;i+=(W<420?3:2)){var t=el('text',{x:x(i),y:H-6,'text-anchor':'middle',class:'ax'});t.textContent=Y[i]}
+series.forEach(function(s){var p='';D[s.k].forEach(function(v,i){p+=(i?' L':'M')+x(i).toFixed(1)+','+y(Math.max(lo,Math.min(hi,v))).toFixed(1)});el('path',{d:p,fill:'none',stroke:cs.getPropertyValue(s.c).trim(),'stroke-width':2,'stroke-linejoin':'round'});
+D[s.k].forEach(function(v,i){el('circle',{cx:x(i),cy:y(Math.max(lo,Math.min(hi,v))),r:2.5,fill:cs.getPropertyValue(s.c).trim()})})});
+var tip=document.createElement('div');tip.className='tip';host.appendChild(tip);var hit=el('rect',{x:L,y:0,width:W-L-R,height:H,fill:'transparent'});
+function mv(ev){var r=svg.getBoundingClientRect(),px=(ev.touches?ev.touches[0].clientX:ev.clientX)-r.left,i=Math.max(0,Math.min(n-1,Math.round((px*W/r.width-L)/(W-L-R)*(n-1))));
+tip.innerHTML='<b>'+Y[i]+'</b><br>'+series.map(function(s){return '<span style="color:'+cs.getPropertyValue(s.c).trim()+'">&#9632;</span> '+s.n+': '+o.fmt(D[s.k][i],1)}).join('<br>');
+var tx=x(i)*r.width/W;tip.style.left=Math.min(Math.max(tx-tip.offsetWidth/2,0),r.width-tip.offsetWidth)+'px';tip.style.top='0px';tip.classList.add('on')}
+hit.addEventListener('mousemove',mv);hit.addEventListener('touchstart',mv,{passive:true});hit.addEventListener('mouseleave',function(){tip.classList.remove('on')})}
+var pc=function(v,t){return t?(+v).toFixed(1)+'%':v+'%'},bp=function(v,t){return t?(+v).toFixed(1)+' bp':v},cr=function(v,t){return (+v).toFixed(t?2:1)};
+function drawDQ(){
+qlc(document.getElementById('dq1'),[{k:'two_spy',n:'SPY',c:'--s1'},{k:'two_qqq',n:'QQQ',c:'--s2'}],{min:90,max:100,ticks:[90,92,94,96,98,100],fmt:pc});
+qlc(document.getElementById('dq2'),[{k:'st_spy',n:'SPY',c:'--s1'},{k:'st_qqq',n:'QQQ',c:'--s2'}],{min:0,max:3,ticks:[0,1,2,3],fmt:pc});
+qlc(document.getElementById('dq3'),[{k:'c0',n:'Same minute',c:'--s3'},{k:'cm',n:'Stock 1 min earlier',c:'--s4'},{k:'cp',n:'Stock 1 min later',c:'--s5'}],{min:-0.2,max:1,ticks:[-0.2,0,0.2,0.4,0.6,0.8,1],fmt:cr});
+qlc(document.getElementById('dq4'),[{k:'pp_spy',n:'SPY',c:'--s1'},{k:'pp_qqq',n:'QQQ',c:'--s2'}],{min:0,max:6,ticks:[0,2,4,6],fmt:bp});
+if(window.barChart){barChart(document.getElementById('dq5'),[{label:'2012-16',value:2.8,tip:'2012-2016: median 2.8%, 60 months'},{label:'2017-21',value:2.7,tip:'2017-2021: median 2.7%, 58 months'},{label:'2022-25',value:4.0,tip:'2022-2025: median 4.0%, 44 months'}],{height:200,fmt:function(v){return (+v).toFixed(1)+'%'}})}}
+drawDQ();var t2;window.addEventListener('resize',function(){clearTimeout(t2);t2=setTimeout(drawDQ,150)});
 })();
 </script>
 </body>
