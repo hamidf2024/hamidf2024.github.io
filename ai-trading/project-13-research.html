@@ -101,11 +101,18 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
     <h2>Current loop: until the first milestone</h2>
     <p class="howread" style="max-width:780px">Since Nov 7, 2026 the research runs as a loop: learn from every model and from outside research, design a new model, write its plan before running it, test it on 2019–2024 at real fills, record why it worked or not, and repeat. A model reaching M1 gets one test on unseen data; only a pass there counts. The view of the problem changes when progress stalls.</p>
     <div class="loopcards">
+      <article class="card attempt" id="att5">
+        <div class="att-head"><span class="att-n">Attempt 5</span><span class="verdict run">Waiting for data</span></div>
+        <h3>A12 &middot; Model on gap-up holders</h3>
+        <p><strong>Idea:</strong> the one stock set with momentum: gap-ups of 10% or more that hold their gap and break their opening range. A model picks among them so the chosen trades clear costs. Needs that set's data for 2019–2026.</p>
+        <dl class="att-res"><div><dt>2019–2024</dt><dd>download pending</dd></div><div><dt>Unseen</dt><dd>—</dd></div></dl>
+      </article>
       <article class="card attempt" id="att4">
-        <div class="att-head"><span class="att-n">Attempt 4</span><span class="verdict run">Next</span></div>
+        <div class="att-head"><span class="att-n">Attempt 4</span><span class="verdict no">Rejected</span></div>
         <h3>D3 &middot; New stock sets</h3>
         <p><strong>Idea:</strong> change of view: keep honest prices, change the stocks. Four new sets from a scan of about 6,600 stocks (2016–2018): stocks that flush at the open, gap-ups that hold, gap-downs that reverse, and liquid stocks in play.</p>
-        <dl class="att-res"><div><dt>2016–2018 design years</dt><dd>starting</dd></div><div><dt>Unseen</dt><dd>—</dd></div></dl>
+        <dl class="att-res"><div><dt>2016–2018 design years</dt><dd class="neg">0 of 1,080 pass &middot; best −0.33%</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
+        <p class="att-why"><strong>Why:</strong> opening flushes and gap-down reversals rebound too little, and liquid stocks in play barely move. Only gap-ups that hold their gap and break their opening range keep rising, by about +0.68% before costs: the same size of edge the timing models found, still below a 1% round trip. <strong>Lesson:</strong> start the next model from that set.</p>
       </article>
       <article class="card attempt" id="att3">
         <div class="att-head"><span class="att-n">Attempt 3</span><span class="verdict no" id="a11badge">Rejected</span></div>
@@ -175,7 +182,7 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
 
   <section id="next">
     <h2>Next</h2>
-    <div class="card" id="nextcard"><p style="margin:0">Loop attempt 4 (D3) changes the stocks rather than the model: on honest prices, it tests long designs on four new stock sets drawn from a scan of about 6,600 stocks (2016–2018). A set with a real edge after costs gets more years of data and a model; anything reaching M1 then gets its single unseen test.</p></div>
+    <div class="card" id="nextcard"><p style="margin:0">Attempt 5 builds a model on gap-ups that hold their gap and break their opening range, the one stock set that keeps rising after the open. Its 2019–2026 data is being downloaded; development uses 2019–2024 and the unseen test 2025–2026.</p></div>
   </section>
 
   <section id="details">
@@ -458,9 +465,10 @@ var MODELS=[
  {n:"#1 A9-v2",stage:3,name:"A9 with a direction-only entry",idea:"A9's model, buys on the 60-minute direction-only score.",dev:-0.034,un:null,v:["no","0.03% short of M1"],lesson:"The decision rule matters as much as the model."},
  {n:"#2 A10",stage:3,name:"Meta-Labeled Timing Transformer",idea:"The transformer proposes; a judge trained on earlier years decides.",dev:0.276,un:-0.980,v:["no","Failed unseen test"],lesson:"Part of the edge was lagging prices in thin moments; train on executable prices."},
  {n:"#3 A11",stage:3,name:"Tradeable-Price Timing Transformer",idea:"A10's design trained only on prices that could really be traded, in actively traded moments.",dev:-0.245,un:null,v:["no","Rejected"],lesson:"The honest timing edge in these stocks (+0.7% before costs) is smaller than the cost of trading."},
- {n:"#4 D3",stage:3,name:"New stock sets",idea:"Change the stocks, not the model: opening flush, gap-ups that hold, gap-down reversals, liquid stocks in play.",dev:null,un:null,v:["run","Next"],lesson:"—"}
+ {n:"#4 D3",stage:3,name:"New stock sets (no model)",idea:"1,080 long designs on opening flushes, gap-ups that hold, gap-down reversals and liquid stocks in play.",dev:-0.33,un:null,v:["no","Rejected"],lesson:"Only gap-ups that hold keep rising (+0.68% before costs), still below cost.",note:"best design, 2016–2018"},
+ {n:"#5 A12",stage:3,name:"Model on gap-up holders",idea:"Select among gap-ups that hold and break their opening range, so the best trades clear costs.",dev:null,un:null,v:["run","Waiting for data"],lesson:"—"}
 ];
-var STATUS="Loop attempt 4 (new stock sets) next · M1 not yet confirmed";
+var STATUS="Attempt 5 waits for gap-up data (2019–2026) · M1 not yet confirmed";
 /* ======================================================================================================== */
 function money(v){return v===null?"—":(v<0?"−$":"+$")+Math.abs(v*10).toFixed(2);}
 function cls(v){return v===null?"":(v>0?"pos":"neg");}
