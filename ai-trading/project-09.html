@@ -73,7 +73,7 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
   <section class="hero" style="padding-top:28px">
     <div class="eyebrow">Project 9 &middot; Quantitative research &middot; Options &middot; Machine learning</div>
     <h1>Project 9: AI Option Trading</h1>
-    <p class="lede">A research-first project to find machine-learning models that grow an account by trading listed options, after real costs and within strict risk limits. Nine experiments and more than 40 models so far &mdash; from simple rules to six transformers of our own design &mdash; tested on 2016&ndash;2025 option quotes. The first milestone (L0) was passed in Experiment 9: monthly put spreads combined with the benchmark model beat it on return and risk; the loop now aims at L1.</p>
+    <p class="lede">A research-first project to find machine-learning models that grow an account by trading listed options, after real costs and within strict risk limits. Ten experiments and more than 40 models so far &mdash; from simple rules to six transformers of our own design &mdash; tested on 2016&ndash;2025 option quotes. The first milestone (L0) was passed in Experiment 9: monthly put spreads combined with the benchmark model beat it on return and risk; the loop now aims at L1.</p>
     <p style="margin-top:12px;max-width:720px"><strong>Major goal:</strong> grow the account <strong>more than 5% a trading day</strong> after all costs, with +1% and +2% a day as milestones, while risking at most 0.5% of the account per position and 5% in total. With 5% at risk, a 5% day needs the options to double, so the research climbs a ladder of realistic steps: first beat the simple Elastic Net benchmark (L0), then +0.05% a day (L1), +0.10% (L2) and +0.25% (L3).</p>
     <p style="margin-top:14px"><span class="tag warn">Status: research loop &middot; no proven edge yet &middot; L0 passed in development</span> <span class="tag muted">Started Sep 27, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
     <nav class="toc" aria-label="On this page"><a href="#found">Findings</a><a href="#research">Research</a><a href="#method">Method</a><a href="#data">Data</a><a href="#goals">Goals</a><a href="#benchmark">Benchmark</a><a href="#roadmap">Roadmap</a><a href="#approach">Approach</a><a href="#background">Background</a><a href="#disclosure">Disclosures</a><a href="#sources">Sources</a></nav>
@@ -82,7 +82,7 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
   <section aria-label="At a glance">
     <div class="statstrip">
       <div class="primary"><div class="k">Best model</div><div class="v">$1,455</div><div class="s">from $1,000, 2016&ndash;2025, Sharpe 1.04</div></div>
-      <div><div class="k">Experiments</div><div class="v sm">9</div><div class="s">new model every round</div></div>
+      <div><div class="k">Experiments</div><div class="v sm">10</div><div class="s">new model every round</div></div>
       <div><div class="k">Models tested</div><div class="v sm">40+</div><div class="s">incl. 6 own transformers</div></div>
       <div><div class="k">Benchmark</div><div class="v sm">$1,220</div><div class="s">Elastic Net, Sharpe 0.68</div></div>
       <div><div class="k">Milestone</div><div class="v sm">L0 &#10003;</div><div class="s">next: L1, +0.05% a day</div></div>
@@ -102,7 +102,7 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
     <a class="card research-link" href="project-09-research.html" aria-label="Open all Project 9 research results">
       <div class="eyebrow" style="margin-bottom:8px">New model development &middot; started Nov 6, 2026</div>
       <h3 style="margin-top:0">Every model we tested, on one page</h3>
-      <p>A standing loop: learn from every model and outside research, design a new model, write the test before running it, test it on unseen years, publish the result. Nine experiments so far &mdash; from daily and intraday baselines to ChainFormer, DistFormer, VolSet, LeverSet, RegimeGate, PremiumSet and MonthlyPremium &mdash; each with charts per model, a verdict and what it taught.</p>
+      <p>A standing loop: learn from every model and outside research, design a new model, write the test before running it, test it on unseen years, publish the result. Ten experiments so far &mdash; from daily and intraday baselines to ChainFormer, DistFormer, VolSet, LeverSet, RegimeGate, PremiumSet, MonthlyPremium and PremiumBreadth &mdash; each with charts per model, a verdict and what it taught.</p>
       <div class="research-stats">
         <div><span>Goal</span><strong>&gt;5% / day</strong></div>
         <div><span>Milestone</span><strong>L0 passed (dev)</strong></div>
