@@ -28,9 +28,9 @@ td.neg{color:var(--bad,#b4443b)}
   <section class="hero" style="padding-top:28px">
     <div class="eyebrow">Project 13 &middot; Research phase &middot; New model development</div>
     <h1>Project 13 Research: Building a New Model</h1>
-    <p class="lede">A dedicated phase for one job: develop new models that pick day trades in stocks running hard at the open, and test them so honestly that a good result can be trusted. Two cycles so far: both new models were rejected, and the reasons point to what the next one needs.</p>
-    <p style="margin-top:14px"><span class="tag warn">Status: 2 cycles done, no model passes yet</span> <span class="tag muted">Started Nov 6, 2026</span> <span class="tag muted">Last updated Nov 6, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#goal">Goal vs today</a><a href="#method">How it works</a><a href="#cycle1">Cycle 1</a><a href="#cycle2">Cycle 2</a><a href="#why">Why it failed</a><a href="#registry">Model registry</a><a href="#next">Next</a><a href="project-13.html">&larr; Project 13</a></nav>
+    <p class="lede">A dedicated phase for one job: develop new models that pick day trades in stocks running hard at the open, and test them so honestly that a good result can be trusted. Three cycles so far: all three new models were rejected, and together the reasons point to what has to change next.</p>
+    <p style="margin-top:14px"><span class="tag warn">Status: 3 cycles done, no model passes yet</span> <span class="tag muted">Started Nov 6, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
+    <nav class="toc" aria-label="On this page"><a href="#goal">Goal vs today</a><a href="#method">How it works</a><a href="#cycle1">Cycle 1</a><a href="#cycle2">Cycle 2</a><a href="#cycle3">Cycle 3</a><a href="#why">Why it failed</a><a href="#registry">Model registry</a><a href="#next">Next</a><a href="project-13.html">&larr; Project 13</a></nav>
   </section>
 
   <section aria-label="At a glance">
@@ -39,7 +39,7 @@ td.neg{color:var(--bad,#b4443b)}
       <div><div class="k">Needed per trade</div><div class="v sm">+3.7%</div><div class="s">one trade per morning, after costs</div></div>
       <div><div class="k">Best model today</div><div class="v sm">−0.96%</div><div class="s">per trade, 2019–2024</div></div>
       <div><div class="k">Perfect pick</div><div class="v sm">+2.68%</div><div class="s">ceiling with a +5% target</div></div>
-      <div><div class="k">Models tested</div><div class="v sm">5</div><div class="s">A1, A5 (×2), transformer, boosting</div></div>
+      <div><div class="k">Models tested</div><div class="v sm">7</div><div class="s">A1, A5 (×2), A6 (×2), baselines</div></div>
       <div><div class="k">Unseen data</div><div class="v sm">22 months</div><div class="s">Jan 2025 – Nov 2026, held out</div></div>
     </div>
   </section>
@@ -50,7 +50,7 @@ td.neg{color:var(--bad,#b4443b)}
       <div class="chart-title"><h3>Average net return per trade, long trade at 10:00 (2019–2024, 0.5% cost per side)</h3></div>
       <p class="chart-note">Each model trades its top-ranked stocks. "Perfect pick" is the best stock every morning in hindsight. The last bar is what the 20%-per-week goal needs with one trade per morning.</p>
       <div id="goalchart"></div>
-      <p style="font-size:13px;color:var(--muted);margin:18px 0 0">"Trade all" = every screened stock; "B0" = base transformer; "A5" = B0 with multi-day context; "Goal needs" = +3.7% per trade for 20% a week. Even a perfect pick falls short with a +5% target, so later designs need bigger targets (10–20%+) or more than one good trade a day. On 44% of mornings at least one screened stock rises 20% or more after 09:45, so the opportunity is in the data. Sustaining 20% a week would be extraordinary; full-account trades also need a maximum weekly loss and drawdown limit before any live use.</p>
+      <p style="font-size:13px;color:var(--muted);margin:18px 0 0">"Trade all" = every screened stock; "B0" = base transformer; "A5" = B0 with multi-day context; "A6" = B0 with news; "Goal needs" = +3.7% per trade for 20% a week. Even a perfect pick falls short with a +5% target, so later designs need bigger targets (10–20%+) or more than one good trade a day. On 44% of mornings at least one screened stock rises 20% or more after 09:45, so the opportunity is in the data. Sustaining 20% a week would be extraordinary; full-account trades also need a maximum weekly loss and drawdown limit before any live use.</p>
     </div>
   </section>
 
@@ -144,6 +144,37 @@ td.neg{color:var(--bad,#b4443b)}
     </div>
   </section>
 
+  <section id="cycle3">
+    <h2>Cycle 3 result: model A6</h2>
+    <div class="card" style="border-left:4px solid var(--warn)">
+      <div class="eyebrow" style="margin-bottom:8px">Verdict</div>
+      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0">A6 added news and catalysts (67,122 headlines published before 10:00) to both models. Both were better in 4 of 6 years, but by amounts indistinguishable from zero, so A6 was <strong>rejected</strong>.</p>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <h3>Does the kind of news matter?</h3>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Headline type</th><th>Stocks</th><th>Per $1,000 trade</th><th>Win rate</th></tr></thead>
+          <tbody>
+            <tr><td>No news</td><td class="num">9,516</td><td class="num neg">−$6.83</td><td class="num">23.5%</td></tr>
+            <tr><td>Any news</td><td class="num">7,904</td><td class="num neg">−$6.15</td><td class="num">23.9%</td></tr>
+            <tr><td>Earnings</td><td class="num">2,768</td><td class="num neg">−$5.40</td><td class="num">17.3%</td></tr>
+            <tr><td>Clinical / FDA</td><td class="num">1,237</td><td class="num neg">−$8.05</td><td class="num">24.4%</td></tr>
+            <tr><td>Deal / contract</td><td class="num">565</td><td class="num neg">−$7.82</td><td class="num">25.7%</td></tr>
+            <tr><td>Dilution / offering</td><td class="num">298</td><td class="num neg">−$3.24</td><td class="num">28.2%</td></tr>
+            <tr><td>Theme (AI, crypto)</td><td class="num">191</td><td class="num neg">−$1.20</td><td class="num">36.6%</td></tr>
+          </tbody>
+        </table></div>
+        <p style="font-size:13px;color:var(--muted);margin:12px 0 0">All D1 stocks 2016–2024, 0.25% cost. No headline type is profitable on its own.</p>
+      </div>
+      <div class="card">
+        <h3>Why</h3>
+        <p>The kind of news barely separates winners from losers. Where it seems to help (earnings, analyst news), those stocks simply move less, so they lose less on a +5% / −3% trade, the same quiet-stock effect as before. Win rates did not rise.</p>
+        <p style="margin-bottom:0"><strong>What three cycles show:</strong> the first 30 minutes, 60 days of history, and the news all fail to reveal which way these stocks go between 10:00 and 10:30. The reliable pattern is the fade. The next step changes the <strong>trade itself</strong>: buying after the fade ends, holding longer, and bigger targets, which the 20%-a-week goal needs anyway. That requires full-day price data.</p>
+      </div>
+    </div>
+  </section>
+
   <section id="registry">
     <h2>Model registry</h2>
     <div class="card">
@@ -155,7 +186,8 @@ td.neg{color:var(--bad,#b4443b)}
           <tr><td>B0</td><td>Base transformer</td><td>Long at 10:00, +5% / −3%</td><td>−$9.32 per trade, 0 / 6 years</td><td><span class="verdict base">Baseline</span></td></tr>
           <tr><td>T2 &middot; A1</td><td>Same-morning cross-stock transformer</td><td>Long at 10:00, +5% / −3%</td><td>−$9.39 per trade, 0 / 6 years</td><td><span class="verdict no">Rejected</span></td></tr>
           <tr><td>T3 &middot; A5</td><td>B0 and boosting + multi-day context</td><td>Long at 10:00, +5% / −3%</td><td>−$9.82 and −$9.65 per trade, 0 / 6 years; no gain over baselines</td><td><span class="verdict no">Rejected</span></td></tr>
-          <tr><td>T4 &middot; A6</td><td>News and catalyst information</td><td>Long, bigger targets</td><td>Proposed</td><td><span class="verdict base">Next</span></td></tr>
+          <tr><td>T4 &middot; A6</td><td>B0 and boosting + news and catalysts</td><td>Long at 10:00, +5% / −3%</td><td>−$9.34 and −$9.97 per trade, 0 / 6 years; gains indistinguishable from zero</td><td><span class="verdict no">Rejected</span></td></tr>
+          <tr><td>Next</td><td>New trade design on full-day data</td><td>Long after the fade, longer hold, bigger targets</td><td>Proposed</td><td><span class="verdict base">Next</span></td></tr>
         </tbody>
       </table></div>
     </div>
@@ -165,12 +197,12 @@ td.neg{color:var(--bad,#b4443b)}
     <h2>Next</h2>
     <div class="grid g2">
       <div class="card">
-        <h3>A6: news and catalysts</h3>
-        <p style="margin-bottom:0">Whether a stock is running on real news, and what kind, is a well-known driver of continuation versus fade, and it is information the price history cannot contain. Alpaca's free plan includes historical news back to 2015, so A6 can be tested the same way: plan first, one change, 2019–2024, unseen data held out.</p>
+        <h3>Change the trade, not the inputs</h3>
+        <p style="margin-bottom:0">Three kinds of information found no direction for a 10:00–10:30 long trade. The next cycle tests new long designs on full-day minute data: entering only after the fade has ended and the stock turns, holding into the afternoon, and targets of 10–20% or more. Designs are chosen on 2016–2018, tested on 2019–2024, with 2025–2026 held out as before.</p>
       </div>
       <div class="card">
-        <h3>Toward the goal</h3>
-        <p style="margin-bottom:0">If news gives the models direction, the following design keeps it and allows bigger targets (10–20%+) and more than one trade a day, since a +5% target caps even a perfect pick below 20% a week. The short side remains the one design with a positive edge so far, if borrowing is possible.</p>
+        <h3>The short side</h3>
+        <p style="margin-bottom:0">The fade is the one pattern that holds every year. A short model is the only design with a positive edge so far; whether it can be traded depends on borrowing the shares at a known cost.</p>
       </div>
     </div>
   </section>
@@ -185,7 +217,7 @@ td.neg{color:var(--bad,#b4443b)}
 <script src="../charts.js"></script>
 <script>
 (function(){
-var G=[["Trade all",-1.15],["Boosting",-0.89],["B0",-0.93],["A1",-0.94],["A5",-0.91],["Perfect pick",2.68],["Goal needs",3.71]];
+var G=[["Trade all",-1.15],["Boosting",-0.89],["B0",-0.93],["A1",-0.94],["A5",-0.91],["A6",-0.89],["Perfect pick",2.68],["Goal needs",3.71]];
 function pct(v){return (v<0?'−':'')+Math.abs(v).toFixed(1)+'%';}
 function draw(){var narrow=window.innerWidth<600;
  barChart(document.getElementById('goalchart'),G.map(function(d){return{label:d[0],value:d[1],tip:d[0]+': '+(d[1]>=0?'+':'−')+Math.abs(d[1]).toFixed(2)+'% per trade'}}),{height:260,rotate:narrow,fmt:pct});}
