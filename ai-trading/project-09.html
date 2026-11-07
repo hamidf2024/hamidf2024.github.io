@@ -27,6 +27,16 @@
 .research-stats strong{font-family:var(--serif);font-size:20px}
 .research-cta{font-weight:600;color:var(--accent)}
 @media (max-width:600px){.research-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.mlc{position:relative}
+.mlc svg{display:block;width:100%;height:auto;overflow:visible}
+.mlc .ax{font-size:11px;fill:var(--muted)}
+.mlc .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12px;line-height:1.45;padding:6px 9px;border-radius:6px;white-space:nowrap;opacity:0;transition:opacity .08s;z-index:2}
+.mlc .tip.on{opacity:1}
+.p9s{--s1:#1f6fb2;--s2:#c8741a;--s3:#3b8a3e;--s4:#b0333a;--s5:#7a4fb0}
+@media (prefers-color-scheme:dark){.p9s{--s1:#6aa9e6;--s2:#e6a259;--s3:#7fc77f;--s4:#ec7f86;--s5:#b897e6}}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:6px 0 14px}
+.kpis div{border-top:1px solid var(--line);padding-top:8px}.kpis span{display:block;font-size:12px;color:var(--muted)}.kpis strong{font-family:var(--serif);font-size:20px}
+@media (max-width:600px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
@@ -42,7 +52,7 @@
     <h1>Project 9: AI Option Trading</h1>
     <p class="lede">A research-first project to find which machine-learning models and frameworks can trade listed options at a profit after real costs. So far: a reviewed study of 20 models, 20 success factors and 5 frameworks, an audit of a working ML options system, and a first experiment ready to run. The goal is to <strong>grow the whole account after all costs</strong>, testing a target of <strong>more than 5% a trading day</strong>. Win rate is tracked, not chased.</p>
     <p style="margin-top:14px"><span class="tag warn">Status: first backtest done &middot; no proven edge yet</span> <span class="tag muted">Started Sep 27, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#findings">Findings</a><a href="#reference">Reference system</a><a href="#experiment">First experiment</a><a href="#research">Research</a><a href="#data">Data</a><a href="#frameworks">Frameworks</a><a href="#benchmark">Benchmark</a><a href="#approach">Approach</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
+    <nav class="toc" aria-label="On this page"><a href="#results">Results</a><a href="#findings">Findings</a><a href="#reference">Reference system</a><a href="#experiment">First experiment</a><a href="#research">Research</a><a href="#data">Data</a><a href="#frameworks">Frameworks</a><a href="#benchmark">Benchmark</a><a href="#approach">Approach</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
   </section>
 
   <section aria-label="At a glance">
@@ -53,6 +63,39 @@
       <div><div class="k">Daily target</div><div class="v">&gt;5%</div><div class="s">account growth, to be tested</div></div>
       <div><div class="k">Best model</div><div class="v">+2.6%</div><div class="s">per trade after costs (daily test)</div></div>
       <div><div class="k">Build plan</div><div class="v">1 / 8</div><div class="s">stages done (Phase 10)</div></div>
+    </div>
+  </section>
+
+  <section id="results" class="p9s">
+    <h2>Results: what $1,000 would have become</h2>
+    <p style="color:var(--muted);margin:-6px 0 14px">First backtest (EXP-01D), Nov 7, 2026. Daily decisions on SPY and QQQ options: buy one call or put at the close, sell it at the next day&rsquo;s close, paying the full bid/ask spread and fees. Models retrained each year and tested 2016&ndash;2023; 2024&ndash;2025 kept sealed and opened once. Simulated on historical data &mdash; not investment advice.</p>
+    <div class="kpis">
+      <div><span>$1,000 at the risk limit</span><strong>$1,220</strong></div>
+      <div><span>Worst drop at the limit</span><strong>&minus;4%</strong></div>
+      <div><span>Best bet size (10% a trade)</span><strong>$9,964</strong></div>
+      <div><span>Its worst drop</span><strong>&minus;60%</strong></div>
+    </div>
+    <div class="card">
+      <div class="chart-title"><h3>$1,000 at the charter limit: 0.5% of the account per trade</h3></div>
+      <p class="chart-note">The linear (Elastic Net) model against two simple rules. Dashed line: start of the sealed 2024&ndash;2025 test.</p>
+      <div class="legend"><span style="--c:var(--s1)">Elastic Net model</span><span style="--c:var(--s2)">Always buy a call</span><span style="--c:var(--s3)">Momentum rule</span></div>
+      <div id="g1" class="mlc"></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="chart-title"><h3>Same model, bigger bets ($1,000 start, log scale)</h3></div>
+      <p class="chart-note">Identical trades; only the share of the account put into each trade changes. Above about 10% the losses compound faster than the gains.</p>
+      <div class="legend"><span style="--c:var(--s1)">0.5% per trade</span><span style="--c:var(--s2)">2%</span><span style="--c:var(--s3)">5%</span><span style="--c:var(--s4)">10%</span><span style="--c:var(--s5)">25%</span></div>
+      <div id="g2" class="mlc"></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>What this shows</h3>
+      <ul style="margin-bottom:0">
+        <li><strong>A small, steady gain at the risk limit:</strong> $1,000 &rarr; $1,220 over ten years (about 2% a year), while always buying calls fell to $903 and the momentum rule to $550.</li>
+        <li><strong>Bigger bets help only up to a point:</strong> 10% per trade reached $9,964 (about 26% a year) but with a 60% fall along the way; 25% per trade ended at $502.</li>
+        <li><strong>Far from the goal:</strong> even the best size made about 0.1% a day against the &gt;5%-a-day target.</li>
+        <li><strong>Small accounts can&rsquo;t follow it:</strong> one SPY option costs about $300&ndash;800, so with $1,000 a single contract is 30&ndash;80% of the account.</li>
+        <li><strong>What the edge is:</strong> the model mostly picks days when SPY and QQQ go on to rise; it is market timing expressed through calls, not an options-specific advantage. Follow-up tests are under way.</li>
+      </ul>
     </div>
   </section>
 
@@ -380,6 +423,33 @@ function draw(){
  barChart(document.getElementById('refpnl'),REF.map(function(d){return{label:d.label,value:d.value,tip:d.label+': '+(d.value<0?'-$':'$')+Math.abs(d.value).toLocaleString()}}),{height:240,rotate:window.innerWidth<600,fmt:function(v){return (v<0?'-$':'$')+Math.round(Math.abs(v)/1000)+'k'}});
  barChart(document.getElementById('exp01'),EXP.map(function(d){return{label:d.label,value:d.value,tip:d.label+': '+(d.value>0?'+':'')+f2(d.value)+'% per trade'}}),{height:240,rotate:window.innerWidth<600,fmt:f1});
  barChart(document.getElementById('cost'),COST.map(function(d){return{label:d.label,value:d.value,tip:d.label+': Sharpe '+f2(d.value)}}),{height:260,rotate:true,fmt:f1});}
+
+var G={"labels":["Start","Jan 2016","Feb 2016","Mar 2016","Apr 2016","May 2016","Jun 2016","Jul 2016","Aug 2016","Sep 2016","Oct 2016","Nov 2016","Dec 2016","Jan 2017","Feb 2017","Mar 2017","Apr 2017","May 2017","Jun 2017","Jul 2017","Aug 2017","Sep 2017","Oct 2017","Nov 2017","Dec 2017","Jan 2018","Feb 2018","Mar 2018","Apr 2018","May 2018","Jun 2018","Jul 2018","Aug 2018","Sep 2018","Oct 2018","Nov 2018","Dec 2018","Jan 2019","Feb 2019","Mar 2019","Apr 2019","May 2019","Jun 2019","Jul 2019","Aug 2019","Sep 2019","Oct 2019","Nov 2019","Dec 2019","Jan 2020","Feb 2020","Mar 2020","Apr 2020","May 2020","Jun 2020","Jul 2020","Aug 2020","Sep 2020","Oct 2020","Nov 2020","Dec 2020","Jan 2021","Feb 2021","Mar 2021","Apr 2021","May 2021","Jun 2021","Jul 2021","Aug 2021","Sep 2021","Oct 2021","Nov 2021","Dec 2021","Jan 2022","Feb 2022","Mar 2022","Apr 2022","May 2022","Jun 2022","Jul 2022","Aug 2022","Sep 2022","Oct 2022","Nov 2022","Dec 2022","Jan 2023","Feb 2023","Mar 2023","Apr 2023","May 2023","Jun 2023","Jul 2023","Aug 2023","Sep 2023","Oct 2023","Nov 2023","Dec 2023","Jan 2024","Feb 2024","Mar 2024","Apr 2024","May 2024","Jun 2024","Jul 2024","Aug 2024","Sep 2024","Oct 2024","Nov 2024","Dec 2024","Jan 2025","Feb 2025","Mar 2025","Apr 2025","May 2025","Jun 2025","Jul 2025","Aug 2025","Sep 2025","Oct 2025","Nov 2025","Dec 2025"],"EN_0.5pct":[1000,976,985,990,995,995,1005,1005,995,997,985,995,1003,1004,1005,1001,1000,1001,999,1000,1005,1004,1006,1011,1011,1013,1007,999,1018,1017,1016,1017,1020,1022,1023,1030,1041,1061,1064,1072,1074,1050,1065,1064,1059,1056,1060,1059,1071,1081,1091,1094,1103,1101,1101,1099,1097,1092,1084,1100,1103,1104,1108,1113,1113,1113,1113,1116,1116,1117,1117,1110,1118,1114,1114,1140,1129,1130,1125,1136,1132,1124,1130,1129,1124,1124,1124,1124,1124,1124,1124,1124,1124,1124,1124,1124,1124,1129,1159,1166,1147,1164,1177,1173,1185,1196,1188,1208,1209,1212,1202,1180,1197,1208,1207,1211,1209,1214,1230,1219,1220],"R0_0.5pct":[1000,983,982,988,973,977,971,985,971,966,947,945,953,954,978,956,959,967,947,953,946,942,951,958,958,993,975,962,961,968,959,964,977,973,946,942,909,925,930,941,946,914,940,933,926,915,926,928,950,955,953,926,944,956,965,976,998,985,976,994,987,991,990,990,996,987,999,1003,1012,982,1005,1003,1011,983,965,975,946,939,922,938,922,904,908,921,891,913,893,905,897,910,926,931,920,894,884,914,920,935,953,948,923,938,951,953,953,959,952,960,946,944,925,905,902,916,920,912,911,924,927,913,903],"R2_0.5pct":[1000,1017,1000,982,972,940,916,929,911,888,868,859,856,847,852,825,828,811,796,788,776,759,754,744,732,759,781,799,789,776,782,776,773,761,770,772,782,778,773,774,779,790,787,783,767,777,788,781,790,796,837,833,820,801,786,781,794,791,791,777,756,748,749,744,736,739,739,736,723,716,730,725,708,715,700,713,726,729,729,720,734,740,732,722,702,702,691,678,667,659,655,646,648,649,652,673,670,663,671,656,643,647,639,656,662,663,643,636,616,594,591,584,594,587,582,583,571,565,560,555,550],"EN_2pct":[1000,906,938,959,978,975,1014,1014,974,981,935,972,1003,1009,1014,995,991,996,988,993,1011,1010,1015,1036,1035,1044,1021,988,1065,1061,1058,1060,1072,1083,1083,1115,1160,1251,1264,1303,1311,1196,1265,1260,1234,1222,1237,1234,1290,1340,1389,1398,1448,1435,1436,1428,1416,1387,1350,1427,1444,1452,1471,1499,1499,1495,1495,1512,1512,1517,1518,1480,1523,1501,1504,1645,1580,1587,1561,1617,1597,1552,1583,1576,1551,1551,1551,1551,1551,1551,1551,1551,1551,1551,1551,1551,1551,1574,1745,1786,1670,1769,1852,1821,1896,1960,1912,2036,2045,2066,1993,1848,1957,2027,2018,2044,2030,2063,2171,2093,2098],"EN_5pct":[1000,777,843,888,930,918,1007,1007,909,925,819,900,973,988,998,951,942,952,934,946,989,986,999,1052,1047,1070,1012,930,1119,1108,1100,1105,1138,1166,1160,1244,1366,1640,1681,1806,1830,1448,1659,1640,1546,1505,1546,1535,1715,1881,2044,2070,2254,2200,2204,2172,2125,2016,1884,2161,2221,2251,2326,2438,2438,2418,2418,2488,2488,2508,2514,2358,2529,2438,2444,3050,2752,2776,2662,2897,2805,2602,2731,2694,2590,2590,2590,2590,2590,2590,2590,2590,2590,2590,2590,2590,2590,2672,3422,3613,3032,3484,3893,3681,4050,4389,4112,4785,4820,4924,4483,3690,4213,4563,4500,4637,4546,4726,5345,4853,4882],"EN_10pct":[1000,591,683,756,823,786,925,925,752,775,606,723,844,868,885,801,784,801,770,790,861,857,879,972,964,1006,898,754,1082,1062,1046,1054,1116,1171,1135,1301,1536,2183,2284,2604,2657,1631,2115,2052,1782,1678,1751,1722,2138,2559,2960,2984,3512,3341,3348,3248,3108,2778,2421,3170,3330,3420,3648,3999,3999,3935,3935,4163,4163,4227,4244,3726,4273,3956,3960,6096,4928,4987,4566,5351,5005,4258,4654,4510,4163,4163,4163,4163,4163,4163,4163,4163,4163,4163,4163,4163,4163,4347,6911,7604,5225,6780,8373,7179,8529,9918,8597,11444,11483,11846,9693,6426,8080,9261,8918,9407,8970,9634,12173,9853,9964],"EN_25pct":[1000,223,284,360,421,327,412,412,241,252,131,191,273,292,306,228,213,225,203,217,264,261,278,353,346,384,280,175,406,387,372,373,429,483,383,527,712,1554,1684,2151,2162,540,957,836,488,398,404,382,632,960,1196,1081,1543,1348,1337,1233,1097,786,548,1039,1126,1203,1404,1741,1741,1671,1671,1913,1913,1982,1991,1414,1950,1563,1519,4127,2281,2257,1755,2435,2016,1216,1445,1286,1041,1041,1041,1041,1041,1041,1041,1041,1041,1041,1041,1041,1041,1004,2608,3014,970,1650,2589,1275,1723,2345,1482,2681,2491,2470,1349,404,555,669,565,615,514,588,968,491,502]};
+function mlc(host,series,o){host.innerHTML='';var W=host.clientWidth||640,H=o.h||280,L=58,R=10,T=10,B=26,n=G.labels.length,lg=!!o.log;
+var all=[];series.forEach(function(s){all=all.concat(G[s.k])});var mn=Math.min.apply(null,all),mx=Math.max.apply(null,all);
+var tf=lg?function(v){return Math.log10(v)}:function(v){return v};var lo,hi,ticks=[];
+if(lg){lo=Math.floor(tf(mn)*2)/2;hi=Math.ceil(tf(mx)*2)/2;for(var e=Math.ceil(lo);e<=hi;e++){[1,3].forEach(function(m){var v=m*Math.pow(10,e);if(tf(v)>=lo&&tf(v)<=hi)ticks.push(v)})}}
+else{var st=[50,100,200,250,500][0],span=mx-mn;st=span>600?200:span>300?100:50;lo=Math.floor(mn/st)*st;hi=Math.ceil(mx/st)*st;for(var v=lo;v<=hi+1e-9;v+=st)ticks.push(v);lo=tf(lo);hi=tf(hi);}
+var x=function(i){return L+(W-L-R)*i/(n-1)},y=function(v){return T+(H-T-B)*(1-(tf(v)-lo)/(hi-lo||1))};
+var NS='http://www.w3.org/2000/svg',svg=document.createElementNS(NS,'svg');svg.setAttribute('viewBox','0 0 '+W+' '+H);host.appendChild(svg);
+function el(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);svg.appendChild(e);return e}
+var cs=getComputedStyle(host),line=getComputedStyle(document.documentElement).getPropertyValue('--line').trim();
+var money=function(v){return '$'+Math.round(v).toLocaleString()};
+ticks.forEach(function(v){el('line',{x1:L,x2:W-R,y1:y(v),y2:y(v),stroke:line,'stroke-width':1});var t=el('text',{x:L-6,y:y(v)+4,'text-anchor':'end',class:'ax'});t.textContent=money(v)});
+var step=W<500?24:12;for(var i=1;i<n;i+=step){var t=el('text',{x:x(i),y:H-6,'text-anchor':'middle',class:'ax'});t.textContent=G.labels[i].slice(-4)}
+var si=G.labels.indexOf('Jan 2024');if(si>0){el('line',{x1:x(si),x2:x(si),y1:T,y2:H-B,stroke:cs.getPropertyValue('--muted')||'#888','stroke-dasharray':'4 4','stroke-width':1})}
+el('line',{x1:L,x2:W-R,y1:y(1000),y2:y(1000),stroke:'currentColor',opacity:.25,'stroke-width':1});
+series.forEach(function(s){var p='';G[s.k].forEach(function(v,i){p+=(i?' L':'M')+x(i).toFixed(1)+','+y(v).toFixed(1)});el('path',{d:p,fill:'none',stroke:cs.getPropertyValue(s.c).trim(),'stroke-width':2,'stroke-linejoin':'round'})});
+var tip=document.createElement('div');tip.className='tip';host.appendChild(tip);var cr=el('line',{y1:T,y2:H-B,stroke:'currentColor',opacity:0,'stroke-width':1});
+var hit=el('rect',{x:L,y:0,width:W-L-R,height:H,fill:'transparent'});
+function mv(ev){var r=svg.getBoundingClientRect(),px=(ev.touches?ev.touches[0].clientX:ev.clientX)-r.left,sx=px*W/r.width,i=Math.max(0,Math.min(n-1,Math.round((sx-L)/(W-L-R)*(n-1))));
+cr.setAttribute('x1',x(i));cr.setAttribute('x2',x(i));cr.setAttribute('opacity',.35);
+tip.innerHTML='<b>'+G.labels[i]+'</b><br>'+series.map(function(s){return '<span style="color:'+cs.getPropertyValue(s.c).trim()+'">&#9632;</span> '+s.n+': '+money(G[s.k][i])}).join('<br>');
+var tx=x(i)*r.width/W;tip.style.left=Math.min(Math.max(tx-tip.offsetWidth/2,0),r.width-tip.offsetWidth)+'px';tip.style.top='0px';tip.classList.add('on')}
+hit.addEventListener('mousemove',mv);hit.addEventListener('touchstart',mv,{passive:true});hit.addEventListener('mouseleave',function(){tip.classList.remove('on');cr.setAttribute('opacity',0)})}
+function drawG(){mlc(document.getElementById('g1'),[{k:'EN_0.5pct',n:'Elastic Net',c:'--s1'},{k:'R0_0.5pct',n:'Always buy a call',c:'--s2'},{k:'R2_0.5pct',n:'Momentum rule',c:'--s3'}],{h:280});
+mlc(document.getElementById('g2'),[{k:'EN_0.5pct',n:'0.5%',c:'--s1'},{k:'EN_2pct',n:'2%',c:'--s2'},{k:'EN_5pct',n:'5%',c:'--s3'},{k:'EN_10pct',n:'10%',c:'--s4'},{k:'EN_25pct',n:'25%',c:'--s5'}],{h:300,log:true});}
+drawG();window.addEventListener('resize',function(){clearTimeout(window._g);window._g=setTimeout(drawG,150)});
 draw();var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,150)});
 var phases=[["0 · Research review (models, factors, frameworks)",1,0,0],["1 · Verify key papers",0,1,0],["2 · Strategy × model grid",0,0,1],["3 · Data vendor & dataset",0,0,1],["4 · Targets & regime thresholds",0,0,1],["5 · Baselines (Elastic Net, VRP, overlay)",0,0,1],["6 · XGBoost / LightGBM, then LSTM",0,0,1],["7 · Regime engine, Transformer/GNN, RL",0,0,1],["8 · Multiple-testing checks & paper trading",0,0,1],["9 · Benchmark track (papers, Cboe PUT/BXM)",0,0,10],["10 · Build: define → data → baselines → models → paper → pilot → scale",0,1,7],["R · Research track: new-model discovery (new)",0,1,6]];var host=document.getElementById('phases');
 phases.forEach(function(p){var tot=p[1]+p[2]+p[3];var r=document.createElement('div');r.className='phase';r.innerHTML='<div>'+p[0]+'</div><div class="sbar"><i class="d" style="width:'+(100*p[1]/tot)+'%"></i><i class="p" style="width:'+(100*p[2]/tot)+'%"></i></div><div class="n">'+(p[1]?'Done':p[2]?'Partial':'—')+'</div>';host.appendChild(r);});
