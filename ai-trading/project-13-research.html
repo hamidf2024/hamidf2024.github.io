@@ -28,9 +28,9 @@ td.neg{color:var(--bad,#b4443b)}td.pos{color:var(--good,#2f7d4f)}
   <section class="hero" style="padding-top:28px">
     <div class="eyebrow">Project 13 &middot; Research phase &middot; New model development</div>
     <h1>Project 13 Research: Building a New Model</h1>
-    <p class="lede">A dedicated phase for one job: develop new models that pick day trades in stocks running hard at the open, and test them so honestly that a good result can be trusted. Six cycles so far, all rejected by their own pass/fail rules. The first five showed no edge for long trades at a fixed time. The sixth changed the question, from <em>which</em> stock to buy at 10:00 to <em>when</em> to buy during the day, and came within about 0.2% per trade of breaking even.</p>
-    <p style="margin-top:14px"><span class="tag warn">Status: 6 cycles done; best long model −0.18% per trade</span> <span class="tag muted">Started Nov 6, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#goal">Goal vs today</a><a href="#method">How it works</a><a href="#cycle1">Cycle 1</a><a href="#cycle2">Cycle 2</a><a href="#cycle3">Cycle 3</a><a href="#cycle4">Cycle 4</a><a href="#cycle5">Cycle 5</a><a href="#cycle6">Cycle 6</a><a href="#why">Why it failed</a><a href="#compare">Compare models</a><a href="#registry">Model registry</a><a href="#next">Next</a><a href="project-13.html">&larr; Project 13</a></nav>
+    <p class="lede">A dedicated phase for one job: develop new models that pick day trades in stocks running hard at the open, and test them so honestly that a good result can be trusted. Seven cycles so far, all rejected by their own pass/fail rules. The first five showed no edge for long trades at a fixed time. The sixth changed the question, from <em>which</em> stock to buy at 10:00 to <em>when</em> to buy during the day, and came within about 0.2% per trade of breaking even. The seventh (A9) tried to learn when to sell as well, and taught a new lesson about how a buy decision should be made.</p>
+    <p style="margin-top:14px"><span class="tag warn">Status: 7 cycles done; best long model −0.18% per trade (A8)</span> <span class="tag muted">Started Nov 6, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
+    <nav class="toc" aria-label="On this page"><a href="#goal">Goal vs today</a><a href="#method">How it works</a><a href="#cycle1">Cycle 1</a><a href="#cycle2">Cycle 2</a><a href="#cycle3">Cycle 3</a><a href="#cycle4">Cycle 4</a><a href="#cycle5">Cycle 5</a><a href="#cycle6">Cycle 6</a><a href="#cycle7">Cycle 7</a><a href="#why">Why it failed</a><a href="#compare">Compare models</a><a href="#registry">Model registry</a><a href="#next">Next</a><a href="project-13.html">&larr; Project 13</a></nav>
   </section>
 
   <section aria-label="At a glance">
@@ -262,6 +262,26 @@ td.neg{color:var(--bad,#b4443b)}td.pos{color:var(--good,#2f7d4f)}
     </div>
   </section>
 
+  <section id="cycle7">
+    <h2>Cycle 7 result: when to buy <em>and</em> when to sell, A9</h2>
+    <div class="card" style="border-left:4px solid var(--warn)">
+      <div class="eyebrow" style="margin-bottom:8px">Verdict</div>
+      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0">A9, a Multi-Horizon Optimal-Stopping Transformer, predicts how much a stock will rise over five horizons (15 minutes to the close), buys where the best outlook is strongest, and sells when its own re-estimate turns negative. It was <strong>rejected</strong>: −$9.50 per $1,000 trade at 0.5% cost, worse than A8's −$1.79.</p>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <h3>Why it failed</h3>
+        <p>The buy decision ranked moments by expected gain in percent: the prediction multiplied by the stock's volatility and by the time left in the day. Both are largest for volatile stocks early in the morning, so 57% of trades started before 10:00, right in the fade, and lost about $16 each. Gradient boosting with the same rule failed the same way, so the rule, not the network, was the problem.</p>
+        <p style="margin-bottom:0"><strong>Lesson:</strong> never rank trades on anything multiplied by volatility or time left. Rank on the direction-only score.</p>
+      </div>
+      <div class="card">
+        <h3>What worked</h3>
+        <p>The predictions themselves were good. The 60-minute outlook's top 0.1% of moments rose <strong>+1.83%</strong> before costs, more than A8's best (+1.67% in 30 minutes). Re-scoring while holding beat a fixed exit by about $3.90 per trade.</p>
+        <p style="margin-bottom:0"><strong>Next (A9-v2):</strong> keep the model and the re-scoring exit, and buy on the 60-minute direction-only score with A8's rule.</p>
+      </div>
+    </div>
+  </section>
+
   <section id="compare">
     <h2>All models compared</h2>
     <div class="card">
@@ -274,6 +294,7 @@ td.neg{color:var(--bad,#b4443b)}td.pos{color:var(--good,#2f7d4f)}
         <thead><tr><th>Model</th><th>Inputs</th><th>Per $1,000 trade</th><th>Win rate</th><th>vs its baseline (95% interval)</th><th>Years better</th><th>Milestone</th></tr></thead>
         <tbody>
           <tr><td><strong>A8 Intraday Timing Transformer*</strong></td><td>Whole day, 5-minute bars</td><td class="num neg">−$1.79</td><td class="num">47.6%</td><td class="num">+3.71 vs boosting (−0.98 to +8.31)</td><td class="num">3 / 6</td><td><span class="verdict no">none</span></td></tr>
+          <tr><td>A9 Optimal-Stopping, dynamic exit*</td><td>Whole day, 5 horizons</td><td class="num neg">−$9.50</td><td class="num">46.3%</td><td class="num">−7.71 vs A8 (−14.28 to −1.17)</td><td class="num">2 / 6</td><td><span class="verdict no">none</span></td></tr>
           <tr><td>Gradient boosting, A8 task*</td><td>Whole day, 5-minute bars</td><td class="num neg">−$5.51</td><td class="num">43.4%</td><td class="num">baseline</td><td class="num"></td><td><span class="verdict no">none</span></td></tr>
           <tr><td>A1 same-morning attention</td><td>First 30 min + day context</td><td class="num neg">−$9.11</td><td class="num">16.9%</td><td class="num">+0.49 (−0.58 to +1.57)</td><td class="num">4 / 6</td><td><span class="verdict no">none</span></td></tr>
           <tr><td>A6 transformer + news</td><td>+ news</td><td class="num neg">−$9.34</td><td class="num">16.8%</td><td class="num">+0.26 (−0.88 to +1.40)</td><td class="num">4 / 6</td><td><span class="verdict no">none</span></td></tr>
@@ -308,6 +329,7 @@ td.neg{color:var(--bad,#b4443b)}td.pos{color:var(--good,#2f7d4f)}
           <tr><td>T6 &middot; A7</td><td>Direction-Disentangled Transformer</td><td>Long at 10:00, +5% / −3%</td><td>−$10.41 per trade, 0 / 6 years; direction still tied to move size</td><td><span class="verdict no">Rejected</span></td></tr>
           <tr><td>T6b/c &middot; A7 + news / + context</td><td>A7 with the A6 or A5 inputs</td><td>Long at 10:00, +5% / −3%</td><td>−$9.96 and −$10.45 per trade; worse than A6 and A5</td><td><span class="verdict no">Rejected</span></td></tr>
           <tr><td>T7 &middot; A8</td><td>Intraday Timing Transformer (causal, direction-only target)</td><td>Long at the first strong moment of the day, out 30 minutes later</td><td>−$1.79 per trade at 0.5%, +$3.21 at 0.25% (real fills); best long model so far</td><td><span class="verdict no">Rejected</span></td></tr>
+          <tr><td>T8 &middot; A9</td><td>Multi-Horizon Optimal-Stopping Transformer</td><td>Long at the best multi-horizon outlook; sell when re-scored outlook turns negative</td><td>−$9.50 per trade at 0.5% (real fills); worse than A8</td><td><span class="verdict no">Rejected</span></td></tr>
           <tr><td>D3</td><td>Long only on four new stock sets, out before the close</td><td>Opening flush, gap-up holders, gap-down reversal, stocks in play</td><td>Data downloading</td><td><span class="verdict run">In progress</span></td></tr>
         </tbody>
       </table></div>
@@ -322,8 +344,8 @@ td.neg{color:var(--bad,#b4443b)}td.pos{color:var(--good,#2f7d4f)}
         <p style="margin-bottom:0">Stocks that run at the open fade all day, so the next study looks at four different sets, all long only and closed before the market close: stocks that flush early, gap-ups that hold, gap-downs that reverse, and liquid "stocks in play". First target: milestone M1, break even after costs, in every design year.</p>
       </div>
       <div class="card">
-        <h3>A8-v2 and the lessons log</h3>
-        <p style="margin-bottom:0">A8 came within 0.2% per trade of break even. A8-v2 keeps it and changes one thing at a time: a liquidity rule for the entry, then a longer hold. Every model, with its pros, cons and lesson, is recorded in a lessons-learned log that is reviewed before each new design.</p>
+        <h3>A9-v2, A8-v2 and the lessons log</h3>
+        <p style="margin-bottom:0">A9-v2 keeps A9's model and re-scoring exit but buys on the 60-minute direction-only score. A8-v2 tests a liquidity rule for the entry and a longer hold, one change at a time. Every model, with its pros, cons and lesson, is recorded in a lessons-learned log that is reviewed before each new design.</p>
       </div>
     </div>
   </section>
@@ -338,7 +360,7 @@ td.neg{color:var(--bad,#b4443b)}td.pos{color:var(--good,#2f7d4f)}
 <script src="../charts.js"></script>
 <script>
 (function(){
-var C=[["A8 timing*",-0.179],["Boost (A8 task)*",-0.551],["A1",-0.911],["A6 (news)",-0.934],["B0",-0.960],["Boost + ctx",-0.965],["Boosting",-0.969],["A5 (ctx)",-0.982],["A7 + news",-0.996],["Boost + news",-0.997],["A7",-1.041],["A7 + ctx",-1.045],["Trade all",-1.149],["M1 break even",0]];
+var C=[["A8 timing*",-0.179],["Boost (A8 task)*",-0.551],["A9 dyn exit*",-0.950],["A1",-0.911],["A6 (news)",-0.934],["B0",-0.960],["Boost + ctx",-0.965],["Boosting",-0.969],["A5 (ctx)",-0.982],["A7 + news",-0.996],["Boost + news",-0.997],["A7",-1.041],["A7 + ctx",-1.045],["Trade all",-1.149],["M1 break even",0]];
 var G=[["Trade all",-1.15],["Boosting",-0.89],["B0",-0.93],["A1",-0.94],["A5",-0.91],["A6",-0.89],["A7",-0.91],["Perfect pick",2.68],["Goal needs",3.71]];
 function pct(v){return (v<0?'−':'')+Math.abs(v).toFixed(1)+'%';}
 function draw(){var narrow=window.innerWidth<600;
