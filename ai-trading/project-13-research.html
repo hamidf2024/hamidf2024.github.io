@@ -28,9 +28,9 @@ td.neg{color:var(--bad,#b4443b)}
   <section class="hero" style="padding-top:28px">
     <div class="eyebrow">Project 13 &middot; Research phase &middot; New model development</div>
     <h1>Project 13 Research: Building a New Model</h1>
-    <p class="lede">A dedicated phase for one job: develop new models that pick day trades in stocks running hard at the open, and test them so honestly that a good result can be trusted. Three cycles so far: all three new models were rejected, and together the reasons point to what has to change next.</p>
-    <p style="margin-top:14px"><span class="tag warn">Status: 3 cycles done, no model passes yet</span> <span class="tag muted">Started Nov 6, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#goal">Goal vs today</a><a href="#method">How it works</a><a href="#cycle1">Cycle 1</a><a href="#cycle2">Cycle 2</a><a href="#cycle3">Cycle 3</a><a href="#why">Why it failed</a><a href="#registry">Model registry</a><a href="#next">Next</a><a href="project-13.html">&larr; Project 13</a></nav>
+    <p class="lede">A dedicated phase for one job: develop new models that pick day trades in stocks running hard at the open, and test them so honestly that a good result can be trusted. Four cycles so far, all rejected. Together they show that long trades in stocks running at the open have no edge in any design or with any input tried.</p>
+    <p style="margin-top:14px"><span class="tag warn">Status: 4 cycles done, no long design passes</span> <span class="tag muted">Started Nov 6, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
+    <nav class="toc" aria-label="On this page"><a href="#goal">Goal vs today</a><a href="#method">How it works</a><a href="#cycle1">Cycle 1</a><a href="#cycle2">Cycle 2</a><a href="#cycle3">Cycle 3</a><a href="#cycle4">Cycle 4</a><a href="#why">Why it failed</a><a href="#registry">Model registry</a><a href="#next">Next</a><a href="project-13.html">&larr; Project 13</a></nav>
   </section>
 
   <section aria-label="At a glance">
@@ -175,6 +175,35 @@ td.neg{color:var(--bad,#b4443b)}
     </div>
   </section>
 
+  <section id="cycle4">
+    <h2>Cycle 4 result: 480 long designs on full-day data</h2>
+    <div class="card" style="border-left:4px solid var(--warn)">
+      <div class="eyebrow" style="margin-bottom:8px">Verdict</div>
+      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0">With the 10:30 exit now flexible, 480 long designs were tested on 2016–2018: buying after the fade, on a new high, at fixed times, holding to the close, targets up to +20%. <strong>None made money in any year</strong> at 0.5% cost, so no model was built on them.</p>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <h3>Average move after entry, before costs</h3>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Entry</th><th>To 11:30</th><th>To 13:00</th><th>To the close</th></tr></thead>
+          <tbody>
+            <tr><td>10:00</td><td class="num neg">−0.68%</td><td class="num neg">−0.64%</td><td class="num neg">−0.72%</td></tr>
+            <tr><td>11:00</td><td class="num neg">−0.20%</td><td class="num neg">−0.23%</td><td class="num neg">−0.55%</td></tr>
+            <tr><td>After a VWAP reclaim</td><td class="num neg">−0.71%</td><td class="num neg">−0.63%</td><td class="num neg">−0.83%</td></tr>
+            <tr><td>After a higher low</td><td class="num neg">−0.64%</td><td class="num neg">−0.58%</td><td class="num neg">−0.81%</td></tr>
+            <tr><td>On a new high of day</td><td class="num neg">−0.71%</td><td class="num neg">−0.52%</td><td class="num neg">−0.41%</td></tr>
+          </tbody>
+        </table></div>
+        <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Stocks up 10%+ in the first 15 minutes, 2016–2018, −8% stop, no target.</p>
+      </div>
+      <div class="card">
+        <h3>Why</h3>
+        <p>These stocks keep drifting down for the rest of the day. Every entry has a negative average move before costs, so no target, stop or holding time can make a long trade profitable on average. Buying after the fade does not mark the bottom, and holding longer only adds to the loss.</p>
+        <p style="margin-bottom:0"><strong>What four cycles show:</strong> for stocks that run hard at the open, long trades have no edge in any design or with any input tried. The same downward drift is why the short side works. A long-only path needs a different set of stocks.</p>
+      </div>
+    </div>
+  </section>
+
   <section id="registry">
     <h2>Model registry</h2>
     <div class="card">
@@ -187,7 +216,8 @@ td.neg{color:var(--bad,#b4443b)}
           <tr><td>T2 &middot; A1</td><td>Same-morning cross-stock transformer</td><td>Long at 10:00, +5% / −3%</td><td>−$9.39 per trade, 0 / 6 years</td><td><span class="verdict no">Rejected</span></td></tr>
           <tr><td>T3 &middot; A5</td><td>B0 and boosting + multi-day context</td><td>Long at 10:00, +5% / −3%</td><td>−$9.82 and −$9.65 per trade, 0 / 6 years; no gain over baselines</td><td><span class="verdict no">Rejected</span></td></tr>
           <tr><td>T4 &middot; A6</td><td>B0 and boosting + news and catalysts</td><td>Long at 10:00, +5% / −3%</td><td>−$9.34 and −$9.97 per trade, 0 / 6 years; gains indistinguishable from zero</td><td><span class="verdict no">Rejected</span></td></tr>
-          <tr><td>Next</td><td>New trade design on full-day data</td><td>Long after the fade, longer hold, bigger targets</td><td>Proposed</td><td><span class="verdict base">Next</span></td></tr>
+          <tr><td>D2</td><td>Design study (no model)</td><td>480 long designs, exits up to the close</td><td>0 of 480 profitable in any of 2016–2018</td><td><span class="verdict no">Rejected</span></td></tr>
+          <tr><td>Next</td><td>Owner decision</td><td>A different stock set for longs, or the short side</td><td>Pending</td><td><span class="verdict base">Next</span></td></tr>
         </tbody>
       </table></div>
     </div>
@@ -197,12 +227,12 @@ td.neg{color:var(--bad,#b4443b)}
     <h2>Next</h2>
     <div class="grid g2">
       <div class="card">
-        <h3>Change the trade, not the inputs</h3>
-        <p style="margin-bottom:0">Three kinds of information found no direction for a 10:00–10:30 long trade. The next cycle tests new long designs on full-day minute data: entering only after the fade has ended and the stock turns, holding into the afternoon, and targets of 10–20% or more. Designs are chosen on 2016–2018, tested on 2019–2024, with 2025–2026 held out as before.</p>
+        <h3>Long only: change the stocks</h3>
+        <p style="margin-bottom:0">Stocks that run at the open fade all day, so a long-only search needs a different starting set: for example stocks that open weak and reverse up, pre-market gappers that hold their gains, or multi-day swings instead of intraday trades. Each would be tested the same way: plan first, design years first, 2025–2026 held out.</p>
       </div>
       <div class="card">
-        <h3>The short side</h3>
-        <p style="margin-bottom:0">The fade is the one pattern that holds every year. A short model is the only design with a positive edge so far; whether it can be traded depends on borrowing the shares at a known cost.</p>
+        <h3>Or the short side</h3>
+        <p style="margin-bottom:0">The fade is the one pattern that holds every year, and the short model is the only design with a positive edge so far. Whether it can be traded depends on borrowing the shares at a known cost.</p>
       </div>
     </div>
   </section>
