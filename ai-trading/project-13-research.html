@@ -30,7 +30,7 @@ td.neg{color:var(--bad,#b4443b)}
     <h1>Project 13 Research: Building a New Model</h1>
     <p class="lede">A dedicated phase for one job: develop new models that pick day trades in stocks running hard at the open, and test them so honestly that a good result can be trusted. Five cycles so far, all rejected. Together they show that long trades in stocks running at the open have no edge in any design or with any input tried.</p>
     <p style="margin-top:14px"><span class="tag warn">Status: 5 cycles done, no long design passes</span> <span class="tag muted">Started Nov 6, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#goal">Goal vs today</a><a href="#method">How it works</a><a href="#cycle1">Cycle 1</a><a href="#cycle2">Cycle 2</a><a href="#cycle3">Cycle 3</a><a href="#cycle4">Cycle 4</a><a href="#cycle5">Cycle 5</a><a href="#why">Why it failed</a><a href="#registry">Model registry</a><a href="#next">Next</a><a href="project-13.html">&larr; Project 13</a></nav>
+    <nav class="toc" aria-label="On this page"><a href="#goal">Goal vs today</a><a href="#method">How it works</a><a href="#cycle1">Cycle 1</a><a href="#cycle2">Cycle 2</a><a href="#cycle3">Cycle 3</a><a href="#cycle4">Cycle 4</a><a href="#cycle5">Cycle 5</a><a href="#why">Why it failed</a><a href="#compare">Compare models</a><a href="#registry">Model registry</a><a href="#next">Next</a><a href="project-13.html">&larr; Project 13</a></nav>
   </section>
 
   <section aria-label="At a glance">
@@ -232,6 +232,34 @@ td.neg{color:var(--bad,#b4443b)}
     </div>
   </section>
 
+  <section id="compare">
+    <h2>All models compared</h2>
+    <div class="card">
+      <div class="chart-title"><h3>Net return per trade, every model on identical terms</h3></div>
+      <p class="chart-note">Long at 10:00, +5% target, −3% stop, out by 10:30; top stock each morning; 2019–2024; 0.5% cost per side. Last bar = milestone M1 (break even).</p>
+      <div id="cmpchart"></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="table-scroll"><table>
+        <thead><tr><th>Model</th><th>Inputs</th><th>Per $1,000 trade</th><th>Win rate</th><th>vs its baseline (95% interval)</th><th>Years better</th><th>Milestone</th></tr></thead>
+        <tbody>
+          <tr><td>A1 same-morning attention</td><td>First 30 min + day context</td><td class="num neg">−$9.11</td><td class="num">16.9%</td><td class="num">+0.49 (−0.58 to +1.57)</td><td class="num">4 / 6</td><td><span class="verdict no">none</span></td></tr>
+          <tr><td>A6 transformer + news</td><td>+ news</td><td class="num neg">−$9.34</td><td class="num">16.8%</td><td class="num">+0.26 (−0.88 to +1.40)</td><td class="num">4 / 6</td><td><span class="verdict no">none</span></td></tr>
+          <tr><td>B0 base transformer</td><td>First 30 min + day context</td><td class="num neg">−$9.60</td><td class="num">17.3%</td><td class="num">baseline</td><td class="num"></td><td><span class="verdict no">none</span></td></tr>
+          <tr><td>Gradient boosting + context (A5)</td><td>+ 60-day history</td><td class="num neg">−$9.65</td><td class="num">25.8%</td><td class="num">+0.04 (−1.34 to +1.44)</td><td class="num">3 / 6</td><td><span class="verdict no">none</span></td></tr>
+          <tr><td>Gradient boosting</td><td>First 30 min + day context</td><td class="num neg">−$9.69</td><td class="num">26.3%</td><td class="num">baseline</td><td class="num"></td><td><span class="verdict no">none</span></td></tr>
+          <tr><td>A5 transformer + context</td><td>+ 60-day history</td><td class="num neg">−$9.82</td><td class="num">15.4%</td><td class="num">−0.22 (−1.50 to +1.05)</td><td class="num">2 / 6</td><td><span class="verdict no">none</span></td></tr>
+          <tr><td>A7 + news</td><td>+ news</td><td class="num neg">−$9.96</td><td class="num">17.3%</td><td class="num">−0.62 (−2.02 to +0.84)</td><td class="num">2 / 6</td><td><span class="verdict no">none</span></td></tr>
+          <tr><td>Gradient boosting + news (A6)</td><td>+ news</td><td class="num neg">−$9.97</td><td class="num">26.0%</td><td class="num">−0.28 (−1.37 to +0.82)</td><td class="num">4 / 6</td><td><span class="verdict no">none</span></td></tr>
+          <tr><td>A7 Direction-Disentangled</td><td>First 30 min + day context</td><td class="num neg">−$10.41</td><td class="num">17.7%</td><td class="num">−0.81 (−2.32 to +0.71)</td><td class="num">2 / 6</td><td><span class="verdict no">none</span></td></tr>
+          <tr><td>A7 + context</td><td>+ 60-day history</td><td class="num neg">−$10.45</td><td class="num">14.9%</td><td class="num">−0.63 (−2.02 to +0.76)</td><td class="num">3 / 6</td><td><span class="verdict no">none</span></td></tr>
+          <tr><td><em>Trade every stock (no model)</em></td><td>—</td><td class="num neg">−$11.49</td><td class="num">24.1%</td><td></td><td></td><td><span class="verdict no">none</span></td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Every model beats trading every stock by about $1–2.40 per trade, mostly by avoiding the most volatile stocks. But no model is reliably better than the model it changes (every interval includes zero), and none has reached M1 yet. This table is refreshed after every new model.</p>
+    </div>
+  </section>
+
   <section id="registry">
     <h2>Model registry</h2>
     <div class="card">
@@ -246,6 +274,7 @@ td.neg{color:var(--bad,#b4443b)}
           <tr><td>T4 &middot; A6</td><td>B0 and boosting + news and catalysts</td><td>Long at 10:00, +5% / −3%</td><td>−$9.34 and −$9.97 per trade, 0 / 6 years; gains indistinguishable from zero</td><td><span class="verdict no">Rejected</span></td></tr>
           <tr><td>D2</td><td>Design study (no model)</td><td>480 long designs, exits up to the close</td><td>0 of 480 profitable in any of 2016–2018</td><td><span class="verdict no">Rejected</span></td></tr>
           <tr><td>T6 &middot; A7</td><td>Direction-Disentangled Transformer</td><td>Long at 10:00, +5% / −3%</td><td>−$10.41 per trade, 0 / 6 years; direction still tied to move size</td><td><span class="verdict no">Rejected</span></td></tr>
+          <tr><td>T6b/c &middot; A7 + news / + context</td><td>A7 with the A6 or A5 inputs</td><td>Long at 10:00, +5% / −3%</td><td>−$9.96 and −$10.45 per trade; worse than A6 and A5</td><td><span class="verdict no">Rejected</span></td></tr>
           <tr><td>D3</td><td>Long only on four new stock sets, out before the close</td><td>Opening flush, gap-up holders, gap-down reversal, stocks in play</td><td>Data downloading</td><td><span class="verdict run">In progress</span></td></tr>
         </tbody>
       </table></div>
@@ -276,11 +305,15 @@ td.neg{color:var(--bad,#b4443b)}
 <script src="../charts.js"></script>
 <script>
 (function(){
+var C=[["A1",-0.911],["A6 (news)",-0.934],["B0",-0.960],["Boost + ctx",-0.965],["Boosting",-0.969],["A5 (ctx)",-0.982],["A7 + news",-0.996],["Boost + news",-0.997],["A7",-1.041],["A7 + ctx",-1.045],["Trade all",-1.149],["M1 break even",0]];
 var G=[["Trade all",-1.15],["Boosting",-0.89],["B0",-0.93],["A1",-0.94],["A5",-0.91],["A6",-0.89],["A7",-0.91],["Perfect pick",2.68],["Goal needs",3.71]];
 function pct(v){return (v<0?'−':'')+Math.abs(v).toFixed(1)+'%';}
 function draw(){var narrow=window.innerWidth<600;
  barChart(document.getElementById('goalchart'),G.map(function(d){return{label:d[0],value:d[1],tip:d[0]+': '+(d[1]>=0?'+':'−')+Math.abs(d[1]).toFixed(2)+'% per trade'}}),{height:260,rotate:narrow,fmt:pct});}
-draw();var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,150)});
+draw();
+function drawC(){var narrow=window.innerWidth<700;barChart(document.getElementById('cmpchart'),C.map(function(d){return{label:d[0],value:d[1],tip:d[0]+': '+(d[1]>=0?'+':'−')+Math.abs(d[1]).toFixed(2)+'% per trade'}}),{height:280,rotate:true,fmt:pct});}
+drawC();window.addEventListener('resize',function(){clearTimeout(window.__c);window.__c=setTimeout(drawC,150)});
+var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,150)});
 })();
 </script>
 </body>
