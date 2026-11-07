@@ -28,9 +28,9 @@ td.neg{color:var(--bad,#b4443b)}
   <section class="hero" style="padding-top:28px">
     <div class="eyebrow">Project 13 &middot; Research phase &middot; New model development</div>
     <h1>Project 13 Research: Building a New Model</h1>
-    <p class="lede">A dedicated phase for one job: develop new models that pick day trades in stocks running hard at the open, and test them so honestly that a good result can be trusted. Four cycles so far, all rejected. Together they show that long trades in stocks running at the open have no edge in any design or with any input tried.</p>
-    <p style="margin-top:14px"><span class="tag warn">Status: 4 cycles done, no long design passes</span> <span class="tag muted">Started Nov 6, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#goal">Goal vs today</a><a href="#method">How it works</a><a href="#cycle1">Cycle 1</a><a href="#cycle2">Cycle 2</a><a href="#cycle3">Cycle 3</a><a href="#cycle4">Cycle 4</a><a href="#why">Why it failed</a><a href="#registry">Model registry</a><a href="#next">Next</a><a href="project-13.html">&larr; Project 13</a></nav>
+    <p class="lede">A dedicated phase for one job: develop new models that pick day trades in stocks running hard at the open, and test them so honestly that a good result can be trusted. Five cycles so far, all rejected. Together they show that long trades in stocks running at the open have no edge in any design or with any input tried.</p>
+    <p style="margin-top:14px"><span class="tag warn">Status: 5 cycles done, no long design passes</span> <span class="tag muted">Started Nov 6, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
+    <nav class="toc" aria-label="On this page"><a href="#goal">Goal vs today</a><a href="#method">How it works</a><a href="#cycle1">Cycle 1</a><a href="#cycle2">Cycle 2</a><a href="#cycle3">Cycle 3</a><a href="#cycle4">Cycle 4</a><a href="#cycle5">Cycle 5</a><a href="#why">Why it failed</a><a href="#registry">Model registry</a><a href="#next">Next</a><a href="project-13.html">&larr; Project 13</a></nav>
   </section>
 
   <section aria-label="At a glance">
@@ -39,7 +39,7 @@ td.neg{color:var(--bad,#b4443b)}
       <div><div class="k">Needed per trade</div><div class="v sm">+3.7%</div><div class="s">one trade per morning, after costs</div></div>
       <div><div class="k">Best model today</div><div class="v sm">−0.96%</div><div class="s">per trade, 2019–2024</div></div>
       <div><div class="k">Perfect pick</div><div class="v sm">+2.68%</div><div class="s">ceiling with a +5% target</div></div>
-      <div><div class="k">Models tested</div><div class="v sm">7</div><div class="s">A1, A5 (×2), A6 (×2), baselines</div></div>
+      <div><div class="k">Models tested</div><div class="v sm">8</div><div class="s">A1, A5 (×2), A6 (×2), A7, baselines</div></div>
       <div><div class="k">Unseen data</div><div class="v sm">22 months</div><div class="s">Jan 2025 – Nov 2026, held out</div></div>
     </div>
   </section>
@@ -50,7 +50,7 @@ td.neg{color:var(--bad,#b4443b)}
       <div class="chart-title"><h3>Average net return per trade, long trade at 10:00 (2019–2024, 0.5% cost per side)</h3></div>
       <p class="chart-note">Each model trades its top-ranked stocks. "Perfect pick" is the best stock every morning in hindsight. The last bar is what the 20%-per-week goal needs with one trade per morning.</p>
       <div id="goalchart"></div>
-      <p style="font-size:13px;color:var(--muted);margin:18px 0 0">"Trade all" = every screened stock; "B0" = base transformer; "A5" = B0 with multi-day context; "A6" = B0 with news; "Goal needs" = +3.7% per trade for 20% a week. Even a perfect pick falls short with a +5% target, so later designs need bigger targets (10–20%+) or more than one good trade a day. On 44% of mornings at least one screened stock rises 20% or more after 09:45, so the opportunity is in the data. Sustaining 20% a week would be extraordinary; full-account trades also need a maximum weekly loss and drawdown limit before any live use.</p>
+      <p style="font-size:13px;color:var(--muted);margin:18px 0 0">"Trade all" = every screened stock; "B0" = base transformer; "A5" = B0 with multi-day context; "A6" = B0 with news; "A7" = Direction-Disentangled Transformer; "Goal needs" = +3.7% per trade for 20% a week. Even a perfect pick falls short with a +5% target, so later designs need bigger targets (10–20%+) or more than one good trade a day. On 44% of mornings at least one screened stock rises 20% or more after 09:45, so the opportunity is in the data. Sustaining 20% a week would be extraordinary; full-account trades also need a maximum weekly loss and drawdown limit before any live use.</p>
     </div>
       <div class="card" style="margin-top:16px">
       <h3>Milestones: reaching the goal step by step</h3>
@@ -219,6 +219,19 @@ td.neg{color:var(--bad,#b4443b)}
     </div>
   </section>
 
+  <section id="cycle5">
+    <h2>Cycle 5 result: a new architecture, A7</h2>
+    <div class="card" style="border-left:4px solid var(--warn)">
+      <div class="eyebrow" style="margin-bottom:8px">Verdict</div>
+      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0">A7, a Direction-Disentangled Transformer, splits what it learns into a "direction" channel and a "move size" channel, with an adversary that keeps move size out of the direction channel. It was <strong>rejected</strong>: −$10.41 per trade vs −$9.60 for the base model, better in only 2 of 6 years.</p>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>Why, and what it taught</h3>
+      <p>The architecture trained as designed, but its direction score stayed tied to move size. The reason is the target: on a +5% / −3% trade, "did the trade make money" depends on how much a stock moves, so the label itself rewards volatility and no adversary can remove that.</p>
+      <p style="margin-bottom:0"><strong>Lesson:</strong> to learn direction, the model needs a direction-only target, such as the return divided by the stock's own volatility. That is the next version (A7-v2), to be applied to the new stock sets as their data arrives.</p>
+    </div>
+  </section>
+
   <section id="registry">
     <h2>Model registry</h2>
     <div class="card">
@@ -232,7 +245,8 @@ td.neg{color:var(--bad,#b4443b)}
           <tr><td>T3 &middot; A5</td><td>B0 and boosting + multi-day context</td><td>Long at 10:00, +5% / −3%</td><td>−$9.82 and −$9.65 per trade, 0 / 6 years; no gain over baselines</td><td><span class="verdict no">Rejected</span></td></tr>
           <tr><td>T4 &middot; A6</td><td>B0 and boosting + news and catalysts</td><td>Long at 10:00, +5% / −3%</td><td>−$9.34 and −$9.97 per trade, 0 / 6 years; gains indistinguishable from zero</td><td><span class="verdict no">Rejected</span></td></tr>
           <tr><td>D2</td><td>Design study (no model)</td><td>480 long designs, exits up to the close</td><td>0 of 480 profitable in any of 2016–2018</td><td><span class="verdict no">Rejected</span></td></tr>
-          <tr><td>Next</td><td>Owner decision</td><td>A different stock set for longs, or the short side</td><td>Pending</td><td><span class="verdict base">Next</span></td></tr>
+          <tr><td>T6 &middot; A7</td><td>Direction-Disentangled Transformer</td><td>Long at 10:00, +5% / −3%</td><td>−$10.41 per trade, 0 / 6 years; direction still tied to move size</td><td><span class="verdict no">Rejected</span></td></tr>
+          <tr><td>D3</td><td>Long only on four new stock sets, out before the close</td><td>Opening flush, gap-up holders, gap-down reversal, stocks in play</td><td>Data downloading</td><td><span class="verdict run">In progress</span></td></tr>
         </tbody>
       </table></div>
     </div>
@@ -242,12 +256,12 @@ td.neg{color:var(--bad,#b4443b)}
     <h2>Next</h2>
     <div class="grid g2">
       <div class="card">
-        <h3>Long only: change the stocks</h3>
-        <p style="margin-bottom:0">Stocks that run at the open fade all day, so a long-only search needs a different starting set: for example stocks that open weak and reverse up, pre-market gappers that hold their gains, or multi-day swings instead of intraday trades. Each would be tested the same way: plan first, design years first, 2025–2026 held out.</p>
+        <h3>D3: long only, new stock sets</h3>
+        <p style="margin-bottom:0">Stocks that run at the open fade all day, so the next study looks at four different sets, all long only and closed before the market close: stocks that flush early, gap-ups that hold, gap-downs that reverse, and liquid "stocks in play". First target: milestone M1, break even after costs, in every design year.</p>
       </div>
       <div class="card">
-        <h3>Or the short side</h3>
-        <p style="margin-bottom:0">The fade is the one pattern that holds every year, and the short model is the only design with a positive edge so far. Whether it can be traded depends on borrowing the shares at a known cost.</p>
+        <h3>A7-v2 and the lessons log</h3>
+        <p style="margin-bottom:0">A7 returns with a direction-only target. Every model so far, with its pros, cons and lesson, is recorded in a lessons-learned log that is reviewed before each new design.</p>
       </div>
     </div>
   </section>
@@ -262,7 +276,7 @@ td.neg{color:var(--bad,#b4443b)}
 <script src="../charts.js"></script>
 <script>
 (function(){
-var G=[["Trade all",-1.15],["Boosting",-0.89],["B0",-0.93],["A1",-0.94],["A5",-0.91],["A6",-0.89],["Perfect pick",2.68],["Goal needs",3.71]];
+var G=[["Trade all",-1.15],["Boosting",-0.89],["B0",-0.93],["A1",-0.94],["A5",-0.91],["A6",-0.89],["A7",-0.91],["Perfect pick",2.68],["Goal needs",3.71]];
 function pct(v){return (v<0?'−':'')+Math.abs(v).toFixed(1)+'%';}
 function draw(){var narrow=window.innerWidth<600;
  barChart(document.getElementById('goalchart'),G.map(function(d){return{label:d[0],value:d[1],tip:d[0]+': '+(d[1]>=0?'+':'−')+Math.abs(d[1]).toFixed(2)+'% per trade'}}),{height:260,rotate:narrow,fmt:pct});}
