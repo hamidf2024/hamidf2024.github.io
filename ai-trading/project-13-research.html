@@ -14,7 +14,7 @@
 .verdict.run{background:color-mix(in srgb,var(--warn) 16%,transparent);color:var(--warn)}
 .verdict.base{background:var(--line);color:var(--muted)}
 .why li{margin-bottom:8px}
-td.neg{color:var(--bad,#b4443b)}
+td.neg{color:var(--bad,#b4443b)}td.pos{color:var(--good,#2f7d4f)}
 </style>
 </head>
 <body>
@@ -28,9 +28,9 @@ td.neg{color:var(--bad,#b4443b)}
   <section class="hero" style="padding-top:28px">
     <div class="eyebrow">Project 13 &middot; Research phase &middot; New model development</div>
     <h1>Project 13 Research: Building a New Model</h1>
-    <p class="lede">A dedicated phase for one job: develop new models that pick day trades in stocks running hard at the open, and test them so honestly that a good result can be trusted. Five cycles so far, all rejected. Together they show that long trades in stocks running at the open have no edge in any design or with any input tried.</p>
-    <p style="margin-top:14px"><span class="tag warn">Status: 5 cycles done, no long design passes</span> <span class="tag muted">Started Nov 6, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#goal">Goal vs today</a><a href="#method">How it works</a><a href="#cycle1">Cycle 1</a><a href="#cycle2">Cycle 2</a><a href="#cycle3">Cycle 3</a><a href="#cycle4">Cycle 4</a><a href="#cycle5">Cycle 5</a><a href="#why">Why it failed</a><a href="#compare">Compare models</a><a href="#registry">Model registry</a><a href="#next">Next</a><a href="project-13.html">&larr; Project 13</a></nav>
+    <p class="lede">A dedicated phase for one job: develop new models that pick day trades in stocks running hard at the open, and test them so honestly that a good result can be trusted. Six cycles so far, all rejected by their own pass/fail rules. The first five showed no edge for long trades at a fixed time. The sixth changed the question, from <em>which</em> stock to buy at 10:00 to <em>when</em> to buy during the day, and came within about 0.2% per trade of breaking even.</p>
+    <p style="margin-top:14px"><span class="tag warn">Status: 6 cycles done; best long model −0.18% per trade</span> <span class="tag muted">Started Nov 6, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
+    <nav class="toc" aria-label="On this page"><a href="#goal">Goal vs today</a><a href="#method">How it works</a><a href="#cycle1">Cycle 1</a><a href="#cycle2">Cycle 2</a><a href="#cycle3">Cycle 3</a><a href="#cycle4">Cycle 4</a><a href="#cycle5">Cycle 5</a><a href="#cycle6">Cycle 6</a><a href="#why">Why it failed</a><a href="#compare">Compare models</a><a href="#registry">Model registry</a><a href="#next">Next</a><a href="project-13.html">&larr; Project 13</a></nav>
   </section>
 
   <section aria-label="At a glance">
@@ -65,7 +65,7 @@ td.neg{color:var(--bad,#b4443b)}
           <tr><td>M5 Weekly goal</td><td class="num">≥ +3.7%</td><td class="num">≈ +20%</td><td class="num">≈ +115%</td><td><span class="verdict base">Major goal</span></td></tr>
         </tbody>
       </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Today the best long-only result is about −0.9% per trade, so the first target is M1: stop losing money after costs.</p>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Today the best long-only result is −0.18% per trade (A8, cycle 6, at real fills; +0.32% at 0.25% cost), so the first target is still M1: stop losing money after costs.</p>
     </div>
   </section>
 
@@ -232,17 +232,49 @@ td.neg{color:var(--bad,#b4443b)}
     </div>
   </section>
 
+  <section id="cycle6">
+    <h2>Cycle 6 result: a change of view, A8</h2>
+    <div class="card" style="border-left:4px solid var(--warn)">
+      <div class="eyebrow" style="margin-bottom:8px">Verdict</div>
+      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0">A8, the Intraday Timing Transformer, stops asking which stock to buy at 10:00 and asks, every five minutes through the day, <em>is now a good moment to buy this stock for the next 30 minutes?</em> It is the <strong>best long model so far</strong>: −$1.79 per $1,000 trade at 0.5% cost and <strong>+$3.21 at 0.25%</strong>, against about −$9 to −$10 for every earlier model. It was still <strong>rejected</strong> by its plan: not reliably better than gradient boosting on the same task, and not yet break even at 0.5%.</p>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <h3>Gross 30-minute return by model confidence</h3>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Moments ranked by A8 (2019–2024)</th><th>Average move, before costs</th></tr></thead>
+          <tbody>
+            <tr><td>Bottom 50%</td><td class="num neg">−0.25%</td></tr>
+            <tr><td>50–90%</td><td class="num">+0.05%</td></tr>
+            <tr><td>90–99%</td><td class="num pos">+0.29%</td></tr>
+            <tr><td>99–99.9%</td><td class="num pos">+0.96%</td></tr>
+            <tr><td>Top 0.1%</td><td class="num pos">+1.67%</td></tr>
+          </tbody>
+        </table></div>
+        <p style="font-size:13px;color:var(--muted);margin:12px 0 0">1.4 million test moments. A random moment averages −0.10%.</p>
+      </div>
+      <div class="card">
+        <h3>Why it worked, and why not yet</h3>
+        <p><strong>Worked:</strong> waiting for the right moment skips the morning fade, and a direction-only target (the 30-minute return divided by the stock's own volatility) stopped the model from simply favouring volatile stocks. The timing signal is real and rises steadily with confidence.</p>
+        <p><strong>Not yet:</strong> the best moments rise about 1–1.7% in 30 minutes, about the same as a 1% round-trip cost. Priced at real fills, about 45% of the first picks were in five-minute bars with no trades, which turned +0.07% on paper into −0.18%.</p>
+        <p style="margin-bottom:0"><strong>Next (A8-v2):</strong> one change at a time: a liquidity rule for the entry, then a longer hold so the expected move outgrows the cost.</p>
+      </div>
+    </div>
+  </section>
+
   <section id="compare">
     <h2>All models compared</h2>
     <div class="card">
       <div class="chart-title"><h3>Net return per trade, every model on identical terms</h3></div>
-      <p class="chart-note">Long at 10:00, +5% target, −3% stop, out by 10:30; top stock each morning; 2019–2024; 0.5% cost per side. Last bar = milestone M1 (break even).</p>
+      <p class="chart-note">Long at 10:00, +5% target, −3% stop, out by 10:30; top stock each morning; 2019–2024; 0.5% cost per side. Last bar = milestone M1 (break even). *A8 uses its own intraday timing trade, priced at real fills, so it is shown for reference.</p>
       <div id="cmpchart"></div>
     </div>
     <div class="card" style="margin-top:16px">
       <div class="table-scroll"><table>
         <thead><tr><th>Model</th><th>Inputs</th><th>Per $1,000 trade</th><th>Win rate</th><th>vs its baseline (95% interval)</th><th>Years better</th><th>Milestone</th></tr></thead>
         <tbody>
+          <tr><td><strong>A8 Intraday Timing Transformer*</strong></td><td>Whole day, 5-minute bars</td><td class="num neg">−$1.79</td><td class="num">47.6%</td><td class="num">+3.71 vs boosting (−0.98 to +8.31)</td><td class="num">3 / 6</td><td><span class="verdict no">none</span></td></tr>
+          <tr><td>Gradient boosting, A8 task*</td><td>Whole day, 5-minute bars</td><td class="num neg">−$5.51</td><td class="num">43.4%</td><td class="num">baseline</td><td class="num"></td><td><span class="verdict no">none</span></td></tr>
           <tr><td>A1 same-morning attention</td><td>First 30 min + day context</td><td class="num neg">−$9.11</td><td class="num">16.9%</td><td class="num">+0.49 (−0.58 to +1.57)</td><td class="num">4 / 6</td><td><span class="verdict no">none</span></td></tr>
           <tr><td>A6 transformer + news</td><td>+ news</td><td class="num neg">−$9.34</td><td class="num">16.8%</td><td class="num">+0.26 (−0.88 to +1.40)</td><td class="num">4 / 6</td><td><span class="verdict no">none</span></td></tr>
           <tr><td>B0 base transformer</td><td>First 30 min + day context</td><td class="num neg">−$9.60</td><td class="num">17.3%</td><td class="num">baseline</td><td class="num"></td><td><span class="verdict no">none</span></td></tr>
@@ -256,7 +288,7 @@ td.neg{color:var(--bad,#b4443b)}
           <tr><td><em>Trade every stock (no model)</em></td><td>—</td><td class="num neg">−$11.49</td><td class="num">24.1%</td><td></td><td></td><td><span class="verdict no">none</span></td></tr>
         </tbody>
       </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Every model beats trading every stock by about $1–2.40 per trade, mostly by avoiding the most volatile stocks. But no model is reliably better than the model it changes (every interval includes zero), and none has reached M1 yet. This table is refreshed after every new model.</p>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Every model beats trading every stock by about $1–2.40 per trade, mostly by avoiding the most volatile stocks. But no model is reliably better than the model it changes (every interval includes zero), and none has reached M1 yet. *A8 rows use their own trade (first strong moment of the day, out 30 minutes later) at real fills; at 0.25% cost A8 makes +$3.21 per trade. This table is refreshed after every new model.</p>
     </div>
   </section>
 
@@ -275,6 +307,7 @@ td.neg{color:var(--bad,#b4443b)}
           <tr><td>D2</td><td>Design study (no model)</td><td>480 long designs, exits up to the close</td><td>0 of 480 profitable in any of 2016–2018</td><td><span class="verdict no">Rejected</span></td></tr>
           <tr><td>T6 &middot; A7</td><td>Direction-Disentangled Transformer</td><td>Long at 10:00, +5% / −3%</td><td>−$10.41 per trade, 0 / 6 years; direction still tied to move size</td><td><span class="verdict no">Rejected</span></td></tr>
           <tr><td>T6b/c &middot; A7 + news / + context</td><td>A7 with the A6 or A5 inputs</td><td>Long at 10:00, +5% / −3%</td><td>−$9.96 and −$10.45 per trade; worse than A6 and A5</td><td><span class="verdict no">Rejected</span></td></tr>
+          <tr><td>T7 &middot; A8</td><td>Intraday Timing Transformer (causal, direction-only target)</td><td>Long at the first strong moment of the day, out 30 minutes later</td><td>−$1.79 per trade at 0.5%, +$3.21 at 0.25% (real fills); best long model so far</td><td><span class="verdict no">Rejected</span></td></tr>
           <tr><td>D3</td><td>Long only on four new stock sets, out before the close</td><td>Opening flush, gap-up holders, gap-down reversal, stocks in play</td><td>Data downloading</td><td><span class="verdict run">In progress</span></td></tr>
         </tbody>
       </table></div>
@@ -289,8 +322,8 @@ td.neg{color:var(--bad,#b4443b)}
         <p style="margin-bottom:0">Stocks that run at the open fade all day, so the next study looks at four different sets, all long only and closed before the market close: stocks that flush early, gap-ups that hold, gap-downs that reverse, and liquid "stocks in play". First target: milestone M1, break even after costs, in every design year.</p>
       </div>
       <div class="card">
-        <h3>A7-v2 and the lessons log</h3>
-        <p style="margin-bottom:0">A7 returns with a direction-only target. Every model so far, with its pros, cons and lesson, is recorded in a lessons-learned log that is reviewed before each new design.</p>
+        <h3>A8-v2 and the lessons log</h3>
+        <p style="margin-bottom:0">A8 came within 0.2% per trade of break even. A8-v2 keeps it and changes one thing at a time: a liquidity rule for the entry, then a longer hold. Every model, with its pros, cons and lesson, is recorded in a lessons-learned log that is reviewed before each new design.</p>
       </div>
     </div>
   </section>
@@ -305,7 +338,7 @@ td.neg{color:var(--bad,#b4443b)}
 <script src="../charts.js"></script>
 <script>
 (function(){
-var C=[["A1",-0.911],["A6 (news)",-0.934],["B0",-0.960],["Boost + ctx",-0.965],["Boosting",-0.969],["A5 (ctx)",-0.982],["A7 + news",-0.996],["Boost + news",-0.997],["A7",-1.041],["A7 + ctx",-1.045],["Trade all",-1.149],["M1 break even",0]];
+var C=[["A8 timing*",-0.179],["Boost (A8 task)*",-0.551],["A1",-0.911],["A6 (news)",-0.934],["B0",-0.960],["Boost + ctx",-0.965],["Boosting",-0.969],["A5 (ctx)",-0.982],["A7 + news",-0.996],["Boost + news",-0.997],["A7",-1.041],["A7 + ctx",-1.045],["Trade all",-1.149],["M1 break even",0]];
 var G=[["Trade all",-1.15],["Boosting",-0.89],["B0",-0.93],["A1",-0.94],["A5",-0.91],["A6",-0.89],["A7",-0.91],["Perfect pick",2.68],["Goal needs",3.71]];
 function pct(v){return (v<0?'−':'')+Math.abs(v).toFixed(1)+'%';}
 function draw(){var narrow=window.innerWidth<600;
