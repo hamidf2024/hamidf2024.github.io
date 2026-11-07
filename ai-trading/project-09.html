@@ -32,6 +32,16 @@
 .mlc .ax{font-size:11px;fill:var(--muted)}
 .mlc .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12px;line-height:1.45;padding:6px 9px;border-radius:6px;white-space:nowrap;opacity:0;transition:opacity .08s;z-index:2}
 .mlc .tip.on{opacity:1}
+.lead-s{color:var(--muted);margin:-6px 0 14px;max-width:820px}
+.subhead{font-size:17px;margin:18px 0 10px}
+.smg{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:900px){.smg{grid-template-columns:1fr 1fr}}@media (max-width:560px){.smg{grid-template-columns:1fr}}
+.smc{padding:14px 14px 10px}.smc h3{font-size:15px;margin:0}.smc .chart-note{margin:4px 0 6px;min-height:34px}
+.smh{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.vb{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.vb.ok{background:rgba(59,138,62,.15);color:#2e7d32}.vb.bad{background:rgba(176,51,58,.12);color:#b0333a}
+@media (prefers-color-scheme:dark){.vb.ok{color:#7fc77f}.vb.bad{color:#ec7f86}}
+.smv{margin:4px 0 0;font-size:14px}.smv span{color:var(--muted);font-size:12px}
 .dqg{display:grid;grid-template-columns:1fr 1fr;gap:22px}@media (max-width:700px){.dqg{grid-template-columns:1fr}}
 .p9s{--s1:#1f6fb2;--s2:#c8741a;--s3:#3b8a3e;--s4:#b0333a;--s5:#7a4fb0;--s6:#8a6d3b;--s7:#5f6b73;--s8:#c2185b;--s9:#00838f}
 @media (prefers-color-scheme:dark){.p9s{--s1:#6aa9e6;--s2:#e6a259;--s3:#7fc77f;--s4:#ec7f86;--s5:#b897e6;--s6:#cfae74;--s7:#a3adb5;--s8:#f06b9f;--s9:#4dd0e1}}
@@ -53,7 +63,7 @@
     <h1>Project 9: AI Option Trading</h1>
     <p class="lede">A research-first project to find which machine-learning models and frameworks can trade listed options at a profit after real costs. So far: a reviewed study of 20 models, 20 success factors and 5 frameworks, an audit of a working ML options system, research-grade option data back to 2008, and three daily backtests on SPY and QQQ options &mdash; which found a small timing signal but <strong>no proven options edge yet</strong>. The goal is to <strong>grow the whole account after all costs</strong>, testing a target of <strong>more than 5% a trading day</strong>. Win rate is tracked, not chased.</p>
     <p style="margin-top:14px"><span class="tag warn">Status: 3 daily backtests done &middot; no proven edge yet</span> <span class="tag muted">Started Sep 27, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#results">Results</a><a href="#findings">Findings</a><a href="#reference">Reference system</a><a href="#experiment">First experiment</a><a href="#research">Research</a><a href="#data">Data</a><a href="#frameworks">Frameworks</a><a href="#benchmark">Benchmark</a><a href="#approach">Approach</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
+    <nav class="toc" aria-label="On this page"><a href="#models">Results by model</a><a href="#results">Best model &amp; benchmarks</a><a href="#experiment">How it works</a><a href="#data">Data</a><a href="#goals">Goals</a><a href="#roadmap">Roadmap</a><a href="#findings">Research background</a><a href="#reference">Working system</a><a href="#frameworks">Frameworks</a><a href="#benchmark">Published benchmark</a><a href="#approach">Approach</a><a href="#research">Research track</a><a href="#disclosure">Disclosures</a><a href="#sources">Sources</a></nav>
   </section>
 
   <section aria-label="At a glance">
@@ -67,8 +77,48 @@
     </div>
   </section>
 
+  <section id="models" class="p9s">
+    <h2>Results by model</h2>
+    <p class="lead-s">Each chart shows what <strong>$1,000</strong> would have become with one model, putting 0.5% of the account into each trade (the project&rsquo;s risk limit), after the bid/ask spread and fees. Same scale on every chart, so they can be compared at a glance. Dashed line: start of the sealed 2024&ndash;2025 test, run only for the models carried forward.</p>
+    <h3 class="subhead">Experiment 1 &mdash; daily decisions (SPY &amp; QQQ options, one trade a day)</h3>
+    <div class="smg">
+        <div class="card smc"><div class="smh"><h3>Elastic Net</h3><span class="vb ok">Made money</span></div>
+          <p class="chart-note">A regularised linear model: the only model that grew the account.</p><div id="sm_EN" class="mlc" data-k="EN" data-c="--s1"></div>
+          <p class="smv">$1,000 &rarr; <b id="smv_EN"></b> <span>(2016&ndash;2025)</span></p></div>
+        <div class="card smc"><div class="smh"><h3>Reference network (M14)</h3><span class="vb bad">Lost a little</span></div>
+          <p class="chart-note">Our rebuild of the working system&rsquo;s 5&times;200 neural network.</p><div id="sm_M14" class="mlc" data-k="M14" data-c="--s9"></div>
+          <p class="smv">$1,000 &rarr; <b id="smv_M14"></b> <span>(2016&ndash;2025)</span></p></div>
+        <div class="card smc"><div class="smh"><h3>Always buy a call</h3><span class="vb bad">Lost a little</span></div>
+          <p class="chart-note">Simple rule: buy an at-the-money call every day.</p><div id="sm_R0" class="mlc" data-k="R0" data-c="--s2"></div>
+          <p class="smv">$1,000 &rarr; <b id="smv_R0"></b> <span>(2016&ndash;2025)</span></p></div>
+        <div class="card smc"><div class="smh"><h3>Shuffled-label check</h3><span class="vb bad">Sanity check</span></div>
+          <p class="chart-note">Trees trained on scrambled answers. Should show no edge &mdash; and doesn&rsquo;t.</p><div id="sm_SH" class="mlc" data-k="SH" data-c="--s7"></div>
+          <p class="smv">$1,000 &rarr; <b id="smv_SH"></b> <span>(2016&ndash;2023)</span></p></div>
+        <div class="card smc"><div class="smh"><h3>Neural network</h3><span class="vb bad">Lost</span></div>
+          <p class="chart-note">A small two-layer neural network.</p><div id="sm_NN" class="mlc" data-k="NN" data-c="--s5"></div>
+          <p class="smv">$1,000 &rarr; <b id="smv_NN"></b> <span>(2016&ndash;2023)</span></p></div>
+        <div class="card smc"><div class="smh"><h3>LightGBM</h3><span class="vb bad">Lost</span></div>
+          <p class="chart-note">Gradient-boosted decision trees.</p><div id="sm_GB" class="mlc" data-k="GB" data-c="--s6"></div>
+          <p class="smv">$1,000 &rarr; <b id="smv_GB"></b> <span>(2016&ndash;2023)</span></p></div>
+        <div class="card smc"><div class="smh"><h3>Momentum rule</h3><span class="vb bad">Lost</span></div>
+          <p class="chart-note">Buy a call after up days, a put after down days.</p><div id="sm_R2" class="mlc" data-k="R2" data-c="--s3"></div>
+          <p class="smv">$1,000 &rarr; <b id="smv_R2"></b> <span>(2016&ndash;2025)</span></p></div>
+        <div class="card smc"><div class="smh"><h3>Random pick</h3><span class="vb bad">Lost</span></div>
+          <p class="chart-note">A random contract each day: the luck baseline.</p><div id="sm_R3" class="mlc" data-k="R3" data-c="--s8"></div>
+          <p class="smv">$1,000 &rarr; <b id="smv_R3"></b> <span>(2016&ndash;2023)</span></p></div>
+        <div class="card smc"><div class="smh"><h3>Always buy a put</h3><span class="vb bad">Lost most</span></div>
+          <p class="chart-note">Simple rule: buy an at-the-money put every day.</p><div id="sm_R1" class="mlc" data-k="R1" data-c="--s4"></div>
+          <p class="smv">$1,000 &rarr; <b id="smv_R1"></b> <span>(2016&ndash;2025)</span></p></div>
+    </div>
+    <div class="card" style="margin-top:16px;border-left:4px solid var(--warn)">
+      <h3 style="margin-top:0">Experiment 2 &mdash; intraday decisions (every 15 minutes, 60-minute hold): running now</h3>
+      <p style="margin-bottom:0">The same eight model types are being tested on 2012&ndash;2023 minute-by-minute quotes on QuantConnect (data audited first &mdash; see <a href="#data">Data &amp; data quality</a>). A chart per model will appear here when the run finishes; 2024&ndash;2026 stays sealed for one final test.</p>
+    </div>
+    <p class="chart-note" style="margin-top:10px">Simulated on historical data; not investment advice.</p>
+  </section>
+
   <section id="results" class="p9s">
-    <h2>Results: what $1,000 would have become</h2>
+    <h2>Best model, bet size &amp; benchmarks</h2>
     <p style="color:var(--muted);margin:-6px 0 14px">Three daily backtests, Nov 7, 2026 (EXP-01D and follow-ups). Daily decisions on SPY and QQQ options: buy one call or put at the close, sell it at the next day&rsquo;s close, paying the full bid/ask spread and fees. Models retrained each year and tested 2016&ndash;2023; 2024&ndash;2025 kept sealed and opened once. Simulated on historical data &mdash; not investment advice.</p>
     <div class="kpis">
       <div><span>$1,000 at the risk limit</span><strong>$1,220</strong></div>
@@ -76,12 +126,7 @@
       <div><span>Best bet size (10% a trade)</span><strong>$9,964</strong></div>
       <div><span>Its worst drop</span><strong>&minus;60%</strong></div>
     </div>
-    <div class="card">
-      <div class="chart-title"><h3>Every model, $1,000 at 0.5% of the account per trade</h3></div>
-      <p class="chart-note">All eight first-experiment models were tested 2016&ndash;2023; the best model and the three simple rules were also run on the sealed 2024&ndash;2025 period (after the dashed line). The reconstructed reference network (M14, added Nov 7) was tested 2016&ndash;2025. End value 2016&ndash;2023 in brackets.</p>
-      <div class="legend"><span style="--c:var(--s1)">Elastic Net, best ($1,124)</span><span style="--c:var(--s2)">Always call ($920)</span><span style="--c:var(--s7)">Shuffled-label check ($858)</span><span style="--c:var(--s5)">Neural network ($727)</span><span style="--c:var(--s3)">Momentum ($670)</span><span style="--c:var(--s6)">LightGBM ($612)</span><span style="--c:var(--s8)">Random ($503)</span><span style="--c:var(--s4)">Always put ($380)</span><span style="--c:var(--s9)">Reference network M14 (2016&ndash;25: $927)</span></div>
-      <div id="g0" class="mlc"></div>
-    </div>
+    
     <div class="card" style="margin-top:16px">
       <div class="chart-title"><h3>Best model vs two simple rules, 2016&ndash;2025</h3></div>
       <p class="chart-note">The linear (Elastic Net) model against two simple rules. Dashed line: start of the sealed 2024&ndash;2025 test.</p>
@@ -138,75 +183,8 @@
     </div>
   </section>
 
-  <section id="findings">
-    <h2>What the research found</h2>
-    <div class="card" style="border-left:4px solid var(--accent)">
-      <div class="eyebrow" style="margin-bottom:8px">Main conclusion</div>
-      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0">No single model wins in options. The best model is the one with a stable edge <em>after costs</em> on data it never saw, not the one with the lowest prediction error.</p>
-    </div>
-    <div class="grid g2" style="margin-top:16px">
-      <div class="card">
-        <h3>Six core model families</h3>
-        <div class="table-scroll"><table>
-          <thead><tr><th>Model</th><th>Best role</th><th>Daily</th><th>Medium</th></tr></thead>
-          <tbody>
-            <tr><td><strong>XGBoost / LightGBM</strong></td><td>IV and RV forecasts, trade selection</td><td class="num">5</td><td class="num">5</td></tr>
-            <tr><td><strong>LSTM</strong></td><td>Volatility sequences</td><td class="num">5</td><td class="num">5</td></tr>
-            <tr><td><strong>Transformer / TFT</strong></td><td>Many features, several horizons</td><td class="num">5</td><td class="num">5</td></tr>
-            <tr><td><strong>GNN</strong></td><td>Whole option chain / IV surface</td><td class="num">4.5</td><td class="num">5</td></tr>
-            <tr><td><strong>PPO / deep hedging</strong></td><td>Sizing, hedging, exits</td><td class="num">4.5</td><td class="num">4</td></tr>
-            <tr><td><strong>Elastic Net</strong> <span class="tag muted">control</span></td><td>Simple benchmark</td><td class="num">5</td><td class="num">4</td></tr>
-          </tbody>
-        </table></div>
-        <p style="font-size:13px;color:var(--muted);margin:10px 0 0">Ratings out of 5 are qualitative opinions from the research chat, not test results. The other 14 models stay as secondary benchmarks.</p>
-      </div>
-      <div class="card">
-        <h3>What matters most (rated 10/10)</h3>
-        <ul>
-          <li><strong>Data quality</strong>, including clean bid/ask quotes.</li>
-          <li><strong>No leakage</strong>: expiring contracts, IV derived from prices and stale quotes all leak future information.</li>
-          <li><strong>The right target</strong>: IV change, IV–RV gap or probability of a profitable trade, not the next option price.</li>
-          <li><strong>Real costs</strong>: a +0.20% forecast is worthless at a 0.35% cost.</li>
-          <li><strong>Out-of-sample testing</strong>: walk-forward in time, never random splits, with 2008, 2020 and 2022 tested separately.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section id="reference">
-    <h2>A working system, examined</h2>
-    <p style="color:var(--muted);margin:-6px 0 14px">On Oct 29 we reviewed 21 screenshots of a third-party ML options system ("m14.fund3") shown publicly on video. It's the best real-world model of what to build &mdash; but none of its returns can be verified.</p>
-    <div class="grid g2">
-      <div class="card">
-        <h3>What it shows</h3>
-        <ul>
-          <li>A trained, checkpointed neural model (PyTorch-style file, &asymp;553 million training steps) with versioned runs.</li>
-          <li>The model is scored on <strong>gain</strong> and <strong>tradability</strong>, separately for calls and puts.</li>
-          <li>Separate scanner, live ranking, risk view, <strong>independent exit schedule</strong> and two brokers (Alpaca, Schwab).</li>
-          <li>Displayed realized profit of <strong>$53,917</strong> on positions opened Aug 17&ndash;27, 2026.</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>What it doesn't prove</h3>
-        <ul>
-          <li><span class="tag bad">No daily return</span> Percentages are on option cost per entry day, not on the account. Account size isn't shown.</li>
-          <li><span class="tag warn">Concentrated</span> About <strong>85%</strong> of the profit ($45,855) came from positions opened on one day.</li>
-          <li><span class="tag warn">Unreconciled</span> One total shows 7.7% where its own formula gives &asymp;5.8%; some daily figures changed between snapshots.</li>
-          <li>A training chart value of &asymp;9.7 is a model metric with unknown units, <strong>not</strong> a 9.7% daily return.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="card" style="margin-top:16px">
-      <div class="chart-title"><h3>Displayed realized profit by entry day, Aug 2026 ($)</h3></div>
-      <p class="chart-note">From the reference system's dashboard, not this project. One entry day accounts for most of the total.</p>
-      <div id="refpnl"></div>
-    </div>
-    <p style="font-size:13px;color:var(--muted);margin:10px 0 0">What we copy: the structure &mdash; train on real profit after costs, add a tradability output, keep every trade linked to the model version that made it, and run exits and accounting separately from the model.</p>
-      <p style="margin-top:8px"><strong>Tested Nov 7:</strong> we rebuilt its network from the screenshots (5 layers &times; 200 units, gain and tradability outputs, separate calls and puts) and ran it on our daily data. It did <strong>not</strong> beat our simple linear model (&minus;0.7% per trade at a 1-day hold, +2.1% at 5 days); its tradability output helped a little. Whatever edge the original has likely depends on its unseen intraday data and inputs. <a href="#results">See results</a>.</p>
-  </section>
-
   <section id="experiment">
-    <h2>First experiment</h2>
+    <h2>How the experiments work</h2>
     <p style="color:var(--muted);margin:-6px 0 14px">Narrow on purpose, and fixed before looking at the test period. These are starting assumptions, not settings known to be profitable.</p>
     <div class="grid g2">
       <div class="card">
@@ -263,24 +241,8 @@
     </div>
   </section>
 
-  <section id="research">
-    <h2>Research track</h2>
-    <a class="card research-link" href="project-09-research.html" aria-label="Open the Project 9 research track">
-      <div class="eyebrow" style="margin-bottom:8px">New model development &middot; started Nov 6, 2026</div>
-      <h3 style="margin-top:0">Finding a better options model</h3>
-      <p>A permanent research track beside the build plan. Two paths: design an original model from the options problem, or combine the strengths of existing models. Both follow the same five steps, face the same honest test with real bid/ask costs and a sealed final period, and must pass six gates. Only a reproduced winner moves into the build.</p>
-      <div class="research-stats">
-        <div><span>Paths</span><strong>2</strong></div>
-        <div><span>Ideas to test</span><strong>4</strong></div>
-        <div><span>Models listed</span><strong>12</strong></div>
-        <div><span>Next gate</span><strong>R0</strong></div>
-      </div>
-      <span class="research-cta">Open the research track &rarr;</span>
-    </a>
-  </section>
-
   <section id="data">
-    <h2>Data</h2>
+    <h2>Data &amp; data quality</h2>
     <p style="color:var(--muted);margin:-6px 0 14px">Collected Nov 6&ndash;7, 2026 from official, exchange and community sources, checked, and kept in one place on the owner&rsquo;s computer (licensed for personal use, not published). The project covers options on a wide range of stocks, not only SPY and QQQ.</p>
     <div class="grid g2">
       <div class="card">
@@ -353,83 +315,12 @@
     </div>
   </section>
 
-  <section id="frameworks">
-    <h2>Five frameworks</h2>
-    <div class="card">
-      <div class="chart-title"><h3>Profit rating by framework (qualitative, out of 5)</h3></div>
-      <p class="chart-note">Ranked by the owner's first priority, profit. Ratings come from the research review, not from backtests.</p>
-      <div id="fw"></div>
-      <div class="table-scroll" style="margin-top:14px"><table>
-        <thead><tr><th>#</th><th>Framework</th><th>Main goal</th><th>Profit</th><th>Risk control</th><th>Intraday</th><th>Daily</th><th>Medium</th><th>Long</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td><strong>Adaptive ML volatility + relative value</strong></td><td>Net risk-adjusted alpha</td><td class="num">5</td><td class="num">4.5</td><td class="num">4.5</td><td class="num">5</td><td class="num">5</td><td class="num">4</td></tr>
-          <tr><td>3</td><td><strong>ML + deep hedging / RL</strong></td><td>Net P&amp;L after costs and risk</td><td class="num">5</td><td class="num">5</td><td class="num">4</td><td class="num">5</td><td class="num">5</td><td class="num">4.5</td></tr>
-          <tr><td>2</td><td><strong>Regime-switching ML</strong></td><td>Consistency across regimes</td><td class="num">4.5</td><td class="num">5</td><td class="num">4.5</td><td class="num">5</td><td class="num">5</td><td class="num">5</td></tr>
-          <tr><td>4</td><td>Institutional volatility risk premium <span class="tag muted">benchmark</span></td><td>Steady premium harvesting</td><td class="num">4</td><td class="num">4.5</td><td class="num">3</td><td class="num">4.5</td><td class="num">5</td><td class="num">5</td></tr>
-          <tr><td>5</td><td>Institutional option overlay <span class="tag muted">benchmark</span></td><td>Portfolio outcome</td><td class="num">3</td><td class="num">5</td><td class="num">2</td><td class="num">4</td><td class="num">4.5</td><td class="num">5</td></tr>
-        </tbody>
-      </table></div>
-    </div>
-  </section>
-
-  <section id="benchmark">
-    <h2>Benchmark</h2>
-    <p style="color:var(--muted);margin:-6px 0 14px">Published research, an institutional index and option platforms this project competes with.</p>
-    <div class="card">
-      <div class="table-scroll"><table>
-        <thead><tr><th>Capability</th><th>This project</th><th>Bali et al. (2023)</th><th>Tan et al. (2024)</th><th>Cboe PUT index</th><th>ORATS / Option Alpha</th></tr></thead>
-        <tbody>
-          <tr><td>Type</td><td>Research + daily backtests</td><td>Academic paper (RFS)</td><td>Academic paper</td><td>Institutional index</td><td>Retail / pro platforms</td></tr>
-          <tr><td>Uses ML</td><td><span class="yes">✓</span> Linear, LightGBM, neural nets tested</td><td><span class="yes">✓</span> Nonlinear ML beats linear</td><td><span class="yes">✓</span> LSTM, linear, MLP, CNN</td><td><span class="no">✗</span> Fixed rule</td><td><span class="no">✗</span> Rule-based</td></tr>
-          <tr><td>Universe</td><td><span class="part">◐</span> SPY &amp; QQQ tested; 150 underlyings defined</td><td><span class="yes">✓</span> US equity options, 12M+ obs.</td><td><span class="yes">✓</span> S&amp;P 100 options</td><td>S&amp;P 500 puts</td><td><span class="yes">✓</span> 5,000+ symbols (ORATS)</td></tr>
-          <tr><td>History tested</td><td><span class="part">◐</span> 2016&ndash;2025, daily only</td><td><span class="yes">✓</span> 1996–2020</td><td><span class="yes">✓</span> 2010–2023</td><td><span class="yes">✓</span> Since 1986</td><td><span class="yes">✓</span> Since 2007 (ORATS)</td></tr>
-          <tr><td>Costs</td><td><span class="yes">✓</span> Bid/ask fills + fees, stress-tested</td><td><span class="yes">✓</span> Conservative costs</td><td><span class="yes">✓</span> 0–50 bps tested</td><td><span class="no">✗</span> Gross index</td><td><span class="part">◐</span> User-set</td></tr>
-          <tr><td>Reported result</td><td>Linear model +2.5%/trade, Sharpe 0.68; no options-specific edge</td><td>Profitable long-short after costs</td><td>LSTM Sharpe 1.33 (0 bps) → 0.39 (50 bps)</td><td>10.1%/yr vs 9.8% S&amp;P 500, lower volatility (1986–2015)</td><td>Backtest &amp; automation tools</td></tr>
-        </tbody>
-      </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">✓ yes &middot; ◐ partial &middot; ✗ no. Based on public papers and vendor pages as of Oct 2026 (sources below). Results come from different markets, periods and costs, so they aren't directly comparable.</p>
-      <p style="font-size:13px;margin:8px 0 0"><strong>Our own check, Nov 7:</strong> we rebuilt the Cboe PUT and BXM strategies from real option quotes (correlation 0.98 with the official indices) and compared them with buy-and-hold and our best model &mdash; <a href="#results">see Benchmark 1 in Results</a>. More benchmarks (Goyal&ndash;Saretto, Bali et al., Tan et al.) follow one by one.</p>
-    </div>
-    <div class="card" style="margin-top:16px">
-      <div class="chart-title"><h3>Costs decide the winner: Sharpe ratio at different trading costs</h3></div>
-      <p class="chart-note">Tan, Roberts &amp; Zohren (2024), S&amp;P 100 straddles, 2010–2023. The deep model beats the best rule up to 20 bps and falls behind at 50 bps, unless trained with a turnover penalty.</p>
-      <div id="cost"></div>
-    </div>
-    <div class="grid g3" style="margin-top:16px">
-      <div class="card"><h3>Where we're ahead</h3><p>A wider design than any single paper: forecasts, regimes, strategy choice, sizing, a cost gate and risk limits, with institutional benchmarks built in.</p></div>
-      <div class="card"><h3>Where we're behind</h3><p>Only daily SPY/QQQ backtests so far, no intraday option data, and no proven edge. The published studies cover more markets and show profits after costs.</p></div>
-      <div class="card"><h3>Biggest lesson</h3><p>The published profits come from <em>simple, cross-sectional</em> designs tested net of costs. Reproduce one of those first, then add layers only if they add profit.</p></div>
-    </div>
-  </section>
-
-  <section>
-    <h2>Goals &amp; objectives</h2>
+  <section id="goals">
+    <h2>Goals</h2>
     <div class="grid g3">
       <div class="card"><h3>1. Grow the account</h3><p>Net growth of total account equity after every cost. Target: <strong>more than 5% a trading day</strong> on average, compounded, losing days allowed, with 1% and 2% a day as milestones. It's a hypothesis to test, not a promise: 5% a day would multiply the account about 219,000&times; in a year.</p></div>
       <div class="card"><h3>2. Survive</h3><p>Pass/fail limits on drawdown, daily loss, tail loss and margin. A model that breaks them is out, however profitable.</p></div>
       <div class="card"><h3>3. Prove it's real</h3><p>Beat simple rules and published benchmarks on data the model never saw, under cost stress, with checks for luck and overfitting. Win rate is reported, not ranked on.</p></div>
-    </div>
-  </section>
-
-  <section id="approach">
-    <h2>Approach</h2>
-    <div class="dqg">
-      <div class="card">
-        <h3>Recommended system: 10 layers</h3>
-        <div class="arch"><img src="img/p9-architecture.png" alt="Recommended ML options system: data, features, forecasts, regime engine, strategy selector, sizing and hedging, cost gate, risk limits, execution and monitoring" loading="lazy" width="576" height="608"></div>
-        <p style="font-size:13px;color:var(--muted);margin:10px 0 0">Signals flow top to bottom. Any trade whose expected edge doesn't clear total costs stops at the cost gate.</p>
-      </div>
-      <div class="card">
-        <h3>Validation plan</h3>
-        <ol class="steps">
-          <li><strong>Statistical</strong>: does it predict IV, RV and returns?</li>
-          <li><strong>Economic</strong>: net profit, win rate, drawdown.</li>
-          <li><strong>Execution</strong>: still profitable after spread, slippage, commission and impact?</li>
-          <li><strong>Crisis</strong>: 2008, 2020 and 2022 tested separately.</li>
-          <li><strong>Walk-forward</strong>: train 2010–2018, validate 2019–2020, test 2021, then roll forward a year.</li>
-          <li><strong>Paper trading</strong> before any capital.</li>
-        </ol>
-      </div>
     </div>
   </section>
 
@@ -465,12 +356,166 @@
     </div>
   </section>
 
+  <section id="findings">
+    <h2>Research background: what the studies say</h2>
+    <div class="card" style="border-left:4px solid var(--accent)">
+      <div class="eyebrow" style="margin-bottom:8px">Main conclusion</div>
+      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0">No single model wins in options. The best model is the one with a stable edge <em>after costs</em> on data it never saw, not the one with the lowest prediction error.</p>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <h3>Six core model families</h3>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Model</th><th>Best role</th><th>Daily</th><th>Medium</th></tr></thead>
+          <tbody>
+            <tr><td><strong>XGBoost / LightGBM</strong></td><td>IV and RV forecasts, trade selection</td><td class="num">5</td><td class="num">5</td></tr>
+            <tr><td><strong>LSTM</strong></td><td>Volatility sequences</td><td class="num">5</td><td class="num">5</td></tr>
+            <tr><td><strong>Transformer / TFT</strong></td><td>Many features, several horizons</td><td class="num">5</td><td class="num">5</td></tr>
+            <tr><td><strong>GNN</strong></td><td>Whole option chain / IV surface</td><td class="num">4.5</td><td class="num">5</td></tr>
+            <tr><td><strong>PPO / deep hedging</strong></td><td>Sizing, hedging, exits</td><td class="num">4.5</td><td class="num">4</td></tr>
+            <tr><td><strong>Elastic Net</strong> <span class="tag muted">control</span></td><td>Simple benchmark</td><td class="num">5</td><td class="num">4</td></tr>
+          </tbody>
+        </table></div>
+        <p style="font-size:13px;color:var(--muted);margin:10px 0 0">Ratings out of 5 are qualitative opinions from the research chat, not test results. The other 14 models stay as secondary benchmarks.</p>
+      </div>
+      <div class="card">
+        <h3>What matters most (rated 10/10)</h3>
+        <ul>
+          <li><strong>Data quality</strong>, including clean bid/ask quotes.</li>
+          <li><strong>No leakage</strong>: expiring contracts, IV derived from prices and stale quotes all leak future information.</li>
+          <li><strong>The right target</strong>: IV change, IV–RV gap or probability of a profitable trade, not the next option price.</li>
+          <li><strong>Real costs</strong>: a +0.20% forecast is worthless at a 0.35% cost.</li>
+          <li><strong>Out-of-sample testing</strong>: walk-forward in time, never random splits, with 2008, 2020 and 2022 tested separately.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="reference">
+    <h2>A working system, examined</h2>
+    <p style="color:var(--muted);margin:-6px 0 14px">On Oct 29 we reviewed 21 screenshots of a third-party ML options system ("m14.fund3") shown publicly on video. It's the best real-world model of what to build &mdash; but none of its returns can be verified.</p>
+    <div class="grid g2">
+      <div class="card">
+        <h3>What it shows</h3>
+        <ul>
+          <li>A trained, checkpointed neural model (PyTorch-style file, &asymp;553 million training steps) with versioned runs.</li>
+          <li>The model is scored on <strong>gain</strong> and <strong>tradability</strong>, separately for calls and puts.</li>
+          <li>Separate scanner, live ranking, risk view, <strong>independent exit schedule</strong> and two brokers (Alpaca, Schwab).</li>
+          <li>Displayed realized profit of <strong>$53,917</strong> on positions opened Aug 17&ndash;27, 2026.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>What it doesn't prove</h3>
+        <ul>
+          <li><span class="tag bad">No daily return</span> Percentages are on option cost per entry day, not on the account. Account size isn't shown.</li>
+          <li><span class="tag warn">Concentrated</span> About <strong>85%</strong> of the profit ($45,855) came from positions opened on one day.</li>
+          <li><span class="tag warn">Unreconciled</span> One total shows 7.7% where its own formula gives &asymp;5.8%; some daily figures changed between snapshots.</li>
+          <li>A training chart value of &asymp;9.7 is a model metric with unknown units, <strong>not</strong> a 9.7% daily return.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="chart-title"><h3>Displayed realized profit by entry day, Aug 2026 ($)</h3></div>
+      <p class="chart-note">From the reference system's dashboard, not this project. One entry day accounts for most of the total.</p>
+      <div id="refpnl"></div>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin:10px 0 0">What we copy: the structure &mdash; train on real profit after costs, add a tradability output, keep every trade linked to the model version that made it, and run exits and accounting separately from the model.</p>
+      <p style="margin-top:8px"><strong>Tested Nov 7:</strong> we rebuilt its network from the screenshots (5 layers &times; 200 units, gain and tradability outputs, separate calls and puts) and ran it on our daily data. It did <strong>not</strong> beat our simple linear model (&minus;0.7% per trade at a 1-day hold, +2.1% at 5 days); its tradability output helped a little. Whatever edge the original has likely depends on its unseen intraday data and inputs. <a href="#results">See results</a>.</p>
+  </section>
+
+  <section id="frameworks">
+    <h2>Five frameworks compared</h2>
+    <div class="card">
+      <div class="chart-title"><h3>Profit rating by framework (qualitative, out of 5)</h3></div>
+      <p class="chart-note">Ranked by the owner's first priority, profit. Ratings come from the research review, not from backtests.</p>
+      <div id="fw"></div>
+      <div class="table-scroll" style="margin-top:14px"><table>
+        <thead><tr><th>#</th><th>Framework</th><th>Main goal</th><th>Profit</th><th>Risk control</th><th>Intraday</th><th>Daily</th><th>Medium</th><th>Long</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><strong>Adaptive ML volatility + relative value</strong></td><td>Net risk-adjusted alpha</td><td class="num">5</td><td class="num">4.5</td><td class="num">4.5</td><td class="num">5</td><td class="num">5</td><td class="num">4</td></tr>
+          <tr><td>3</td><td><strong>ML + deep hedging / RL</strong></td><td>Net P&amp;L after costs and risk</td><td class="num">5</td><td class="num">5</td><td class="num">4</td><td class="num">5</td><td class="num">5</td><td class="num">4.5</td></tr>
+          <tr><td>2</td><td><strong>Regime-switching ML</strong></td><td>Consistency across regimes</td><td class="num">4.5</td><td class="num">5</td><td class="num">4.5</td><td class="num">5</td><td class="num">5</td><td class="num">5</td></tr>
+          <tr><td>4</td><td>Institutional volatility risk premium <span class="tag muted">benchmark</span></td><td>Steady premium harvesting</td><td class="num">4</td><td class="num">4.5</td><td class="num">3</td><td class="num">4.5</td><td class="num">5</td><td class="num">5</td></tr>
+          <tr><td>5</td><td>Institutional option overlay <span class="tag muted">benchmark</span></td><td>Portfolio outcome</td><td class="num">3</td><td class="num">5</td><td class="num">2</td><td class="num">4</td><td class="num">4.5</td><td class="num">5</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <section id="benchmark">
+    <h2>Published benchmark to beat</h2>
+    <p style="color:var(--muted);margin:-6px 0 14px">Published research, an institutional index and option platforms this project competes with.</p>
+    <div class="card">
+      <div class="table-scroll"><table>
+        <thead><tr><th>Capability</th><th>This project</th><th>Bali et al. (2023)</th><th>Tan et al. (2024)</th><th>Cboe PUT index</th><th>ORATS / Option Alpha</th></tr></thead>
+        <tbody>
+          <tr><td>Type</td><td>Research + daily backtests</td><td>Academic paper (RFS)</td><td>Academic paper</td><td>Institutional index</td><td>Retail / pro platforms</td></tr>
+          <tr><td>Uses ML</td><td><span class="yes">✓</span> Linear, LightGBM, neural nets tested</td><td><span class="yes">✓</span> Nonlinear ML beats linear</td><td><span class="yes">✓</span> LSTM, linear, MLP, CNN</td><td><span class="no">✗</span> Fixed rule</td><td><span class="no">✗</span> Rule-based</td></tr>
+          <tr><td>Universe</td><td><span class="part">◐</span> SPY &amp; QQQ tested; 150 underlyings defined</td><td><span class="yes">✓</span> US equity options, 12M+ obs.</td><td><span class="yes">✓</span> S&amp;P 100 options</td><td>S&amp;P 500 puts</td><td><span class="yes">✓</span> 5,000+ symbols (ORATS)</td></tr>
+          <tr><td>History tested</td><td><span class="part">◐</span> 2016&ndash;2025, daily only</td><td><span class="yes">✓</span> 1996–2020</td><td><span class="yes">✓</span> 2010–2023</td><td><span class="yes">✓</span> Since 1986</td><td><span class="yes">✓</span> Since 2007 (ORATS)</td></tr>
+          <tr><td>Costs</td><td><span class="yes">✓</span> Bid/ask fills + fees, stress-tested</td><td><span class="yes">✓</span> Conservative costs</td><td><span class="yes">✓</span> 0–50 bps tested</td><td><span class="no">✗</span> Gross index</td><td><span class="part">◐</span> User-set</td></tr>
+          <tr><td>Reported result</td><td>Linear model +2.5%/trade, Sharpe 0.68; no options-specific edge</td><td>Profitable long-short after costs</td><td>LSTM Sharpe 1.33 (0 bps) → 0.39 (50 bps)</td><td>10.1%/yr vs 9.8% S&amp;P 500, lower volatility (1986–2015)</td><td>Backtest &amp; automation tools</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">✓ yes &middot; ◐ partial &middot; ✗ no. Based on public papers and vendor pages as of Oct 2026 (sources below). Results come from different markets, periods and costs, so they aren't directly comparable.</p>
+      <p style="font-size:13px;margin:8px 0 0"><strong>Our own check, Nov 7:</strong> we rebuilt the Cboe PUT and BXM strategies from real option quotes (correlation 0.98 with the official indices) and compared them with buy-and-hold and our best model &mdash; <a href="#results">see Benchmark 1 in Results</a>. More benchmarks (Goyal&ndash;Saretto, Bali et al., Tan et al.) follow one by one.</p>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="chart-title"><h3>Costs decide the winner: Sharpe ratio at different trading costs</h3></div>
+      <p class="chart-note">Tan, Roberts &amp; Zohren (2024), S&amp;P 100 straddles, 2010–2023. The deep model beats the best rule up to 20 bps and falls behind at 50 bps, unless trained with a turnover penalty.</p>
+      <div id="cost"></div>
+    </div>
+    <div class="grid g3" style="margin-top:16px">
+      <div class="card"><h3>Where we're ahead</h3><p>A wider design than any single paper: forecasts, regimes, strategy choice, sizing, a cost gate and risk limits, with institutional benchmarks built in.</p></div>
+      <div class="card"><h3>Where we're behind</h3><p>Only daily SPY/QQQ backtests so far, no intraday option data, and no proven edge. The published studies cover more markets and show profits after costs.</p></div>
+      <div class="card"><h3>Biggest lesson</h3><p>The published profits come from <em>simple, cross-sectional</em> designs tested net of costs. Reproduce one of those first, then add layers only if they add profit.</p></div>
+    </div>
+  </section>
+
+  <section id="approach">
+    <h2>Approach</h2>
+    <div class="dqg">
+      <div class="card">
+        <h3>Recommended system: 10 layers</h3>
+        <div class="arch"><img src="img/p9-architecture.png" alt="Recommended ML options system: data, features, forecasts, regime engine, strategy selector, sizing and hedging, cost gate, risk limits, execution and monitoring" loading="lazy" width="576" height="608"></div>
+        <p style="font-size:13px;color:var(--muted);margin:10px 0 0">Signals flow top to bottom. Any trade whose expected edge doesn't clear total costs stops at the cost gate.</p>
+      </div>
+      <div class="card">
+        <h3>Validation plan</h3>
+        <ol class="steps">
+          <li><strong>Statistical</strong>: does it predict IV, RV and returns?</li>
+          <li><strong>Economic</strong>: net profit, win rate, drawdown.</li>
+          <li><strong>Execution</strong>: still profitable after spread, slippage, commission and impact?</li>
+          <li><strong>Crisis</strong>: 2008, 2020 and 2022 tested separately.</li>
+          <li><strong>Walk-forward</strong>: train 2010–2018, validate 2019–2020, test 2021, then roll forward a year.</li>
+          <li><strong>Paper trading</strong> before any capital.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="research">
+    <h2>Research track: finding new models</h2>
+    <a class="card research-link" href="project-09-research.html" aria-label="Open the Project 9 research track">
+      <div class="eyebrow" style="margin-bottom:8px">New model development &middot; started Nov 6, 2026</div>
+      <h3 style="margin-top:0">Finding a better options model</h3>
+      <p>A permanent research track beside the build plan. Two paths: design an original model from the options problem, or combine the strengths of existing models. Both follow the same five steps, face the same honest test with real bid/ask costs and a sealed final period, and must pass six gates. Only a reproduced winner moves into the build.</p>
+      <div class="research-stats">
+        <div><span>Paths</span><strong>2</strong></div>
+        <div><span>Ideas to test</span><strong>4</strong></div>
+        <div><span>Models listed</span><strong>12</strong></div>
+        <div><span>Next gate</span><strong>R0</strong></div>
+      </div>
+      <span class="research-cta">Open the research track &rarr;</span>
+    </a>
+  </section>
+
   <section id="disclosure">
     <h2>Disclosures</h2>
     <div class="card"><p style="margin:0">This project is at the research stage and has no backtest or trading results. Ratings are qualitative opinions from the research review. Figures from other studies are the authors' own and aren't comparable with each other. Options can lose more than expected. Nothing on this page is investment advice.</p></div>
   </section>
 
-  <section>
+  <section id="sources">
     <h2>Sources</h2>
     <div class="card"><ul style="margin:0">
       <li><a href="https://academic.oup.com/rfs/article/36/9/3548/7056660">Bali, Beckmeyer, Mörke &amp; Weigert (2023): Option Return Predictability with Machine Learning and Big Data</a></li>
@@ -529,9 +574,9 @@ var tx=x(i)*r.width/W;tip.style.left=Math.min(Math.max(tx-tip.offsetWidth/2,0),r
 hit.addEventListener('mousemove',mv);hit.addEventListener('touchstart',mv,{passive:true});hit.addEventListener('mouseleave',function(){tip.classList.remove('on');cr.setAttribute('opacity',0)})}
 function drawG(){mlc(document.getElementById('g1'),[{k:'EN_0.5pct',n:'Elastic Net',c:'--s1'},{k:'R0_0.5pct',n:'Always buy a call',c:'--s2'},{k:'R2_0.5pct',n:'Momentum rule',c:'--s3'}],{h:280});
 mlc(document.getElementById('g2'),[{k:'EN_0.5pct',n:'0.5%',c:'--s1'},{k:'EN_2pct',n:'2%',c:'--s2'},{k:'EN_5pct',n:'5%',c:'--s3'},{k:'EN_10pct',n:'10%',c:'--s4'},{k:'EN_25pct',n:'25%',c:'--s5'}],{h:300,log:true});}
-var GA={"labels":["Start","Jan 2016","Feb 2016","Mar 2016","Apr 2016","May 2016","Jun 2016","Jul 2016","Aug 2016","Sep 2016","Oct 2016","Nov 2016","Dec 2016","Jan 2017","Feb 2017","Mar 2017","Apr 2017","May 2017","Jun 2017","Jul 2017","Aug 2017","Sep 2017","Oct 2017","Nov 2017","Dec 2017","Jan 2018","Feb 2018","Mar 2018","Apr 2018","May 2018","Jun 2018","Jul 2018","Aug 2018","Sep 2018","Oct 2018","Nov 2018","Dec 2018","Jan 2019","Feb 2019","Mar 2019","Apr 2019","May 2019","Jun 2019","Jul 2019","Aug 2019","Sep 2019","Oct 2019","Nov 2019","Dec 2019","Jan 2020","Feb 2020","Mar 2020","Apr 2020","May 2020","Jun 2020","Jul 2020","Aug 2020","Sep 2020","Oct 2020","Nov 2020","Dec 2020","Jan 2021","Feb 2021","Mar 2021","Apr 2021","May 2021","Jun 2021","Jul 2021","Aug 2021","Sep 2021","Oct 2021","Nov 2021","Dec 2021","Jan 2022","Feb 2022","Mar 2022","Apr 2022","May 2022","Jun 2022","Jul 2022","Aug 2022","Sep 2022","Oct 2022","Nov 2022","Dec 2022","Jan 2023","Feb 2023","Mar 2023","Apr 2023","May 2023","Jun 2023","Jul 2023","Aug 2023","Sep 2023","Oct 2023","Nov 2023","Dec 2023","Jan 2024","Feb 2024","Mar 2024","Apr 2024","May 2024","Jun 2024","Jul 2024","Aug 2024","Sep 2024","Oct 2024","Nov 2024","Dec 2024","Jan 2025","Feb 2025","Mar 2025","Apr 2025","May 2025","Jun 2025","Jul 2025","Aug 2025","Sep 2025","Oct 2025","Nov 2025","Dec 2025"],"EN":[1000,976,985,990,995,995,1005,1005,995,997,985,995,1003,1004,1005,1001,1000,1001,999,1000,1005,1004,1006,1011,1011,1013,1007,999,1018,1017,1016,1017,1020,1022,1023,1030,1041,1061,1064,1072,1074,1050,1065,1064,1059,1056,1060,1059,1071,1081,1091,1094,1103,1101,1101,1099,1097,1092,1084,1100,1103,1104,1108,1113,1113,1113,1113,1116,1116,1117,1117,1110,1118,1114,1114,1140,1129,1130,1125,1136,1132,1124,1130,1129,1124,1124,1124,1124,1124,1124,1124,1124,1124,1124,1124,1124,1124,1129,1159,1166,1147,1164,1177,1173,1185,1196,1188,1208,1209,1212,1202,1180,1197,1208,1207,1211,1209,1214,1230,1219,1220],"R0":[1000,983,982,988,973,977,971,985,971,966,947,945,953,954,978,956,959,967,947,953,946,942,951,958,958,993,975,962,961,968,959,964,977,973,946,942,909,925,930,941,946,914,940,933,926,915,927,928,950,955,953,926,944,956,965,976,998,985,976,994,987,991,990,990,996,987,999,1003,1012,982,1005,1003,1011,983,965,975,946,939,922,938,922,904,908,921,891,913,893,905,897,910,926,931,920,894,884,914,920,935,953,948,923,938,951,953,953,959,952,960,946,944,925,905,902,916,920,912,911,924,927,913,903],"NN":[1000,975,965,932,931,932,949,920,903,946,940,955,930,907,887,873,861,868,857,848,851,830,814,807,820,817,797,804,780,782,772,778,783,774,764,766,798,769,754,760,746,756,727,720,750,751,744,762,761,742,735,746,739,740,748,744,759,750,749,753,750,747,741,741,754,738,744,751,751,768,766,745,770,763,755,755,764,786,796,794,798,786,794,810,841,828,819,814,808,789,775,769,767,773,773,745,727,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"SH":[1000,1008,1003,989,981,974,983,968,964,998,991,989,966,946,916,914,904,907,897,880,881,868,852,829,820,814,838,848,849,848,840,840,828,829,833,831,816,812,811,818,813,817,810,815,823,824,823,832,824,835,841,894,896,889,875,882,887,885,917,913,905,911,911,897,896,892,873,874,873,867,860,853,839,835,850,834,837,839,874,873,879,881,876,878,887,879,874,878,875,882,881,878,880,878,870,866,858,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"R2":[1000,1017,1000,982,972,940,916,929,911,888,868,859,856,847,852,825,828,811,796,788,776,759,754,744,732,759,781,799,789,776,782,776,773,761,770,772,782,778,773,774,779,790,787,783,767,777,788,781,790,796,837,833,820,801,786,781,794,791,791,777,756,748,749,744,736,739,739,736,723,716,730,725,708,715,700,713,726,729,729,720,734,740,732,722,702,702,691,678,667,659,655,646,648,649,652,673,670,663,671,656,643,647,639,656,662,663,643,636,616,594,591,584,594,587,582,583,571,565,560,555,550],"GB":[1000,970,945,918,919,915,928,913,896,910,902,890,868,844,829,817,815,812,811,808,801,781,768,766,769,780,760,744,756,764,765,763,770,770,754,767,759,730,708,697,679,701,677,667,675,675,672,674,684,690,699,693,720,721,718,720,736,736,724,725,720,708,701,694,694,688,677,681,685,676,676,671,680,669,665,669,662,678,670,684,670,656,661,677,662,671,668,674,666,657,637,628,623,637,636,626,612,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"R3":[1000,986,965,951,938,935,941,938,918,903,883,865,836,823,815,784,774,772,739,727,730,717,715,707,694,681,695,685,677,680,667,668,667,650,663,661,669,669,668,666,647,641,637,622,613,604,611,606,603,604,590,589,574,567,568,570,570,587,596,580,568,572,563,563,551,555,552,550,554,549,542,535,529,541,542,542,531,539,524,533,537,538,533,542,541,527,527,521,515,518,512,508,515,524,513,505,503,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"R1":[1000,1006,998,967,966,947,948,917,904,902,902,886,861,837,803,796,777,760,765,740,735,720,701,685,669,646,662,671,659,643,640,628,608,601,625,625,645,628,611,600,587,605,582,578,584,582,566,555,536,534,543,562,549,535,528,516,500,504,504,488,481,477,471,466,455,455,442,436,425,431,417,418,410,421,428,420,433,436,443,432,438,444,442,435,444,431,434,425,421,413,402,395,396,404,404,388,380,372,364,360,367,355,345,350,349,342,339,329,332,329,331,332,340,331,322,317,311,300,296,296,293],"M14":[1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,998,998,998,998,995,1005,1005,1008,1008,1017,1017,1017,1025,1030,1031,1026,1033,1033,1037,1043,1041,1030,1051,1054,1049,1045,1054,1063,1054,1059,1063,1077,1055,1065,1052,1048,1051,1054,1066,1059,1069,1046,1067,1058,1016,1000,1007,1014,995,1009,1012,985,981,963,962,927,922,907,884,877,899,903,899,897,902,898,933,919,914,910,912,905,908,900,882,936,943,933,926,923,925,927,934,927]};
+var GA=window.P9GA={"labels":["Start","Jan 2016","Feb 2016","Mar 2016","Apr 2016","May 2016","Jun 2016","Jul 2016","Aug 2016","Sep 2016","Oct 2016","Nov 2016","Dec 2016","Jan 2017","Feb 2017","Mar 2017","Apr 2017","May 2017","Jun 2017","Jul 2017","Aug 2017","Sep 2017","Oct 2017","Nov 2017","Dec 2017","Jan 2018","Feb 2018","Mar 2018","Apr 2018","May 2018","Jun 2018","Jul 2018","Aug 2018","Sep 2018","Oct 2018","Nov 2018","Dec 2018","Jan 2019","Feb 2019","Mar 2019","Apr 2019","May 2019","Jun 2019","Jul 2019","Aug 2019","Sep 2019","Oct 2019","Nov 2019","Dec 2019","Jan 2020","Feb 2020","Mar 2020","Apr 2020","May 2020","Jun 2020","Jul 2020","Aug 2020","Sep 2020","Oct 2020","Nov 2020","Dec 2020","Jan 2021","Feb 2021","Mar 2021","Apr 2021","May 2021","Jun 2021","Jul 2021","Aug 2021","Sep 2021","Oct 2021","Nov 2021","Dec 2021","Jan 2022","Feb 2022","Mar 2022","Apr 2022","May 2022","Jun 2022","Jul 2022","Aug 2022","Sep 2022","Oct 2022","Nov 2022","Dec 2022","Jan 2023","Feb 2023","Mar 2023","Apr 2023","May 2023","Jun 2023","Jul 2023","Aug 2023","Sep 2023","Oct 2023","Nov 2023","Dec 2023","Jan 2024","Feb 2024","Mar 2024","Apr 2024","May 2024","Jun 2024","Jul 2024","Aug 2024","Sep 2024","Oct 2024","Nov 2024","Dec 2024","Jan 2025","Feb 2025","Mar 2025","Apr 2025","May 2025","Jun 2025","Jul 2025","Aug 2025","Sep 2025","Oct 2025","Nov 2025","Dec 2025"],"EN":[1000,976,985,990,995,995,1005,1005,995,997,985,995,1003,1004,1005,1001,1000,1001,999,1000,1005,1004,1006,1011,1011,1013,1007,999,1018,1017,1016,1017,1020,1022,1023,1030,1041,1061,1064,1072,1074,1050,1065,1064,1059,1056,1060,1059,1071,1081,1091,1094,1103,1101,1101,1099,1097,1092,1084,1100,1103,1104,1108,1113,1113,1113,1113,1116,1116,1117,1117,1110,1118,1114,1114,1140,1129,1130,1125,1136,1132,1124,1130,1129,1124,1124,1124,1124,1124,1124,1124,1124,1124,1124,1124,1124,1124,1129,1159,1166,1147,1164,1177,1173,1185,1196,1188,1208,1209,1212,1202,1180,1197,1208,1207,1211,1209,1214,1230,1219,1220],"R0":[1000,983,982,988,973,977,971,985,971,966,947,945,953,954,978,956,959,967,947,953,946,942,951,958,958,993,975,962,961,968,959,964,977,973,946,942,909,925,930,941,946,914,940,933,926,915,927,928,950,955,953,926,944,956,965,976,998,985,976,994,987,991,990,990,996,987,999,1003,1012,982,1005,1003,1011,983,965,975,946,939,922,938,922,904,908,921,891,913,893,905,897,910,926,931,920,894,884,914,920,935,953,948,923,938,951,953,953,959,952,960,946,944,925,905,902,916,920,912,911,924,927,913,903],"NN":[1000,975,965,932,931,932,949,920,903,946,940,955,930,907,887,873,861,868,857,848,851,830,814,807,820,817,797,804,780,782,772,778,783,774,764,766,798,769,754,760,746,756,727,720,750,751,744,762,761,742,735,746,739,740,748,744,759,750,749,753,750,747,741,741,754,738,744,751,751,768,766,745,770,763,755,755,764,786,796,794,798,786,794,810,841,828,819,814,808,789,775,769,767,773,773,745,727,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"SH":[1000,1008,1003,989,981,974,983,968,964,998,991,989,966,946,916,914,904,907,897,880,881,868,852,829,820,814,838,848,849,848,840,840,828,829,833,831,816,812,811,818,813,817,810,815,823,824,823,832,824,835,841,894,896,889,875,882,887,885,917,913,905,911,911,897,896,892,873,874,873,867,860,853,839,835,850,834,837,839,874,873,879,881,876,878,887,879,874,878,875,882,881,878,880,878,870,866,858,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"R2":[1000,1017,1000,982,972,940,916,929,911,888,868,859,856,847,852,825,828,811,796,788,776,759,754,744,732,759,781,799,789,776,782,776,773,761,770,772,782,778,773,774,779,790,787,783,767,777,788,781,790,796,837,833,820,801,786,781,794,791,791,777,756,748,749,744,736,739,739,736,723,716,730,725,708,715,700,713,726,729,729,720,734,740,732,722,702,702,691,678,667,659,655,646,648,649,652,673,670,663,671,656,643,647,639,656,662,663,643,636,616,594,591,584,594,587,582,583,571,565,560,555,550],"GB":[1000,970,945,918,919,915,928,913,896,910,902,890,868,844,829,817,815,812,811,808,801,781,768,766,769,780,760,744,756,764,765,763,770,770,754,767,759,730,708,697,679,701,677,667,675,675,672,674,684,690,699,693,720,721,718,720,736,736,724,725,720,708,701,694,694,688,677,681,685,676,676,671,680,669,665,669,662,678,670,684,670,656,661,677,662,671,668,674,666,657,637,628,623,637,636,626,612,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"R3":[1000,986,965,951,938,935,941,938,918,903,883,865,836,823,815,784,774,772,739,727,730,717,715,707,694,681,695,685,677,680,667,668,667,650,663,661,669,669,668,666,647,641,637,622,613,604,611,606,603,604,590,589,574,567,568,570,570,587,596,580,568,572,563,563,551,555,552,550,554,549,542,535,529,541,542,542,531,539,524,533,537,538,533,542,541,527,527,521,515,518,512,508,515,524,513,505,503,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"R1":[1000,1006,998,967,966,947,948,917,904,902,902,886,861,837,803,796,777,760,765,740,735,720,701,685,669,646,662,671,659,643,640,628,608,601,625,625,645,628,611,600,587,605,582,578,584,582,566,555,536,534,543,562,549,535,528,516,500,504,504,488,481,477,471,466,455,455,442,436,425,431,417,418,410,421,428,420,433,436,443,432,438,444,442,435,444,431,434,425,421,413,402,395,396,404,404,388,380,372,364,360,367,355,345,350,349,342,339,329,332,329,331,332,340,331,322,317,311,300,296,296,293],"M14":[1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,998,998,998,998,995,1005,1005,1008,1008,1017,1017,1017,1025,1030,1031,1026,1033,1033,1037,1043,1041,1030,1051,1054,1049,1045,1054,1063,1054,1059,1063,1077,1055,1065,1052,1048,1051,1054,1066,1059,1069,1046,1067,1058,1016,1000,1007,1014,995,1009,1012,985,981,963,962,927,922,907,884,877,899,903,899,897,902,898,933,919,914,910,912,905,908,900,882,936,943,933,926,923,925,927,934,927]};
 var ALL=[['EN','Elastic Net (best)','--s1'],['R0','Always buy a call','--s2'],['SH','Shuffled-label check','--s7'],['NN','Neural network','--s5'],['R2','Momentum rule','--s3'],['GB','LightGBM','--s6'],['R3','Random pick','--s8'],['R1','Always buy a put','--s4'],['M14','Reference network (M14)','--s9']];
-function drawA(){mlc(document.getElementById('g0'),ALL.map(function(a){return{k:a[0],n:a[1],c:a[2]}}),{h:320,data:GA});}
+function drawA(){if(!document.getElementById('g0'))return;mlc(document.getElementById('g0'),ALL.map(function(a){return{k:a[0],n:a[1],c:a[2]}}),{h:320,data:GA});}
 var GB={"labels":["Dec 2015","Jan 2016","Feb 2016","Mar 2016","Apr 2016","May 2016","Jun 2016","Jul 2016","Aug 2016","Sep 2016","Oct 2016","Nov 2016","Dec 2016","Jan 2017","Feb 2017","Mar 2017","Apr 2017","May 2017","Jun 2017","Jul 2017","Aug 2017","Sep 2017","Oct 2017","Nov 2017","Dec 2017","Jan 2018","Feb 2018","Mar 2018","Apr 2018","May 2018","Jun 2018","Jul 2018","Aug 2018","Sep 2018","Oct 2018","Nov 2018","Dec 2018","Jan 2019","Feb 2019","Mar 2019","Apr 2019","May 2019","Jun 2019","Jul 2019","Aug 2019","Sep 2019","Oct 2019","Nov 2019","Dec 2019","Jan 2020","Feb 2020","Mar 2020","Apr 2020","May 2020","Jun 2020","Jul 2020","Aug 2020","Sep 2020","Oct 2020","Nov 2020","Dec 2020","Jan 2021","Feb 2021","Mar 2021","Apr 2021","May 2021","Jun 2021","Jul 2021","Aug 2021","Sep 2021","Oct 2021","Nov 2021","Dec 2021","Jan 2022","Feb 2022","Mar 2022","Apr 2022","May 2022","Jun 2022","Jul 2022","Aug 2022","Sep 2022","Oct 2022","Nov 2022","Dec 2022","Jan 2023","Feb 2023","Mar 2023","Apr 2023","May 2023","Jun 2023","Jul 2023","Aug 2023","Sep 2023","Oct 2023","Nov 2023","Dec 2023","Jan 2024","Feb 2024","Mar 2024","Apr 2024","May 2024","Jun 2024","Jul 2024","Aug 2024","Sep 2024","Oct 2024","Nov 2024","Dec 2024","Jan 2025","Feb 2025","Mar 2025","Apr 2025","May 2025","Jun 2025","Jul 2025","Aug 2025","Sep 2025","Oct 2025","Nov 2025"],"BH":[1000,939,960,1027,1044,1033,1043,1090,1104,1083,1086,1109,1149,1158,1201,1216,1203,1222,1251,1272,1251,1291,1332,1336,1387,1460,1422,1433,1394,1418,1455,1468,1497,1540,1457,1444,1277,1414,1472,1499,1545,1523,1574,1591,1547,1605,1603,1677,1734,1795,1803,1244,1559,1557,1686,1758,1855,1814,1905,1949,2034,2070,2149,2153,2306,2293,2301,2392,2459,2456,2480,2609,2567,2445,2424,2489,2452,2182,2058,2166,2374,2177,2114,2237,2175,2246,2311,2221,2348,2384,2512,2585,2495,2544,2417,2586,2704,2779,2878,2946,2861,3060,3157,3183,3214,3304,3400,3406,3449,3487,3500,3300,3081,3477,3488,3684,3777,3906,3910,3879],"BXM":[1000,959,987,1012,1025,1028,1047,1066,1081,1069,1086,1100,1120,1134,1144,1159,1161,1177,1195,1209,1198,1219,1231,1241,1258,1273,1254,1278,1264,1286,1307,1322,1335,1357,1297,1309,1185,1219,1237,1259,1277,1274,1304,1322,1303,1337,1355,1374,1399,1415,1432,1013,1080,1115,1155,1187,1218,1213,1242,1277,1307,1333,1362,1388,1410,1426,1454,1478,1502,1521,1546,1569,1566,1526,1554,1599,1608,1469,1427,1471,1511,1416,1418,1461,1456,1496,1529,1502,1548,1576,1609,1638,1605,1640,1587,1624,1654,1680,1705,1735,1717,1751,1782,1809,1840,1879,1907,1942,1985,2022,2058,1976,1886,1948,1991,2031,2068,2110,2143,2177],"PUT":[1000,959,984,1007,1020,1023,1039,1059,1073,1059,1076,1090,1102,1115,1125,1136,1136,1150,1162,1174,1164,1178,1188,1197,1208,1219,1200,1219,1203,1223,1238,1252,1265,1280,1224,1237,1112,1145,1163,1178,1194,1191,1212,1231,1213,1239,1257,1274,1291,1303,1319,927,985,1017,1051,1085,1112,1103,1129,1163,1186,1206,1233,1253,1274,1288,1308,1329,1351,1364,1386,1407,1399,1360,1384,1419,1427,1304,1262,1299,1336,1248,1249,1288,1280,1315,1345,1320,1359,1384,1411,1436,1408,1436,1390,1422,1446,1468,1489,1515,1499,1530,1555,1578,1606,1637,1664,1694,1727,1757,1790,1715,1635,1684,1720,1754,1786,1820,1848,1876],"PS":[1000,995,997,999,1001,1001,1003,1005,1006,1004,1006,1007,1009,1010,1012,1013,1013,1015,1016,1018,1018,1020,1021,1023,1025,1026,1025,1028,1027,1030,1033,1036,1038,1041,1037,1040,1037,1041,1044,1047,1050,1052,1055,1058,1058,1061,1064,1067,1069,1071,1074,1070,1072,1074,1076,1079,1081,1079,1081,1083,1085,1086,1088,1089,1090,1091,1092,1094,1095,1096,1097,1099,1097,1092,1093,1095,1095,1090,1086,1090,1094,1091,1092,1098,1099,1106,1112,1112,1119,1125,1131,1138,1139,1145,1146,1153,1159,1166,1172,1178,1182,1189,1196,1202,1209,1217,1223,1229,1236,1241,1248,1246,1244,1250,1257,1263,1269,1276,1281,1287],"STR":[1000,979,1012,990,999,1016,1040,1032,1047,1042,1073,1077,1070,1087,1067,1077,1090,1102,1104,1110,1108,1106,1092,1106,1089,1054,1049,1077,1082,1099,1102,1118,1119,1118,1079,1111,1021,972,962,974,970,979,987,1005,1004,1015,1044,1024,1022,1008,1028,740,648,691,682,694,691,698,696,720,720,733,738,763,733,753,777,772,776,795,812,795,801,796,832,855,877,822,819,825,792,755,779,782,796,814,827,829,832,849,837,843,839,857,846,825,817,820,814,823,830,806,808,826,847,856,858,888,914,937,968,944,920,859,893,879,889,893,920,956],"EN_1day_plus_cash":[1000,976,985,991,996,996,1006,1006,997,999,987,997,1006,1008,1009,1005,1005,1006,1005,1007,1013,1013,1016,1022,1023,1026,1022,1014,1036,1036,1037,1039,1044,1048,1051,1060,1074,1096,1101,1112,1116,1093,1112,1112,1109,1108,1113,1114,1128,1140,1153,1157,1167,1164,1165,1163,1161,1155,1148,1164,1167,1169,1173,1179,1179,1178,1178,1181,1181,1182,1183,1175,1184,1180,1180,1208,1196,1198,1194,1207,1206,1200,1210,1212,1212,1217,1221,1225,1231,1236,1241,1247,1252,1258,1264,1270,1275,1287,1326,1340,1325,1350,1373,1374,1394,1413,1410,1438,1446,1454,1448,1426,1452,1470,1475,1485,1488,1500,1524,1516]};
 function drawB(){mlc(document.getElementById('gb'),[{k:'BH',n:'Buy & hold SPY',c:'--s2'},{k:'BXM',n:'Covered calls',c:'--s3'},{k:'PUT',n:'Cash-secured puts',c:'--s5'},{k:'EN_1day_plus_cash',n:'Elastic Net + cash',c:'--s1'},{k:'PS',n:'Put spread (risk limit)',c:'--s7'},{k:'STR',n:'Short straddle',c:'--s4'}],{h:300,data:GB,log:true});}
 drawB();window.addEventListener('resize',function(){clearTimeout(window._b);window._b=setTimeout(drawB,150)});
@@ -574,6 +619,28 @@ qlc(document.getElementById('dq4'),[{k:'pp_spy',n:'SPY',c:'--s1'},{k:'pp_qqq',n:
 if(window.barChart){barChart(document.getElementById('dq5'),[{label:'2012-16',value:2.8,tip:'2012-2016: median 2.8%, 60 months'},{label:'2017-21',value:2.7,tip:'2017-2021: median 2.7%, 58 months'},{label:'2022-25',value:4.0,tip:'2022-2025: median 4.0%, 44 months'}],{height:200,fmt:function(v){return (+v).toFixed(1)+'%'}})}}
 drawDQ();var t2;window.addEventListener('resize',function(){clearTimeout(t2);t2=setTimeout(drawDQ,150)});
 })();
+</script>
+
+<script>
+(function(){var G=window.P9GA;if(!G)return;
+function sm(host){var k=host.getAttribute('data-k'),c=host.getAttribute('data-c');host.innerHTML='';var W=host.clientWidth||300,H=150,L=44,R=6,T=6,B=20,n=G.labels.length,lo=200,hi=1400;
+var NS='http://www.w3.org/2000/svg',svg=document.createElementNS(NS,'svg');svg.setAttribute('viewBox','0 0 '+W+' '+H);host.appendChild(svg);
+function el(t,a){var e=document.createElementNS(NS,t);for(var q in a)e.setAttribute(q,a[q]);svg.appendChild(e);return e}
+var cs=getComputedStyle(host),col=cs.getPropertyValue(c).trim(),line=getComputedStyle(document.documentElement).getPropertyValue('--line').trim();
+var x=function(i){return L+(W-L-R)*i/(n-1)},y=function(v){return T+(H-T-B)*(1-(Math.max(lo,Math.min(hi,v))-lo)/(hi-lo))};
+[200,600,1000,1400].forEach(function(v){el('line',{x1:L,x2:W-R,y1:y(v),y2:y(v),stroke:line,'stroke-width':1});var t=el('text',{x:L-5,y:y(v)+4,'text-anchor':'end',class:'ax'});t.textContent='$'+v.toLocaleString()});
+['Jan 2016','Jan 2020','Jan 2024'].forEach(function(lb){var i=G.labels.indexOf(lb);if(i<0)return;var t=el('text',{x:x(i),y:H-5,'text-anchor':'middle',class:'ax'});t.textContent=lb.slice(-4)});
+var si=G.labels.indexOf('Jan 2024');el('line',{x1:x(si),x2:x(si),y1:T,y2:H-B,stroke:cs.getPropertyValue('--muted')||'#888','stroke-dasharray':'3 3','stroke-width':1});
+el('line',{x1:L,x2:W-R,y1:y(1000),y2:y(1000),stroke:'currentColor',opacity:.35,'stroke-width':1});
+var p='',a='',last=null,li=0;G[k].forEach(function(v,i){if(v==null)return;p+=(p?' L':'M')+x(i).toFixed(1)+','+y(v).toFixed(1);last=v;li=i});
+a=p+' L'+x(li).toFixed(1)+','+y(1000).toFixed(1)+' L'+x(0).toFixed(1)+','+y(1000).toFixed(1)+' Z';
+el('path',{d:a,fill:col,opacity:.12});el('path',{d:p,fill:'none',stroke:col,'stroke-width':2,'stroke-linejoin':'round'});
+var v=document.getElementById('smv_'+k);if(v){v.textContent='$'+Math.round(last).toLocaleString();v.style.color=last>=1000?'#2e7d32':'#b0333a'}
+var tip=document.createElement('div');tip.className='tip';host.appendChild(tip);var hit=el('rect',{x:L,y:0,width:W-L-R,height:H,fill:'transparent'});
+function mv(ev){var r=svg.getBoundingClientRect(),px=(ev.touches?ev.touches[0].clientX:ev.clientX)-r.left,i=Math.max(0,Math.min(n-1,Math.round((px*W/r.width-L)/(W-L-R)*(n-1))));var val=G[k][i];if(val==null){tip.classList.remove('on');return}
+tip.innerHTML='<b>'+G.labels[i]+'</b><br>$'+Math.round(val).toLocaleString();var tx=x(i)*r.width/W;tip.style.left=Math.min(Math.max(tx-tip.offsetWidth/2,0),r.width-tip.offsetWidth)+'px';tip.style.top='0px';tip.classList.add('on')}
+hit.addEventListener('mousemove',mv);hit.addEventListener('touchstart',mv,{passive:true});hit.addEventListener('mouseleave',function(){tip.classList.remove('on')})}
+function all(){document.querySelectorAll('.smg .mlc').forEach(sm)}all();var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(all,150)});})();
 </script>
 </body>
 </html>
