@@ -41,17 +41,17 @@
     <div class="eyebrow">Project 9 &middot; Quantitative research &middot; Options &middot; Machine learning</div>
     <h1>Project 9: AI Option Trading</h1>
     <p class="lede">A research-first project to find which machine-learning models and frameworks can trade listed options at a profit after real costs. So far: a reviewed study of 20 models, 20 success factors and 5 frameworks, an audit of a working ML options system, and a first experiment ready to run. The goal is to <strong>grow the whole account after all costs</strong>, testing a target of <strong>more than 2% a trading day</strong>. Win rate is tracked, not chased.</p>
-    <p style="margin-top:14px"><span class="tag warn">Status: research &amp; design &middot; no backtests yet</span> <span class="tag muted">Started Sep 27, 2026</span> <span class="tag muted">Last updated Nov 6, 2026</span></p>
+    <p style="margin-top:14px"><span class="tag warn">Status: data foundation &middot; no backtests yet</span> <span class="tag muted">Started Sep 27, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
     <nav class="toc" aria-label="On this page"><a href="#findings">Findings</a><a href="#reference">Reference system</a><a href="#experiment">First experiment</a><a href="#research">Research</a><a href="#data">Data</a><a href="#frameworks">Frameworks</a><a href="#benchmark">Benchmark</a><a href="#approach">Approach</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
   </section>
 
   <section aria-label="At a glance">
     <div class="statstrip">
-      <div class="primary"><div class="k">Stage</div><div class="v">Research</div><div class="s">design done, nothing built yet</div></div>
+      <div class="primary"><div class="k">Stage</div><div class="v">Data</div><div class="s">daily option data in hand, no models yet</div></div>
       <div><div class="k">Models reviewed</div><div class="v">20</div><div class="s">6 core families chosen</div></div>
       <div><div class="k">Frameworks</div><div class="v">5</div><div class="s">3 to build, 2 as benchmarks</div></div>
       <div><div class="k">Daily target</div><div class="v">&gt;2%</div><div class="s">account growth, to be tested</div></div>
-      <div><div class="k">Backtests</div><div class="v">0</div><div class="s">no data or code yet</div></div>
+      <div><div class="k">Backtests</div><div class="v">0</div><div class="s">data ready, models not built</div></div>
       <div><div class="k">Build plan</div><div class="v">1 / 8</div><div class="s">stages done (Phase 10)</div></div>
     </div>
   </section>
@@ -184,7 +184,7 @@
 
   <section id="data">
     <h2>Data</h2>
-    <p style="color:var(--muted);margin:-6px 0 14px">Collected Nov 6, 2026 from official and exchange sources, checked, and kept locally (licensed for personal use). The project now covers options on a wide range of stocks, not only SPY and QQQ.</p>
+    <p style="color:var(--muted);margin:-6px 0 14px">Collected Nov 6&ndash;7, 2026 from official, exchange and community sources, checked, and kept in one place on the owner&rsquo;s computer (licensed for personal use, not published). The project covers options on a wide range of stocks, not only SPY and QQQ.</p>
     <div class="grid g2">
       <div class="card">
         <h3>What we have</h3>
@@ -195,7 +195,9 @@
             <tr><td>Option chain snapshot</td><td>Nasdaq</td><td>564,890 contracts on 392 underlyings, Nov 6</td></tr>
             <tr><td>Volatility indices</td><td>Cboe</td><td>VIX (from 1990), VIX1D, VIX9D, VIX3M, VIX6M, VVIX, SKEW, VXN</td></tr>
             <tr><td>Interest rates</td><td>Federal Reserve (FRED)</td><td>1- and 3-month Treasury bills, SOFR</td></tr>
-            <tr><td>Daily option prices with IV and Greeks</td><td>DoltHub (free community database)</td><td>Pilot: SPY, AAPL, NVDA, 160,456 contracts; full 150-stock download set up</td></tr>
+            <tr><td>Daily option prices with IV and Greeks</td><td>DoltHub (free community database)</td><td>139 of the 150 underlyings, Feb 2019 &ndash; Nov 2026, 18.3 million contracts</td></tr>
+            <tr><td>Full end-of-day option chains</td><td>Open historical dataset (MIT licence)</td><td>SPY and IWM 2008&ndash;2025, QQQ 2011&ndash;2025, 53.4 million contracts with bid/ask, IV and Greeks</td></tr>
+            <tr><td>Full end-of-day S&amp;P 500 index option chains</td><td>OptionsDX</td><td>SPX, 2010&ndash;2023</td></tr>
           </tbody>
         </table></div>
       </div>
@@ -210,9 +212,9 @@
       <p>A wider search of 15 sources (including GitHub, Kaggle and community databases) found two low-cost routes:</p>
       <ul>
         <li><strong>OptionsDX</strong>: full option chains every 15 minutes with bid/ask, implied volatility and Greeks, for SPY (2010&ndash;2023), QQQ, NVDA, AAPL and TSLA, at <strong>$5 per year of data</strong> &mdash; about $250 for all five. End-of-day data is free.</li>
-        <li><strong>DoltHub</strong> (chosen, pilot done): a free community database of daily option prices for about 2,300 stocks from 2019 to today. Each day holds about three expiries per stock. In our check its S&amp;P 500 volatility matched Cboe&rsquo;s VIX almost exactly (correlation 0.99); it covers about 60% of trading days in 2020&ndash;21 and 98% now, and one bad week (Nov 2021) is flagged automatically.</li>
+        <li><strong>DoltHub</strong> (downloaded in full): a free community database of daily option prices. For our 150 underlyings it holds 18.3 million contracts since 2019, about three expiries per stock per day. Its S&amp;P 500 volatility tracks Cboe&rsquo;s VIX closely (correlation 0.98 over 1,226 days); it covers about 60% of trading days in 2020&ndash;23 and every day since 2025, and implausible days are flagged automatically.</li>
       </ul>
-      <p style="margin-bottom:0">Alpaca ($99 a month) fills 2024&ndash;2026. The largest free option datasets once on GitHub have been taken down. Buying the OptionsDX data is the next decision.</p>
+      <p style="margin-bottom:0">Daily data is now covered: end-of-day chains for SPY, QQQ and IWM back to 2008 and SPX back to 2010. Intraday quotes are still missing: Alpaca ($99 a month) fills 2024&ndash;2026, and buying the OptionsDX 15-minute data is the next decision.</p>
     </div>
   </section>
 
