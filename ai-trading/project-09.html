@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AI Option Trading — Hamid Faghidi</title>
-<meta name="description" content="Project 9: machine-learning research for options trading. Goal: grow account equity after costs, with a 2%-a-day target to test. 20 models and 5 frameworks reviewed, a reference ML options system audited, and a first SPY/QQQ experiment designed.">
+<meta name="description" content="Project 9: machine-learning research for options trading. Goal: grow account equity after costs, with a 5%-a-day target to test. 20 models and 5 frameworks reviewed, a reference ML options system audited, and a first SPY/QQQ experiment designed.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../style.css">
@@ -40,7 +40,7 @@
   <section class="hero" style="padding-top:28px">
     <div class="eyebrow">Project 9 &middot; Quantitative research &middot; Options &middot; Machine learning</div>
     <h1>Project 9: AI Option Trading</h1>
-    <p class="lede">A research-first project to find which machine-learning models and frameworks can trade listed options at a profit after real costs. So far: a reviewed study of 20 models, 20 success factors and 5 frameworks, an audit of a working ML options system, and a first experiment ready to run. The goal is to <strong>grow the whole account after all costs</strong>, testing a target of <strong>more than 2% a trading day</strong>. Win rate is tracked, not chased.</p>
+    <p class="lede">A research-first project to find which machine-learning models and frameworks can trade listed options at a profit after real costs. So far: a reviewed study of 20 models, 20 success factors and 5 frameworks, an audit of a working ML options system, and a first experiment ready to run. The goal is to <strong>grow the whole account after all costs</strong>, testing a target of <strong>more than 5% a trading day</strong>. Win rate is tracked, not chased.</p>
     <p style="margin-top:14px"><span class="tag warn">Status: first backtest done &middot; no proven edge yet</span> <span class="tag muted">Started Sep 27, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
     <nav class="toc" aria-label="On this page"><a href="#findings">Findings</a><a href="#reference">Reference system</a><a href="#experiment">First experiment</a><a href="#research">Research</a><a href="#data">Data</a><a href="#frameworks">Frameworks</a><a href="#benchmark">Benchmark</a><a href="#approach">Approach</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
   </section>
@@ -50,7 +50,7 @@
       <div class="primary"><div class="k">Stage</div><div class="v">Baselines</div><div class="s">first daily experiment run</div></div>
       <div><div class="k">Models reviewed</div><div class="v">20</div><div class="s">6 core families chosen</div></div>
       <div><div class="k">Frameworks</div><div class="v">5</div><div class="s">3 to build, 2 as benchmarks</div></div>
-      <div><div class="k">Daily target</div><div class="v">&gt;2%</div><div class="s">account growth, to be tested</div></div>
+      <div><div class="k">Daily target</div><div class="v">&gt;5%</div><div class="s">account growth, to be tested</div></div>
       <div><div class="k">Best model</div><div class="v">+2.6%</div><div class="s">per trade after costs (daily test)</div></div>
       <div><div class="k">Build plan</div><div class="v">1 / 8</div><div class="s">stages done (Phase 10)</div></div>
     </div>
@@ -158,7 +158,7 @@
       <ul style="margin-top:12px">
         <li><strong>One model shows a possible edge:</strong> the linear (Elastic Net) model averaged <strong>+2.6% per trade</strong> in testing and <strong>+2.4%</strong> in the sealed 2024&ndash;2025 period, though that period alone isn&rsquo;t statistically conclusive.</li>
         <li>It works as a <strong>timing rule for buying calls</strong>: on the days it picks, a plain call earned money; on the days it skips, the same call lost.</li>
-        <li><strong>It is small:</strong> at the 0.5%-per-trade risk limit the account grows about 1.5&ndash;4% a year. The &gt;2%-a-day goal is far out of reach for this design.</li>
+        <li><strong>It is small:</strong> at the 0.5%-per-trade risk limit the account grows about 1.5&ndash;4% a year. The &gt;5%-a-day goal is far out of reach for this design (it made about 0.01% a day).</li>
         <li>Everything else &mdash; simple rules, LightGBM, a small neural network &mdash; <strong>lost money after costs</strong>. The bid/ask spread is the main hurdle on a one-day hold.</li>
       </ul>
       <p class="chart-note" style="margin-bottom:0">Simulated results on historical data; not investment advice.</p>
@@ -176,7 +176,7 @@
           <tr><td>Overnight positions</td><td class="num">None at first</td></tr>
         </tbody>
       </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:10px 0 0">These limits pull against the 2% target: with 5% of the account in options, a 2% day needs a 40% gain on the premium. Evidence, not looser limits, will settle that.</p>
+      <p style="font-size:13px;color:var(--muted);margin:10px 0 0">These limits pull against the 5% target: with 5% of the account in options, a 5% day needs the premium to double. Evidence, not looser limits, will settle that.</p>
     </div>
   </section>
 
@@ -283,7 +283,7 @@
   <section>
     <h2>Goals &amp; objectives</h2>
     <div class="grid g3">
-      <div class="card"><h3>1. Grow the account</h3><p>Net growth of total account equity after every cost. Target: <strong>more than 2% a trading day</strong> on average, compounded, losing days allowed, with 1% a day as a milestone. It's a hypothesis to test, not a promise: 2% a day would be about 147&times; in a year.</p></div>
+      <div class="card"><h3>1. Grow the account</h3><p>Net growth of total account equity after every cost. Target: <strong>more than 5% a trading day</strong> on average, compounded, losing days allowed, with 1% and 2% a day as milestones. It's a hypothesis to test, not a promise: 5% a day would multiply the account about 219,000&times; in a year.</p></div>
       <div class="card"><h3>2. Survive</h3><p>Pass/fail limits on drawdown, daily loss, tail loss and margin. A model that breaks them is out, however profitable.</p></div>
       <div class="card"><h3>3. Prove it's real</h3><p>Beat simple rules and published benchmarks on data the model never saw, under cost stress, with checks for luck and overfitting. Win rate is reported, not ranked on.</p></div>
     </div>
@@ -336,7 +336,7 @@
           <li><span class="tag bad">Data</span> Free data is collected; years of intraday option bid/ask prices still need a paid vendor.</li>
           <li><span class="tag warn">Costs</span> Option spreads are wide, and published edges shrink fast as costs rise.</li>
           <li><span class="tag warn">Overfitting</span> Every model and setting tried is logged and corrected for before any result counts.</li>
-          <li><span class="tag warn">Target vs risk</span> 2% a day is far above any published result; the risk limits may make it unreachable.</li>
+          <li><span class="tag warn">Target vs risk</span> 5% a day is far above any published result; the risk limits may make it unreachable.</li>
         </ul>
       </div>
     </div>
