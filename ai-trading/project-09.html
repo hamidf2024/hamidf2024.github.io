@@ -305,13 +305,15 @@
     </div>
     <div class="card" style="margin-top:16px;border-left:4px solid var(--warn)">
       <h3>Still missing: historical intraday option quotes &mdash; and a cheap way to get them</h3>
-      <p>A wider search of 15 sources (including GitHub, Kaggle and community databases) found two low-cost routes:</p>
+      <p>Two searches of more than 25 sources (vendors, GitHub, Kaggle, community databases) found these routes:</p>
       <ul>
         <li><strong>OptionsDX</strong>: full option chains every 15 minutes with bid/ask, implied volatility and Greeks, for SPY and QQQ <strong>2016&ndash;2023</strong> (30-minute data goes back to 2010), at <strong>$5 per year of data</strong> &mdash; about $80 for both. End-of-day data is free. The vendor doesn&rsquo;t name its source or guarantee accuracy, so we check it against independent data before use.</li>
         <li><strong>Databento</strong>: the official consolidated exchange feed (OPRA) with 1-minute best bid/ask since 2013, priced by usage, with free starter credit &mdash; used to spot-check OptionsDX and, if needed, to cover 2024 onward.</li>
+        <li><strong>QuantConnect</strong> (found Nov 7): exchange-grade minute bid/ask bars for US options from 2012 to today, <strong>free</strong> when the backtest runs in its cloud &mdash; our planned route for the intraday tests.</li>
+        <li><strong>ThetaData</strong>: every exchange best bid/ask quote from 2016 to today for $80 a month (1-minute from 2020 for $40) &mdash; the cheapest copy we can keep locally, but only while subscribed.</li>
         <li><strong>DoltHub</strong> (downloaded in full): a free community database of daily option prices. For our 150 underlyings it holds 18.3 million contracts since 2019, about three expiries per stock per day. Its S&amp;P 500 volatility tracks Cboe&rsquo;s VIX closely (correlation 0.98 over 1,226 days); it covers about 60% of trading days in 2020&ndash;23 and every day since 2025, and implausible days are flagged automatically.</li>
       </ul>
-      <p style="margin-bottom:0">Daily data is now covered: end-of-day chains for SPY, QQQ and IWM back to 2008 and SPX back to 2010. Our checks rate them research-grade (quotes on 95&ndash;100% of trading days, prices consistent within about 0.2%, S&amp;P 500 volatility tracking VIX at 0.98). That is enough to build and test <strong>daily</strong> models now. The first experiment&rsquo;s 15-minute version still needs intraday quotes: OptionsDX 15-minute chains for SPY and QQQ 2016&ndash;2023 (about $80), spot-checked against exchange-grade Databento data. Alpaca does <em>not</em> sell historical option bid/ask, so it serves as the broker and for recording live quotes from now on.</p>
+      <p style="margin-bottom:0">Daily data is now covered: end-of-day chains for SPY, QQQ and IWM back to 2008 and SPX back to 2010. Our checks rate them research-grade (quotes on 95&ndash;100% of trading days, prices consistent within about 0.2%, S&amp;P 500 volatility tracking VIX at 0.98). That is enough to build and test <strong>daily</strong> models now. The first experiment&rsquo;s 15-minute version still needs intraday quotes: OptionsDX 15-minute chains for SPY and QQQ 2016&ndash;2023 (about $80), spot-checked against exchange-grade Databento data &mdash; or, at no data cost, on QuantConnect&rsquo;s free exchange-grade minute quotes (2012&ndash;today). Alpaca does <em>not</em> sell historical option bid/ask, so it serves as the broker and for recording live quotes from now on.</p>
     </div>
   </section>
 
