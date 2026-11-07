@@ -48,6 +48,18 @@
 .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:6px 0 14px}
 .kpis div{border-top:1px solid var(--line);padding-top:8px}.kpis span{display:block;font-size:12px;color:var(--muted)}.kpis strong{font-family:var(--serif);font-size:20px}
 @media (max-width:600px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.sbar2{position:relative;height:10px;border-radius:99px;background:var(--line);overflow:visible}
+.sbar2 i{display:block;height:100%;border-radius:99px}.sbar2 b{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);opacity:.5}
+td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.vb.warn{background:rgba(200,116,26,.15);color:#a85f12}.vb.muted{background:var(--line);color:var(--muted)}
+@media (prefers-color-scheme:dark){.vb.warn{color:#e6a259}}
+.ladder{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.ladder div{border:1px solid var(--line);border-radius:10px;padding:10px;font-size:13px;background:var(--card,transparent)}
+.ladder b{display:block;font-family:var(--serif);font-size:18px}.ladder span{color:var(--muted)}
+.ladder .here{border:2px solid var(--warn)}.ladder .here::after{content:"We are here";display:block;margin-top:6px;font-size:11px;font-weight:700;color:var(--warn)}
+@media (max-width:760px){.ladder{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.lessons{columns:2;column-gap:28px}@media (max-width:760px){.lessons{columns:1}}.lessons li{break-inside:avoid;margin-bottom:8px}
+.jump{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}.jump a{font-size:13px;border:1px solid var(--line);border-radius:99px;padding:3px 10px;text-decoration:none}
 </style>
 </head>
 <body>
@@ -61,348 +73,94 @@
   <section class="hero" style="padding-top:28px">
     <div class="eyebrow">Project 9 &middot; Quantitative research &middot; Options &middot; Machine learning</div>
     <h1>Project 9: AI Option Trading</h1>
-    <p class="lede">A research-first project to find which machine-learning models and frameworks can trade listed options at a profit after real costs. So far: a reviewed study of 20 models, 20 success factors and 5 frameworks, an audit of a working ML options system, research-grade option data back to 2008, three daily backtests and one intraday backtest (15-minute decisions, audited minute data) on SPY and QQQ options &mdash; which found a small timing signal but <strong>no proven options edge yet</strong>. The goal is to <strong>grow the whole account after all costs</strong>, testing a target of <strong>more than 5% a trading day</strong>. Win rate is tracked, not chased.</p>
-    <p style="margin-top:14px"><span class="tag warn">Status: daily and intraday backtests done &middot; no proven edge yet</span> <span class="tag muted">Started Sep 27, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#models">Results by model</a><a href="#results">Best model &amp; benchmarks</a><a href="#experiment">How it works</a><a href="#data">Data</a><a href="#goals">Goals</a><a href="#roadmap">Roadmap</a><a href="#findings">Research background</a><a href="#reference">Working system</a><a href="#frameworks">Frameworks</a><a href="#benchmark">Published benchmark</a><a href="#approach">Approach</a><a href="#research">Research track</a><a href="#disclosure">Disclosures</a><a href="#sources">Sources</a></nav>
+    <p class="lede">A research-first project to find machine-learning models that grow an account by trading listed options, after real costs and within strict risk limits. Seven experiments and more than 40 models so far &mdash; from simple rules to six transformers of our own design &mdash; tested on 2016&ndash;2025 option quotes. No model has yet beaten the simple benchmark; the research loop continues with a new model each round.</p>
+    <p style="margin-top:14px"><span class="tag warn">Status: research loop &middot; no proven edge yet &middot; Experiment 8 running</span> <span class="tag muted">Started Sep 27, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
+    <nav class="toc" aria-label="On this page"><a href="#research-results">Research results</a><a href="#goals">Goals</a><a href="#roadmap">Roadmap</a><a href="#data">Data</a><a href="#approach">Approach</a><a href="#findings">Background</a><a href="#disclosure">Disclosures</a><a href="#sources">Sources</a></nav>
   </section>
 
   <section aria-label="At a glance">
     <div class="statstrip">
-      <div class="primary"><div class="k">Stage</div><div class="v">Baselines</div><div class="s">3 daily experiments run</div></div>
-      <div><div class="k">Models reviewed</div><div class="v">20</div><div class="s">6 core families chosen</div></div>
-      <div><div class="k">Frameworks</div><div class="v">5</div><div class="s">3 to build, 2 as benchmarks</div></div>
+      <div class="primary"><div class="k">Stage</div><div class="v">Research</div><div class="s">new model every round</div></div>
+      <div><div class="k">Experiments</div><div class="v">7</div><div class="s">done, 8th running</div></div>
+      <div><div class="k">Models tested</div><div class="v">40+</div><div class="s">incl. 6 own transformers</div></div>
+      <div><div class="k">Benchmark</div><div class="v">0.77</div><div class="s">Sharpe of the simple linear model</div></div>
+      <div><div class="k">Next step</div><div class="v">L0</div><div class="s">beat that benchmark</div></div>
       <div><div class="k">Daily target</div><div class="v">&gt;5%</div><div class="s">account growth, to be tested</div></div>
-      <div><div class="k">Best model</div><div class="v">+2.5%</div><div class="s">per trade after costs; market timing, not an options edge</div></div>
-      <div><div class="k">Build plan</div><div class="v">2 / 8</div><div class="s">data + daily baselines (Phase 10)</div></div>
     </div>
   </section>
-
-  <section id="models" class="p9s">
-    <h2>Results by model</h2>
-    <p class="lead-s">Each chart shows what <strong>$1,000</strong> would have become with one model, putting 0.5% of the account into each trade (the project&rsquo;s risk limit), after the bid/ask spread and fees. Same scale on every chart, so they can be compared at a glance. Dashed line: start of the sealed 2024&ndash;2025 test, run only for the models carried forward.</p>
-    <h3 class="subhead">Experiment 1 &mdash; daily decisions (one decision a day at the close, held to the next close, SPY &amp; QQQ options)</h3>
-    <div class="smg">
-        <div class="card smc"><div class="smh"><h3>Elastic Net</h3><span class="vb ok">Made money</span></div>
-          <p class="chart-note">A regularised linear model: the only model that grew the account.</p><div id="sm_EN" class="mlc" data-k="EN" data-c="--s1"></div>
-          <p class="smv">$1,000 &rarr; <b id="smv_EN"></b> <span>(2016&ndash;2025)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Reference network (M14)</h3><span class="vb bad">Lost a little</span></div>
-          <p class="chart-note">Our rebuild of the working system&rsquo;s 5&times;200 neural network.</p><div id="sm_M14" class="mlc" data-k="M14" data-c="--s9"></div>
-          <p class="smv">$1,000 &rarr; <b id="smv_M14"></b> <span>(2016&ndash;2025)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Always buy a call</h3><span class="vb bad">Lost a little</span></div>
-          <p class="chart-note">Simple rule: buy an at-the-money call every day.</p><div id="sm_R0" class="mlc" data-k="R0" data-c="--s2"></div>
-          <p class="smv">$1,000 &rarr; <b id="smv_R0"></b> <span>(2016&ndash;2025)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Shuffled-label check</h3><span class="vb bad">Sanity check</span></div>
-          <p class="chart-note">Trees trained on scrambled answers. Should show no edge &mdash; and doesn&rsquo;t.</p><div id="sm_SH" class="mlc" data-k="SH" data-c="--s7"></div>
-          <p class="smv">$1,000 &rarr; <b id="smv_SH"></b> <span>(2016&ndash;2023)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Neural network</h3><span class="vb bad">Lost</span></div>
-          <p class="chart-note">A small two-layer neural network.</p><div id="sm_NN" class="mlc" data-k="NN" data-c="--s5"></div>
-          <p class="smv">$1,000 &rarr; <b id="smv_NN"></b> <span>(2016&ndash;2023)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>LightGBM</h3><span class="vb bad">Lost</span></div>
-          <p class="chart-note">Gradient-boosted decision trees.</p><div id="sm_GB" class="mlc" data-k="GB" data-c="--s6"></div>
-          <p class="smv">$1,000 &rarr; <b id="smv_GB"></b> <span>(2016&ndash;2023)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Momentum rule</h3><span class="vb bad">Lost</span></div>
-          <p class="chart-note">Buy a call after up days, a put after down days.</p><div id="sm_R2" class="mlc" data-k="R2" data-c="--s3"></div>
-          <p class="smv">$1,000 &rarr; <b id="smv_R2"></b> <span>(2016&ndash;2025)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Random pick</h3><span class="vb bad">Lost</span></div>
-          <p class="chart-note">A random contract each day: the luck baseline.</p><div id="sm_R3" class="mlc" data-k="R3" data-c="--s8"></div>
-          <p class="smv">$1,000 &rarr; <b id="smv_R3"></b> <span>(2016&ndash;2023)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Always buy a put</h3><span class="vb bad">Lost most</span></div>
-          <p class="chart-note">Simple rule: buy an at-the-money put every day.</p><div id="sm_R1" class="mlc" data-k="R1" data-c="--s4"></div>
-          <p class="smv">$1,000 &rarr; <b id="smv_R1"></b> <span>(2016&ndash;2025)</span></p></div>
-    </div>
-    <h3 class="subhead">Experiment 2 &mdash; intraday decisions (every 15 minutes, 60-minute hold, SPY &amp; QQQ options)</h3>
-    <p class="lead-s" style="margin-top:0">Tested Nov 7, 2026 on minute-by-minute quotes (QuantConnect, audited first): a decision every 15 minutes from 9:45 to 2:45 New York time (6:45&ndash;11:45 AM Pacific), each trade sold at the bid exactly one hour later. Models retrained every year, tested 2016&ndash;2023; 2.9 million candidate trades. Note the wider scale: these losses are much larger.</p>
-    <div class="smg" data-src="P9GI" data-lo="0" data-hi="1200" data-ticks="0,400,800,1200">
-        <div class="card smc"><div class="smh"><h3>LightGBM</h3><span class="vb bad">Lost</span></div>
-          <p class="chart-note">Gradient-boosted trees. Best of the active models: 5,444 trades, &minus;0.85% each.</p><div id="smi_GB" class="mlc" data-k="GB" data-c="--s6"></div>
-          <p class="smv">$1,000 &rarr; <b id="smiv_GB"></b> <span>(2016&ndash;2023)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Elastic Net</h3><span class="vb bad">Lost a little</span></div>
-          <p class="chart-note">Linear model. Learned to stay out: only 392 trades in eight years.</p><div id="smi_EN" class="mlc" data-k="EN" data-c="--s1"></div>
-          <p class="smv">$1,000 &rarr; <b id="smiv_EN"></b> <span>(2016&ndash;2023)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Shuffled-label check</h3><span class="vb bad">Sanity check</span></div>
-          <p class="chart-note">Trees on scrambled answers: also mostly stays out &mdash; same as Elastic Net.</p><div id="smi_SH" class="mlc" data-k="SH" data-c="--s7"></div>
-          <p class="smv">$1,000 &rarr; <b id="smiv_SH"></b> <span>(2016&ndash;2023)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Neural network</h3><span class="vb bad">Lost</span></div>
-          <p class="chart-note">Small two-layer network. Traded often (17,673 times) and lost.</p><div id="smi_NN" class="mlc" data-k="NN" data-c="--s5"></div>
-          <p class="smv">$1,000 &rarr; <b id="smiv_NN"></b> <span>(2016&ndash;2023)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Momentum rule</h3><span class="vb bad">Lost most</span></div>
-          <p class="chart-note">Call if the stock rose in the last hour, put if it fell.</p><div id="smi_R2" class="mlc" data-k="R2" data-c="--s3"></div>
-          <p class="smv">$1,000 &rarr; <b id="smiv_R2"></b> <span>(2016&ndash;2023)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Always buy a call</h3><span class="vb bad">Lost most</span></div>
-          <p class="chart-note">Buy an at-the-money call at every 15-minute decision.</p><div id="smi_R0" class="mlc" data-k="R0" data-c="--s2"></div>
-          <p class="smv">$1,000 &rarr; <b id="smiv_R0"></b> <span>(2016&ndash;2023)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Always buy a put</h3><span class="vb bad">Lost most</span></div>
-          <p class="chart-note">Buy an at-the-money put at every decision.</p><div id="smi_R1" class="mlc" data-k="R1" data-c="--s4"></div>
-          <p class="smv">$1,000 &rarr; <b id="smiv_R1"></b> <span>(2016&ndash;2023)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Random pick</h3><span class="vb bad">Lost most</span></div>
-          <p class="chart-note">A random contract each time: the luck baseline.</p><div id="smi_R3" class="mlc" data-k="R3" data-c="--s8"></div>
-          <p class="smv">$1,000 &rarr; <b id="smiv_R3"></b> <span>(2016&ndash;2023)</span></p></div>
-    </div>
-    <div class="card" style="margin-top:16px;border-left:4px solid var(--warn)">
-      <h3 style="margin-top:0">Result: no model works intraday</h3>
-      <ul style="margin:0;padding-left:18px">
-        <li><strong>Every model and rule lost money</strong> after the bid/ask spread and fees, in every year.</li>
-        <li><strong>The cost of a one-hour round trip</strong> (about 1.3&ndash;1.7% of the option price) is bigger than what an hour of price movement earns. Simple rules lost 79&ndash;87% of the account.</li>
-        <li><strong>The models mostly learned not to trade</strong> &mdash; the best they could do was lose slowly.</li>
-        <li><strong>Sealed 2024&ndash;Aug 2026 test</strong> (opened once, best simple rule only): always buying a call lost 0.85% per trade over 7,711 trades ($1,000 &rarr; $720) &mdash; confirming the result.</li>
-      </ul>
-    </div>
-    <div class="card" style="margin-top:16px">
-      <div class="chart-title"><h3>Daily vs intraday: $1,000, 2016&ndash;2023</h3></div>
-      <p class="chart-note">Same model types, same 0.5% per trade. Daily decisions (Experiment 1) vs 15-minute decisions with a 60-minute hold (Experiment 2).</p>
-      <div class="legend"><span style="--c:var(--s1)">Elastic Net, daily</span><span style="--c:var(--s2)">Always call, daily</span><span style="--c:var(--s6)">LightGBM, intraday</span><span style="--c:var(--s5)">Elastic Net, intraday</span><span style="--c:var(--s4)">Always call, intraday</span></div>
-      <div id="gdi" class="mlc"></div>
-    </div>
-    <h3 class="subhead">Experiment 3 &mdash; new model: ChainFormer (our own design, daily decisions)</h3>
-    <p class="lead-s" style="margin-top:0">Built Nov 7, 2026 from the lessons of every model above: a transformer that compares all of the day&rsquo;s SPY and QQQ options against each other, can choose <strong>cash</strong>, picks the holding period (1, 2, 3 or 5 days), and is trained directly to grow the account with costs set 25% above real. Retrained every year, tested 2016&ndash;2025; dashed line = 2024&ndash;2025. Narrow scale ($800&ndash;$1,200): the differences are small.</p>
-    <div class="smg" data-src="P9GC" data-lo="800" data-hi="1200" data-ticks="800,1000,1200">
-        <div class="card smc"><div class="smh"><h3>No attention</h3><span class="vb ok">Made a little</span></div>
-          <p class="chart-note">Same model without cross-contract attention. The only version that made money: 240 trades, +5.1% each (not statistically certain).</p><div id="smc_B" class="mlc" data-k="B" data-c="--s3"></div>
-          <p class="smv">$1,000 &rarr; <b id="smcv_B"></b> <span>(2016&ndash;2025)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Prediction-trained</h3><span class="vb ok">Flat, then up</span></div>
-          <p class="chart-note">Trained to predict returns instead of growing the account. Traded 1,651 times; broke even until 2024, lost in 2022.</p><div id="smc_D" class="mlc" data-k="D" data-c="--s5"></div>
-          <p class="smv">$1,000 &rarr; <b id="smcv_D"></b> <span>(2016&ndash;2025)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Full ChainFormer</h3><span class="vb bad">Never traded</span></div>
-          <p class="chart-note">Attention + cash option + hold choice, trained to grow the account. Chose cash every single day.</p><div id="smc_A" class="mlc" data-k="A" data-c="--s1"></div>
-          <p class="smv">$1,000 &rarr; <b id="smcv_A"></b> <span>(2016&ndash;2025)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>1-day holds only</h3><span class="vb bad">Never traded</span></div>
-          <p class="chart-note">Full model forced to hold one day. Also chose cash every day.</p><div id="smc_C" class="mlc" data-k="C" data-c="--s7"></div>
-          <p class="smv">$1,000 &rarr; <b id="smcv_C"></b> <span>(2016&ndash;2025)</span></p></div>
-    </div>
-    <div class="card" style="margin-top:16px;border-left:4px solid var(--warn)">
-      <h3 style="margin-top:0">Result: no improvement on Elastic Net</h3>
-      <ul style="margin:0;padding-left:18px">
-        <li><strong>The full model refused to trade</strong> &mdash; trained to grow the account with realistic costs, it judged every option trade not worth the spread.</li>
-        <li><strong>The simpler version without attention</strong> made a little ($1,058 over 2016&ndash;2025), mostly with 3&ndash;5-day call holds.</li>
-        <li><strong>Elastic Net stays the best model</strong> ($1,220). Lesson: the edge must come from forecasting the market itself &mdash; the idea behind the next model, DistFormer (running now).</li>
-      </ul>
-    </div>
-    <h3 class="subhead">Experiment 4 &mdash; new model: DistFormer (forecast the market, then price real options)</h3>
-    <p class="lead-s" style="margin-top:0">Built Nov 7, 2026. Step 1: forecast the full range of SPY/QQQ moves over the next 1&ndash;5 days. Step 2 (no learning): reprice every real option in 256 scenarios using its actual bid/ask, with costs 25% above real, and buy only where the expected profit is positive. Three versions show which step matters. Retrained every year, tested 2016&ndash;2025.</p>
-    <div class="smg" data-src="P9GD" data-lo="600" data-hi="1400" data-ticks="600,1000,1400">
-        <div class="card smc"><div class="smh"><h3>No-skill distribution</h3><span class="vb ok">Made money</span></div>
-          <p class="chart-note">Prices every real option against how much SPY/QQQ have historically moved, buys where it is cheap (mostly 5-day calls). Best new model so far.</p><div id="smd_B" class="mlc" data-k="B" data-c="--s3"></div>
-          <p class="smv">$1,000 &rarr; <b id="smdv_B"></b> <span>(2016&ndash;2025)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Linear forecaster</h3><span class="vb ok">Made a little</span></div>
-          <p class="chart-note">A simple linear model forecasts the range of moves; same option pricing step.</p><div id="smd_C" class="mlc" data-k="C" data-c="--s2"></div>
-          <p class="smv">$1,000 &rarr; <b id="smdv_C"></b> <span>(2016&ndash;2025)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Transformer forecaster (DistFormer)</h3><span class="vb bad">Lost a little</span></div>
-          <p class="chart-note">A transformer reads 60 days of market history to forecast the range of moves. Added nothing.</p><div id="smd_A" class="mlc" data-k="A" data-c="--s1"></div>
-          <p class="smv">$1,000 &rarr; <b id="smdv_A"></b> <span>(2016&ndash;2025)</span></p></div>
-    </div>
-    <div class="card" style="margin-top:16px;border-left:4px solid var(--warn)">
-      <h3 style="margin-top:0">Result: the pricing step helps, the forecasting doesn&rsquo;t</h3>
-      <ul style="margin:0;padding-left:18px">
-        <li><strong>Best new model so far:</strong> the no-skill version turned $1,000 into <strong>$1,347</strong> (2016&ndash;2025), +8.3% per trade &mdash; more money than Elastic Net ($1,220), but with bigger swings (Sharpe 0.52 vs 0.68&ndash;0.73), so it does not yet clear the first progress step.</li>
-        <li><strong>The transformer forecaster added nothing</strong> &mdash; SPY/QQQ direction is too hard to forecast from past data.</li>
-        <li><strong>Next:</strong> change perspective &mdash; single-stock options across ~140 companies, with market direction hedged out, where published research finds lasting edges.</li>
-      </ul>
-    </div>
-    <h3 class="subhead">Experiment 5 &mdash; new perspective: VolSet (about 140 individual stocks, weekly volatility trades)</h3>
-    <p class="lead-s" style="margin-top:0">Built Nov 7, 2026 after two rounds on SPY/QQQ without progress. Instead of betting on direction, each trade bets on how much a stock will move: buy a straddle when moves look underpriced, or sell a protected iron butterfly when they look overpriced, with the stock&rsquo;s direction hedged out daily. Up to 10 positions a week, each risking at most 0.5% of the account. Tested 2022&ndash;2025.</p>
-    <div class="smg" data-src="P9GE" data-lo="0" data-hi="1200" data-ticks="0,400,800,1200">
-        <div class="card smc"><div class="smh"><h3>LightGBM</h3><span class="vb ok">Broke even</span></div>
-          <p class="chart-note">Gradient-boosted trees choosing which stocks to trade each week. Broke even.</p><div id="sme_C" class="mlc" data-k="C" data-c="--s6"></div>
-          <p class="smv">$1,000 &rarr; <b id="smev_C"></b> <span>(2022&ndash;2025)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>No attention</h3><span class="vb bad">Flat</span></div>
-          <p class="chart-note">Same network without comparing stocks. Traded only 16 times.</p><div id="sme_B" class="mlc" data-k="B" data-c="--s3"></div>
-          <p class="smv">$1,000 &rarr; <b id="smev_B"></b> <span>(2022&ndash;2025)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>VolSet (transformer)</h3><span class="vb bad">Lost a little</span></div>
-          <p class="chart-note">Compares ~110 stocks each week; buys straddles where moves look underpriced, sells butterflies where overpriced.</p><div id="sme_A" class="mlc" data-k="A" data-c="--s1"></div>
-          <p class="smv">$1,000 &rarr; <b id="smev_A"></b> <span>(2022&ndash;2025)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Always sell butterflies</h3><span class="vb bad">Lost half</span></div>
-          <p class="chart-note">Collect option premium on the 10 most liquid stocks every week.</p><div id="sme_E" class="mlc" data-k="E" data-c="--s4"></div>
-          <p class="smv">$1,000 &rarr; <b id="smev_E"></b> <span>(2022&ndash;2025)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Goyal&ndash;Saretto rule</h3><span class="vb bad">Lost most</span></div>
-          <p class="chart-note">Classic research rule: buy volatility where it looks cheap, sell where expensive.</p><div id="sme_D" class="mlc" data-k="D" data-c="--s8"></div>
-          <p class="smv">$1,000 &rarr; <b id="smev_D"></b> <span>(2022&ndash;2025)</span></p></div>
-    </div>
-    <div class="card" style="margin-top:16px;border-left:4px solid var(--warn)">
-      <h3 style="margin-top:0">Result: no progress &mdash; and a false alarm caught</h3>
-      <ul style="margin:0;padding-left:18px">
-        <li><strong>The first run looked like a breakthrough</strong> ($1,000 &rarr; $2,053). Our checks traced it to a data error: stock prices were adjusted for splits but option strikes were not. Fixed and rerun with the same models: the gains disappeared.</li>
-        <li><strong>After the fix, nothing makes money:</strong> the best model broke even; selling options every week lost half the account. Single-stock option spreads (3&ndash;4% per leg) are too costly for weekly trading.</li>
-        <li><strong>Next perspective:</strong> use options where they are cheapest &mdash; deep in-the-money calls as low-cost leverage on slow, well-documented stock signals, held for a month.</li>
-      </ul>
-    </div>
-    <h3 class="subhead">Experiment 6 &mdash; new perspective: LeverSet (monthly stock picks through deep in-the-money calls)</h3>
-    <p class="lead-s" style="margin-top:0">Built Nov 7, 2026 after three rounds where trading costs beat every short-term edge. Instead of out-predicting option prices, use options as cheap, loss-capped leverage on slow, well-documented stock signals (momentum, volatility, distance from the 52-week high, option skew), holding for a month. Ten positions, each risking at most 0.5% of the account. Tested 2021&ndash;2025.</p>
-    <div class="smg" data-src="P9GF" data-lo="800" data-hi="1400" data-ticks="800,1000,1200,1400">
-        <div class="card smc"><div class="smh"><h3>LeverSet, cheaper calls</h3><span class="vb ok">Made money</span></div>
-          <p class="chart-note">Same ranking, 0.60-delta calls (more leverage per dollar). Best of the round, but it mostly rode the market.</p><div id="smf_E" class="mlc" data-k="E" data-c="--s3"></div>
-          <p class="smv">$1,000 &rarr; <b id="smfv_E"></b> <span>(2021&ndash;2025)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Momentum rule</h3><span class="vb ok">Made a little</span></div>
-          <p class="chart-note">Buy calls on the 10 stocks that rose most over the past year (skipping the last month).</p><div id="smf_C" class="mlc" data-k="C" data-c="--s2"></div>
-          <p class="smv">$1,000 &rarr; <b id="smfv_C"></b> <span>(2021&ndash;2025)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>LeverSet (transformer)</h3><span class="vb ok">Made a little</span></div>
-          <p class="chart-note">Ranks ~140 stocks each month; buys deep in-the-money calls on the top 10.</p><div id="smf_A" class="mlc" data-k="A" data-c="--s1"></div>
-          <p class="smv">$1,000 &rarr; <b id="smfv_A"></b> <span>(2021&ndash;2025)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>LightGBM</h3><span class="vb ok">Flat</span></div>
-          <p class="chart-note">Gradient-boosted trees ranking the same stocks.</p><div id="smf_B" class="mlc" data-k="B" data-c="--s6"></div>
-          <p class="smv">$1,000 &rarr; <b id="smfv_B"></b> <span>(2021&ndash;2025)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Random picks</h3><span class="vb bad">Lost a little</span></div>
-          <p class="chart-note">Calls on 10 random stocks each month: pure market exposure, the luck baseline.</p><div id="smf_D" class="mlc" data-k="D" data-c="--s8"></div>
-          <p class="smv">$1,000 &rarr; <b id="smfv_D"></b> <span>(2021&ndash;2025)</span></p></div>
-    </div>
-    <div class="card" style="margin-top:16px;border-left:4px solid var(--warn)">
-      <h3 style="margin-top:0">Result: no progress &mdash; the gains are just the market</h3>
-      <ul style="margin:0;padding-left:18px">
-        <li><strong>Best version: $1,000 &rarr; $1,238</strong> (2021&ndash;2025), but with big swings (Sharpe 0.44) and a loss in 2022.</li>
-        <li><strong>No stock-picking skill:</strong> the rankings had essentially zero correlation with next month&rsquo;s returns. After removing the market&rsquo;s own move, every version lost money.</li>
-        <li><strong>What four rounds show:</strong> every positive result so far comes from the market&rsquo;s upward drift and fails in the same market falls. <strong>Next perspective:</strong> combine those strategies and learn <em>when</em> to be invested.</li>
-      </ul>
-    </div>
-    <h3 class="subhead">Experiment 7 &mdash; new perspective: RegimeGate (learn <em>when</em> to be invested)</h3>
-    <p class="lead-s" style="margin-top:0">Built Nov 7, 2026. Every strategy that made money so far rode the market&rsquo;s upward drift and lost in the same falls (2022). Instead of a new edge, this round combines the two best out-of-sample strategies (Elastic Net 1-day calls and DistFormer 3&ndash;5-day calls) and decides each week whether each one should trade. Tested 2018&ndash;2025.</p>
-    <div class="smg" data-src="P9GG" data-lo="900" data-hi="1700" data-ticks="900,1100,1300,1500,1700">
-        <div class="card smc"><div class="smh"><h3>Both strategies, always on</h3><span class="vb ok">Made money</span></div>
-          <p class="chart-note">No timing at all. Most money of any model so far, but bigger swings and still a loss in 2022.</p><div id="smg_D" class="mlc" data-k="D" data-c="--s3"></div>
-          <p class="smv">$1,000 &rarr; <b id="smgv_D"></b> <span>(2018&ndash;2025)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Trend + volatility rule</h3><span class="vb ok">Made money</span></div>
-          <p class="chart-note">Trade only when SPY is above its 200-day average and short-term fear (VIX) is below 3-month fear.</p><div id="smg_C" class="mlc" data-k="C" data-c="--s2"></div>
-          <p class="smv">$1,000 &rarr; <b id="smgv_C"></b> <span>(2018&ndash;2025)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Elastic Net alone (benchmark)</h3><span class="vb ok">Best quality</span></div>
-          <p class="chart-note">The model every new one must beat. Smoothest ride of the round (Sharpe 0.77).</p><div id="smg_E" class="mlc" data-k="E" data-c="--s6"></div>
-          <p class="smv">$1,000 &rarr; <b id="smgv_E"></b> <span>(2018&ndash;2025)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>Logistic gate</h3><span class="vb ok">Made a little</span></div>
-          <p class="chart-note">Simple learned on/off switch from last week&rsquo;s market state.</p><div id="smg_B" class="mlc" data-k="B" data-c="--s8"></div>
-          <p class="smv">$1,000 &rarr; <b id="smgv_B"></b> <span>(2018&ndash;2025)</span></p></div>
-        <div class="card smc"><div class="smh"><h3>RegimeGate (transformer)</h3><span class="vb ok">Made a little</span></div>
-          <p class="chart-note">Reads 26 weeks of market history and switches each strategy on or off. Too cautious: on only 37% / 6% of weeks.</p><div id="smg_A" class="mlc" data-k="A" data-c="--s1"></div>
-          <p class="smv">$1,000 &rarr; <b id="smgv_A"></b> <span>(2018&ndash;2025)</span></p></div>
-    </div>
-    <div class="card" style="margin-top:16px;border-left:4px solid var(--warn)">
-      <h3 style="margin-top:0">Result: no progress &mdash; timing the market week by week doesn&rsquo;t help</h3>
-      <ul style="margin:0;padding-left:18px">
-        <li><strong>No on/off switch beat Elastic Net alone</strong> on quality (Sharpe 0.77). The learned switches stayed out too often and missed rallies; the transformer was the most cautious and did worst ($1,071).</li>
-        <li><strong>Running both strategies all the time made the most money</strong> ($1,000 &rarr; $1,481) but with bigger drops: both lose in the same weeks.</li>
-        <li><strong>What five rounds show:</strong> as option <em>buyers</em> we pay the bid/ask spread twice and depend on the market rising. <strong>Next perspective (Experiment 8):</strong> be the option <em>seller</em> &mdash; collect insurance premium on SPY/QQQ with loss-capped put spreads held to expiry, which held up in 2020 and 2022.</li>
-      </ul>
-    </div>
-    <p class="chart-note" style="margin-top:10px">Simulated on historical data; not investment advice.</p>
-  </section>
-
-  <section id="results" class="p9s">
-    <h2>Best model, bet size &amp; benchmarks</h2>
-    <p style="color:var(--muted);margin:-6px 0 14px">Three daily backtests, Nov 7, 2026 (EXP-01D and follow-ups). Daily decisions on SPY and QQQ options: buy one call or put at the close, sell it at the next day&rsquo;s close, paying the full bid/ask spread and fees. Models retrained each year and tested 2016&ndash;2023; 2024&ndash;2025 kept sealed and opened once. Simulated on historical data &mdash; not investment advice.</p>
-    <div class="kpis">
-      <div><span>$1,000 at the risk limit</span><strong>$1,220</strong></div>
-      <div><span>Worst drop at the limit</span><strong>&minus;4%</strong></div>
-      <div><span>Best bet size (10% a trade)</span><strong>$9,964</strong></div>
-      <div><span>Its worst drop</span><strong>&minus;60%</strong></div>
-    </div>
-    
-    <div class="card" style="margin-top:16px">
-      <div class="chart-title"><h3>Best model vs two simple rules, 2016&ndash;2025</h3></div>
-      <p class="chart-note">The linear (Elastic Net) model against two simple rules. Dashed line: start of the sealed 2024&ndash;2025 test.</p>
-      <div class="legend"><span style="--c:var(--s1)">Elastic Net model</span><span style="--c:var(--s2)">Always buy a call</span><span style="--c:var(--s3)">Momentum rule</span></div>
-      <div id="g1" class="mlc"></div>
-    </div>
-    <div class="card" style="margin-top:16px">
-      <div class="chart-title"><h3>Same model, bigger bets ($1,000 start, log scale)</h3></div>
-      <p class="chart-note">Identical trades; only the share of the account put into each trade changes. Above about 10% the losses compound faster than the gains.</p>
-      <div class="legend"><span style="--c:var(--s1)">0.5% per trade</span><span style="--c:var(--s2)">2%</span><span style="--c:var(--s3)">5%</span><span style="--c:var(--s4)">10%</span><span style="--c:var(--s5)">25%</span></div>
-      <div id="g2" class="mlc"></div>
-    </div>
-    <div class="card" style="margin-top:16px">
-      <div class="chart-title"><h3>Benchmark 1: our best model vs buy-and-hold and option-selling strategies, SPY 2016&ndash;2025 (log scale)</h3></div>
-      <p class="chart-note">$1,000 start. Covered calls (BXM) and cash-secured puts (PUT) rebuilt from real quotes &mdash; they track Cboe&rsquo;s official indices with a 0.98 correlation. All lines earn T-bill interest on idle cash.</p>
-      <div class="legend"><span style="--c:var(--s2)">Buy &amp; hold SPY ($3,879)</span><span style="--c:var(--s3)">Covered calls, BXM ($2,177)</span><span style="--c:var(--s5)">Cash-secured puts, PUT ($1,876)</span><span style="--c:var(--s1)">Elastic Net + cash ($1,516)</span><span style="--c:var(--s7)">Put spread at the risk limit ($1,287)</span><span style="--c:var(--s4)">Short straddle ($956)</span></div>
-      <div id="gb" class="mlc"></div>
-      <div class="table-scroll" style="margin-top:12px"><table>
-        <thead><tr><th>Strategy</th><th>Per year</th><th>Ups &amp; downs (volatility)</th><th>Worst drop</th><th>Return per unit of risk (Sharpe)</th></tr></thead>
-        <tbody>
-          <tr><td>Buy &amp; hold SPY</td><td>14.7%</td><td>18.6%</td><td>&minus;31%</td><td>0.72</td></tr>
-          <tr><td>Covered calls (BXM)</td><td>8.2%</td><td>12.4%</td><td>&minus;29%</td><td>0.53</td></tr>
-          <tr><td>Cash-secured puts (PUT)</td><td>6.6%</td><td>12.5%</td><td>&minus;30%</td><td>0.40</td></tr>
-          <tr><td><strong>Elastic Net + cash</strong></td><td>4.3%</td><td>2.8%</td><td>&minus;2%</td><td><strong>0.75</strong></td></tr>
-          <tr><td>Put spread at the 0.5% risk limit</td><td>2.6%</td><td>0.9%</td><td>&minus;1%</td><td>0.48</td></tr>
-          <tr><td>Short straddle</td><td>&minus;0.5%</td><td>12.7%</td><td>&minus;42%</td><td>&minus;0.14</td></tr>
-        </tbody>
-      </table></div>
-      <p class="chart-note" style="margin:10px 0 0">Buy-and-hold made the most money. Selling options smoothed the ride but gave up most of the gains and still fell about 30% in the worst month; short straddles lost. Our model had the best return per unit of risk, but at the 0.5% risk limit it makes little money. Simulated; not investment advice.</p>
-    </div>
-    <div class="card" style="margin-top:16px;border-left:4px solid var(--accent)">
-      <h3>Follow-up tests (Nov 7, 2026)</h3>
-      <div class="table-scroll"><table>
-        <thead><tr><th>Question</th><th>Answer</th></tr></thead>
-        <tbody>
-          <tr><td>Is the best model skilled at options, or just at market direction?</td><td><strong>Market direction.</strong> It picks days when SPY/QQQ go on to rise (+0.16% next day vs +0.04% on other days); after removing that move, no extra gain remains.</td></tr>
-          <tr><td>Do longer holds beat the bid/ask cost?</td><td><strong>Yes, for every call-buying approach.</strong> Holding 5 days: best model +7.9% per trade &mdash; but simply always buying a call made +7.4%. The model&rsquo;s real advantage is a smaller worst drop at a 1-day hold (&minus;4% vs &minus;14%).</td></tr>
-          <tr><td>What does the model look at?</td><td>Prefers calls, bought after calm, slightly falling markets: low recent volatility, a small 5-day dip, falling implied volatility, tight spreads.</td></tr>
-          <tr><td>Does the working system&rsquo;s network help?</td><td><strong>No.</strong> We rebuilt its network from the screenshots (5 layers &times; 200 units; gain and tradability outputs; separate calls and puts). On daily data it lost 0.7% per trade at a 1-day hold and made +2.1% at 5 days &mdash; below the simple linear model. Its tradability output helped a little.</td></tr>
-          <tr><td>Does it hold up in 2026?</td><td><strong>Not enough data to say:</strong> only 34&ndash;42 trades in the 2026 check.</td></tr>
-        </tbody>
-      </table></div>
-    </div>
-    <div class="card" style="margin-top:16px">
-      <h3>What this shows</h3>
-      <ul style="margin-bottom:0">
-        <li><strong>Only one model made money:</strong> of eight models, only Elastic Net ended above $1,000; LightGBM, the neural network, the rules and a random pick all lost after costs.</li>
-        <li><strong>A small, steady gain at the risk limit:</strong> $1,000 &rarr; $1,220 over ten years (about 2% a year), while always buying calls fell to $903 and the momentum rule to $550.</li>
-        <li><strong>Bigger bets help only up to a point:</strong> 10% per trade reached $9,964 (about 26% a year) but with a 60% fall along the way; 25% per trade ended at $502.</li>
-        <li><strong>Far from the goal:</strong> even the best size made about 0.1% a day against the &gt;5%-a-day target.</li>
-        <li><strong>Small accounts can&rsquo;t follow it:</strong> one SPY option costs about $300&ndash;800, so with $1,000 a single contract is 30&ndash;80% of the account.</li>
-        <li><strong>What the edge is:</strong> the model mostly picks days when SPY and QQQ go on to rise; it is market timing expressed through calls, not an options-specific advantage. A rebuilt version of the working system&rsquo;s network did no better.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section id="experiment">
-    <h2>How the experiments work</h2>
-    <p style="color:var(--muted);margin:-6px 0 14px">Narrow on purpose, and fixed before looking at the test period. These are starting assumptions, not settings known to be profitable.</p>
-    <div class="grid g2">
-      <div class="card">
-        <div class="table-scroll"><table>
-          <tbody>
-            <tr><td>Markets</td><td>SPY and QQQ first, then options on the 150 most-traded underlyings</td></tr>
-            <tr><td>Trades</td><td>Buy calls or puts; debit spreads as a second test</td></tr>
-            <tr><td>Expiry</td><td>7&ndash;21 days out, delta 0.35&ndash;0.60</td></tr>
-            <tr><td>Timing</td><td>Decide every 15 minutes, hold 60 minutes, close same day <span class="tag warn">needs intraday data</span> &mdash; daily versions (1&ndash;5 day holds) run first</td></tr>
-            <tr><td>Fills</td><td>Buy at the ask, sell at the bid, plus fees and delay</td></tr>
-            <tr><td>Target</td><td>Profit per contract after costs, in $ and % of premium</td></tr>
-          </tbody>
-        </table></div>
+  <section id="research-results" class="p9s">
+    <h2>Research results</h2>
+    <a class="card research-link" href="project-09-research.html" aria-label="Open all Project 9 research results">
+      <div class="eyebrow" style="margin-bottom:8px">All models &middot; charts &middot; lessons</div>
+      <h3 style="margin-top:0">Every model we tested, on one page</h3>
+      <p>Seven experiments, each with $1,000 growth charts per model, a scoreboard, the progress ladder and what we learned. The simple linear model (Elastic Net) is still the one to beat.</p>
+      <div class="research-stats">
+        <div><span>Experiments</span><strong>7 + 1 running</strong></div>
+        <div><span>Models tested</span><strong>40+</strong></div>
+        <div><span>Most money</span><strong>$1,481</strong></div>
+        <div><span>Ladder</span><strong>Below L0</strong></div>
       </div>
+      <span class="research-cta">Open the research results &rarr;</span>
+    </a>
+    <div class="card" style="margin-top:16px"><h3 style="margin-top:0">Scoreboard</h3><div class="table-scroll"><table>
+      <thead><tr><th>#</th><th>What was tested</th><th>Best version</th><th class="num">$1,000 &rarr;</th><th>vs $1,000</th><th>Test years</th><th class="num">Sharpe</th><th>Verdict</th></tr></thead>
+      <tbody>
+<tr><td><a href="project-09-research.html#exp1">1</a></td><td>Daily SPY/QQQ calls &amp; puts, 1-day hold (6 models)</td><td>Elastic Net (linear)</td><td class="num">$1,220</td><td style="min-width:120px"><div class="sbar2"><i style="width:81%;background:var(--s3)"></i><b style="left:66.7%"></b></div></td><td>2016&ndash;2025</td><td class="num">0.75*</td><td><span class="vb ok">Benchmark to beat (L0)</span></td></tr>
+<tr><td><a href="project-09-research.html#exp2">2</a></td><td>Intraday: 15-minute decisions, 60-minute hold</td><td>Elastic Net</td><td class="num">$970</td><td style="min-width:120px"><div class="sbar2"><i style="width:65%;background:var(--s4)"></i><b style="left:66.7%"></b></div></td><td>2016&ndash;2023</td><td class="num">&lt; 0</td><td><span class="vb bad">No edge</span></td></tr>
+<tr><td><a href="project-09-research.html#exp3">3</a></td><td>ChainFormer: transformer over the whole option chain</td><td>No-attention version</td><td class="num">$1,062</td><td style="min-width:120px"><div class="sbar2"><i style="width:71%;background:var(--s3)"></i><b style="left:66.7%"></b></div></td><td>2016&ndash;2023</td><td class="num">0.42</td><td><span class="vb warn">Below L0</span></td></tr>
+<tr><td><a href="project-09-research.html#exp4">4</a></td><td>DistFormer: forecast the market, then price options</td><td>No-forecast version</td><td class="num">$1,347</td><td style="min-width:120px"><div class="sbar2"><i style="width:90%;background:var(--s3)"></i><b style="left:66.7%"></b></div></td><td>2016&ndash;2025</td><td class="num">0.52</td><td><span class="vb warn">Below L0</span></td></tr>
+<tr><td><a href="project-09-research.html#exp5">5</a></td><td>VolSet: weekly volatility trades on ~140 stocks</td><td>LightGBM</td><td class="num">$1,001</td><td style="min-width:120px"><div class="sbar2"><i style="width:67%;background:var(--s3)"></i><b style="left:66.7%"></b></div></td><td>2022&ndash;2025</td><td class="num">0.02</td><td><span class="vb bad">No edge</span></td></tr>
+<tr><td><a href="project-09-research.html#exp6">6</a></td><td>LeverSet: monthly stock picks through in-the-money calls</td><td>LeverSet, 0.60-delta calls</td><td class="num">$1,238</td><td style="min-width:120px"><div class="sbar2"><i style="width:83%;background:var(--s3)"></i><b style="left:66.7%"></b></div></td><td>2021&ndash;2025</td><td class="num">0.44</td><td><span class="vb warn">Below L0</span></td></tr>
+<tr><td><a href="project-09-research.html#exp7">7</a></td><td>RegimeGate: learn when to run the best strategies</td><td>Both strategies, always on</td><td class="num">$1,481</td><td style="min-width:120px"><div class="sbar2"><i style="width:99%;background:var(--s3)"></i><b style="left:66.7%"></b></div></td><td>2018&ndash;2025</td><td class="num">0.66</td><td><span class="vb warn">Below L0</span></td></tr>
+<tr><td><a href="project-09-research.html#exp8">8</a></td><td>PremiumSet: sell weekly loss-capped put/call spreads</td><td>Running now</td><td class="num">&mdash;</td><td style="min-width:120px"><div class="sbar2"></div></td><td>2016&ndash;2025</td><td class="num">&mdash;</td><td><span class="vb muted">In progress</span></td></tr>
+      </tbody></table></div></div>
+    <div style="margin-top:16px"><div class="ladder">
+        <div class="here"><b>L0</b><span>Beat Elastic Net: Sharpe &gt; 0.68 and higher daily return, still positive at +25% costs</span></div>
+        <div><b>L1</b><span>+0.05% a day (about +13% a year)</span></div>
+        <div><b>L2</b><span>+0.10% a day</span></div>
+        <div><b>L3</b><span>+0.25% a day</span></div>
+        <div><b>G1</b><span>Milestones: +1% and +2% a day</span></div>
+        <div><b>Goal</b><span>More than +5% a trading day</span></div>
+      </div></div>
+  </section>
+  <section id="goals">
+    <h2>Goals</h2>
+    <div class="grid g3">
+      <div class="card"><h3>1. Grow the account</h3><p>Net growth of total account equity after every cost. Target: <strong>more than 5% a trading day</strong> on average, compounded, losing days allowed, with 1% and 2% a day as milestones. It's a hypothesis to test, not a promise: 5% a day would multiply the account about 219,000&times; in a year.</p></div>
+      <div class="card"><h3>2. Survive</h3><p>Pass/fail limits on drawdown, daily loss, tail loss and margin. A model that breaks them is out, however profitable.</p></div>
+      <div class="card"><h3>3. Prove it's real</h3><p>Beat simple rules and published benchmarks on data the model never saw, under cost stress, with checks for luck and overfitting. Win rate is reported, not ranked on.</p></div>
+    </div>
+  </section>
+
+  <section id="roadmap">
+    <h2>Status &amp; roadmap</h2>
+    <div class="card">
+      <h3>Progress by phase (Phase 10 is now the main build path)</h3>
+      <div class="legend"><span style="--c:var(--accent)">Done</span><span style="--c:var(--warn)">Partial</span><span style="--c:var(--line)">Not started</span></div>
+      <div id="phases"></div>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
       <div class="card">
-        <h3>Models, in order</h3>
+        <h3>Benchmark track (Phase 9)</h3>
         <ol class="steps">
-          <li><strong>Simple rules and linear model</strong> &mdash; the baseline every model must beat. <span class="tag good">tested</span> linear model best so far</li>
-          <li><strong>LightGBM</strong> &mdash; first main model. <span class="tag bad">tested</span> lost after costs</li>
-          <li><strong>Small neural network</strong> &mdash; with and without a tradability output and call/put outputs. <span class="tag bad">tested</span> below the linear model; tradability output helped a little</li>
-          <li><strong>LSTM or causal CNN</strong> &mdash; uses recent market history. <span class="tag muted">next, with intraday data</span></li>
-          <li>Later, only if they add profit: transformers, graph models, reinforcement learning.</li>
+          <li><strong>Selection rule</strong>: now account growth first, survival limits as gates.</li>
+          <li><strong>Choose a data vendor</strong> and lock a point-in-time dataset.</li>
+          <li><strong>Rule benchmark</strong>: the Goyal–Saretto IV–RV straddle sort.</li>
+          <li><strong>Reproduce Bali et al.</strong>: ML on delta-hedged option returns.</li>
+          <li><strong>Reproduce Tan et al.</strong> with a turnover penalty, at 0–50 bps.</li>
+          <li>IV baseline, Cboe PUT/BXM comparison, deep hedging later, multiple-testing control, paper trading.</li>
         </ol>
       </div>
-    </div>
-    <div class="card" style="margin-top:16px;border-left:4px solid var(--good)">
-      <h3>First results: daily version on SPY and QQQ (Nov 7, 2026)</h3>
-      <p>Intraday option prices aren&rsquo;t available yet, so the experiment was first run on <strong>daily</strong> decisions: buy one call or put at the close, sell it at the next day&rsquo;s close, paying the full bid/ask spread and fees. Rules were written down before any result, models were retrained each year (tested 2016&ndash;2023), and 2024&ndash;2025 was kept sealed and opened once.</p>
-      <div class="chart-title"><h3>Average net return per trade, 2016&ndash;2023 (%)</h3></div>
-      <p class="chart-note">After the spread and fees. Positive means the model made money per trade.</p>
-      <div id="exp01"></div>
-      <ul style="margin-top:12px">
-        <li><strong>One model shows a possible edge:</strong> the linear (Elastic Net) model averaged <strong>+2.6% per trade</strong> in testing and <strong>+2.4%</strong> in the sealed 2024&ndash;2025 period, though that period alone isn&rsquo;t statistically conclusive.</li>
-        <li>It works as a <strong>timing rule for buying calls</strong>: on the days it picks, a plain call earned money; on the days it skips, the same call lost.</li>
-        <li><strong>It is small:</strong> at the 0.5%-per-trade risk limit the account grows about 1.5&ndash;4% a year. The &gt;5%-a-day goal is far out of reach for this design (it made about 0.01% a day).</li>
-        <li>Everything else &mdash; simple rules, LightGBM, a small neural network &mdash; <strong>lost money after costs</strong>. The bid/ask spread is the main hurdle on a one-day hold.</li>
-      </ul>
-      <p class="chart-note" style="margin-bottom:0">Simulated results on historical data; not investment advice.</p>
-    </div>
-    <div class="card" style="margin-top:16px">
-      <h3>Starting risk limits</h3>
-      <div class="table-scroll"><table>
-        <thead><tr><th>Limit</th><th>Starting value</th></tr></thead>
-        <tbody>
-          <tr><td>Most a new position can lose</td><td class="num">0.25&ndash;0.5% of account</td></tr>
-          <tr><td>All open option premium</td><td class="num">&le; 5% of account</td></tr>
-          <tr><td>SPY + QQQ together</td><td class="num">&le; 2% of account</td></tr>
-          <tr><td>Daily loss: stop new trades</td><td class="num">&asymp; 1&ndash;1.5%</td></tr>
-          <tr><td>Drawdown: pause and review</td><td class="num">&asymp; 5%</td></tr>
-          <tr><td>Overnight positions</td><td class="num">None at first</td></tr>
-        </tbody>
-      </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:10px 0 0">These limits pull against the 5% target: with 5% of the account in options, a 5% day needs the premium to double. Evidence, not looser limits, will settle that.</p>
+      <div class="card">
+        <h3>Main challenges</h3>
+        <ul>
+          <li><span class="tag bad">Data</span> Free data is collected; years of intraday option bid/ask prices still need a paid vendor.</li>
+          <li><span class="tag warn">Costs</span> Option spreads are wide, and published edges shrink fast as costs rise.</li>
+          <li><span class="tag warn">Overfitting</span> Every model and setting tried is logged and corrected for before any result counts. Bigger models already overfit on daily data.</li>
+          <li><span class="tag bad">Edge</span> No options-specific edge found yet: the best model is a modest market-timing signal for buying calls.</li>
+          <li><span class="tag warn">Target vs risk</span> 5% a day is far above any published result; the risk limits may make it unreachable.</li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -480,43 +238,24 @@
     </div>
   </section>
 
-  <section id="goals">
-    <h2>Goals</h2>
-    <div class="grid g3">
-      <div class="card"><h3>1. Grow the account</h3><p>Net growth of total account equity after every cost. Target: <strong>more than 5% a trading day</strong> on average, compounded, losing days allowed, with 1% and 2% a day as milestones. It's a hypothesis to test, not a promise: 5% a day would multiply the account about 219,000&times; in a year.</p></div>
-      <div class="card"><h3>2. Survive</h3><p>Pass/fail limits on drawdown, daily loss, tail loss and margin. A model that breaks them is out, however profitable.</p></div>
-      <div class="card"><h3>3. Prove it's real</h3><p>Beat simple rules and published benchmarks on data the model never saw, under cost stress, with checks for luck and overfitting. Win rate is reported, not ranked on.</p></div>
-    </div>
-  </section>
-
-  <section id="roadmap">
-    <h2>Status &amp; roadmap</h2>
-    <div class="card">
-      <h3>Progress by phase (Phase 10 is now the main build path)</h3>
-      <div class="legend"><span style="--c:var(--accent)">Done</span><span style="--c:var(--warn)">Partial</span><span style="--c:var(--line)">Not started</span></div>
-      <div id="phases"></div>
-    </div>
-    <div class="grid g2" style="margin-top:16px">
+  <section id="approach">
+    <h2>Approach</h2>
+    <div class="dqg">
       <div class="card">
-        <h3>Benchmark track (Phase 9)</h3>
-        <ol class="steps">
-          <li><strong>Selection rule</strong>: now account growth first, survival limits as gates.</li>
-          <li><strong>Choose a data vendor</strong> and lock a point-in-time dataset.</li>
-          <li><strong>Rule benchmark</strong>: the Goyal–Saretto IV–RV straddle sort.</li>
-          <li><strong>Reproduce Bali et al.</strong>: ML on delta-hedged option returns.</li>
-          <li><strong>Reproduce Tan et al.</strong> with a turnover penalty, at 0–50 bps.</li>
-          <li>IV baseline, Cboe PUT/BXM comparison, deep hedging later, multiple-testing control, paper trading.</li>
-        </ol>
+        <h3>Recommended system: 10 layers</h3>
+        <div class="arch"><img src="img/p9-architecture.png" alt="Recommended ML options system: data, features, forecasts, regime engine, strategy selector, sizing and hedging, cost gate, risk limits, execution and monitoring" loading="lazy" width="576" height="608"></div>
+        <p style="font-size:13px;color:var(--muted);margin:10px 0 0">Signals flow top to bottom. Any trade whose expected edge doesn't clear total costs stops at the cost gate.</p>
       </div>
       <div class="card">
-        <h3>Main challenges</h3>
-        <ul>
-          <li><span class="tag bad">Data</span> Free data is collected; years of intraday option bid/ask prices still need a paid vendor.</li>
-          <li><span class="tag warn">Costs</span> Option spreads are wide, and published edges shrink fast as costs rise.</li>
-          <li><span class="tag warn">Overfitting</span> Every model and setting tried is logged and corrected for before any result counts. Bigger models already overfit on daily data.</li>
-          <li><span class="tag bad">Edge</span> No options-specific edge found yet: the best model is a modest market-timing signal for buying calls.</li>
-          <li><span class="tag warn">Target vs risk</span> 5% a day is far above any published result; the risk limits may make it unreachable.</li>
-        </ul>
+        <h3>Validation plan</h3>
+        <ol class="steps">
+          <li><strong>Statistical</strong>: does it predict IV, RV and returns?</li>
+          <li><strong>Economic</strong>: net profit, win rate, drawdown.</li>
+          <li><strong>Execution</strong>: still profitable after spread, slippage, commission and impact?</li>
+          <li><strong>Crisis</strong>: 2008, 2020 and 2022 tested separately.</li>
+          <li><strong>Walk-forward</strong>: train 2010–2018, validate 2019–2020, test 2021, then roll forward a year.</li>
+          <li><strong>Paper trading</strong> before any capital.</li>
+        </ol>
       </div>
     </div>
   </section>
@@ -585,7 +324,7 @@
       <div id="refpnl"></div>
     </div>
     <p style="font-size:13px;color:var(--muted);margin:10px 0 0">What we copy: the structure &mdash; train on real profit after costs, add a tradability output, keep every trade linked to the model version that made it, and run exits and accounting separately from the model.</p>
-      <p style="margin-top:8px"><strong>Tested Nov 7:</strong> we rebuilt its network from the screenshots (5 layers &times; 200 units, gain and tradability outputs, separate calls and puts) and ran it on our daily data. It did <strong>not</strong> beat our simple linear model (&minus;0.7% per trade at a 1-day hold, +2.1% at 5 days); its tradability output helped a little. Whatever edge the original has likely depends on its unseen intraday data and inputs. <a href="#results">See results</a>.</p>
+      <p style="margin-top:8px"><strong>Tested Nov 7:</strong> we rebuilt its network from the screenshots (5 layers &times; 200 units, gain and tradability outputs, separate calls and puts) and ran it on our daily data. It did <strong>not</strong> beat our simple linear model (&minus;0.7% per trade at a 1-day hold, +2.1% at 5 days); its tradability output helped a little. Whatever edge the original has likely depends on its unseen intraday data and inputs. <a href="project-09-research.html#results">See results</a>.</p>
   </section>
 
   <section id="frameworks">
@@ -623,7 +362,7 @@
         </tbody>
       </table></div>
       <p style="font-size:13px;color:var(--muted);margin:12px 0 0">✓ yes &middot; ◐ partial &middot; ✗ no. Based on public papers and vendor pages as of Oct 2026 (sources below). Results come from different markets, periods and costs, so they aren't directly comparable.</p>
-      <p style="font-size:13px;margin:8px 0 0"><strong>Our own check, Nov 7:</strong> we rebuilt the Cboe PUT and BXM strategies from real option quotes (correlation 0.98 with the official indices) and compared them with buy-and-hold and our best model &mdash; <a href="#results">see Benchmark 1 in Results</a>. More benchmarks (Goyal&ndash;Saretto, Bali et al., Tan et al.) follow one by one.</p>
+      <p style="font-size:13px;margin:8px 0 0"><strong>Our own check, Nov 7:</strong> we rebuilt the Cboe PUT and BXM strategies from real option quotes (correlation 0.98 with the official indices) and compared them with buy-and-hold and our best model &mdash; <a href="project-09-research.html#results">see Benchmark 1 in Results</a>. More benchmarks (Goyal&ndash;Saretto, Bali et al., Tan et al.) follow one by one.</p>
     </div>
     <div class="card" style="margin-top:16px">
       <div class="chart-title"><h3>Costs decide the winner: Sharpe ratio at different trading costs</h3></div>
@@ -637,47 +376,9 @@
     </div>
   </section>
 
-  <section id="approach">
-    <h2>Approach</h2>
-    <div class="dqg">
-      <div class="card">
-        <h3>Recommended system: 10 layers</h3>
-        <div class="arch"><img src="img/p9-architecture.png" alt="Recommended ML options system: data, features, forecasts, regime engine, strategy selector, sizing and hedging, cost gate, risk limits, execution and monitoring" loading="lazy" width="576" height="608"></div>
-        <p style="font-size:13px;color:var(--muted);margin:10px 0 0">Signals flow top to bottom. Any trade whose expected edge doesn't clear total costs stops at the cost gate.</p>
-      </div>
-      <div class="card">
-        <h3>Validation plan</h3>
-        <ol class="steps">
-          <li><strong>Statistical</strong>: does it predict IV, RV and returns?</li>
-          <li><strong>Economic</strong>: net profit, win rate, drawdown.</li>
-          <li><strong>Execution</strong>: still profitable after spread, slippage, commission and impact?</li>
-          <li><strong>Crisis</strong>: 2008, 2020 and 2022 tested separately.</li>
-          <li><strong>Walk-forward</strong>: train 2010–2018, validate 2019–2020, test 2021, then roll forward a year.</li>
-          <li><strong>Paper trading</strong> before any capital.</li>
-        </ol>
-      </div>
-    </div>
-  </section>
-
-  <section id="research">
-    <h2>Research track: finding new models</h2>
-    <a class="card research-link" href="project-09-research.html" aria-label="Open the Project 9 research track">
-      <div class="eyebrow" style="margin-bottom:8px">New model development &middot; started Nov 6, 2026</div>
-      <h3 style="margin-top:0">Finding a better options model</h3>
-      <p>A permanent research track beside the build plan. Two paths: design an original model from the options problem, or combine the strengths of existing models. Both follow the same five steps, face the same honest test with real bid/ask costs and a sealed final period, and must pass six gates. Only a reproduced winner moves into the build.</p>
-      <div class="research-stats">
-        <div><span>Paths</span><strong>2</strong></div>
-        <div><span>Ideas to test</span><strong>4</strong></div>
-        <div><span>Models listed</span><strong>12</strong></div>
-        <div><span>Next gate</span><strong>R0</strong></div>
-      </div>
-      <span class="research-cta">Open the research track &rarr;</span>
-    </a>
-  </section>
-
   <section id="disclosure">
     <h2>Disclosures</h2>
-    <div class="card"><p style="margin:0">This project is at the research stage and has no backtest or trading results. Ratings are qualitative opinions from the research review. Figures from other studies are the authors' own and aren't comparable with each other. Options can lose more than expected. Nothing on this page is investment advice.</p></div>
+    <div class="card"><p style="margin:0">All results are simulated backtests on historical option quotes with real bid/ask costs; none is a proven edge, and nothing here is investment advice. Licensed market data stays on the owner&rsquo;s computer. Ratings are qualitative opinions from the research review; figures from other studies are the authors&rsquo; own.</p></div>
   </section>
 
   <section id="sources">
@@ -701,6 +402,7 @@
 </main>
 <footer><div class="wrap">&copy; 2026 Hamid Faghidi &middot; Trading results are hypothetical backtests. Nothing on this site is investment advice.</div></footer>
 <script src="../charts.js"></script>
+<script>function bcP9(id,d,o){var h=document.getElementById(id);if(h&&window.barChart)barChart(h,d,o)}</script>
 <script>
 (function(){
 var FW=[{"label":"Adaptive ML","value":5},{"label":"ML + deep hedging","value":5},{"label":"Regime ML","value":4.5},{"label":"Inst. VRP","value":4},{"label":"Inst. overlay","value":3}];
@@ -709,13 +411,13 @@ var EXP=[{"label":"Elastic Net","value":2.62},{"label":"Always call","value":-0.
 var COST=[{"label":"LSTM · 0 bps","value":1.329},{"label":"Best rule · 0 bps","value":0.762},{"label":"LSTM · 20 bps","value":0.952},{"label":"Best rule · 20 bps","value":0.663},{"label":"LSTM · 50 bps","value":0.388},{"label":"Best rule · 50 bps","value":0.514},{"label":"LSTM + turnover penalty · 50 bps","value":0.689}];
 function f1(v){return (+v).toFixed(1);}function f2(v){return (+v).toFixed(2);}
 function draw(){
- barChart(document.getElementById('fw'),FW.map(function(d){return{label:d.label,value:d.value,tip:d.label+': '+d.value+' / 5'}}),{height:240,rotate:window.innerWidth<600,fmt:f1});
- barChart(document.getElementById('refpnl'),REF.map(function(d){return{label:d.label,value:d.value,tip:d.label+': '+(d.value<0?'-$':'$')+Math.abs(d.value).toLocaleString()}}),{height:240,rotate:window.innerWidth<600,fmt:function(v){return (v<0?'-$':'$')+Math.round(Math.abs(v)/1000)+'k'}});
- barChart(document.getElementById('exp01'),EXP.map(function(d){return{label:d.label,value:d.value,tip:d.label+': '+(d.value>0?'+':'')+f2(d.value)+'% per trade'}}),{height:240,rotate:window.innerWidth<600,fmt:f1});
- barChart(document.getElementById('cost'),COST.map(function(d){return{label:d.label,value:d.value,tip:d.label+': Sharpe '+f2(d.value)}}),{height:260,rotate:true,fmt:f1});}
+ bcP9('fw',FW.map(function(d){return{label:d.label,value:d.value,tip:d.label+': '+d.value+' / 5'}}),{height:240,rotate:window.innerWidth<600,fmt:f1});
+ bcP9('refpnl',REF.map(function(d){return{label:d.label,value:d.value,tip:d.label+': '+(d.value<0?'-$':'$')+Math.abs(d.value).toLocaleString()}}),{height:240,rotate:window.innerWidth<600,fmt:function(v){return (v<0?'-$':'$')+Math.round(Math.abs(v)/1000)+'k'}});
+ bcP9('exp01',EXP.map(function(d){return{label:d.label,value:d.value,tip:d.label+': '+(d.value>0?'+':'')+f2(d.value)+'% per trade'}}),{height:240,rotate:window.innerWidth<600,fmt:f1});
+ bcP9('cost',COST.map(function(d){return{label:d.label,value:d.value,tip:d.label+': Sharpe '+f2(d.value)}}),{height:260,rotate:true,fmt:f1});}
 
 var G=window.P9G={"labels":["Start","Jan 2016","Feb 2016","Mar 2016","Apr 2016","May 2016","Jun 2016","Jul 2016","Aug 2016","Sep 2016","Oct 2016","Nov 2016","Dec 2016","Jan 2017","Feb 2017","Mar 2017","Apr 2017","May 2017","Jun 2017","Jul 2017","Aug 2017","Sep 2017","Oct 2017","Nov 2017","Dec 2017","Jan 2018","Feb 2018","Mar 2018","Apr 2018","May 2018","Jun 2018","Jul 2018","Aug 2018","Sep 2018","Oct 2018","Nov 2018","Dec 2018","Jan 2019","Feb 2019","Mar 2019","Apr 2019","May 2019","Jun 2019","Jul 2019","Aug 2019","Sep 2019","Oct 2019","Nov 2019","Dec 2019","Jan 2020","Feb 2020","Mar 2020","Apr 2020","May 2020","Jun 2020","Jul 2020","Aug 2020","Sep 2020","Oct 2020","Nov 2020","Dec 2020","Jan 2021","Feb 2021","Mar 2021","Apr 2021","May 2021","Jun 2021","Jul 2021","Aug 2021","Sep 2021","Oct 2021","Nov 2021","Dec 2021","Jan 2022","Feb 2022","Mar 2022","Apr 2022","May 2022","Jun 2022","Jul 2022","Aug 2022","Sep 2022","Oct 2022","Nov 2022","Dec 2022","Jan 2023","Feb 2023","Mar 2023","Apr 2023","May 2023","Jun 2023","Jul 2023","Aug 2023","Sep 2023","Oct 2023","Nov 2023","Dec 2023","Jan 2024","Feb 2024","Mar 2024","Apr 2024","May 2024","Jun 2024","Jul 2024","Aug 2024","Sep 2024","Oct 2024","Nov 2024","Dec 2024","Jan 2025","Feb 2025","Mar 2025","Apr 2025","May 2025","Jun 2025","Jul 2025","Aug 2025","Sep 2025","Oct 2025","Nov 2025","Dec 2025"],"EN_0.5pct":[1000,976,985,990,995,995,1005,1005,995,997,985,995,1003,1004,1005,1001,1000,1001,999,1000,1005,1004,1006,1011,1011,1013,1007,999,1018,1017,1016,1017,1020,1022,1023,1030,1041,1061,1064,1072,1074,1050,1065,1064,1059,1056,1060,1059,1071,1081,1091,1094,1103,1101,1101,1099,1097,1092,1084,1100,1103,1104,1108,1113,1113,1113,1113,1116,1116,1117,1117,1110,1118,1114,1114,1140,1129,1130,1125,1136,1132,1124,1130,1129,1124,1124,1124,1124,1124,1124,1124,1124,1124,1124,1124,1124,1124,1129,1159,1166,1147,1164,1177,1173,1185,1196,1188,1208,1209,1212,1202,1180,1197,1208,1207,1211,1209,1214,1230,1219,1220],"R0_0.5pct":[1000,983,982,988,973,977,971,985,971,966,947,945,953,954,978,956,959,967,947,953,946,942,951,958,958,993,975,962,961,968,959,964,977,973,946,942,909,925,930,941,946,914,940,933,926,915,926,928,950,955,953,926,944,956,965,976,998,985,976,994,987,991,990,990,996,987,999,1003,1012,982,1005,1003,1011,983,965,975,946,939,922,938,922,904,908,921,891,913,893,905,897,910,926,931,920,894,884,914,920,935,953,948,923,938,951,953,953,959,952,960,946,944,925,905,902,916,920,912,911,924,927,913,903],"R2_0.5pct":[1000,1017,1000,982,972,940,916,929,911,888,868,859,856,847,852,825,828,811,796,788,776,759,754,744,732,759,781,799,789,776,782,776,773,761,770,772,782,778,773,774,779,790,787,783,767,777,788,781,790,796,837,833,820,801,786,781,794,791,791,777,756,748,749,744,736,739,739,736,723,716,730,725,708,715,700,713,726,729,729,720,734,740,732,722,702,702,691,678,667,659,655,646,648,649,652,673,670,663,671,656,643,647,639,656,662,663,643,636,616,594,591,584,594,587,582,583,571,565,560,555,550],"EN_2pct":[1000,906,938,959,978,975,1014,1014,974,981,935,972,1003,1009,1014,995,991,996,988,993,1011,1010,1015,1036,1035,1044,1021,988,1065,1061,1058,1060,1072,1083,1083,1115,1160,1251,1264,1303,1311,1196,1265,1260,1234,1222,1237,1234,1290,1340,1389,1398,1448,1435,1436,1428,1416,1387,1350,1427,1444,1452,1471,1499,1499,1495,1495,1512,1512,1517,1518,1480,1523,1501,1504,1645,1580,1587,1561,1617,1597,1552,1583,1576,1551,1551,1551,1551,1551,1551,1551,1551,1551,1551,1551,1551,1551,1574,1745,1786,1670,1769,1852,1821,1896,1960,1912,2036,2045,2066,1993,1848,1957,2027,2018,2044,2030,2063,2171,2093,2098],"EN_5pct":[1000,777,843,888,930,918,1007,1007,909,925,819,900,973,988,998,951,942,952,934,946,989,986,999,1052,1047,1070,1012,930,1119,1108,1100,1105,1138,1166,1160,1244,1366,1640,1681,1806,1830,1448,1659,1640,1546,1505,1546,1535,1715,1881,2044,2070,2254,2200,2204,2172,2125,2016,1884,2161,2221,2251,2326,2438,2438,2418,2418,2488,2488,2508,2514,2358,2529,2438,2444,3050,2752,2776,2662,2897,2805,2602,2731,2694,2590,2590,2590,2590,2590,2590,2590,2590,2590,2590,2590,2590,2590,2672,3422,3613,3032,3484,3893,3681,4050,4389,4112,4785,4820,4924,4483,3690,4213,4563,4500,4637,4546,4726,5345,4853,4882],"EN_10pct":[1000,591,683,756,823,786,925,925,752,775,606,723,844,868,885,801,784,801,770,790,861,857,879,972,964,1006,898,754,1082,1062,1046,1054,1116,1171,1135,1301,1536,2183,2284,2604,2657,1631,2115,2052,1782,1678,1751,1722,2138,2559,2960,2984,3512,3341,3348,3248,3108,2778,2421,3170,3330,3420,3648,3999,3999,3935,3935,4163,4163,4227,4244,3726,4273,3956,3960,6096,4928,4987,4566,5351,5005,4258,4654,4510,4163,4163,4163,4163,4163,4163,4163,4163,4163,4163,4163,4163,4163,4347,6911,7604,5225,6780,8373,7179,8529,9918,8597,11444,11483,11846,9693,6426,8080,9261,8918,9407,8970,9634,12173,9853,9964],"EN_25pct":[1000,223,284,360,421,327,412,412,241,252,131,191,273,292,306,228,213,225,203,217,264,261,278,353,346,384,280,175,406,387,372,373,429,483,383,527,712,1554,1684,2151,2162,540,957,836,488,398,404,382,632,960,1196,1081,1543,1348,1337,1233,1097,786,548,1039,1126,1203,1404,1741,1741,1671,1671,1913,1913,1982,1991,1414,1950,1563,1519,4127,2281,2257,1755,2435,2016,1216,1445,1286,1041,1041,1041,1041,1041,1041,1041,1041,1041,1041,1041,1041,1041,1004,2608,3014,970,1650,2589,1275,1723,2345,1482,2681,2491,2470,1349,404,555,669,565,615,514,588,968,491,502]};
-window.mlcP9=mlc;function mlc(host,series,o){var G=o.data||window.P9G;host.innerHTML='';var W=host.clientWidth||640,H=o.h||280,L=58,R=10,T=10,B=26,n=G.labels.length,lg=!!o.log;
+window.mlcP9=mlc;function mlc(host,series,o){if(!host)return;var G=o.data||window.P9G;host.innerHTML='';var W=host.clientWidth||640,H=o.h||280,L=58,R=10,T=10,B=26,n=G.labels.length,lg=!!o.log;
 var all=[];series.forEach(function(s){all=all.concat(G[s.k].filter(function(v){return v!=null}))});var mn=Math.min.apply(null,all),mx=Math.max.apply(null,all);
 var tf=lg?function(v){return Math.log10(v)}:function(v){return v};var lo,hi,ticks=[];
 if(lg){lo=Math.floor(tf(mn)*2)/2;hi=Math.ceil(tf(mx)*2)/2;for(var e=Math.ceil(lo);e<=hi;e++){[1,3].forEach(function(m){var v=m*Math.pow(10,e);if(tf(v)>=lo&&tf(v)<=hi)ticks.push(v)})}}
@@ -749,7 +451,7 @@ drawA();window.addEventListener('resize',function(){clearTimeout(window._a);wind
 drawG();window.addEventListener('resize',function(){clearTimeout(window._g);window._g=setTimeout(drawG,150)});
 draw();var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,150)});
 var phases=[["0 · Research review (models, factors, frameworks)",1,0,0],["1 · Verify key papers",0,1,0],["2 · Strategy × model grid",0,0,1],["3 · Data vendor & dataset",0,1,0],["4 · Targets & regime thresholds",0,0,1],["5 · Baselines (Elastic Net, VRP, overlay)",0,1,0],["6 · XGBoost / LightGBM, then LSTM",0,1,0],["7 · Regime engine, Transformer/GNN, RL",0,0,1],["8 · Multiple-testing checks & paper trading",0,0,1],["9 · Benchmark track (papers, Cboe PUT/BXM)",0,0,10],["10 · Build: define → data → baselines → models → paper → pilot → scale",1,2,5],["R · Research track: new-model discovery (new)",0,1,6]];var host=document.getElementById('phases');
-phases.forEach(function(p){var tot=p[1]+p[2]+p[3];var r=document.createElement('div');r.className='phase';r.innerHTML='<div>'+p[0]+'</div><div class="sbar"><i class="d" style="width:'+(100*p[1]/tot)+'%"></i><i class="p" style="width:'+(100*p[2]/tot)+'%"></i></div><div class="n">'+(p[1]?'Done':p[2]?'Partial':'—')+'</div>';host.appendChild(r);});
+var PH=document.getElementById('phases');if(PH)phases.forEach(function(p){var tot=p[1]+p[2]+p[3];var r=document.createElement('div');r.className='phase';r.innerHTML='<div>'+p[0]+'</div><div class="sbar"><i class="d" style="width:'+(100*p[1]/tot)+'%"></i><i class="p" style="width:'+(100*p[2]/tot)+'%"></i></div><div class="n">'+(p[1]?'Done':p[2]?'Partial':'—')+'</div>';host.appendChild(r);});
 })();
 </script>
 
@@ -761,7 +463,7 @@ two_spy:[99.0,99.7,99.4,100,100,100,100,100,100,99.9,100,100,100,100,100],two_qq
 st_spy:[0.0,0.1,0.1,0.3,0.0,0.0,0.1,0.0,0.1,0.1,0.2,0.2,0.1,0.2,0.2],st_qqq:[1.1,0.0,0.1,0.3,0.2,0.1,0.1,0.1,0.2,0.1,2.4,0.3,0.2,0.9,2.7],
 c0:[.95,.95,.96,.92,.96,.92,.93,.96,.96,.94,.97,.96,.95,.94,.94],cm:[-.02,-.01,-.02,.03,0,-.01,-.02,-.02,-.01,-.02,0,-.01,0,0,-.01],cp:[-.03,-.01,-.03,0,-.02,-.02,-.01,0,.03,.01,.01,0,.02,.01,-.01],
 pp_spy:[3.4,3.3,3.1,2.7,2.8,3.7,3.2,2.6,4.5,5.4,4.2,3.1,4.1,3.9,4.3],pp_qqq:[2.0,0.9,1.2,1.2,1.1,0.8,1.0,1.0,1.2,1.7,1.4,2.0,2.4,2.4,2.3]};
-function qlc(host,series,o){host.innerHTML='';var W=host.clientWidth||560,H=o.h||200,L=40,R=8,T=8,B=24,n=Y.length,lo=o.min,hi=o.max;
+function qlc(host,series,o){if(!host)return;host.innerHTML='';var W=host.clientWidth||560,H=o.h||200,L=40,R=8,T=8,B=24,n=Y.length,lo=o.min,hi=o.max;
 var NS='http://www.w3.org/2000/svg',svg=document.createElementNS(NS,'svg');svg.setAttribute('viewBox','0 0 '+W+' '+H);host.appendChild(svg);
 function el(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);svg.appendChild(e);return e}
 var cs=getComputedStyle(host),line=getComputedStyle(document.documentElement).getPropertyValue('--line').trim();
@@ -781,7 +483,7 @@ qlc(document.getElementById('dq1'),[{k:'two_spy',n:'SPY',c:'--s1'},{k:'two_qqq',
 qlc(document.getElementById('dq2'),[{k:'st_spy',n:'SPY',c:'--s1'},{k:'st_qqq',n:'QQQ',c:'--s2'}],{min:0,max:3,ticks:[0,1,2,3],fmt:pc});
 qlc(document.getElementById('dq3'),[{k:'c0',n:'Same minute',c:'--s3'},{k:'cm',n:'Stock 1 min earlier',c:'--s4'},{k:'cp',n:'Stock 1 min later',c:'--s5'}],{min:-0.2,max:1,ticks:[-0.2,0,0.2,0.4,0.6,0.8,1],fmt:cr});
 qlc(document.getElementById('dq4'),[{k:'pp_spy',n:'SPY',c:'--s1'},{k:'pp_qqq',n:'QQQ',c:'--s2'}],{min:0,max:6,ticks:[0,2,4,6],fmt:bp});
-if(window.barChart){barChart(document.getElementById('dq5'),[{label:'2012-16',value:2.8,tip:'2012-2016: median 2.8%, 60 months'},{label:'2017-21',value:2.7,tip:'2017-2021: median 2.7%, 58 months'},{label:'2022-25',value:4.0,tip:'2022-2025: median 4.0%, 44 months'}],{height:200,fmt:function(v){return (+v).toFixed(1)+'%'}})}}
+if(window.barChart){bcP9('dq5',[{label:'2012-16',value:2.8,tip:'2012-2016: median 2.8%, 60 months'},{label:'2017-21',value:2.7,tip:'2017-2021: median 2.7%, 58 months'},{label:'2022-25',value:4.0,tip:'2022-2025: median 4.0%, 44 months'}],{height:200,fmt:function(v){return (+v).toFixed(1)+'%'}})}}
 drawDQ();var t2;window.addEventListener('resize',function(){clearTimeout(t2);t2=setTimeout(drawDQ,150)});
 })();
 </script>
