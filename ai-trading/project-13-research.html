@@ -62,9 +62,9 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
     <div class="grid g2">
       <div class="card">
         <h3>The goal, step by step</h3>
-        <p class="howread">Net return per trade after 0.5% cost per side, one trade a day, the whole account each trade. The major goal (20% a week) needs about +3.7% per trade.</p>
+        <p class="howread">Net return per trade after 0.5% cost per side, one trade a day. <strong>Account: $10,000, 5% ($500) in each trade</strong> (owner, Nov 7, 2026), so the account moves 1/20 of each trade's result. At this size the major goal (20% a week) would need about +74% per trade; the milestones stay the research steps.</p>
         <div class="table-scroll"><table class="ladder">
-          <thead><tr><th>Milestone</th><th>Net per trade</th><th>Status</th></tr></thead>
+          <thead><tr><th>Milestone</th><th>Net per trade</th><th>Account per week</th><th>Status</th></tr></thead>
           <tbody id="ladder"></tbody>
         </table></div>
       </div>
@@ -72,6 +72,7 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
         <h3>In plain words</h3>
         <p><strong>What these stocks do:</strong> stocks that jump 10% or more in the first 15 minutes tend to drift down for the rest of the day. Buying them at a fixed time loses money in every year tested.</p>
         <p><strong>What works so far:</strong> choosing <em>when</em> to buy during the day. Timing models find moments that do rise, enough to cover costs on paper.</p>
+        <p><strong>On a $10,000 account</strong> with $500 per trade: the best honest model (A12-v2) ends 2019–2024 at $9,713; A10 reached $10,961 on 2019–2024 but fell to $8,875 on 2025–2026.</p>
         <p style="margin-bottom:0"><strong>What is still missing:</strong> a model whose profit also holds on data it has never seen. The best one (A10) passed on 2019–2024 but failed on 2025–2026, because part of its edge came from thinly traded moments that cannot really be bought.</p>
       </div>
     </div>
@@ -80,7 +81,7 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
   <section id="progress">
     <h2>Progress of every model</h2>
     <div class="card">
-      <p class="howread">Each bar is one model's average net result per trade on the development years (2019–2024) at 0.5% cost. A diamond shows the result on unseen data (Jan 2025 – Nov 2026) for models that reached that test. Right of the dashed line = milestone M1 (making money after costs).</p>
+      <p class="howread">Each bar is one model's average net result per trade (hover: dollars per $500 trade, i.e. 5% of the $10,000 account) on the development years (2019–2024) at 0.5% cost. A diamond shows the result on unseen data (Jan 2025 – Nov 2026) for models that reached that test. Right of the dashed line = milestone M1 (making money after costs).</p>
       <div id="progchart"></div>
       <div class="legend"><span><i style="background:var(--loss)"></i>Loses after costs</span><span><i style="background:var(--gain)"></i>Makes money after costs</span><span><i style="background:transparent;border:2px solid var(--ink);transform:rotate(45deg);width:9px;height:9px"></i>Unseen data result</span></div>
     </div>
@@ -89,7 +90,7 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
   <section id="models">
     <h2>Every model at a glance</h2>
     <div class="card">
-      <p class="howread">In the order they were built. Results are net per $1,000 trade at 0.5% cost per side. Stage 1 models trade at 10:00 (+5% target, −3% stop); timing models choose their own moment and are priced at real fills.</p>
+      <p class="howread">In the order they were built. Results are net per $500 trade (5% of a $10,000 account) at 0.5% cost per side. Stage 1 models trade at 10:00 (+5% target, −3% stop); timing models choose their own moment and are priced at real fills.</p>
       <div class="table-scroll"><table class="mtable">
         <thead><tr><th>#</th><th>Model and idea</th><th>2019–2024</th><th>Unseen 2025–26</th><th>Verdict</th><th>What it taught</th></tr></thead>
         <tbody id="mrows"></tbody>
@@ -164,50 +165,50 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
         <div class="att-head"><span class="att-n">Attempt 11</span><span class="verdict no">Rejected</span></div>
         <h3>A12-v5 &middot; Twice the training data</h3>
         <p><strong>Idea:</strong> small data limits models, so train on every gap-up breakout (10,324, including stocks that did not hold their gap) and still trade only gap-up holders.</p>
-        <dl class="att-res"><div><dt>2019–2024</dt><dd class="neg">−$3.11 per $1,000 &middot; +$1.88 at 0.25%</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
+        <dl class="att-res"><div><dt>2019–2024</dt><dd class="neg">−$1.55 per $1,000 &middot; +$0.94 at 0.25%</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
         <p class="att-why"><strong>Why:</strong> overall ranking improved slightly, but the few top-scored breakouts that are traded did not: gap-ups that failed to hold behave differently, so they add examples but not the right ones. <strong>Lesson:</strong> for one trade a day, only the top picks count.</p>
       </article>
       <article class="card attempt" id="att10">
         <div class="att-head"><span class="att-n">Attempt 10</span><span class="verdict no">Rejected</span></div>
         <h3>A12-v4 &middot; Market-heat gate</h3>
         <p><strong>Idea:</strong> research says intraday edges concentrate in hot, uncertain markets, so trade breakouts only on days when the recent number of breakouts is above (or below) normal, chosen on validation years.</p>
-        <dl class="att-res"><div><dt>2019–2024</dt><dd class="neg">−$6.85 per $1,000</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
+        <dl class="att-res"><div><dt>2019–2024</dt><dd class="neg">−$3.42 per $1,000</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
         <p class="att-why"><strong>Why:</strong> the gate that looked best in each validation year did not carry over to the next year. <strong>Lesson:</strong> with a few hundred trades a year, every extra rule chosen on validation adds noise.</p>
       </article>
       <article class="card attempt" id="att9">
         <div class="att-head"><span class="att-n">Attempt 9</span><span class="verdict no">Rejected</span></div>
         <h3>A12-v3 &middot; Volatility-aware stop</h3>
         <p><strong>Idea:</strong> following the breakout literature, choose the stop on each validation year from fixed levels or levels scaled to the stock's own daily move.</p>
-        <dl class="att-res"><div><dt>2019–2024</dt><dd class="neg">−$1.81 per $1,000 &middot; +$3.19 at 0.25%</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
+        <dl class="att-res"><div><dt>2019–2024</dt><dd class="neg">−$0.91 per $1,000 &middot; +$1.59 at 0.25%</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
         <p class="att-why"><strong>Why:</strong> validation years picked wide stops or none (tight stops cut winners in these volatile stocks), but that did not raise the average: the best breakouts still gain about +0.8% before costs, just under a 1% round trip. <strong>Next:</strong> a change of view after two tweaks without progress.</p>
       </article>
       <article class="card attempt" id="att8">
         <div class="att-head"><span class="att-n">Attempt 8</span><span class="verdict no">Rejected (closest yet)</span></div>
         <h3>A12-v2 &middot; Gap-up holders, stricter selection</h3>
         <p><strong>Idea:</strong> A12 trades only the breakouts it is most sure of; how strict to be (top 50%, 25% or 10%) is chosen on each validation year, never on the test year.</p>
-        <dl class="att-res"><div><dt>2019–2024</dt><dd class="neg">−$1.64 per $1,000 &middot; +$3.36 at 0.25%</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
-        <p class="att-why"><strong>Why:</strong> stricter selection raised the gain before costs from +0.61% to +0.84% per trade, and the improvement over taking every breakout stayed reliable (+$10.37). But 2022 carries the average; in other years even the best breakouts gain less than a 1% round trip. <strong>Next:</strong> a stop scaled to each stock's own volatility, as in the breakout literature, instead of a fixed −3%.</p>
+        <dl class="att-res"><div><dt>2019–2024</dt><dd class="neg">−$0.82 per $1,000 &middot; +$1.68 at 0.25%</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
+        <p class="att-why"><strong>Why:</strong> stricter selection raised the gain before costs from +0.61% to +0.84% per trade, and the improvement over taking every breakout stayed reliable (+$5.18). But 2022 carries the average; in other years even the best breakouts gain less than a 1% round trip. <strong>Next:</strong> a stop scaled to each stock's own volatility, as in the breakout literature, instead of a fixed −3%.</p>
       </article>
       <article class="card attempt" id="att7">
         <div class="att-head"><span class="att-n">Attempt 7</span><span class="verdict no">Rejected</span></div>
         <h3>A14 &middot; Tail-Asymmetry Transformer</h3>
         <p><strong>Idea:</strong> for one trade a day only the extreme matters, so A14 predicts the chance of a 2%+ rise and of a 2%+ fall in the next hour and trades the difference; volatility raises both, so it should cancel.</p>
-        <dl class="att-res"><div><dt>2019–2024</dt><dd class="neg">−$5.27 per $1,000</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
+        <dl class="att-res"><div><dt>2019–2024</dt><dd class="neg">−$2.63 per $1,000</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
         <p class="att-why"><strong>Why:</strong> on real prices, the most confident moments of every model so far (A11, A13, A14) rise at most +0.2% in the next hour, and all of them still lean to quiet moments. <strong>Lesson:</strong> seven attempts agree that stocks running 10%+ at the open have no long edge above costs; the loop moves to gap-up holders (attempt 5) and other stock sets.</p>
       </article>
       <article class="card attempt" id="att6">
         <div class="att-head"><span class="att-n">Attempt 6</span><span class="verdict no" id="a13badge">Rejected</span></div>
         <h3>A13 &middot; Pretrained candle transformer ("mini-Kronos")</h3>
         <p><strong>Idea:</strong> research shows generic forecasting models fail on stock returns, but models first pre-trained on market data do much better (Kronos, trained on 12 billion candles). Its weights are not reachable here, so A13 pre-trains its own: it first learns how candles behave from 50,000 unlabelled stock-days (2016–2018), then learns A11's honest timing task.</p>
-        <dl class="att-res" id="a13res"><div><dt>2019–2024</dt><dd class="neg">−$7.80 per $1,000</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
+        <dl class="att-res" id="a13res"><div><dt>2019–2024</dt><dd class="neg">−$3.90 per $1,000</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
         <p class="att-why" id="a13why"><strong>Why:</strong> pre-training made the model rank ordinary moments slightly better in every year, but the trade uses only the rarest, strongest moments of stocks that ran 10%+, which look little like the broad stocks it pre-trained on; those picks got worse (+0.22% before costs vs A11's +0.76%). <strong>Lesson:</strong> judge and train models on how their top picks perform, not on average ranking.</p>
       </article>
       <article class="card attempt" id="att5">
         <div class="att-head"><span class="att-n">Attempt 5</span><span class="verdict no">Rejected</span></div>
         <h3>A12 &middot; Breakout quality on gap-up holders</h3>
         <p><strong>Idea:</strong> the one stock set with momentum: gap-ups of 10% or more that hold their gap and break their opening range. A transformer reads the minutes up to the breakout and judges whether it is a good one.</p>
-        <dl class="att-res"><div><dt>2019–2024</dt><dd class="neg">−$3.94 per $1,000 &middot; +$1.06 at 0.25%</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
-        <p class="att-why"><strong>Why:</strong> the model clearly separates good breakouts from bad ones: it gains +$8.08 per trade over taking every breakout, the first improvement over a baseline that is statistically reliable, and its ranking is twice as strong as on stocks that ran 10%+. But the average breakout lost money before costs in 2019–2024, so picking the better half only reaches +0.61%. <strong>Next:</strong> trade only the breakouts it is most sure of.</p>
+        <dl class="att-res"><div><dt>2019–2024</dt><dd class="neg">−$1.97 per $1,000 &middot; +$0.53 at 0.25%</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
+        <p class="att-why"><strong>Why:</strong> the model clearly separates good breakouts from bad ones: it gains +$4.04 per trade over taking every breakout, the first improvement over a baseline that is statistically reliable, and its ranking is twice as strong as on stocks that ran 10%+. But the average breakout lost money before costs in 2019–2024, so picking the better half only reaches +0.61%. <strong>Next:</strong> trade only the breakouts it is most sure of.</p>
       </article>
       <article class="card attempt" id="att4">
         <div class="att-head"><span class="att-n">Attempt 4</span><span class="verdict no">Rejected</span></div>
@@ -220,27 +221,27 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
         <div class="att-head"><span class="att-n">Attempt 3</span><span class="verdict no" id="a11badge">Rejected</span></div>
         <h3>A11 &middot; Tradeable-Price Timing Transformer</h3>
         <p><strong>Idea:</strong> A10's lesson applied to the data itself: every training label uses prices a trader would really get, and a moment counts only if the stock traded at least 50 times in the 5 minutes before it. The model also sees how actively each bar traded.</p>
-        <dl class="att-res" id="a11res"><div><dt>2019–2024</dt><dd class="neg">−$2.45 per $1,000</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
+        <dl class="att-res" id="a11res"><div><dt>2019–2024</dt><dd class="neg">−$1.23 per $1,000</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
         <p class="att-why" id="a11why"><strong>Why:</strong> with honest prices, the recorded and real results agree exactly, and they show the true size of the timing edge: about +0.7% per trade before costs, against a 1% round trip. Even the most confident moments gain under +0.8%. <strong>Lesson:</strong> a better model of the same stocks cannot close this gap; the next attempt changes the stocks.</p>
       </article>
       <article class="card attempt">
         <div class="att-head"><span class="att-n">Attempt 2</span><span class="verdict no">Failed unseen test</span></div>
         <h3>A10 &middot; Meta-Labeled Timing Transformer</h3>
         <p><strong>Idea:</strong> the transformer proposes trades; a second model, trained only on earlier years, judges which proposals pay after costs (price level, gap, opening run, distance from VWAP, whether the stock is trading).</p>
-        <dl class="att-res"><div><dt>2019–2024</dt><dd class="pos">+$2.76 per $1,000 &middot; M1</dd></div><div><dt>Unseen</dt><dd class="neg">−$9.80 &middot; 0 / 8 quarters</dd></div></dl>
+        <dl class="att-res"><div><dt>2019–2024</dt><dd class="pos">+$1.38 per $1,000 &middot; M1</dd></div><div><dt>Unseen</dt><dd class="neg">−$4.90 &middot; 0 / 8 quarters</dd></div></dl>
         <p class="att-why"><strong>Why:</strong> most of the paper gain came from thinly traded moments, where the recorded price lags and then jumps when the next trade prints. It looks like a predictable rise but cannot be bought. <strong>Lesson:</strong> build training labels from real, executable prices.</p>
       </article>
       <article class="card attempt">
         <div class="att-head"><span class="att-n">Attempt 1</span><span class="verdict no">Rejected (0.03% short)</span></div>
         <h3>A9-v2 &middot; A9 with a direction-only entry</h3>
         <p><strong>Idea:</strong> keep A9's multi-horizon model and its "sell when the outlook turns negative" exit, but buy on the 60-minute direction-only score with A8's first-signal rule.</p>
-        <dl class="att-res"><div><dt>2019–2024</dt><dd class="neg">−$0.34 per $1,000</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
-        <p class="att-why"><strong>Why:</strong> fixing the buy rule alone moved A9 from −$9.50 to −$0.34. Trades started 10:00–11:00 lost and losers were held longer than winners. <strong>Lesson:</strong> decision rules matter as much as the model.</p>
+        <dl class="att-res"><div><dt>2019–2024</dt><dd class="neg">−$0.17 per $1,000</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
+        <p class="att-why"><strong>Why:</strong> fixing the buy rule alone moved A9 from −$4.75 to −$0.17. Trades started 10:00–11:00 lost and losers were held longer than winners. <strong>Lesson:</strong> decision rules matter as much as the model.</p>
       </article>
       <article class="card attempt muted-card">
         <div class="att-head"><span class="att-n">Before the loop</span><span class="verdict base">Reference</span></div>
         <h3>A8 and A9 (cycles 6 and 7)</h3>
-        <p>A8 changed the question to <em>when</em> to buy: −$1.79 per trade (real fills). A9 added "when to sell" but ranked on volatility-scaled gains: −$9.50. Details in <a href="#history">earlier cycles</a>.</p>
+        <p>A8 changed the question to <em>when</em> to buy: −$0.90 per trade (real fills). A9 added "when to sell" but ranked on volatility-scaled gains: −$4.75. Details in <a href="#history">earlier cycles</a>.</p>
       </article>
     </div>
   </section>
@@ -252,7 +253,7 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
       <li><b>Models learn size, not direction.</b>Price history, multi-day context and news mostly tell how much a stock will move, not which way.</li>
       <li><b>Ask "when", not only "which".</b>Choosing the moment to buy (A8) cut the loss per trade by about 80%.</li>
       <li><b>Use direction-only targets.</b>Predict the return divided by the stock's own volatility; never rank trades on anything multiplied by volatility (A9).</li>
-      <li><b>The decision rule matters as much as the model.</b>Fixing only A9's buy rule moved it from −$9.50 to −$0.34 per trade.</li>
+      <li><b>The decision rule matters as much as the model.</b>Fixing only A9's buy rule moved it from −$4.75 to −$0.17 per trade.</li>
       <li><b>A second opinion helps.</b>A judge trained on past proposals picks better trades (A10), but only if what it learns from is real.</li>
       <li><b>Only real prices count.</b>Thinly traded moments show lagging prices that look like predictable rises; labels and tests must use executable prices (A10 unseen test).</li>
       <li><b>Research agrees, and points at costs.</b>Published intraday strategies that work (e.g. opening-range breakouts on "stocks in play") trade liquid stocks at commission-level costs; replications that charge spreads find the edge disappears. Full review: <code>research/LITERATURE_REVIEW.md</code>.</li>
@@ -306,15 +307,15 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
       <h3>The trade and the test</h3>
       <p>Long at the 10:00 open, +5% target, −3% stop, out by 10:30, on stocks that ran 10%+ in the first 15 minutes. The design was chosen on 2016–2018 only. Each model was trained on earlier years and tested on 2019–2024, one year at a time.</p>
       <div class="table-scroll"><table>
-        <thead><tr><th>Model</th><th>Trades</th><th>Per $1,000 at 0.5% cost</th><th>Profitable years</th><th>2019</th><th>2020</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th></tr></thead>
+        <thead><tr><th>Model</th><th>Trades</th><th>Per $500 trade at 0.5% cost</th><th>Profitable years</th><th>2019</th><th>2020</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th></tr></thead>
         <tbody>
-          <tr><td><strong>A1</strong> same-morning transformer</td><td class="num">1,759</td><td class="num neg">−$9.39</td><td class="num">0 / 6</td><td class="num neg">−9.9</td><td class="num neg">−8.7</td><td class="num neg">−10.7</td><td class="num neg">−13.6</td><td class="num neg">−9.0</td><td class="num neg">−10.2</td></tr>
-          <tr><td>B0 same, without the cross-stock layer</td><td class="num">2,500</td><td class="num neg">−$9.32</td><td class="num">0 / 6</td><td class="num neg">−5.0</td><td class="num neg">−10.0</td><td class="num neg">−15.6</td><td class="num neg">−10.8</td><td class="num neg">−10.2</td><td class="num neg">−8.6</td></tr>
-          <tr><td>Gradient boosting</td><td class="num">1,757</td><td class="num neg">−$8.89</td><td class="num">0 / 6</td><td class="num neg">−7.0</td><td class="num neg">−10.9</td><td class="num neg">−10.2</td><td class="num neg">−12.1</td><td class="num neg">−1.2</td><td class="num neg">−9.2</td></tr>
-          <tr><td>Trade every stock</td><td class="num">14,329</td><td class="num neg">−$11.49</td><td class="num">0 / 6</td><td class="num neg">−9.4</td><td class="num neg">−12.1</td><td class="num neg">−13.6</td><td class="num neg">−12.2</td><td class="num neg">−10.4</td><td class="num neg">−11.0</td></tr>
+          <tr><td><strong>A1</strong> same-morning transformer</td><td class="num">1,759</td><td class="num neg">−$4.70</td><td class="num">0 / 6</td><td class="num neg">−5.0</td><td class="num neg">−4.3</td><td class="num neg">−5.3</td><td class="num neg">−6.8</td><td class="num neg">−4.5</td><td class="num neg">−5.1</td></tr>
+          <tr><td>B0 same, without the cross-stock layer</td><td class="num">2,500</td><td class="num neg">−$4.66</td><td class="num">0 / 6</td><td class="num neg">−2.5</td><td class="num neg">−5.0</td><td class="num neg">−7.8</td><td class="num neg">−5.4</td><td class="num neg">−5.1</td><td class="num neg">−4.3</td></tr>
+          <tr><td>Gradient boosting</td><td class="num">1,757</td><td class="num neg">−$4.45</td><td class="num">0 / 6</td><td class="num neg">−3.5</td><td class="num neg">−5.5</td><td class="num neg">−5.1</td><td class="num neg">−6.0</td><td class="num neg">−0.6</td><td class="num neg">−4.6</td></tr>
+          <tr><td>Trade every stock</td><td class="num">14,329</td><td class="num neg">−$5.75</td><td class="num">0 / 6</td><td class="num neg">−4.7</td><td class="num neg">−6.0</td><td class="num neg">−6.8</td><td class="num neg">−6.1</td><td class="num neg">−5.2</td><td class="num neg">−5.5</td></tr>
         </tbody>
       </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Yearly columns are net per $1,000 trade at 0.5% cost. A1 minus B0 per trade: 95% interval −1.42 to +1.29, which includes zero.</p>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Yearly columns are net per $500 trade at 0.5% cost. A1 minus B0 per trade: 95% interval −0.71 to +0.65, which includes zero.</p>
     </div>
   </div>
   <div class="dsec" id="why">
@@ -325,14 +326,14 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
         <ol class="why">
           <li><strong>The models learn how much a stock will move, not which way.</strong> Ranked by expected profit they pick quiet stocks that lose a little; ranked by chance of hitting the target they pick volatile ones that also hit the stop more.</li>
           <li><strong>The cross-stock layer had nothing to work with.</strong> A1's rankings within a morning matched the base model's (correlation 0.93). Both found the morning's best stock less often than random.</li>
-          <li><strong>The money is there, the inputs can't see it.</strong> A perfect top-10% pick makes +$39.60 per trade; the models' picks gained only about 0.1% before a 1% round-trip cost.</li>
+          <li><strong>The money is there, the inputs can't see it.</strong> A perfect top-10% pick makes +$19.80 per trade; the models' picks gained only about 0.1% before a 1% round-trip cost.</li>
           <li><strong>The trade-count rule was unstable</strong> (17 to 1,180 trades a year), so the next test picks the top stock each morning.</li>
         </ol>
       </div>
       <div class="card">
         <h3>What it changes</h3>
         <p>A smarter architecture cannot create direction information that isn't in the inputs. The next version therefore changes the <strong>information</strong>, not the model: each stock's multi-day history.</p>
-        <p style="margin-bottom:0">One condition did hold up: stocks that had already faded at least 10% from their high lost much less (−$4.5 vs −$10.1 per trade), so it stays part of the design.</p>
+        <p style="margin-bottom:0">One condition did hold up: stocks that had already faded at least 10% from their high lost much less (−$2.25 vs −$5.05 per trade), so it stays part of the design.</p>
       </div>
     </div>
   </div>
@@ -345,15 +346,15 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
     <div class="card" style="margin-top:16px">
       <h3>With vs without multi-day context (top stock each morning, 2019–2024)</h3>
       <div class="table-scroll"><table>
-        <thead><tr><th>Model</th><th>Per $1,000 at 0.5% cost</th><th>Win rate</th><th>Better than without context</th><th>Typical week</th><th>Weeks ≥ 20%</th></tr></thead>
+        <thead><tr><th>Model</th><th>Per $500 trade at 0.5% cost</th><th>Win rate</th><th>Better than without context</th><th>Typical week (account)</th><th>Weeks ≥ 20%</th></tr></thead>
         <tbody>
-          <tr><td>Base transformer</td><td class="num neg">−$9.60</td><td class="num">17.3%</td><td class="num">—</td><td class="num neg">−4.5%</td><td class="num">0%</td></tr>
-          <tr><td><strong>Base transformer + context</strong></td><td class="num neg">−$9.82</td><td class="num">15.4%</td><td class="num">2 of 6 years</td><td class="num neg">−5.0%</td><td class="num">0%</td></tr>
-          <tr><td>Gradient boosting</td><td class="num neg">−$9.69</td><td class="num">26.3%</td><td class="num">—</td><td class="num neg">−4.5%</td><td class="num">0.3%</td></tr>
-          <tr><td><strong>Gradient boosting + context</strong></td><td class="num neg">−$9.65</td><td class="num">25.8%</td><td class="num">3 of 6 years</td><td class="num neg">−4.7%</td><td class="num">0%</td></tr>
+          <tr><td>Base transformer</td><td class="num neg">−$4.80</td><td class="num">17.3%</td><td class="num">—</td><td class="num neg">−0.22%</td><td class="num">0%</td></tr>
+          <tr><td><strong>Base transformer + context</strong></td><td class="num neg">−$4.91</td><td class="num">15.4%</td><td class="num">2 of 6 years</td><td class="num neg">−0.25%</td><td class="num">0%</td></tr>
+          <tr><td>Gradient boosting</td><td class="num neg">−$4.84</td><td class="num">26.3%</td><td class="num">—</td><td class="num neg">−0.21%</td><td class="num">0%</td></tr>
+          <tr><td><strong>Gradient boosting + context</strong></td><td class="num neg">−$4.83</td><td class="num">25.8%</td><td class="num">3 of 6 years</td><td class="num neg">−0.22%</td><td class="num">0%</td></tr>
         </tbody>
       </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Week figures assume the whole account in each trade, one trade per morning, compounding. Differences with vs without context: 95% intervals −1.47 to +1.07 and −1.34 to +1.44 per trade, both including zero.</p>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Week figures: the $10,000 account with 5% per trade, one trade per morning, compounding. Differences with vs without context: 95% intervals −$0.73 to +$0.54 and −$0.67 to +$0.72 per $500 trade, both including zero.</p>
     </div>
     <div class="card" style="margin-top:16px">
       <h3>Why</h3>
@@ -371,15 +372,15 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
       <div class="card">
         <h3>Does the kind of news matter?</h3>
         <div class="table-scroll"><table>
-          <thead><tr><th>Headline type</th><th>Stocks</th><th>Per $1,000 trade</th><th>Win rate</th></tr></thead>
+          <thead><tr><th>Headline type</th><th>Stocks</th><th>Per $500 trade</th><th>Win rate</th></tr></thead>
           <tbody>
-            <tr><td>No news</td><td class="num">9,516</td><td class="num neg">−$6.83</td><td class="num">23.5%</td></tr>
-            <tr><td>Any news</td><td class="num">7,904</td><td class="num neg">−$6.15</td><td class="num">23.9%</td></tr>
-            <tr><td>Earnings</td><td class="num">2,768</td><td class="num neg">−$5.40</td><td class="num">17.3%</td></tr>
-            <tr><td>Clinical / FDA</td><td class="num">1,237</td><td class="num neg">−$8.05</td><td class="num">24.4%</td></tr>
-            <tr><td>Deal / contract</td><td class="num">565</td><td class="num neg">−$7.82</td><td class="num">25.7%</td></tr>
-            <tr><td>Dilution / offering</td><td class="num">298</td><td class="num neg">−$3.24</td><td class="num">28.2%</td></tr>
-            <tr><td>Theme (AI, crypto)</td><td class="num">191</td><td class="num neg">−$1.20</td><td class="num">36.6%</td></tr>
+            <tr><td>No news</td><td class="num">9,516</td><td class="num neg">−$3.42</td><td class="num">23.5%</td></tr>
+            <tr><td>Any news</td><td class="num">7,904</td><td class="num neg">−$3.08</td><td class="num">23.9%</td></tr>
+            <tr><td>Earnings</td><td class="num">2,768</td><td class="num neg">−$2.70</td><td class="num">17.3%</td></tr>
+            <tr><td>Clinical / FDA</td><td class="num">1,237</td><td class="num neg">−$4.03</td><td class="num">24.4%</td></tr>
+            <tr><td>Deal / contract</td><td class="num">565</td><td class="num neg">−$3.91</td><td class="num">25.7%</td></tr>
+            <tr><td>Dilution / offering</td><td class="num">298</td><td class="num neg">−$1.62</td><td class="num">28.2%</td></tr>
+            <tr><td>Theme (AI, crypto)</td><td class="num">191</td><td class="num neg">−$0.60</td><td class="num">36.6%</td></tr>
           </tbody>
         </table></div>
         <p style="font-size:13px;color:var(--muted);margin:12px 0 0">All D1 stocks 2016–2024, 0.25% cost. No headline type is profitable on its own.</p>
@@ -423,7 +424,7 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
     <h2>Cycle 5 result: a new architecture, A7</h2>
     <div class="card" style="border-left:4px solid var(--warn)">
       <div class="eyebrow" style="margin-bottom:8px">Verdict</div>
-      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0">A7, a Direction-Disentangled Transformer, splits what it learns into a "direction" channel and a "move size" channel, with an adversary that keeps move size out of the direction channel. It was <strong>rejected</strong>: −$10.41 per trade vs −$9.60 for the base model, better in only 2 of 6 years.</p>
+      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0">A7, a Direction-Disentangled Transformer, splits what it learns into a "direction" channel and a "move size" channel, with an adversary that keeps move size out of the direction channel. It was <strong>rejected</strong>: −$5.21 per trade vs −$4.80 for the base model, better in only 2 of 6 years.</p>
     </div>
     <div class="card" style="margin-top:16px">
       <h3>Why, and what it taught</h3>
@@ -438,7 +439,7 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
     <h2>Cycle 6 result: a change of view, A8</h2>
     <div class="card" style="border-left:4px solid var(--warn)">
       <div class="eyebrow" style="margin-bottom:8px">Verdict</div>
-      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0">A8, the Intraday Timing Transformer, stops asking which stock to buy at 10:00 and asks, every five minutes through the day, <em>is now a good moment to buy this stock for the next 30 minutes?</em> It is the <strong>best long model so far</strong>: −$1.79 per $1,000 trade at 0.5% cost and <strong>+$3.21 at 0.25%</strong>, against about −$9 to −$10 for every earlier model. It was still <strong>rejected</strong> by its plan: not reliably better than gradient boosting on the same task, and not yet break even at 0.5%.</p>
+      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0">A8, the Intraday Timing Transformer, stops asking which stock to buy at 10:00 and asks, every five minutes through the day, <em>is now a good moment to buy this stock for the next 30 minutes?</em> It is the <strong>best long model so far</strong>: −$0.90 per $1,000 trade at 0.5% cost and <strong>+$1.60 at 0.25%</strong>, against about −$4.5 to −$5 for every earlier model. It was still <strong>rejected</strong> by its plan: not reliably better than gradient boosting on the same task, and not yet break even at 0.5%.</p>
     </div>
     <div class="grid g2" style="margin-top:16px">
       <div class="card">
@@ -467,17 +468,17 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
     <h2>Cycle 7 result: when to buy <em>and</em> when to sell, A9</h2>
     <div class="card" style="border-left:4px solid var(--warn)">
       <div class="eyebrow" style="margin-bottom:8px">Verdict</div>
-      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0">A9, a Multi-Horizon Optimal-Stopping Transformer, predicts how much a stock will rise over five horizons (15 minutes to the close), buys where the best outlook is strongest, and sells when its own re-estimate turns negative. It was <strong>rejected</strong>: −$9.50 per $1,000 trade at 0.5% cost, worse than A8's −$1.79.</p>
+      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0">A9, a Multi-Horizon Optimal-Stopping Transformer, predicts how much a stock will rise over five horizons (15 minutes to the close), buys where the best outlook is strongest, and sells when its own re-estimate turns negative. It was <strong>rejected</strong>: −$4.75 per $1,000 trade at 0.5% cost, worse than A8's −$0.90.</p>
     </div>
     <div class="grid g2" style="margin-top:16px">
       <div class="card">
         <h3>Why it failed</h3>
-        <p>The buy decision ranked moments by expected gain in percent: the prediction multiplied by the stock's volatility and by the time left in the day. Both are largest for volatile stocks early in the morning, so 57% of trades started before 10:00, right in the fade, and lost about $16 each. Gradient boosting with the same rule failed the same way, so the rule, not the network, was the problem.</p>
+        <p>The buy decision ranked moments by expected gain in percent: the prediction multiplied by the stock's volatility and by the time left in the day. Both are largest for volatile stocks early in the morning, so 57% of trades started before 10:00, right in the fade, and lost about $8 each. Gradient boosting with the same rule failed the same way, so the rule, not the network, was the problem.</p>
         <p style="margin-bottom:0"><strong>Lesson:</strong> never rank trades on anything multiplied by volatility or time left. Rank on the direction-only score.</p>
       </div>
       <div class="card">
         <h3>What worked</h3>
-        <p>The predictions themselves were good. The 60-minute outlook's top 0.1% of moments rose <strong>+1.83%</strong> before costs, more than A8's best (+1.67% in 30 minutes). Re-scoring while holding beat a fixed exit by about $3.90 per trade.</p>
+        <p>The predictions themselves were good. The 60-minute outlook's top 0.1% of moments rose <strong>+1.83%</strong> before costs, more than A8's best (+1.67% in 30 minutes). Re-scoring while holding beat a fixed exit by about $1.95 per trade.</p>
         <p style="margin-bottom:0"><strong>Next (A9-v2):</strong> keep the model and the re-scoring exit, and buy on the 60-minute direction-only score with A8's rule.</p>
       </div>
     </div>
@@ -494,27 +495,27 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
     </div>
     <div class="card" style="margin-top:16px">
       <div class="table-scroll"><table>
-        <thead><tr><th>Model</th><th>Inputs</th><th>Per $1,000 trade</th><th>Win rate</th><th>vs its baseline (95% interval)</th><th>Years better</th><th>Milestone</th></tr></thead>
+        <thead><tr><th>Model</th><th>Inputs</th><th>Per $500 trade</th><th>Win rate</th><th>vs its baseline (95% interval)</th><th>Years better</th><th>Milestone</th></tr></thead>
         <tbody>
-          <tr><td><strong>A10 Meta-Labeled Timing Transformer*</strong></td><td>Whole day + judge</td><td class="num pos">+$2.76</td><td class="num">57.0%</td><td class="num">+3.10 vs A9-v2 (−2.84 to +9.11)</td><td class="num">5 / 6</td><td><span class="verdict no">M1 dev only; failed unseen</span></td></tr>
-          <tr><td><strong>A9-v2 direction-only entry*</strong></td><td>Whole day, 5 horizons</td><td class="num neg">−$0.34</td><td class="num">53.1%</td><td class="num">+1.45 vs A8 (−4.13 to +6.88)</td><td class="num">4 / 6</td><td><span class="verdict no">none</span></td></tr>
-          <tr><td><strong>A8 Intraday Timing Transformer*</strong></td><td>Whole day, 5-minute bars</td><td class="num neg">−$1.79</td><td class="num">47.6%</td><td class="num">+3.71 vs boosting (−0.98 to +8.31)</td><td class="num">3 / 6</td><td><span class="verdict no">none</span></td></tr>
-          <tr><td>A9 Optimal-Stopping, dynamic exit*</td><td>Whole day, 5 horizons</td><td class="num neg">−$9.50</td><td class="num">46.3%</td><td class="num">−7.71 vs A8 (−14.28 to −1.17)</td><td class="num">2 / 6</td><td><span class="verdict no">none</span></td></tr>
-          <tr><td>Gradient boosting, A8 task*</td><td>Whole day, 5-minute bars</td><td class="num neg">−$5.51</td><td class="num">43.4%</td><td class="num">baseline</td><td class="num"></td><td><span class="verdict no">none</span></td></tr>
-          <tr><td>A1 same-morning attention</td><td>First 30 min + day context</td><td class="num neg">−$9.11</td><td class="num">16.9%</td><td class="num">+0.49 (−0.58 to +1.57)</td><td class="num">4 / 6</td><td><span class="verdict no">none</span></td></tr>
-          <tr><td>A6 transformer + news</td><td>+ news</td><td class="num neg">−$9.34</td><td class="num">16.8%</td><td class="num">+0.26 (−0.88 to +1.40)</td><td class="num">4 / 6</td><td><span class="verdict no">none</span></td></tr>
-          <tr><td>B0 base transformer</td><td>First 30 min + day context</td><td class="num neg">−$9.60</td><td class="num">17.3%</td><td class="num">baseline</td><td class="num"></td><td><span class="verdict no">none</span></td></tr>
-          <tr><td>Gradient boosting + context (A5)</td><td>+ 60-day history</td><td class="num neg">−$9.65</td><td class="num">25.8%</td><td class="num">+0.04 (−1.34 to +1.44)</td><td class="num">3 / 6</td><td><span class="verdict no">none</span></td></tr>
-          <tr><td>Gradient boosting</td><td>First 30 min + day context</td><td class="num neg">−$9.69</td><td class="num">26.3%</td><td class="num">baseline</td><td class="num"></td><td><span class="verdict no">none</span></td></tr>
-          <tr><td>A5 transformer + context</td><td>+ 60-day history</td><td class="num neg">−$9.82</td><td class="num">15.4%</td><td class="num">−0.22 (−1.50 to +1.05)</td><td class="num">2 / 6</td><td><span class="verdict no">none</span></td></tr>
-          <tr><td>A7 + news</td><td>+ news</td><td class="num neg">−$9.96</td><td class="num">17.3%</td><td class="num">−0.62 (−2.02 to +0.84)</td><td class="num">2 / 6</td><td><span class="verdict no">none</span></td></tr>
-          <tr><td>Gradient boosting + news (A6)</td><td>+ news</td><td class="num neg">−$9.97</td><td class="num">26.0%</td><td class="num">−0.28 (−1.37 to +0.82)</td><td class="num">4 / 6</td><td><span class="verdict no">none</span></td></tr>
-          <tr><td>A7 Direction-Disentangled</td><td>First 30 min + day context</td><td class="num neg">−$10.41</td><td class="num">17.7%</td><td class="num">−0.81 (−2.32 to +0.71)</td><td class="num">2 / 6</td><td><span class="verdict no">none</span></td></tr>
-          <tr><td>A7 + context</td><td>+ 60-day history</td><td class="num neg">−$10.45</td><td class="num">14.9%</td><td class="num">−0.63 (−2.02 to +0.76)</td><td class="num">3 / 6</td><td><span class="verdict no">none</span></td></tr>
-          <tr><td><em>Trade every stock (no model)</em></td><td>—</td><td class="num neg">−$11.49</td><td class="num">24.1%</td><td></td><td></td><td><span class="verdict no">none</span></td></tr>
+          <tr><td><strong>A10 Meta-Labeled Timing Transformer*</strong></td><td>Whole day + judge</td><td class="num pos">+$1.38</td><td class="num">57.0%</td><td class="num">+1.55 vs A9-v2 (−1.42 to +4.55)</td><td class="num">5 / 6</td><td><span class="verdict no">M1 dev only; failed unseen</span></td></tr>
+          <tr><td><strong>A9-v2 direction-only entry*</strong></td><td>Whole day, 5 horizons</td><td class="num neg">−$0.17</td><td class="num">53.1%</td><td class="num">+0.72 vs A8 (−2.06 to +3.44)</td><td class="num">4 / 6</td><td><span class="verdict no">none</span></td></tr>
+          <tr><td><strong>A8 Intraday Timing Transformer*</strong></td><td>Whole day, 5-minute bars</td><td class="num neg">−$0.90</td><td class="num">47.6%</td><td class="num">+1.85 vs boosting (−0.49 to +4.16)</td><td class="num">3 / 6</td><td><span class="verdict no">none</span></td></tr>
+          <tr><td>A9 Optimal-Stopping, dynamic exit*</td><td>Whole day, 5 horizons</td><td class="num neg">−$4.75</td><td class="num">46.3%</td><td class="num">−3.85 vs A8 (−7.14 to −0.58)</td><td class="num">2 / 6</td><td><span class="verdict no">none</span></td></tr>
+          <tr><td>Gradient boosting, A8 task*</td><td>Whole day, 5-minute bars</td><td class="num neg">−$2.75</td><td class="num">43.4%</td><td class="num">baseline</td><td class="num"></td><td><span class="verdict no">none</span></td></tr>
+          <tr><td>A1 same-morning attention</td><td>First 30 min + day context</td><td class="num neg">−$4.55</td><td class="num">16.9%</td><td class="num">+0.24 (−0.29 to +0.79)</td><td class="num">4 / 6</td><td><span class="verdict no">none</span></td></tr>
+          <tr><td>A6 transformer + news</td><td>+ news</td><td class="num neg">−$4.67</td><td class="num">16.8%</td><td class="num">+0.13 (−0.44 to +0.70)</td><td class="num">4 / 6</td><td><span class="verdict no">none</span></td></tr>
+          <tr><td>B0 base transformer</td><td>First 30 min + day context</td><td class="num neg">−$4.80</td><td class="num">17.3%</td><td class="num">baseline</td><td class="num"></td><td><span class="verdict no">none</span></td></tr>
+          <tr><td>Gradient boosting + context (A5)</td><td>+ 60-day history</td><td class="num neg">−$4.83</td><td class="num">25.8%</td><td class="num">+0.02 (−0.67 to +0.72)</td><td class="num">3 / 6</td><td><span class="verdict no">none</span></td></tr>
+          <tr><td>Gradient boosting</td><td>First 30 min + day context</td><td class="num neg">−$4.84</td><td class="num">26.3%</td><td class="num">baseline</td><td class="num"></td><td><span class="verdict no">none</span></td></tr>
+          <tr><td>A5 transformer + context</td><td>+ 60-day history</td><td class="num neg">−$4.91</td><td class="num">15.4%</td><td class="num">−0.11 (−0.75 to +0.53)</td><td class="num">2 / 6</td><td><span class="verdict no">none</span></td></tr>
+          <tr><td>A7 + news</td><td>+ news</td><td class="num neg">−$4.98</td><td class="num">17.3%</td><td class="num">−0.31 (−1.01 to +0.42)</td><td class="num">2 / 6</td><td><span class="verdict no">none</span></td></tr>
+          <tr><td>Gradient boosting + news (A6)</td><td>+ news</td><td class="num neg">−$4.99</td><td class="num">26.0%</td><td class="num">−0.14 (−0.69 to +0.41)</td><td class="num">4 / 6</td><td><span class="verdict no">none</span></td></tr>
+          <tr><td>A7 Direction-Disentangled</td><td>First 30 min + day context</td><td class="num neg">−$5.21</td><td class="num">17.7%</td><td class="num">−0.41 (−1.16 to +0.35)</td><td class="num">2 / 6</td><td><span class="verdict no">none</span></td></tr>
+          <tr><td>A7 + context</td><td>+ 60-day history</td><td class="num neg">−$5.22</td><td class="num">14.9%</td><td class="num">−0.32 (−1.01 to +0.38)</td><td class="num">3 / 6</td><td><span class="verdict no">none</span></td></tr>
+          <tr><td><em>Trade every stock (no model)</em></td><td>—</td><td class="num neg">−$5.75</td><td class="num">24.1%</td><td></td><td></td><td><span class="verdict no">none</span></td></tr>
         </tbody>
       </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Every model beats trading every stock by about $1–2.40 per trade, mostly by avoiding the most volatile stocks. No model is yet reliably better than the model it changes (every interval includes zero). A10 was the first to reach M1 on 2019–2024 but failed on the unseen data (−$9.80 per trade, 2025–2026). *Timing-model rows use their own trade (first strong moment of the day; A8 sells after 30 minutes, A9 and A10 when the outlook turns negative) at real fills. This table is refreshed after every new model.</p>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Every model beats trading every stock by about $0.50–1.20 per trade, mostly by avoiding the most volatile stocks. No model is yet reliably better than the model it changes (every interval includes zero). A10 was the first to reach M1 on 2019–2024 but failed on the unseen data (−$4.90 per trade, 2025–2026). *Timing-model rows use their own trade (first strong moment of the day; A8 sells after 30 minutes, A9 and A10 when the outlook turns negative) at real fills. This table is refreshed after every new model.</p>
     </div>
   </div>
     </details>
@@ -527,18 +528,18 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
         <thead><tr><th>Version</th><th>Model</th><th>Trade</th><th>Result (development years)</th><th>Status</th></tr></thead>
         <tbody>
           <tr><td>L0</td><td>Boosting, transformers, GRU</td><td>Long at 09:45, +10% / −5%</td><td>No profitable subset, 2016–2025</td><td><span class="verdict no">Rejected</span></td></tr>
-          <tr><td>T1</td><td>Gradient boosting</td><td>Short at 09:45, +15% / −5%</td><td>+$16,242 (2020–2025), but +$393 at 0.5% cost on recent data</td><td><span class="verdict no">Fails cost test</span></td></tr>
-          <tr><td>B0</td><td>Base transformer</td><td>Long at 10:00, +5% / −3%</td><td>−$9.32 per trade, 0 / 6 years</td><td><span class="verdict base">Baseline</span></td></tr>
-          <tr><td>T2 &middot; A1</td><td>Same-morning cross-stock transformer</td><td>Long at 10:00, +5% / −3%</td><td>−$9.39 per trade, 0 / 6 years</td><td><span class="verdict no">Rejected</span></td></tr>
-          <tr><td>T3 &middot; A5</td><td>B0 and boosting + multi-day context</td><td>Long at 10:00, +5% / −3%</td><td>−$9.82 and −$9.65 per trade, 0 / 6 years; no gain over baselines</td><td><span class="verdict no">Rejected</span></td></tr>
-          <tr><td>T4 &middot; A6</td><td>B0 and boosting + news and catalysts</td><td>Long at 10:00, +5% / −3%</td><td>−$9.34 and −$9.97 per trade, 0 / 6 years; gains indistinguishable from zero</td><td><span class="verdict no">Rejected</span></td></tr>
+          <tr><td>T1</td><td>Gradient boosting</td><td>Short at 09:45, +15% / −5%</td><td>+$8,121 (2020–2025), but +$196 at 0.5% cost on recent data</td><td><span class="verdict no">Fails cost test</span></td></tr>
+          <tr><td>B0</td><td>Base transformer</td><td>Long at 10:00, +5% / −3%</td><td>−$4.66 per trade, 0 / 6 years</td><td><span class="verdict base">Baseline</span></td></tr>
+          <tr><td>T2 &middot; A1</td><td>Same-morning cross-stock transformer</td><td>Long at 10:00, +5% / −3%</td><td>−$4.70 per trade, 0 / 6 years</td><td><span class="verdict no">Rejected</span></td></tr>
+          <tr><td>T3 &middot; A5</td><td>B0 and boosting + multi-day context</td><td>Long at 10:00, +5% / −3%</td><td>−$4.91 and −$4.83 per trade, 0 / 6 years; no gain over baselines</td><td><span class="verdict no">Rejected</span></td></tr>
+          <tr><td>T4 &middot; A6</td><td>B0 and boosting + news and catalysts</td><td>Long at 10:00, +5% / −3%</td><td>−$4.67 and −$4.99 per trade, 0 / 6 years; gains indistinguishable from zero</td><td><span class="verdict no">Rejected</span></td></tr>
           <tr><td>D2</td><td>Design study (no model)</td><td>480 long designs, exits up to the close</td><td>0 of 480 profitable in any of 2016–2018</td><td><span class="verdict no">Rejected</span></td></tr>
-          <tr><td>T6 &middot; A7</td><td>Direction-Disentangled Transformer</td><td>Long at 10:00, +5% / −3%</td><td>−$10.41 per trade, 0 / 6 years; direction still tied to move size</td><td><span class="verdict no">Rejected</span></td></tr>
-          <tr><td>T6b/c &middot; A7 + news / + context</td><td>A7 with the A6 or A5 inputs</td><td>Long at 10:00, +5% / −3%</td><td>−$9.96 and −$10.45 per trade; worse than A6 and A5</td><td><span class="verdict no">Rejected</span></td></tr>
-          <tr><td>T7 &middot; A8</td><td>Intraday Timing Transformer (causal, direction-only target)</td><td>Long at the first strong moment of the day, out 30 minutes later</td><td>−$1.79 per trade at 0.5%, +$3.21 at 0.25% (real fills); best long model so far</td><td><span class="verdict no">Rejected</span></td></tr>
-          <tr><td>T8 &middot; A9</td><td>Multi-Horizon Optimal-Stopping Transformer</td><td>Long at the best multi-horizon outlook; sell when re-scored outlook turns negative</td><td>−$9.50 per trade at 0.5% (real fills); worse than A8</td><td><span class="verdict no">Rejected</span></td></tr>
-          <tr><td>T8b &middot; A9-v2</td><td>A9 with a direction-only entry (loop attempt 1)</td><td>Long at the first strong 60-minute signal; sell when the outlook turns negative</td><td>−$0.34 per trade at 0.5%, +$4.67 at 0.25% (real fills); best so far</td><td><span class="verdict no">Rejected (M1 missed by 0.03%)</span></td></tr>
-          <tr><td>T9 &middot; A10</td><td>Meta-Labeled Timing Transformer (loop attempt 2)</td><td>A9 proposes; a judge trained on earlier years picks the first proposal it expects to pay</td><td>+$2.76 per trade at 0.5% on 2019–2024 (M1); unseen 2025–2026: −$9.80, 0/8 quarters</td><td><span class="verdict no">Rejected at unseen test</span></td></tr>
+          <tr><td>T6 &middot; A7</td><td>Direction-Disentangled Transformer</td><td>Long at 10:00, +5% / −3%</td><td>−$5.21 per trade, 0 / 6 years; direction still tied to move size</td><td><span class="verdict no">Rejected</span></td></tr>
+          <tr><td>T6b/c &middot; A7 + news / + context</td><td>A7 with the A6 or A5 inputs</td><td>Long at 10:00, +5% / −3%</td><td>−$4.98 and −$5.22 per trade; worse than A6 and A5</td><td><span class="verdict no">Rejected</span></td></tr>
+          <tr><td>T7 &middot; A8</td><td>Intraday Timing Transformer (causal, direction-only target)</td><td>Long at the first strong moment of the day, out 30 minutes later</td><td>−$0.90 per trade at 0.5%, +$1.60 at 0.25% (real fills); best long model so far</td><td><span class="verdict no">Rejected</span></td></tr>
+          <tr><td>T8 &middot; A9</td><td>Multi-Horizon Optimal-Stopping Transformer</td><td>Long at the best multi-horizon outlook; sell when re-scored outlook turns negative</td><td>−$4.75 per trade at 0.5% (real fills); worse than A8</td><td><span class="verdict no">Rejected</span></td></tr>
+          <tr><td>T8b &middot; A9-v2</td><td>A9 with a direction-only entry (loop attempt 1)</td><td>Long at the first strong 60-minute signal; sell when the outlook turns negative</td><td>−$0.17 per trade at 0.5%, +$2.33 at 0.25% (real fills); best so far</td><td><span class="verdict no">Rejected (M1 missed by 0.03%)</span></td></tr>
+          <tr><td>T9 &middot; A10</td><td>Meta-Labeled Timing Transformer (loop attempt 2)</td><td>A9 proposes; a judge trained on earlier years picks the first proposal it expects to pay</td><td>+$1.38 per trade at 0.5% on 2019–2024 (M1); unseen 2025–2026: −$4.90, 0/8 quarters</td><td><span class="verdict no">Rejected at unseen test</span></td></tr>
           <tr><td>D3</td><td>Long only on four new stock sets, out before the close</td><td>Opening flush, gap-up holders, gap-down reversal, stocks in play</td><td>Data ready (2016–2018)</td><td><span class="verdict run">Next in the loop</span></td></tr>
         </tbody>
       </table></div>
@@ -586,7 +587,7 @@ var MODELS=[
 ];
 var STATUS="14 loop attempts · best honest result A12-v2 (−0.16% per trade at 0.5% cost) · M1 not yet reached";
 /* ======================================================================================================== */
-function money(v){return v===null?"—":(v<0?"−$":"+$")+Math.abs(v*10).toFixed(2);}
+function money(v){return v===null?"—":(v<0?"−$":"+$")+Math.abs(v*5).toFixed(2);}
 function cls(v){return v===null?"":(v>0?"pos":"neg");}
 document.getElementById('statustag').textContent="Status: "+STATUS;
 var done=MODELS.filter(function(m){return m.dev!==null});
@@ -599,14 +600,15 @@ document.getElementById('glance').innerHTML=
  '<div><div class="k">Best on 2019–2024</div><div class="v sm">'+(bestDev.dev>0?'+':'−')+Math.abs(bestDev.dev).toFixed(2)+'%</div><div class="s">'+bestDev.name+'</div></div>'+
  '<div><div class="k">Confirmed on unseen data</div><div class="v sm">'+(conf.length?conf.map(function(m){return m.n}).join(', '):'none yet')+'</div><div class="s">Jan 2025 – Nov 2026 held out</div></div>'+
  '<div><div class="k">Models built</div><div class="v sm">'+MODELS.length+'</div><div class="s">'+loopN+' loop attempts so far</div></div>';
-var LAD=[["M1","> 0%",0],["M2","≥ +0.5%",0.5],["M3","≥ +1.0%",1.0],["M4","≥ +2.7%",2.7],["M5 (goal)","≥ +3.7%",3.7]];
+var ACCT={"B0": [4856, null], "GBM": [4822, null], "A1": [5038, null], "A5": [4777, null], "A5b": [4836, null], "A6": [4953, null], "A6b": [4722, null], "A7": [4570, null], "A7b": [4728, null], "A7c": [4556, null], "A8": [9275, null], "GBM-A8": [7457, null], "A9": [6833, null], "GBM-A9": [6889, null], "#1 A9-v2": [9822, 8976], "#2 A10": [10961, 8875], "#3 A11": [9211, null], "#6 A13": [7067, null], "#7 A14": [8967, null], "#5 A12": [8431, null], "#8 A12-v2": [9713, null], "#9 A12-v3": [9594, null], "#10 A12-v4": [8926, null], "#11 A12-v5": [9177, null], "D2": [null, null], "#4 D3": [null, null], "#12 D4": [null, null], "#13 R1": [null, null], "#14 Q1": [8811, null]};
+var LAD=[["M1","> 0%",0,"> 0%"],["M2","≥ +0.5%",0.5,"+0.13%"],["M3","≥ +1.0%",1.0,"+0.25%"],["M4","≥ +2.7%",2.7,"+0.68%"],["M5","≥ +3.7%",3.7,"+0.93%"]];
 document.getElementById('ladder').innerHTML=LAD.map(function(l,i){
  var dev=bestDev.dev>l[2]+(i?0:0), ok=conf.some(function(m){return m.un>l[2]});
  var st=ok?'<span class="verdict ok">Reached</span>':(dev&&i===0?'<span class="verdict run">2019–24 only</span>':(i===0?'<span class="verdict run">Next target</span>':'<span class="verdict base">Later</span>'));
- return '<tr class="'+(i===0&&!ok?'here':'')+'"><td>'+l[0]+'</td><td class="num">'+l[1]+'</td><td>'+st+'</td></tr>';}).join('');
+ return '<tr class="'+(i===0&&!ok?'here':'')+'"><td>'+l[0]+'</td><td class="num">'+l[1]+'</td><td class="num">'+l[3]+'</td><td>'+st+'</td></tr>';}).join('');
 var rows='',last=0;MODELS.forEach(function(m){
  if(m.stage!==last){rows+='<tr class="stage-row"><td colspan="6">'+STAGES[m.stage]+'</td></tr>';last=m.stage;}
- rows+='<tr><td><strong>'+m.n+'</strong></td><td><strong>'+m.name+'</strong><div class="idea">'+m.idea+'</div></td><td class="num '+cls(m.dev)+'">'+(m.dev===null?'running':money(m.dev))+(m.note?'<div class="idea">'+m.note+'</div>':'')+'</td><td class="num '+cls(m.un)+'">'+(m.un===null?'<span style="color:var(--muted)">not tested</span>':money(m.un))+'</td><td><span class="verdict '+m.v[0]+'">'+m.v[1]+'</span></td><td class="idea">'+m.lesson+'</td></tr>';});
+ rows+='<tr><td><strong>'+m.n+'</strong></td><td><strong>'+m.name+'</strong><div class="idea">'+m.idea+'</div></td><td class="num '+cls(m.dev)+'">'+(m.dev===null?'running':money(m.dev))+(ACCT[m.n]&&ACCT[m.n][0]?'<div class="idea">$10,000 → $'+ACCT[m.n][0].toLocaleString('en-US')+'</div>':'')+(m.note?'<div class="idea">'+m.note+'</div>':'')+'</td><td class="num '+cls(m.un)+'">'+(m.un===null?'<span style="color:var(--muted)">not tested</span>':money(m.un)+(ACCT[m.n]&&ACCT[m.n][1]?'<div class="idea">$10,000 → $'+ACCT[m.n][1].toLocaleString('en-US')+'</div>':''))+'</td><td><span class="verdict '+m.v[0]+'">'+m.v[1]+'</span></td><td class="idea">'+m.lesson+'</td></tr>';});
 document.getElementById('mrows').innerHTML=rows;
 function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
 function drawP(){var host=document.getElementById('progchart'),W=host.clientWidth||700,narrow=W<560,LW=narrow?118:230,R=56,rowH=26,T=6;
@@ -620,10 +622,10 @@ function drawP(){var host=document.getElementById('progchart'),W=host.clientWidt
   g+='<text class="lbl" x="0" y="'+(y+rowH/2+4)+'">'+name+'</text>';
   if(it.dev===null){g+='<text class="val" x="'+(x(0)+6)+'" y="'+(y+rowH/2+4)+'">running…</text>';return;}
   var x0=x(Math.min(0,it.dev)),x1=x(Math.max(0,it.dev));
-  g+='<rect x="'+x0+'" y="'+(y+6)+'" width="'+Math.max(2,x1-x0)+'" height="'+(rowH-12)+'" rx="3" fill="'+css(it.dev>0?'--gain':'--loss')+'"><title>'+it.name+': '+money(it.dev)+' per $1,000 (2019–2024)</title></rect>';
+  g+='<rect x="'+x0+'" y="'+(y+6)+'" width="'+Math.max(2,x1-x0)+'" height="'+(rowH-12)+'" rx="3" fill="'+css(it.dev>0?'--gain':'--loss')+'"><title>'+it.name+': '+money(it.dev)+' per $500 trade (2019–2024)</title></rect>';
   var off=it.dev<lo;
   g+='<text class="val" x="'+(it.dev>0||off?x1+5:x0-5)+'" y="'+(y+rowH/2+4)+'" text-anchor="'+(it.dev>0||off?'start':'end')+'">'+(it.dev>0?'+':'−')+Math.abs(it.dev).toFixed(2)+'%'+(off&&!narrow?' (off scale)':'')+'</text>';
-  if(it.un!==null){var ux=x(it.un),uy=y+rowH/2;g+='<path d="M'+ux+' '+(uy-6)+' L'+(ux+6)+' '+uy+' L'+ux+' '+(uy+6)+' L'+(ux-6)+' '+uy+'Z" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"><title>Unseen 2025–26: '+money(it.un)+' per $1,000</title></path>';}
+  if(it.un!==null){var ux=x(it.un),uy=y+rowH/2;g+='<path d="M'+ux+' '+(uy-6)+' L'+(ux+6)+' '+uy+' L'+ux+' '+(uy+6)+' L'+(ux-6)+' '+uy+'Z" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"><title>Unseen 2025–26: '+money(it.un)+' per $500 trade</title></path>';}
  });
  g+='<line class="m1" x1="'+x(0)+'" x2="'+x(0)+'" y1="'+T+'" y2="'+(H-22)+'"/><text class="val" x="'+(x(0)+4)+'" y="'+(T+10)+'" style="fill:var(--accent);font-weight:700">M1</text></svg>';
  host.innerHTML=g;}

@@ -50,11 +50,11 @@ td.th{font-size:12px;color:var(--muted)}
 
   <section aria-label="At a glance">
     <div class="statstrip">
-      <div class="primary"><div class="k">Best result</div><div class="v">+$3,172</div><div class="s">short model, Oct 2025 – Nov 2026</div></div>
+      <div class="primary"><div class="k">Best result</div><div class="v">+$1,586</div><div class="s">short model, Oct 2025 – Nov 2026</div></div>
       <div><div class="k">Rule strategies</div><div class="v">19</div><div class="s">frozen and replayed</div></div>
-      <div><div class="k">Best rule (fresh)</div><div class="v sm">S8 +$639</div><div class="s">151 unseen sessions</div></div>
+      <div><div class="k">Best rule (fresh)</div><div class="v sm">S8 +$320</div><div class="s">151 unseen sessions</div></div>
       <div><div class="k">History checked</div><div class="v sm">32,716</div><div class="s">screened stocks, 2016–2025</div></div>
-      <div><div class="k">Long side, 10 yrs</div><div class="v sm">−$4,699</div><div class="s">S8, 653 trades</div></div>
+      <div><div class="k">Long side, 10 yrs</div><div class="v sm">−$2,350</div><div class="s">S8, 653 trades</div></div>
       <div><div class="k">Short edge</div><div class="v sm">+0.57%</div><div class="s">per trade at 0.25% cost</div></div>
     </div>
   </section>
@@ -72,7 +72,7 @@ td.th{font-size:12px;color:var(--muted)}
     <a class="card research-link" href="project-13-research.html" aria-label="Open the Project 13 research summary">
       <div class="eyebrow" style="margin-bottom:8px">New model development &middot; started Nov 6, 2026</div>
       <h3 style="margin-top:0">Building a new model toward 20% a week</h3>
-      <p>Two research paths, Jan 2025 – Nov 2026 held out as unseen data, and a pass/fail gate at every step. Seven cycles so far, all rejected by their own rules. Five found no edge for long trades at a fixed time: stocks that run at the open drift down all day. The sixth, the Intraday Timing Transformer (A8), asks <em>when</em> to buy during the day instead of <em>which</em> stock at 10:00, and is the best long model so far: −0.18% per trade at 0.5% cost and +0.32% at 0.25% (2019–2024, real fills). A seventh model (A9) that also learns when to sell did worse, because its buy rule favoured volatile stocks early in the morning; its 60-minute signal and its exit rule worked. A9-v2, the first attempt of a continuous loop toward M1, fixed that buy rule and reached −0.03% per trade at 0.5% cost (+0.47% at 0.25%), the best long result so far and just short of break even. Attempt 2, A10, added a second model that judges the transformer's trade proposals and reached milestone M1 on 2019–2024: +0.28% per trade at 0.5% cost (real fills). On the unseen data (Jan 2025 – Nov 2026) it failed (−0.98% per trade): its edge came mostly from thinly traded moments whose recorded prices lag. The loop continues with labels built from real, executable prices.</p>
+      <p>Two research paths, Jan 2025 – Nov 2026 held out as unseen data, and a pass/fail gate at every step. Seven cycles so far, all rejected by their own rules. Five found no edge for long trades at a fixed time: stocks that run at the open drift down all day. The sixth, the Intraday Timing Transformer (A8), asks <em>when</em> to buy during the day instead of <em>which</em> stock at 10:00, and is the best long model so far: −0.18% per trade at 0.5% cost and +0.32% at 0.25% (2019–2024, real fills). A seventh model (A9) that also learns when to sell did worse, because its buy rule favoured volatile stocks early in the morning; its 60-minute signal and its exit rule worked. A9-v2, the first attempt of a continuous loop toward M1, fixed that buy rule and reached −0.03% per trade at 0.5% cost (+0.47% at 0.25%), the best long result so far and just short of break even. Attempt 2, A10, added a second model that judges the transformer's trade proposals and reached milestone M1 on 2019–2024: +0.28% per trade at 0.5% cost (real fills). On the unseen data (Jan 2025 – Nov 2026) it failed (−0.98% per trade): its edge came mostly from thinly traded moments whose recorded prices lag. The loop continues with labels built from real, executable prices. <strong>Account (owner, Nov 7, 2026): $10,000, 5% ($500) per trade</strong>; all dollar figures on these pages are now per $500 trade.</p>
       <div class="research-stats">
         <div><span>Goal</span><strong>20% / week</strong></div>
         <div><span>Needed per trade</span><strong>+3.7%</strong></div>
@@ -92,7 +92,7 @@ td.th{font-size:12px;color:var(--muted)}
           <li><strong>Screen</strong>: common shares and ADRs whose high from 09:30 to 09:44 is at least 20% above the regular-session open, with at least 5,000 shares traded.</li>
           <li><strong>Read three candles</strong>: 09:30, 09:35 and 09:40 (5-minute bars), with no data after 09:45.</li>
           <li><strong>Filter</strong>: each strategy's rules accept or reject the stock (blow-off reversal, red inside bar, long wick and so on).</li>
-          <li><strong>Trade</strong>: buy at 09:45, +10% target, −5% stop, out by 10:30; $1,000 per trade, 0.25% cost per side.</li>
+          <li><strong>Trade</strong>: buy at 09:45, +10% target, −5% stop, out by 10:30; $500 per trade (5% of a $10,000 account), 0.25% cost per side.</li>
         </ol>
       </div>
       <div class="card">
@@ -111,7 +111,7 @@ td.th{font-size:12px;color:var(--muted)}
     <h2>Rule strategies on fresh data</h2>
     <div class="card">
       <div class="chart-title"><h3>Net profit by strategy, Jan 2 – Aug 10, 2026 (151 sessions)</h3></div>
-      <p class="chart-note">First price at 09:45, $1,000 per trade, 0.25% cost per side. S15–S17 learned from June, so part of their result is fitted.</p>
+      <p class="chart-note">First price at 09:45, $500 per trade (5% of a $10,000 account), 0.25% cost per side. S15–S17 learned from June, so part of their result is fitted.</p>
       <div id="strat"></div>
       <div class="table-scroll" style="margin-top:14px"><table>
         <thead><tr><th>Strategy</th><th>Oct–Dec 2025</th><th>Jan–Mar 2026</th><th>Apr–May</th><th>Jun 1 – Aug 10</th><th>Total, 284 sessions*</th></tr></thead>
@@ -135,10 +135,10 @@ td.th{font-size:12px;color:var(--muted)}
         <div class="table-scroll"><table>
           <thead><tr><th>Strategy</th><th>Trades</th><th>Net</th><th>Profitable years</th></tr></thead>
           <tbody>
-            <tr><td>S6</td><td class="num">1,551</td><td class="num">−$18,143</td><td class="num">0 / 10</td></tr>
-            <tr><td>S8</td><td class="num">653</td><td class="num">−$4,699</td><td class="num">3 / 10</td></tr>
-            <tr><td>S17</td><td class="num">712</td><td class="num">−$5,924</td><td class="num">1 / 10</td></tr>
-            <tr><td>S19</td><td class="num">644</td><td class="num">−$4,337</td><td class="num">4 / 10</td></tr>
+            <tr><td>S6</td><td class="num">1,551</td><td class="num">−$9,072</td><td class="num">0 / 10</td></tr>
+            <tr><td>S8</td><td class="num">653</td><td class="num">−$2,350</td><td class="num">3 / 10</td></tr>
+            <tr><td>S17</td><td class="num">712</td><td class="num">−$2,962</td><td class="num">1 / 10</td></tr>
+            <tr><td>S19</td><td class="num">644</td><td class="num">−$2,168</td><td class="num">4 / 10</td></tr>
           </tbody>
         </table></div>
       </div>
@@ -163,12 +163,12 @@ td.th{font-size:12px;color:var(--muted)}
       <div class="table-scroll" style="margin-top:14px"><table>
         <thead><tr><th>Approach</th><th>Trades</th><th>Net at 0.25% cost</th><th>Net at 0.5% cost</th></tr></thead>
         <tbody>
-          <tr><td><strong>Short model (top picks)</strong></td><td class="num">554</td><td class="num">+$3,172</td><td class="num">+$393</td></tr>
-          <tr><td>Short every 20%+ stock (no model)</td><td class="num">—</td><td class="num">−$3,625</td><td class="num">—</td></tr>
-          <tr><td>S8 long (same period)</td><td class="num">135</td><td class="num">+$1,125</td><td class="num">—</td></tr>
+          <tr><td><strong>Short model (top picks)</strong></td><td class="num">554</td><td class="num">+$1,586</td><td class="num">+$196</td></tr>
+          <tr><td>Short every 20%+ stock (no model)</td><td class="num">—</td><td class="num">−$1,812</td><td class="num">—</td></tr>
+          <tr><td>S8 long (same period)</td><td class="num">135</td><td class="num">+$562</td><td class="num">—</td></tr>
         </tbody>
       </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Profitable in 9 of 14 months; +$5.73 per trade with a 32% win rate. By price: under $1 +$9 per trade, $1–3 +$4, $3–10 −$6. Most of the profit comes from cheap stocks that are often impossible to borrow.</p>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Profitable in 9 of 14 months; +$2.87 per trade with a 32% win rate. By price: under $1 +$4.5 per trade, $1–3 +$2, $3–10 −$3. Most of the profit comes from cheap stocks that are often impossible to borrow.</p>
     </div>
   </section>
 
@@ -226,7 +226,7 @@ td.th{font-size:12px;color:var(--muted)}
 
   <section id="disclosure">
     <h2>Disclosures</h2>
-    <div class="card"><p style="margin:0">Research and education only, not investment advice; the author isn't a licensed financial advisor. All results are hypothetical backtests with $1,000 per trade and modelled costs; real fills, spreads, borrow fees and halts can be worse. Short selling can lose more than the stake.</p></div>
+    <div class="card"><p style="margin:0">Research and education only, not investment advice; the author isn't a licensed financial advisor. All results are hypothetical backtests with $500 per trade (5% of a $10,000 account) and modelled costs; real fills, spreads, borrow fees and halts can be worse. Short selling can lose more than the stake.</p></div>
   </section>
 
   <section>
@@ -247,8 +247,8 @@ td.th{font-size:12px;color:var(--muted)}
 <script src="../charts.js"></script>
 <script>
 (function(){
-var ST=[["S1",-3053],["S2",-906],["S3",-361],["S4",-1388],["S5",-867],["S6",-1070],["S7",174],["S8",639],["S9",321],["S10",187],["S11",250],["S12",304],["S13",195],["S14",275],["S15",300],["S16",355],["S17",639]];
-var SM=[["Oct 25",76],["Nov",200],["Dec",-169],["Jan 26",-47],["Feb",60],["Mar",1168],["Apr",-511],["May",343],["Jun",714],["Jul",324],["Aug",812],["Sep",-341],["Oct",454],["Nov 2–3",89]];
+var ST=[["S1",-1526],["S2",-453],["S3",-180],["S4",-694],["S5",-434],["S6",-535],["S7",87],["S8",320],["S9",160],["S10",94],["S11",125],["S12",152],["S13",98],["S14",138],["S15",150],["S16",178],["S17",320]];
+var SM=[["Oct 25",38],["Nov",100],["Dec",-84],["Jan 26",-24],["Feb",30],["Mar",584],["Apr",-256],["May",172],["Jun",357],["Jul",162],["Aug",406],["Sep",-170],["Oct",227],["Nov 2–3",44]];
 function usd(v){return (v<0?'−$':'$')+Math.abs(Math.round(v)).toLocaleString();}
 function draw(){var narrow=window.innerWidth<600;
  barChart(document.getElementById('strat'),ST.map(function(d){return{label:d[0],value:d[1],tip:d[0]+': '+(d[1]>=0?'+':'')+usd(d[1])}}),{height:260,rotate:narrow,fmt:usd});
