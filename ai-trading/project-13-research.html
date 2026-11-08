@@ -621,7 +621,8 @@ function drawP(){var host=document.getElementById('progchart'),W=host.clientWidt
   if(it.dev===null){g+='<text class="val" x="'+(x(0)+6)+'" y="'+(y+rowH/2+4)+'">running…</text>';return;}
   var x0=x(Math.min(0,it.dev)),x1=x(Math.max(0,it.dev));
   g+='<rect x="'+x0+'" y="'+(y+6)+'" width="'+Math.max(2,x1-x0)+'" height="'+(rowH-12)+'" rx="3" fill="'+css(it.dev>0?'--gain':'--loss')+'"><title>'+it.name+': '+money(it.dev)+' per $1,000 (2019–2024)</title></rect>';
-  g+='<text class="val" x="'+(it.dev>0?x1+5:x0-5)+'" y="'+(y+rowH/2+4)+'" text-anchor="'+(it.dev>0?'start':'end')+'">'+(it.dev>0?'+':'−')+Math.abs(it.dev).toFixed(2)+'%</text>';
+  var off=it.dev<lo;
+  g+='<text class="val" x="'+(it.dev>0||off?x1+5:x0-5)+'" y="'+(y+rowH/2+4)+'" text-anchor="'+(it.dev>0||off?'start':'end')+'">'+(it.dev>0?'+':'−')+Math.abs(it.dev).toFixed(2)+'%'+(off&&!narrow?' (off scale)':'')+'</text>';
   if(it.un!==null){var ux=x(it.un),uy=y+rowH/2;g+='<path d="M'+ux+' '+(uy-6)+' L'+(ux+6)+' '+uy+' L'+ux+' '+(uy+6)+' L'+(ux-6)+' '+uy+'Z" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"><title>Unseen 2025–26: '+money(it.un)+' per $1,000</title></path>';}
  });
  g+='<line class="m1" x1="'+x(0)+'" x2="'+x(0)+'" y1="'+T+'" y2="'+(H-22)+'"/><text class="val" x="'+(x(0)+4)+'" y="'+(T+10)+'" style="fill:var(--accent);font-weight:700">M1</text></svg>';
