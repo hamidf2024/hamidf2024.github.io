@@ -101,6 +101,13 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
     <h2>Current loop: until the first milestone</h2>
     <p class="howread" style="max-width:780px">Since Nov 7, 2026 the research runs as a loop: learn from every model and from outside research, design a new model, write its plan before running it, test it on 2019–2024 at real fills, record why it worked or not, and repeat. A model reaching M1 gets one test on unseen data; only a pass there counts. The view of the problem changes when progress stalls.</p>
     <div class="loopcards">
+      <article class="card attempt" id="c1">
+        <div class="att-head"><span class="att-n">Study (owner question)</span><span class="verdict base">Finding</span></div>
+        <h3>C1 &middot; Stocks up 20%+ by 09:45: who keeps running?</h3>
+        <p><strong>Question:</strong> some stocks run 20%+ in the first 15 minutes and then rise another 10%+. What characterises them, and how likely is it?</p>
+        <dl class="att-res"><div><dt>Rise another 10% later</dt><dd>49% of 4,201 (2016–2024)</dd></div><div><dt>Likeliest tenth</dt><dd class="pos">66% (least likely 38%)</dd></div></dl>
+        <p class="att-why"><strong>Characteristics:</strong> bigger gap and opening run, more trades and pre-market volume, higher volatility, further above VWAP, still making highs late in the first 15 minutes. <strong>But:</strong> the chance of reaching +10% <em>before</em> a 5% drop stays about 26% in every group, and the stocks that fade lose more than the runners gain: buying the likeliest tenth with a +10% target loses about 2% per trade after costs. The features measure how wild a stock is, not which way it goes next.</p>
+      </article>
       <article class="card attempt" id="att11">
         <div class="att-head"><span class="att-n">Attempt 11</span><span class="verdict no">Rejected</span></div>
         <h3>A12-v5 &middot; Twice the training data</h3>
@@ -197,6 +204,7 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
       <li><b>A second opinion helps.</b>A judge trained on past proposals picks better trades (A10), but only if what it learns from is real.</li>
       <li><b>Only real prices count.</b>Thinly traded moments show lagging prices that look like predictable rises; labels and tests must use executable prices (A10 unseen test).</li>
       <li><b>Research agrees, and points at costs.</b>Published intraday strategies that work (e.g. opening-range breakouts on "stocks in play") trade liquid stocks at commission-level costs; replications that charge spreads find the edge disappears. Full review: <code>research/LITERATURE_REVIEW.md</code>.</li>
+      <li><b>Big moves are predictable, their order is not.</b>Half of the stocks up 20%+ by 09:45 rise another 10% later (two-thirds in the likeliest group), but whether a sharp drop comes first cannot be told from their characteristics.</li>
       <li><b>Costs decide everything.</b>At 0.5% per side a trade must gain about 1% just to break even; at 0.25% several models would already be profitable.</li>
     </ol>
     <p class="howread" style="margin-top:12px">Full record of every model's pros, cons and lesson: <code>research/LESSONS_LEARNED.md</code> in the project repository.</p>
