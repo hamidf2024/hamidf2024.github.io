@@ -101,6 +101,23 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
     <h2>Current loop: until the first milestone</h2>
     <p class="howread" style="max-width:780px">Since Nov 7, 2026 the research runs as a loop: learn from every model and from outside research, design a new model, write its plan before running it, test it on 2019–2024 at real fills, record why it worked or not, and repeat. A model reaching M1 gets one test on unseen data; only a pass there counts. The view of the problem changes when progress stalls.</p>
     <div class="loopcards">
+      <article class="card attempt" id="c2">
+        <div class="att-head"><span class="att-n">Study (owner question)</span><span class="verdict base">Finding</span></div>
+        <h3>C2 &middot; Time after the open &times; gain so far</h3>
+        <p><strong>Question:</strong> at 09:35, 09:40, 09:45 and later, given how much a stock is already up, how likely is another rise of 5%, 10% or 20%? All gap-ups of 10%+, 2016–2024 (about 13,000 stock-days per time).</p>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Chance of another +10% later</th><th>up 0–5%</th><th>5–10%</th><th>10–20%</th><th>20–30%</th><th>30–50%</th><th>50%+</th></tr></thead>
+          <tbody>
+            <tr><td>09:35</td><td class="num">29%</td><td class="num">42%</td><td class="num">52%</td><td class="num">62%</td><td class="num">60%</td><td class="num">55%</td></tr>
+            <tr><td>09:40</td><td class="num">26%</td><td class="num">37%</td><td class="num">48%</td><td class="num">63%</td><td class="num">67%</td><td class="num">69%</td></tr>
+            <tr><td>09:45</td><td class="num">24%</td><td class="num">35%</td><td class="num">48%</td><td class="num">59%</td><td class="num">65%</td><td class="num">67%</td></tr>
+            <tr><td>10:30</td><td class="num">16%</td><td class="num">26%</td><td class="num">39%</td><td class="num">51%</td><td class="num">52%</td><td class="num">63%</td></tr>
+            <tr><td>12:00</td><td class="num">10%</td><td class="num">18%</td><td class="num">27%</td><td class="num">41%</td><td class="num">49%</td><td class="num">58%</td></tr>
+            <tr><td>14:00</td><td class="num">5%</td><td class="num">8%</td><td class="num">15%</td><td class="num">26%</td><td class="num">38%</td><td class="num">51%</td></tr>
+          </tbody>
+        </table></div>
+        <p class="att-why"><strong>Finding:</strong> a bigger gain so far and an earlier time make another big rise more likely. <strong>But:</strong> the chance of reaching +10% <em>before</em> a 5% drop stays 20–33% in almost every cell, and buying in every cell loses after costs (best −0.5% per trade). Time and gain show how much a stock still has left to move, not which way.</p>
+      </article>
       <article class="card attempt" id="att13">
         <div class="att-head"><span class="att-n">Attempt 13</span><span class="verdict no">Rejected</span></div>
         <h3>R1 &middot; Risk management on 20%+ runners</h3>
@@ -220,6 +237,7 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
       <li><b>Research agrees, and points at costs.</b>Published intraday strategies that work (e.g. opening-range breakouts on "stocks in play") trade liquid stocks at commission-level costs; replications that charge spreads find the edge disappears. Full review: <code>research/LITERATURE_REVIEW.md</code>.</li>
       <li><b>Big moves are predictable, their order is not.</b>Half of the stocks up 20%+ by 09:45 rise another 10% later (two-thirds in the likeliest group), but whether a sharp drop comes first cannot be told from their characteristics.</li>
       <li><b>Risk management shapes results, it does not create an edge.</b>On 20%+ runners, 58 stop, target, trailing and scale-out designs all lose after costs; half of the eventual winners first fall 5%.</li>
+      <li><b>Time and gain show room to move, not direction.</b>Earlier and bigger gainers are far more likely to rise another 10% (up to two-thirds), but just as likely to drop first.</li>
       <li><b>Costs decide everything.</b>At 0.5% per side a trade must gain about 1% just to break even; at 0.25% several models would already be profitable.</li>
     </ol>
     <p class="howread" style="margin-top:12px">Full record of every model's pros, cons and lesson: <code>research/LESSONS_LEARNED.md</code> in the project repository.</p>
