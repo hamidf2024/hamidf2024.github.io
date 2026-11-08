@@ -74,18 +74,18 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
     <div class="eyebrow">Project 9 &middot; Quantitative research &middot; Options &middot; Machine learning</div>
     <h1>Project 9: AI Option Trading</h1>
     <p class="lede">A research-first project to find machine-learning models that grow an account by trading listed options, after real costs and within strict risk limits. Fourteen experiments and more than 40 models so far &mdash; from simple rules to six transformers of our own design &mdash; tested on 2016&ndash;2025 option quotes. The first milestone (L0) was passed in Experiment 9: monthly put spreads combined with the benchmark model beat it on return and risk; the loop now aims at L1.</p>
-    <p style="margin-top:12px;max-width:720px"><strong>Major goal:</strong> grow the account <strong>more than 5% a trading day</strong> after all costs, with +1% and +2% a day as milestones, while risking at most 0.5% of the account per position and 5% in total. With 5% at risk, a 5% day needs the options to double, so the research climbs a ladder of realistic steps: first beat the simple Elastic Net benchmark (L0), then +0.05% a day (L1), +0.10% (L2) and +0.25% (L3).</p>
-    <p style="margin-top:14px"><span class="tag warn">Status: research loop &middot; no proven edge yet &middot; L0 passed in development</span> <span class="tag muted">Started Sep 27, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
+    <p style="margin-top:12px;max-width:720px"><strong>Major goal:</strong> grow the account <strong>more than 5% a trading day</strong> after all costs, with +1% and +2% a day as milestones, while risking at most 5% of the account per position and 50% in total (charter v1.9, Nov 8, 2026; was 0.5% and 5%). With up to 50% at risk, a 5% day still needs about +10% on the money at risk every day, so the research climbs a ladder of realistic steps: first beat the simple Elastic Net benchmark (L0), then +0.05% a day (L1), +0.10% (L2) and +0.25% (L3).</p>
+    <p style="margin-top:14px"><span class="tag warn">Status: research loop &middot; no proven edge yet &middot; L2 reached in development at 5% sizing</span> <span class="tag muted">Started Sep 27, 2026</span> <span class="tag muted">Last updated Nov 7, 2026</span></p>
     <nav class="toc" aria-label="On this page"><a href="#found">Findings</a><a href="#research">Research</a><a href="#method">Method</a><a href="#data">Data</a><a href="#goals">Goals</a><a href="#benchmark">Benchmark</a><a href="#roadmap">Roadmap</a><a href="#approach">Approach</a><a href="#background">Background</a><a href="#disclosure">Disclosures</a><a href="#sources">Sources</a></nav>
   </section>
 
   <section aria-label="At a glance">
     <div class="statstrip">
-      <div class="primary"><div class="k">Best model</div><div class="v">$14,550</div><div class="s">from $10,000, 2016&ndash;2025, Sharpe 1.04</div></div>
+      <div class="primary"><div class="k">Best model</div><div class="v">$203,352</div><div class="s">from $10,000, 2016&ndash;2025, 5% per position</div></div>
       <div><div class="k">Experiments</div><div class="v sm">14</div><div class="s">new model every round</div></div>
       <div><div class="k">Models tested</div><div class="v sm">40+</div><div class="s">incl. 6 own transformers</div></div>
-      <div><div class="k">Benchmark</div><div class="v sm">$12,200</div><div class="s">Elastic Net, Sharpe 0.68</div></div>
-      <div><div class="k">Milestone</div><div class="v sm">L0 &#10003;</div><div class="s">next: L1, +0.05% a day</div></div>
+      <div><div class="k">Benchmark</div><div class="v sm">$51,946</div><div class="s">Elastic Net, Sharpe 0.68</div></div>
+      <div><div class="k">Milestone</div><div class="v sm">L2 &#10003;</div><div class="s">dev, 5% sizing; next: L3 (+0.25% a day)</div></div>
       <div><div class="k">Daily goal</div><div class="v sm">&gt;5%</div><div class="s">account growth, to be tested</div></div>
     </div>
   </section>
@@ -93,7 +93,7 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
     <h2>What the research found</h2>
     <div class="card" style="border-left:4px solid var(--warn)">
       <div class="eyebrow" style="margin-bottom:8px">Main conclusion so far</div>
-      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0">After real bid/ask costs, most option edges in daily data are about as large as the cost of trading them. The only steady result is a simple linear model that buys SPY/QQQ calls on good days &mdash; and it mostly rides the market&rsquo;s upward drift. The first combination to beat it on return <em>and</em> risk: selling a monthly SPY/QQQ/IWM put spread alongside it ($14,550 vs $12,200, Sharpe 1.04 vs 0.68), because the two earn in different markets. The gain came from trading less often and combining edges, not from a bigger model.</p>
+      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0">After real bid/ask costs, most option edges in daily data are about as large as the cost of trading them. The only steady result is a simple linear model that buys SPY/QQQ calls on good days &mdash; and it mostly rides the market&rsquo;s upward drift. The first combination to beat it on return <em>and</em> risk: selling a monthly SPY/QQQ/IWM put spread alongside it ($203,352 vs $51,946, Sharpe 1.04 vs 0.68; at 5% per position, +0.12% a day but with drops of about 50%), because the two earn in different markets. The gain came from trading less often and combining edges, not from a bigger model.</p>
     </div>
   </section>
 
@@ -106,7 +106,7 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
       <div class="research-stats">
         <div><span>Goal</span><strong>&gt;5% / day</strong></div>
         <div><span>Milestone</span><strong>L0 passed (dev)</strong></div>
-        <div><span>Best model</span><strong>$14,550 &middot; Sharpe 1.04</strong></div>
+        <div><span>Best model</span><strong>$203,352 &middot; Sharpe 1.04</strong></div>
         <div><span>Next</span><strong>Scale toward L1</strong></div>
       </div>
       <span class="research-cta">Open the research results &rarr;</span>
@@ -122,7 +122,7 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
           <li><strong>Instruments</strong>: listed US options, mainly SPY and QQQ (also IWM and 150 liquid stocks in later rounds).</li>
           <li><strong>Decision</strong>: a model scores the available contracts at the close (or every 15 minutes intraday) and trades only if the expected gain clears costs; otherwise it stays in cash.</li>
           <li><strong>Prices</strong>: buy at the ask, sell at the bid, plus $0.65 per contract.</li>
-          <li><strong>Size</strong>: at most 0.5% of the account per position, 5% in total, 2% on SPY+QQQ.</li>
+          <li><strong>Size</strong>: at most 5% of the account per position, 50% in total, 20% on SPY+QQQ (charter v1.9, Nov 8, 2026).</li>
         </ol>
       </div>
       <div class="card">
