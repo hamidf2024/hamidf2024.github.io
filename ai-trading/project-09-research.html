@@ -105,7 +105,7 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
       <div><div class="k">Best step reached</div><div class="v sm">L2</div><div class="s">+0.12% a day, development 2016&ndash;2025, at 5% per position</div></div>
       <div><div class="k">Benchmark</div><div class="v sm">$51,946</div><div class="s">Elastic Net, from $10,000, 2016&ndash;2025</div></div>
       <div><div class="k">Best model</div><div class="v sm">$203,352</div><div class="s">put spreads + Elastic Net, Sharpe 1.04</div></div>
-      <div><div class="k">Models built</div><div class="v sm">40+</div><div class="s">14 experiments, 10 own transformers</div></div>
+      <div><div class="k">Models built</div><div class="v sm">40+</div><div class="s">16 experiments, 10 own transformers</div></div>
     </div>
   </section>
   <section id="stand">
@@ -157,110 +157,110 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
     </div>
   </section>
   <section id="loop">
-    <h2>Current loop: until the first milestone</h2>
+    <h2>Current loop: experiment by experiment (newest first)</h2>
     <p class="howread" style="max-width:780px">Since Nov 7, 2026 the research runs as a loop: learn from every model and from outside research, design a new model, write its test plan before running it, test it on unseen years, publish the result here and record why it worked or not. After rounds without progress, the view of the problem changes (trade type, horizon, instruments), not just the model. Newest first.</p>
     <div class="loopcards">
       <article class="card attempt">
-        <div class="att-head"><span class="att-n">Round 14 &middot; Exp. 16</span><span class="verdict run">Provisional</span></div>
-        <h3>Intraday stock options &middot; LiftRank at 2 PM ET</h3>
+        <div class="att-head"><span class="att-n">Round 14 &middot; <a href="#d16">Experiment 16</a></span><span class="verdict run">Provisional</span></div>
+        <h3><span style="color:var(--muted);font-weight:600">Experiment 16:</span> Intraday stock options &middot; LiftRank at 2 PM ET</h3>
         <p><strong>Idea:</strong> use real intraday option quotes (QuantConnect) for 24 large stocks and rank each day&rsquo;s options with a learning-to-rank model; buy the top 5 at 2 PM ET, sell 5 days later.</p>
         <dl class="att-res"><div><dt>LiftRank per trade</dt><dd class="pos">+28.6% (58% win)</dd></div><div><dt>Random picks</dt><dd class="neg">&minus;2.2% per trade</dd></div></dl>
         <p class="att-why"><strong>Caveat:</strong> 22% of exit prices were missing and those trades were skipped, which flatters the result; at 5% sizing it would compound to an unrealistic $36.6 million. <strong>Next:</strong> re-run with conservative exit prices (owner decision).</p>
       </article>
       <article class="card attempt">
-        <div class="att-head"><span class="att-n">Round 13 &middot; Exp. 15</span><span class="verdict no">Not robust</span></div>
-        <h3>Frozen SetLift &middot; same design every year</h3>
+        <div class="att-head"><span class="att-n">Round 13 &middot; <a href="#d15">Experiment 15</a></span><span class="verdict no">Not robust</span></div>
+        <h3><span style="color:var(--muted);font-weight:600">Experiment 15:</span> Frozen SetLift &middot; same design every year</h3>
         <p><strong>Idea:</strong> stop re-picking the hold period each year; fix it (3, 5 or 10 days) and repeat with 3 training seeds &mdash; 9 runs, 2022&ndash;2025. Pre-set rule: robust only if at least 7 of 9 runs make money and the middle run earns &ge; +0.02% a day.</p>
         <dl class="att-res"><div><dt>Runs that made money</dt><dd class="neg">6 of 9 (needed 7)</dd></div><div><dt>Middle run</dt><dd class="neg">+0.006% a day (needed +0.02%)</dd></div></dl>
         <p class="att-why"><strong>Why:</strong> 3-day holds lost in every seed, 5-day holds (the design chosen in advance) only just broke even, and only the 10-day hold made clear money (+0.02% to +0.06% a day at 0.5% sizing) &mdash; choosing it after seeing results would be cherry-picking. At 5% sizing every run falls 72&ndash;100% at its worst point. <strong>Lesson:</strong> SetLift&rsquo;s past gains came from lucky design choices; it is dropped from the account. A 10-day version could be pre-registered and tested on new data only.</p>
       </article>
       <article class="card attempt">
-        <div class="att-head"><span class="att-n">Round 12 &middot; Exp. 14</span><span class="verdict no">No pass</span></div>
-        <h3>Combined account &middot; SetLift + Experiment 9</h3>
+        <div class="att-head"><span class="att-n">Round 12 &middot; <a href="#d14">Experiment 14</a></span><span class="verdict no">No pass</span></div>
+        <h3><span style="color:var(--muted);font-weight:600">Experiment 14:</span> Combined account &middot; SetLift + Experiment 9</h3>
         <p><strong>Idea:</strong> run SetLift (both levers) next to the Experiment 9 strategy in one account within the 50% risk limit.</p>
         <dl class="att-res"><div><dt>Best combined (5% sizing)</dt><dd>$10,085 (2022&ndash;25)</dd></div><div><dt>Quality (Sharpe)</dt><dd>0.71, range incl. zero</dd></div></dl>
         <p class="att-why"><strong>Why:</strong> the two levers didn&rsquo;t add up and SetLift&rsquo;s result swings with small design changes. <strong>Lesson:</strong> freeze one design and test it on new data (paper trading).</p>
       </article>
       <article class="card attempt">
-        <div class="att-head"><span class="att-n">Round 11 &middot; Exp. 13</span><span class="verdict no">Wiped out at 5%</span></div>
-        <h3>SetLift made robust &middot; limit entries, market gate</h3>
+        <div class="att-head"><span class="att-n">Round 11 &middot; <a href="#d13">Experiment 13</a></span><span class="verdict no">Wiped out at 5%</span></div>
+        <h3><span style="color:var(--muted);font-weight:600">Experiment 13:</span> SetLift made robust &middot; limit entries, market gate</h3>
         <p><strong>Idea:</strong> keep SetLift, but buy with limit orders near the mid price and trade only in favourable markets (trend + VIX).</p>
         <dl class="att-res"><div><dt>$10,000 became (2022&ndash;25, 5% sizing)</dt><dd class="neg">$848 / $40</dd></div><div><dt>At 0.5% sizing</dt><dd class="pos">$18,440 / $16,940</dd></div></dl>
         <p class="att-why"><strong>Why:</strong> at 0.5% per position both levers lifted SetLift above L1 on average, but its swings are so large that 5% positions lose almost everything. <strong>Lesson:</strong> only steady strategies can carry big positions.</p>
       </article>
       <article class="card attempt">
-        <div class="att-head"><span class="att-n">Round 10 &middot; Exp. 12</span><span class="verdict no">Not robust</span></div>
-        <h3>Reference system rebuilt &middot; single-stock options</h3>
+        <div class="att-head"><span class="att-n">Round 10 &middot; <a href="#d12">Experiment 12</a></span><span class="verdict no">Not robust</span></div>
+        <h3><span style="color:var(--muted);font-weight:600">Experiment 12:</span> Reference system rebuilt &middot; single-stock options</h3>
         <p><strong>Idea:</strong> rebuild the reference system faithfully &mdash; single-stock options, multi-day holds, the 5&times;200 network, a big-winner version &mdash; plus a set-transformer successor (SetLift).</p>
         <dl class="att-res"><div><dt>Sealed 2026 test (SetLift, 5% sizing)</dt><dd class="neg">$5,737 in 10 months</dd></div><div><dt>Quality (Sharpe)</dt><dd class="pos">1.53 (2026) &middot; 0.27 (2022&ndash;25)</dd></div></dl>
         <p class="att-why"><strong>Why:</strong> the reference&rsquo;s fat-right-tail pattern is reproducible, but whether it pays depends on the market regime: strong in 2025&ndash;26, negative in 2022&ndash;24. <strong>Lesson:</strong> needs a regime filter and cheaper (limit-order) execution before it can be trusted.</p>
       </article>
       <article class="card attempt">
-        <div class="att-head"><span class="att-n">Round 9 &middot; Exp. 11</span><span class="verdict no">No progress</span></div>
-        <h3>TrendPremium &middot; sell calls when the market falls</h3>
+        <div class="att-head"><span class="att-n">Round 9 &middot; <a href="#d11">Experiment 11</a></span><span class="verdict no">No progress</span></div>
+        <h3><span style="color:var(--muted);font-weight:600">Experiment 11:</span> TrendPremium &middot; sell calls when the market falls</h3>
         <p><strong>Idea:</strong> keep the monthly spreads but switch to call spreads in falling markets, chosen by a small transformer or the 200-day trend rule.</p>
         <dl class="att-res"><div><dt>$10,000 became</dt><dd>$82,973 (best version)</dd></div><div><dt>Quality (Sharpe)</dt><dd class="neg">0.78 vs 1.04</dd></div></dl>
         <p class="att-why"><strong>Why:</strong> call spreads lose in a rising decade; the trend switch helps in 2018/2022 but whipsaws. <strong>Lesson:</strong> manage bad months with position size, not by flipping side.</p>
       </article>
       <article class="card attempt">
-        <div class="att-head"><span class="att-n">Round 8 &middot; Exp. 10</span><span class="verdict no">No progress</span></div>
-        <h3>PremiumBreadth &middot; more legs on single stocks</h3>
+        <div class="att-head"><span class="att-n">Round 8 &middot; <a href="#d10">Experiment 10</a></span><span class="verdict no">No progress</span></div>
+        <h3><span style="color:var(--muted);font-weight:600">Experiment 10:</span> PremiumBreadth &middot; more legs on single stocks</h3>
         <p><strong>Idea:</strong> use the rest of the 50% risk budget: add up to five monthly put spreads on large liquid stocks, picked by a set transformer.</p>
         <dl class="att-res"><div><dt>$10,000 became</dt><dd>$17,201 (vs $31,999 without)</dd></div><div><dt>Quality (Sharpe)</dt><dd class="neg">0.60 vs 0.82</dd></div></dl>
         <p class="att-why"><strong>Why:</strong> stock put spreads break even at best and lose in the same falls as the index legs; the model had no skill. <strong>Lesson:</strong> add legs that earn in <em>different</em> months.</p>
       </article>
       <article class="card attempt">
-        <div class="att-head"><span class="att-n">Round 7 &middot; Exp. 9</span><span class="verdict ok">L0 passed (dev)</span></div>
-        <h3>MonthlyPremium &middot; slower premium + Elastic Net</h3>
+        <div class="att-head"><span class="att-n">Round 7 &middot; <a href="#d9">Experiment 9</a></span><span class="verdict ok">L0 passed; L2 at 5% (dev)</span></div>
+        <h3><span style="color:var(--muted);font-weight:600">Experiment 9:</span> MonthlyPremium &middot; slower premium + Elastic Net</h3>
         <p><strong>Idea:</strong> sell put spreads once a month instead of weekly, keep the choice fixed, and run them in the same account as Elastic Net; a small transformer only decides whether to sell.</p>
         <dl class="att-res"><div><dt>$10,000 became</dt><dd class="pos">$203,352 (vs $51,946)</dd></div><div><dt>Quality (Sharpe)</dt><dd class="pos">1.04 vs 0.68 needed</dd></div></dl>
         <p class="att-why"><strong>Why:</strong> monthly spreads earn +5&ndash;13% of their risk per trade and move independently of Elastic Net; on fresh 2026 SPY data they stayed positive. At 5% per position this reaches +0.12% a day (L2), with drops of about half the account. <strong>Lesson:</strong> the edge is steady enough to carry bigger positions.</p>
       </article>
       <article class="card attempt">
-        <div class="att-head"><span class="att-n">Round 6 &middot; Exp. 8</span><span class="verdict no">Below L0</span></div>
-        <h3>PremiumSet &middot; be the option seller</h3>
+        <div class="att-head"><span class="att-n">Round 6 &middot; <a href="#d8">Experiment 8</a></span><span class="verdict no">Below L0</span></div>
+        <h3><span style="color:var(--muted);font-weight:600">Experiment 8:</span> PremiumSet &middot; be the option seller</h3>
         <p><strong>Idea:</strong> sell weekly loss-capped put and call spreads on SPY, QQQ and IWM, held to expiry; a set transformer picks which of ~100 spreads to sell.</p>
         <dl class="att-res"><div><dt>$10,000 became</dt><dd class="pos">Best: $41,961 (rule + EN) &middot; model $0</dd></div><div><dt>Quality (Sharpe)</dt><dd>0.62 vs 0.68 needed</dd></div></dl>
         <p class="att-why"><strong>Why:</strong> the weekly premium is about the size of the bid/ask spread, and the transformer&rsquo;s top picks were its noisiest candidates. <strong>Lesson:</strong> put spreads diversify Elastic Net; trade less often.</p>
       </article>
       <article class="card attempt">
-        <div class="att-head"><span class="att-n">Round 5 &middot; Exp. 7</span><span class="verdict no">Below L0</span></div>
-        <h3>RegimeGate &middot; learn when to be invested</h3>
+        <div class="att-head"><span class="att-n">Round 5 &middot; <a href="#d7">Experiment 7</a></span><span class="verdict no">Below L0</span></div>
+        <h3><span style="color:var(--muted);font-weight:600">Experiment 7:</span> RegimeGate &middot; learn when to be invested</h3>
         <p><strong>Idea:</strong> combine the two best strategies and let a transformer switch each on or off every week from 26 weeks of market history.</p>
         <dl class="att-res"><div><dt>$10,000 became</dt><dd class="pos">Best: $40,402 (always on) &middot; model $13,067</dd></div><div><dt>Quality (Sharpe)</dt><dd>0.66 vs 0.68 needed</dd></div></dl>
         <p class="att-why"><strong>Why:</strong> switches stayed out too often and missed rallies; both strategies lose in the same weeks. <strong>Lesson:</strong> week-by-week timing is noise.</p>
       </article>
       <article class="card attempt">
-        <div class="att-head"><span class="att-n">Round 4 &middot; Exp. 6</span><span class="verdict no">Below L0</span></div>
-        <h3>LeverSet &middot; stock picks through calls</h3>
+        <div class="att-head"><span class="att-n">Round 4 &middot; <a href="#d6">Experiment 6</a></span><span class="verdict no">Below L0</span></div>
+        <h3><span style="color:var(--muted);font-weight:600">Experiment 6:</span> LeverSet &middot; stock picks through calls</h3>
         <p><strong>Idea:</strong> rank ~140 stocks monthly on slow signals and buy deep in-the-money calls on the top 10.</p>
         <dl class="att-res"><div><dt>$10,000 became</dt><dd class="pos">Best: $8,157</dd></div><div><dt>Quality (Sharpe)</dt><dd>0.44</dd></div></dl>
         <p class="att-why"><strong>Why:</strong> the ranking had no skill; gains were market exposure. <strong>Lesson:</strong> public stock signals show no edge in large liquid stocks.</p>
       </article>
       <article class="card attempt">
-        <div class="att-head"><span class="att-n">Round 3 &middot; Exp. 5</span><span class="verdict no">No edge</span></div>
-        <h3>VolSet &middot; single-stock volatility</h3>
+        <div class="att-head"><span class="att-n">Round 3 &middot; <a href="#d5">Experiment 5</a></span><span class="verdict no">No edge</span></div>
+        <h3><span style="color:var(--muted);font-weight:600">Experiment 5:</span> VolSet &middot; single-stock volatility</h3>
         <p><strong>Idea:</strong> weekly delta-hedged straddles and butterflies on ~140 stocks, chosen by a set transformer.</p>
         <dl class="att-res"><div><dt>$10,000 became</dt><dd class="">Best: $9,423</dd></div><div><dt>Quality (Sharpe)</dt><dd>0.02</dd></div></dl>
         <p class="att-why"><strong>Why:</strong> costs exceed volatility edges; a split bug once faked a profit. <strong>Lesson:</strong> every dataset gets a call&ndash;put consistency check.</p>
       </article>
       <article class="card attempt">
-        <div class="att-head"><span class="att-n">Round 2 &middot; Exp. 4</span><span class="verdict no">Below L0</span></div>
-        <h3>DistFormer &middot; forecast, then price</h3>
+        <div class="att-head"><span class="att-n">Round 2 &middot; <a href="#d4">Experiment 4</a></span><span class="verdict no">Below L0</span></div>
+        <h3><span style="color:var(--muted);font-weight:600">Experiment 4:</span> DistFormer &middot; forecast, then price</h3>
         <p><strong>Idea:</strong> forecast the market&rsquo;s whole distribution, then price real options from it and buy the cheapest.</p>
         <dl class="att-res"><div><dt>$10,000 became</dt><dd class="pos">Best: $18,744</dd></div><div><dt>Quality (Sharpe)</dt><dd>0.52</dd></div></dl>
         <p class="att-why"><strong>Why:</strong> the version without any forecast did best. <strong>Lesson:</strong> market direction is close to unforecastable; repricing helps.</p>
       </article>
       <article class="card attempt">
-        <div class="att-head"><span class="att-n">Round 1 &middot; Exp. 3</span><span class="verdict no">Below L0</span></div>
-        <h3>ChainFormer &middot; read the whole chain</h3>
+        <div class="att-head"><span class="att-n">Round 1 &middot; <a href="#d3">Experiment 3</a></span><span class="verdict no">Below L0</span></div>
+        <h3><span style="color:var(--muted);font-weight:600">Experiment 3:</span> ChainFormer &middot; read the whole chain</h3>
         <p><strong>Idea:</strong> a transformer sees every contract at once, with a &ldquo;stay in cash&rdquo; option and a choice of holding period.</p>
         <dl class="att-res"><div><dt>$10,000 became</dt><dd class="pos">Best: $14,274</dd></div><div><dt>Quality (Sharpe)</dt><dd>0.42</dd></div></dl>
         <p class="att-why"><strong>Why:</strong> the full model learned never to trade. <strong>Lesson:</strong> growth-style training makes models too cautious.</p>
       </article>
       <article class="card attempt muted-card">
-        <div class="att-head"><span class="att-n">Before the loop &middot; Exp. 1&ndash;2</span><span class="verdict base">Reference</span></div>
-        <h3>Daily and intraday baselines</h3>
+        <div class="att-head"><span class="att-n">Before the loop &middot; <a href="#d1">Experiments 1&ndash;2</a></span><span class="verdict base">Reference</span></div>
+        <h3><span style="color:var(--muted);font-weight:600">Experiments 1&ndash;2:</span> Daily and intraday baselines</h3>
         <p><strong>Idea:</strong> six model types on daily SPY/QQQ options, then 15-minute intraday decisions on audited minute data.</p>
         <dl class="att-res"><div><dt>$10,000 became</dt><dd class="pos">EN $51,946 &middot; intraday $7,312</dd></div><div><dt>Quality (Sharpe)</dt><dd>0.75* (EN)</dd></div></dl>
         <p class="att-why"><strong>Lesson:</strong> beat &ldquo;always buy a call&rdquo;, not zero; intraday costs wipe out every signal.</p>
