@@ -304,6 +304,11 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
       <li><b>Picking the top-rated of many noisy options picks the riskiest.</b>Forecasts must be shrunk or the menu kept small (Experiment 8).</li>
       <li><b>Selling options diversifies.</b>Put spreads move independently of the benchmark, but weekly premium barely covers costs; monthly does better.</li>
       <li><b>Change the view, not just the model.</b>The first milestone came from trading monthly and combining unrelated edges (Experiment 9), not from a bigger model.</li>
+      <li><b>Price every exit.</b>Experiment 16 looked brilliant (Sharpe 2.6) until we found that trades with a missing closing price had been skipped; a missing price now counts as $0.</li>
+      <li><b>Freeze the design before trusting a result.</b>SetLift&rsquo;s gains vanished when its hold period was fixed in advance (Experiment 15: 6 of 9 runs positive, needed 7).</li>
+      <li><b>Use the longest history available.</b>Momentum calls looked strong on 2022&ndash;2025 but earned about nothing over 2016&ndash;2025 (Experiment 17a).</li>
+      <li><b>Ranking beats regression for picking trades</b>&mdash; but no ranker has yet passed on unbiased data (Experiments 12 and 16).</li>
+      <li><b>Steady growth is now a goal.</b>Every model is also judged on months up and losing years; the steadiest so far (Experiment 9, 89 of 120 months up) still had two losing years.</li>
       <li><b>Big positions punish volatility.</b>At 5% per position, steady strategies (Experiment 9) grow ~10&times; faster, but strategies that win only one trade in three are wiped out by losing streaks.</li>
       <li><b>The risk limits are tight on purpose.</b>Even with up to 50% of the account at risk (charter v1.9), +5% a day would need about +10% a day on the money at risk; the ladder tracks realistic progress.</li>
     </ol>
