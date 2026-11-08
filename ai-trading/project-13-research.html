@@ -101,6 +101,13 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
     <h2>Current loop: until the first milestone</h2>
     <p class="howread" style="max-width:780px">Since Nov 7, 2026 the research runs as a loop: learn from every model and from outside research, design a new model, write its plan before running it, test it on 2019–2024 at real fills, record why it worked or not, and repeat. A model reaching M1 gets one test on unseen data; only a pass there counts. The view of the problem changes when progress stalls.</p>
     <div class="loopcards">
+      <article class="card attempt" id="att10">
+        <div class="att-head"><span class="att-n">Attempt 10</span><span class="verdict no">Rejected</span></div>
+        <h3>A12-v4 &middot; Market-heat gate</h3>
+        <p><strong>Idea:</strong> research says intraday edges concentrate in hot, uncertain markets, so trade breakouts only on days when the recent number of breakouts is above (or below) normal, chosen on validation years.</p>
+        <dl class="att-res"><div><dt>2019–2024</dt><dd class="neg">−$6.85 per $1,000</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
+        <p class="att-why"><strong>Why:</strong> the gate that looked best in each validation year did not carry over to the next year. <strong>Lesson:</strong> with a few hundred trades a year, every extra rule chosen on validation adds noise.</p>
+      </article>
       <article class="card attempt" id="att9">
         <div class="att-head"><span class="att-n">Attempt 9</span><span class="verdict no">Rejected</span></div>
         <h3>A12-v3 &middot; Volatility-aware stop</h3>
@@ -498,6 +505,7 @@ var MODELS=[
  {n:"#4 D3",stage:3,name:"New stock sets (no model)",idea:"1,080 long designs on opening flushes, gap-ups that hold, gap-down reversals and liquid stocks in play.",dev:-0.33,un:null,v:["no","Rejected"],lesson:"Only gap-ups that hold keep rising (+0.68% before costs), still below cost.",note:"best design, 2016–2018"},
  {n:"#5 A12",stage:3,name:"Model on gap-up holders",idea:"Select among gap-ups that hold and break their opening range, so the best trades clear costs.",dev:-0.394,un:null,v:["no","Rejected"],lesson:"First reliable gain over its baseline (+0.81% per trade); the average breakout faded after 2018, so selection must be stricter."},
  {n:"#8 A12-v2",stage:3,name:"Gap-up holders, stricter selection",idea:"A12 trading only the breakouts it is most sure of, with the threshold chosen on each validation year.",dev:-0.164,un:null,v:["no","Rejected"],lesson:"Stricter selection helps (+0.34% at 0.25% cost, best honest result); one year carries it, so the exit is next."},
+ {n:"#10 A12-v4",stage:3,name:"Gap-up holders, market-heat gate",idea:"Trade breakouts only on days the recent market looks 'hot' (or not), chosen on validation years.",dev:-0.685,un:null,v:["no","Rejected"],lesson:"Rules picked on a single validation year overfit; the gate did not carry over."},
  {n:"#9 A12-v3",stage:3,name:"Gap-up holders, volatility-aware stop",idea:"A12-v2 with the stop chosen on validation years, including stops scaled to each stock's daily move.",dev:-0.181,un:null,v:["no","Rejected"],lesson:"Tight stops hurt these stocks, but wider ones add nothing: the exit is not the bottleneck."},
  {n:"#7 A14",stage:3,name:"Tail-Asymmetry Transformer",idea:"Chance of a 2%+ rise minus chance of a 2%+ fall in the next hour, so volatility cancels and only the direction of big moves counts.",dev:-0.527,un:null,v:["no","Rejected"],lesson:"Even the best moments of stocks that ran 10%+ barely rise on real prices: this stock set is exhausted for long trades."},
  {n:"#6 A13",stage:3,name:"Pretrained candle transformer",idea:"Learns how candles behave from 50,000 unlabelled stock-days (2016–2018), then learns the honest timing task. Inspired by finance foundation models (Kronos).",dev:-0.780,un:null,v:["no","Rejected"],lesson:"Better average ranking, worse top picks: for one trade a day only the extreme tail counts."}
