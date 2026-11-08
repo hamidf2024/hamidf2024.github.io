@@ -101,6 +101,13 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
     <h2>Current loop: until the first milestone</h2>
     <p class="howread" style="max-width:780px">Since Nov 7, 2026 the research runs as a loop: learn from every model and from outside research, design a new model, write its plan before running it, test it on 2019–2024 at real fills, record why it worked or not, and repeat. A model reaching M1 gets one test on unseen data; only a pass there counts. The view of the problem changes when progress stalls.</p>
     <div class="loopcards">
+      <article class="card attempt" id="att12">
+        <div class="att-head"><span class="att-n">Attempt 12</span><span class="verdict no">Rejected</span></div>
+        <h3>D4 &middot; Catch the run</h3>
+        <p><strong>Idea:</strong> change of view: every model so far entered after the opening move. D4 buys gap-ups in the first 1–5 minutes, while a 10%+ run (ten times the cost) is still ahead, including the literature's 5-minute breakout and relative-volume selection.</p>
+        <dl class="att-res"><div><dt>2016–2018 design years</dt><dd class="neg">0 of 144 pass &middot; best −0.77%</dd></div><div><dt>Unseen</dt><dd>not run</dd></div></dl>
+        <p class="att-why"><strong>Why:</strong> early entries catch the runs, but just as many gap-ups fade straight from the open, so they lose even before costs. <strong>Lesson:</strong> the first minutes show how active a stock will be, not which way it goes.</p>
+      </article>
       <article class="card attempt" id="c1">
         <div class="att-head"><span class="att-n">Study (owner question)</span><span class="verdict base">Finding</span></div>
         <h3>C1 &middot; Stocks up 20%+ by 09:45: who keeps running?</h3>
@@ -520,13 +527,14 @@ var MODELS=[
  {n:"#4 D3",stage:3,name:"New stock sets (no model)",idea:"1,080 long designs on opening flushes, gap-ups that hold, gap-down reversals and liquid stocks in play.",dev:-0.33,un:null,v:["no","Rejected"],lesson:"Only gap-ups that hold keep rising (+0.68% before costs), still below cost.",note:"best design, 2016–2018"},
  {n:"#5 A12",stage:3,name:"Model on gap-up holders",idea:"Select among gap-ups that hold and break their opening range, so the best trades clear costs.",dev:-0.394,un:null,v:["no","Rejected"],lesson:"First reliable gain over its baseline (+0.81% per trade); the average breakout faded after 2018, so selection must be stricter."},
  {n:"#8 A12-v2",stage:3,name:"Gap-up holders, stricter selection",idea:"A12 trading only the breakouts it is most sure of, with the threshold chosen on each validation year.",dev:-0.164,un:null,v:["no","Rejected"],lesson:"Stricter selection helps (+0.34% at 0.25% cost, best honest result); one year carries it, so the exit is next."},
+ {n:"#12 D4",stage:3,name:"Catch the run (no model)",idea:"Change of view: buy gap-ups in the first 1–5 minutes, before the run, instead of after it.",dev:-0.77,un:null,v:["no","Rejected"],lesson:"Early entries catch runs and fades equally; entering earlier does not create direction.",note:"best design, 2016–2018"},
  {n:"#11 A12-v5",stage:3,name:"Gap-up holders, trained on all gap-ups",idea:"A12-v2 trained on all 10,324 gap-up breakouts (twice the data), still trading only holders.",dev:-0.311,un:null,v:["no","Rejected"],lesson:"More data from a related set improved average ranking, not the top picks."},
  {n:"#10 A12-v4",stage:3,name:"Gap-up holders, market-heat gate",idea:"Trade breakouts only on days the recent market looks 'hot' (or not), chosen on validation years.",dev:-0.685,un:null,v:["no","Rejected"],lesson:"Rules picked on a single validation year overfit; the gate did not carry over."},
  {n:"#9 A12-v3",stage:3,name:"Gap-up holders, volatility-aware stop",idea:"A12-v2 with the stop chosen on validation years, including stops scaled to each stock's daily move.",dev:-0.181,un:null,v:["no","Rejected"],lesson:"Tight stops hurt these stocks, but wider ones add nothing: the exit is not the bottleneck."},
  {n:"#7 A14",stage:3,name:"Tail-Asymmetry Transformer",idea:"Chance of a 2%+ rise minus chance of a 2%+ fall in the next hour, so volatility cancels and only the direction of big moves counts.",dev:-0.527,un:null,v:["no","Rejected"],lesson:"Even the best moments of stocks that ran 10%+ barely rise on real prices: this stock set is exhausted for long trades."},
  {n:"#6 A13",stage:3,name:"Pretrained candle transformer",idea:"Learns how candles behave from 50,000 unlabelled stock-days (2016–2018), then learns the honest timing task. Inspired by finance foundation models (Kronos).",dev:-0.780,un:null,v:["no","Rejected"],lesson:"Better average ranking, worse top picks: for one trade a day only the extreme tail counts."}
 ];
-var STATUS="Best honest result: A12-v2, −0.16% per trade at 0.5% cost · M1 not yet confirmed · loop continues";
+var STATUS="12 loop attempts · best honest result A12-v2 (−0.16% per trade at 0.5% cost) · M1 not yet reached";
 /* ======================================================================================================== */
 function money(v){return v===null?"—":(v<0?"−$":"+$")+Math.abs(v*10).toFixed(2);}
 function cls(v){return v===null?"":(v>0?"pos":"neg");}
