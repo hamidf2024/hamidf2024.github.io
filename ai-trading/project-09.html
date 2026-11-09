@@ -162,6 +162,14 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
         <p style="margin-bottom:0">Option costs vary widely: the typical gap between bid and ask is <strong>10.6%</strong> of the option&rsquo;s price, from 1.4% on SPY to over 60% on the least liquid names. Costs will be modelled per stock.</p>
       </div>
     </div>
+    <div class="card" style="margin-top:16px;border-left:4px solid var(--accent)">
+      <h3>How much to trust each result: which data it used (Nov 9, 2026)</h3>
+      <ul style="margin-bottom:0">
+        <li>Results from the <strong>SPY/QQQ/IWM end-of-day file</strong> and from <strong>QuantConnect</strong> are trustworthy.</li>
+        <li>Results from <strong>DoltHub</strong> (Experiments 5, 6, 10, 12, 13, 22, and the stock part of 14 and 15) are weaker. Many of their exit prices had to be estimated because the option wasn&rsquo;t in DoltHub on the exit day; in Experiment 22, 95% of exits were estimated. That&rsquo;s one reason Experiment 17 later re-tested several of them on QuantConnect&rsquo;s real quotes, where most did worse.</li>
+        <li>From now on, &ldquo;daily data&rdquo; always names its source: either &ldquo;daily (SPY/QQQ/IWM file)&rdquo; or &ldquo;daily (DoltHub)&rdquo;.</li>
+      </ul>
+    </div>
     <div class="card" style="margin-top:16px;border-left:4px solid var(--warn)">
       <h3>Intraday option quotes: sources checked &mdash; QuantConnect chosen</h3>
       <p>Two searches of more than 25 sources (vendors, GitHub, Kaggle, community databases) found these routes:</p>
