@@ -167,7 +167,7 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
       <ul style="margin-bottom:0">
         <li>Results from the <strong>SPY/QQQ/IWM end-of-day file</strong> and from <strong>QuantConnect</strong> are trustworthy.</li>
         <li>Results from <strong>DoltHub</strong> (Experiments 5, 6, 10, 12, 13, 22, and the stock part of 14 and 15) are weaker. Many of their exit prices had to be estimated because the option wasn&rsquo;t in DoltHub on the exit day; in Experiment 22, 95% of exits were estimated. That&rsquo;s one reason Experiment 17 later re-tested several of them on QuantConnect&rsquo;s real quotes, where most did worse.</li>
-        <li>From now on, &ldquo;daily data&rdquo; always names its source: either &ldquo;daily (SPY/QQQ/IWM file)&rdquo; or &ldquo;daily (DoltHub)&rdquo;.</li>
+        <li><strong>From now on, daily models use only the SPY/QQQ/IWM file</strong>, and every result names its source (&ldquo;daily (SPY/QQQ/IWM file)&rdquo;). DoltHub is no longer used; the experiments that relied on it will be redone on the SPY/QQQ/IWM file.</li>
       </ul>
     </div>
     <div class="card" style="margin-top:16px;border-left:4px solid var(--warn)">
