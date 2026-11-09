@@ -425,7 +425,7 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
         <li><strong>QuantConnect standard test:</strong> the same stocks (index list SPY, QQQ, IWM; stock list = the 24 large stocks), the same years (train from 2012, test 2016&ndash;2025, 2026 kept sealed for the best models), one decision a day at 2 PM ET, buy at the ask and sell at the bid with fees, every exit at a real quote, $10,000 with 5% per position, and the same benchmarks in every run.</li>
         <li><strong>Daily models:</strong> only the saved SPY/QQQ/IWM file.</li>
         <li><strong>Cross-check:</strong> index models run on both sources. Similar results mean a robust model; a big gap means it depends on the exact trading time (like the 1-day Elastic Net: +0.6% a trade daily, &minus;2.2% at 2 PM).</li>
-        <li><strong>Order:</strong> write the standard and one shared program &rarr; redo the DoltHub experiments on the saved file &rarr; re-run the Top 10 and the gated put spread on the QuantConnect standard (older results stay, marked &ldquo;pre-standard&rdquo;) &rarr; new models.</li>
+        <li><strong>Order:</strong> (1) redo on the saved SPY/QQQ/IWM file every experiment that didn&rsquo;t use it &mdash; the DoltHub experiments <em>and</em> the QuantConnect experiments (2, 16&ndash;21); models built to pick among many stocks will rank options within the SPY, QQQ and IWM chains instead &rarr; (2) rank every model on that one file and pick the new Top 10 &rarr; (3) run only those Top 10 on the QuantConnect standard test. Older results stay, marked &ldquo;pre-standard&rdquo;.</li>
       </ul></div>
   </section>
   <section id="details">
