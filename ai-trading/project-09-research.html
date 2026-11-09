@@ -429,6 +429,14 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
         <li><strong>Cross-check:</strong> index models run on both sources. Similar results mean a robust model; a big gap means it depends on the exact trading time (like the 1-day Elastic Net: +0.6% a trade daily, &minus;2.2% at 2 PM).</li>
         <li><strong>Order:</strong> (1) redo on the saved SPY/QQQ/IWM file every experiment that didn&rsquo;t use it &mdash; the DoltHub experiments <em>and</em> the QuantConnect experiments (2, 16&ndash;21); models built to pick among many stocks will rank options within the SPY, QQQ and IWM chains instead &rarr; (2) rank every model on that one file and pick the new Top 10 &rarr; (3) run only those Top 10 on the QuantConnect standard test. Older results stay, marked &ldquo;pre-standard&rdquo;.</li>
       </ul></div>
+      <div class="card" style="margin-top:12px;border-left:4px solid var(--loss)"><p style="margin:0 0 6px"><strong>Down markets (Nov 9, 2026).</strong> Our best strategies win when the market rises or stays calm and lose in declines: in 2022 the put spread lost 17% (end-of-day) to 42% (2 PM quotes) and momentum calls 44&ndash;87%. From the redo on, every model must also handle falls:</p>
+      <ul style="margin:0">
+        <li><strong>Judge the downside:</strong> every model reports its worst year and its results in 2008, 2018, 2020 and 2022.</li>
+        <li><strong>Test 2008&ndash;2025</strong> on the saved SPY/QQQ/IWM file, so each model faces two bear markets.</li>
+        <li><strong>Standard market gate:</strong> the 200-day trend plus the VIX term structure (short-term fear above 3-month fear); every model tested with and without it.</li>
+        <li><strong>Protection over prediction:</strong> call spreads, cash or a cheap put hedge in downtrends, rather than trying to time the fall exactly.</li>
+        <li><strong>Profit from falls (two-way design):</strong> predict up / down / unclear and pick the trade &mdash; sell a put spread, sell a call spread or buy a put spread, or stay in cash. The Experiment 11 trend rule already did this: +53% in 2022 with Elastic Net, but false signals cost it in choppy years (2016 &minus;8%, 2023 &minus;24%).</li>
+      </ul></div>
   </section>
   <section id="details">
     <h2>Details &amp; charts</h2>
