@@ -413,8 +413,9 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
       <li><b>Test the same strategy on two data sources.</b>Experiment 9 (end-of-day) and 20a (2 PM quotes): the monthly put spread agreed closely (month-by-month correlation 0.95), but the one-day Elastic Net earned +0.6% a trade at the close and lost 2.2% at 2 PM &mdash; a timing-sensitive model.</li>
       <li><b>Choose the number of underlyings on purpose.</b>Three index funds are cheap, steady and well tested but give few trades tied to the market; 24 stocks add stock-picking at higher cost and risk; 100+ stocks add choice but also lucky results and heavy computing (see the Data section).</li>
       <li><b>Graphs help only against random picks.</b>On real 2 PM quotes the option-chain graph beat random options but not a plain ranker, and its daily promise (Experiment 22) did not survive real exits (Experiment 21).</li>
+      <li><b>Long computer jobs must save as they go.</b>A two-hour model run was stopped by the computing time limit minutes before it finished and lost everything; every long run now saves after each test year and resumes from there.</li>
     </ol>
-    <p class="howread" style="margin-top:12px">Full record of every model&rsquo;s pros, cons and lesson (68 lessons): <code>docs/LESSONS_LEARNED_MODELS.md</code> in the project repository.</p>
+    <p class="howread" style="margin-top:12px">Full record of every model&rsquo;s pros, cons and lesson (69 lessons): <code>docs/LESSONS_LEARNED_MODELS.md</code> in the project repository.</p>
   </section>
   <section id="method">
     <h2>How we test</h2>
