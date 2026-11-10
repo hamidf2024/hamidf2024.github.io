@@ -197,6 +197,12 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
     <p class="howread" style="max-width:780px">Since Nov 7, 2026 the research runs as a loop: learn from every model and from outside research, design a new model, write its test plan before running it, test it on unseen years, publish the result here and record why it worked or not. After rounds without progress, the view of the problem changes (trade type, horizon, instruments), not just the model. Newest first.</p>
     <div class="loopcards">
       <article class="card attempt">
+        <div class="att-head"><span class="att-n">Round 58 &middot; Experiment 36 (rates signal)</span><span class="verdict base">Not run</span></div>
+        <h3><span style="color:var(--muted);font-weight:600">Experiment 36:</span> &ldquo;Don&rsquo;t fight the Fed&rdquo;</h3>
+        <p><strong>Idea:</strong> falls during monetary tightening tend to last (2022), others tend to reverse (2015); use the 3-month T-bill yield to switch on the downtrend layer.</p>
+        <p class="att-why"><strong>Why not run:</strong> in the saved data the signal fires only in 2022&ndash;2023, with no earlier tightening to check it on, so a test would fit 2022 by construction. <strong>Lesson:</strong> check how often a signal fires before testing it.</p>
+      </article>
+      <article class="card attempt">
         <div class="att-head"><span class="att-n">Round 57 &middot; <a href="#exp35">Experiment 35 (SchmittTrend)</a></span><span class="verdict no">No pass</span></div>
         <h3><span style="color:var(--muted);font-weight:600">Experiment 35:</span> A Schmitt-trigger switch for the downtrend layer</h3>
         <p><strong>Idea:</strong> sell call spreads only once the price is clearly below its 200-day average, and stop only once it is clearly back above.</p>
@@ -668,8 +674,9 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
       <li><b>The later entries in a panic are the ones that catch the rebound.</b>Capping open fear calls softened the worst month but cut growth to $0.4&ndash;1.1 million and made 2022 worse.</li>
       <li><b>Four bid&ndash;ask crossings per round trip can be bigger than the edge.</b>Long call calendars lost 11% per 10-day trade and reverse calendars 4% on SPY/QQQ after costs.</li>
       <li><b>Hysteresis stops chatter around a line, not false breaks.</b>A Schmitt-trigger switch removed only 7 of 54 downtrend call spreads; the 2015&ndash;2016 falls looked like 2022 at first.</li>
+      <li><b>Check how often a signal fires before testing it.</b>A Fed-tightening signal fires only in 2022&ndash;2023 in the saved data, so a test would just fit 2022; it was not run (Experiment 36).</li>
     </ol>
-    <p class="howread" style="margin-top:12px">Full record of every model&rsquo;s pros, cons and lesson (97 lessons): <code>docs/LESSONS_LEARNED_MODELS.md</code> in the project repository.</p>
+    <p class="howread" style="margin-top:12px">Full record of every model&rsquo;s pros, cons and lesson (98 lessons): <code>docs/LESSONS_LEARNED_MODELS.md</code> in the project repository.</p>
   </section>
   <section id="method">
     <h2>How we test</h2>
