@@ -2084,7 +2084,7 @@ function drawP(){var host=document.getElementById('progchart');if(!host)return;v
  items.forEach(function(it,i){var y=T+i*rowH;
   if(it.stage){g+='<text class="stage" x="0" y="'+(y+rowH-7)+'">'+(narrow?'Exp. '+it.stage:ST[it.stage].replace('&middot;','·').replace('&amp;','&'))+'</text>';return;}
   var name=it.n.replace(/&times;/g,'×').replace(/&ndash;/g,'–');if(name.length>(narrow?18:36))name=name.slice(0,narrow?17:35)+'…';
-  g+='<text class="lbl" x="0" y="'+(y+rowH/2+4)+'"'+(it.f==='Q'?' style="fill:#4fb3f6"':'')+'>'+name+'</text>';
+  g+='<text class="lbl" x="0" y="'+(y+rowH/2+4)+'"'+(it.f==='Q'?' style="fill:#a9dcfb"':'')+'>'+name+'</text>';
   var x0=x(Math.min(10000,it.v)),x1=x(Math.max(10000,it.v)),col=(it.vt.indexOf('Benchmark')>=0||/Defines L0|^L[0-3]|Holds up/.test(it.vt))?css('--good'):css(it.v>10000?'--gain':'--loss');
   g+='<rect x="'+x0+'" y="'+(y+5)+'" width="'+Math.max(2,x1-x0)+'" height="'+(rowH-10)+'" rx="3" fill="'+col+'"><title>'+name+': $'+it.v.toLocaleString()+'</title></rect>';
   var ptx=(it.pt===null||it.pt===undefined)?'':' · '+(it.pt>0?'+':'')+it.pt.toFixed(1)+'%/trade';g+='<text class="val" x="'+(it.v>10000?x1+5:x0-5)+'" y="'+(y+rowH/2+4)+'" text-anchor="'+(it.v>10000?'start':'end')+'">$'+it.v.toLocaleString()+ptx+'</text>';});
