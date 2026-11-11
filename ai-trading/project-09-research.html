@@ -967,8 +967,9 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
       <li><b>Decide what counts as untouched data before the experiment.</b>After Experiment 64 the owner judged 2012 a training year and placed three accounts as overrides. That leaves no year the selection has not seen, so those accounts rest on in-sample evidence until they are tested on QuantConnect quotes or forward in time; a rule changed after the result is an override, not a pass.</li>
       <li><b>Blend the exits, not only the entries.</b>Selling each fear call in thirds (+50%, +100%, held 10 days) gave Anchor: S1 in all 12 years under the robust measure with Sharpe 2.19, and it passed. Averaging the ten best models instead cut S1 from 12 years to 10, because S1 is a count with thresholds.</li>
       <li><b>When no blind year is left, repeat the selection without each year.</b>Leave-one-year-out accounts kept 83&ndash;95% of the growth in Experiment 65. And when the target sits a hair outside a rule (Anchor&rsquo;s design at &times;0.60: L3 with S1 12, 2012 &minus;0.07%), report the margin and leave the rule where it is.</li>
+      <li><b>One design, several sizes.</b>Anchor&rsquo;s design is the steady account at &times;0.45 and reaches L3 with S1 in all 12 years at &times;0.60; size moved growth, drop and the 2012 result, but hardly the S1 count. And a constraint used in selection is met by the smallest margin (2012: +0.1% to +0.4%) &mdash; ask for a margin, and check the drop limit under the same variants as S1.</li>
     </ol>
-    <p class="howread" style="margin-top:12px">Full record of every model&rsquo;s pros, cons and lesson (159 lessons): <code>docs/LESSONS_LEARNED_MODELS.md</code> in the project repository.</p>
+    <p class="howread" style="margin-top:12px">Full record of every model&rsquo;s pros, cons and lesson (162 lessons): <code>docs/LESSONS_LEARNED_MODELS.md</code> in the project repository.</p>
   </section>
   <section id="method">
     <h2>How we test</h2>
