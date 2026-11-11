@@ -840,8 +840,10 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
       <li><b>Risk parity discards an edge that sits where the risk is.</b>Hierarchical risk parity cut the VVIX fear calls to 6&ndash;13% of their size; the account ended at $53,671 despite a &minus;35% worst drop.</li>
       <li><b>The saved file is a faithful stand-in for real quotes.</b>Every layer matched on QuantConnect (monthly correlation 0.87&ndash;0.995); fixed-rule #2 and #6 kept 93% and 86% of their growth.</li>
       <li><b>Optimised weights do not survive a change of data source.</b>The Kelly-weighted #1 fell from $12.3 million to $191,155 on real quotes; fixed rules held.</li>
+      <li><b>Full-Kelly size is fragile to a small loss of edge.</b>50-Q K failed mainly because it runs the fear calls at double size; on real quotes their edge fell from +23.8% to +20.8% a trade, and growth fell far more. Fixed-size #2 and #6 lost only 7&ndash;14% of their growth.</li>
+      <li><b>Run QuantConnect tests the practical way.</b>Subscribe only the contracts a rule needs (the full 2012&ndash;2025 run took 15 minutes), subscribe an hour before the decision, build the calendar from price bars, log compact summaries, and verify one shared accounting module first.</li>
     </ol>
-    <p class="howread" style="margin-top:12px">Full record of every model&rsquo;s pros, cons and lesson (122 lessons): <code>docs/LESSONS_LEARNED_MODELS.md</code> in the project repository.</p>
+    <p class="howread" style="margin-top:12px">Full record of every model&rsquo;s pros, cons and lesson (124 lessons): <code>docs/LESSONS_LEARNED_MODELS.md</code> in the project repository.</p>
   </section>
   <section id="method">
     <h2>How we test</h2>
