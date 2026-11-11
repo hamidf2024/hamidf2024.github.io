@@ -932,8 +932,11 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
       <li><b>The fear-call edge lives at the close of the panic day.</b>No signal looks into the future, but reading the VVIX fear flag one day late cuts Thruster from $48.5M to $0.47M (calls +23.6% vs +3.6% a trade). Trade it at the close with a near-close VVIX reading, and test every rule with signals known at its own decision time.</li>
       <li><b>Test at the time that matches the signal &mdash; and the new accounts still hold.</b>At the last hourly bar (~3:59 PM, no look-ahead) Thruster kept 89% of its daily growth (still L3) and Consilience 89%; every fixed-rule Top 10 account stayed robust, Kelly again did not; the weekly tranches and ~60-day spreads earn on real quotes close to the saved file.</li>
       <li><b>Engineer the payoff, not the forecast.</b>0.25-delta fear calls earned +38.8% a trade vs +23.7% (Lever: +0.338% a day); selling at +50% lifted the win rate to 63% and gave the first account with S1 in all 12 test years (Ratchet; 10&ndash;12 under variants). A learned expected-return model again showed no skill.</li>
+      <li><b>Do not shorten or stop the fear calls.</b>Holding 3&ndash;7 days earned +6% to +16% a trade against +24% for 10 days, and a &minus;50% stop-loss cut the account sevenfold; exit early only on a gain, never on a loss or on the clock.</li>
+      <li><b>A learned sizing model can look right for years and still have no skill.</b>Gradient-boosted trees picked the better fear calls in 2014&ndash;2018 and the worse ones in 2019&ndash;2021 (+23.5% vs +24.0% a trade overall); simple conditions that also hold in never-traded years are worth more.</li>
+      <li><b>Report S1 as a range, not a best case.</b>Ratchet met S1 in 12 of 12 years as run but 10&ndash;11 with nearby targets or a one-day-late sale; test the neighbours and an execution delay before quoting a headline.</li>
     </ol>
-    <p class="howread" style="margin-top:12px">Full record of every model&rsquo;s pros, cons and lesson (140 lessons): <code>docs/LESSONS_LEARNED_MODELS.md</code> in the project repository.</p>
+    <p class="howread" style="margin-top:12px">Full record of every model&rsquo;s pros, cons and lesson (143 lessons): <code>docs/LESSONS_LEARNED_MODELS.md</code> in the project repository.</p>
   </section>
   <section id="method">
     <h2>How we test</h2>
