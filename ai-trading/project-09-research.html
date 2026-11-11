@@ -197,6 +197,13 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
     <p class="howread" style="max-width:780px">Since Nov 7, 2026 the research runs as a loop: learn from every model and from outside research, design a new model, write its test plan before running it, test it on unseen years, publish the result here and record why it worked or not. After rounds without progress, the view of the problem changes (trade type, horizon, instruments), not just the model. Newest first.</p>
     <div class="loopcards">
       <article class="card attempt">
+        <div class="att-head"><span class="att-n">Round 71 &middot; <a href="#exp49">Experiment 49 (overfitting audit)</a></span><span class="verdict ok">Ranking robust; Sharpe unproven</span></div>
+        <h3><span style="color:var(--muted);font-weight:600">Experiment 49:</span> How much of the Top 10 is likely real?</h3>
+        <p><strong>Idea:</strong> deflated Sharpe ratio and probability of backtest overfitting over all 240 saved-file accounts.</p>
+        <dl class="att-res"><div><dt>Overfitting probability</dt><dd class="pos">0.029 (low)</dd></div><div><dt>Deflated Sharpe &ge; 0.95</dt><dd class="neg">none of the Top 10</dd></div></dl>
+        <p class="att-why"><strong>Why:</strong> winners hold up across time, but 12 years with crash tails cannot prove a Sharpe of 2 after ~240 tries. <strong>Lesson:</strong> expect live Sharpe well below 2.</p>
+      </article>
+      <article class="card attempt">
         <div class="att-head"><span class="att-n">Round 70 &middot; <a href="#exp48">Experiment 48 (VRP gate + shock pause)</a></span><span class="verdict bad">No pass (stage 1)</span></div>
         <h3><span style="color:var(--muted);font-weight:600">Experiment 48:</span> Sell only when volatility is overpriced</h3>
         <p><strong>Idea:</strong> from the research review &mdash; open put spreads only with a positive variance risk premium; pause after shocks (Hawkes).</p>
@@ -775,8 +782,9 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
       <li><b>Neither green-month probability nor Kelly growth alone fits the goal.</b>Probability-max gave 123/144 positive months but $12,079; Kelly gave $1.53 billion on paper with a &minus;77% drop and broke the 50% cap.</li>
       <li><b>A hand-built account beats walk-forward optimisation over the same layers.</b>Under a 75% floor and the 50% cap the optimiser matched Top 10 #5 on months and S1 years but made $313,258 vs $5.04 million.</li>
       <li><b>Negative VRP and shock clustering warn about open positions, not new spreads.</b>Spreads sold after shocks earned the most on 2011&ndash;2013 (+10.1% vs +2.1%); skipping them cut Top 10 #5 to 90&ndash;103 positive months.</li>
+      <li><b>A robust ranking is not a proven Sharpe level.</b>Overfitting probability was low (0.03), but no Top 10 account reached a deflated Sharpe of 0.95; expect live results well below the back-tests.</li>
     </ol>
-    <p class="howread" style="margin-top:12px">Full record of every model&rsquo;s pros, cons and lesson (113 lessons): <code>docs/LESSONS_LEARNED_MODELS.md</code> in the project repository.</p>
+    <p class="howread" style="margin-top:12px">Full record of every model&rsquo;s pros, cons and lesson (114 lessons): <code>docs/LESSONS_LEARNED_MODELS.md</code> in the project repository.</p>
   </section>
   <section id="method">
     <h2>How we test</h2>
@@ -2591,6 +2599,18 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
     <p style="margin-bottom:0"><strong>Top 10 check:</strong> no change. Full table: <code>results/EXP48_VRPSHOCK_RESULTS_2026-11-11.md</code>.</p></div>
       </div>
     </details>
+    <details class="detail p9s" id="d49">
+      <summary>Experiment 49: overfitting audit of the Top 10 (deflated Sharpe ratio and probability of backtest overfitting) &mdash; result</summary>
+      <div class="dsec">
+<h3 class="subhead" id="exp49">Experiment 49 &mdash; how much of the Top 10 is likely real?</h3>
+    <p class="lead-s" style="margin-top:0">Run Nov 11, 2026 on all 240 saved-file accounts with daily results for 2014&ndash;2025 (effective number of independent trials: 12.9). Two standard tests from the research review: the probability of backtest overfitting (12,870 splits of the years into two halves) and the deflated Sharpe ratio, which asks whether each Top 10 Sharpe beats the best result expected from this many unskilled attempts. Plan written before any result.</p>
+    <div class="card"><div class="tblwrap"><table class="mtable"><thead><tr><th>Rank</th><th>Account</th><th class="num">Sharpe</th><th class="num">Skew</th><th class="num">Kurtosis</th><th class="num">Deflated Sharpe</th><th class="num">Survives (&ge;0.95)</th></tr></thead><tbody><tr><td>#1</td><td>Exp. 43 E</td><td class="num">1.83</td><td class="num">-3.76</td><td class="num">56.1</td><td class="num">0.098</td><td class="num">no</td></tr><tr><td>#2</td><td>Exp. 39 B</td><td class="num">2.1</td><td class="num">-1.68</td><td class="num">32.6</td><td class="num">0.266</td><td class="num">no</td></tr><tr><td>#3</td><td>Exp. 36 A</td><td class="num">1.77</td><td class="num">-2.03</td><td class="num">35.3</td><td class="num">0.053</td><td class="num">no</td></tr><tr><td>#4</td><td>Exp. 41 A</td><td class="num">2.06</td><td class="num">-1.79</td><td class="num">36.1</td><td class="num">0.229</td><td class="num">no</td></tr><tr><td>#5</td><td>Exp. 45 A</td><td class="num">1.94</td><td class="num">-1.78</td><td class="num">34.1</td><td class="num">0.132</td><td class="num">no</td></tr><tr><td>#6</td><td>Exp. 43 D</td><td class="num">1.94</td><td class="num">-1.65</td><td class="num">34.6</td><td class="num">0.136</td><td class="num">no</td></tr><tr><td>#7</td><td>Exp. 31 A</td><td class="num">1.73</td><td class="num">-2.38</td><td class="num">36.0</td><td class="num">0.044</td><td class="num">no</td></tr><tr><td>#8</td><td>Exp. 30 B</td><td class="num">1.86</td><td class="num">-0.38</td><td class="num">17.2</td><td class="num">0.07</td><td class="num">no</td></tr><tr><td>#9</td><td>Exp. 30 A</td><td class="num">1.87</td><td class="num">0.36</td><td class="num">16.9</td><td class="num">0.067</td><td class="num">no</td></tr><tr><td>#10</td><td>Exp. 29 B</td><td class="num">1.84</td><td class="num">2.04</td><td class="num">13.5</td><td class="num">0.034</td><td class="num">no</td></tr></tbody></table></div></div>
+    <div class="card"><p><strong>Verdict: the ranking is robust, the Sharpe level is not proven.</strong></p>
+    <p><strong>Probability of backtest overfitting: 0.029 (low).</strong> The account that looks best in one half of the years ranks above the median in the other half in 97% of splits &mdash; the winning families hold up across time. <strong>Deflated Sharpe: no Top 10 account reaches 0.95</strong> (best 0.27, VVIX alone): with ~240 attempts the best of ~13 unskilled tries would be expected near Sharpe 2.31, and the accounts&rsquo; fat left tails widen the doubt. Expect a live Sharpe well below 2; real-quote testing is the true out-of-sample check.</p>
+    <p style="margin-bottom:0"><strong>Top 10 check:</strong> no change. Full table: <code>results/EXP49_OVERFITAUDIT_RESULTS_2026-11-11.md</code>.</p></div>
+      </div>
+    </details>
+
 
 
 
