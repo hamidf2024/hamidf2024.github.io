@@ -1024,8 +1024,9 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
       <li><b>A high share of winning trades is not steadiness; and a verdict belongs to its rule.</b>88% of fear spreads won, yet accounts built only on them met S1 in 9 years, because the losers arrive in the same weeks. The same account was &ldquo;no pass&rdquo; under one rule and &ldquo;pass&rdquo; under another: compare accounts by their numbers and yield, not by the label.</li>
       <li><b>The Experiment 64 accounts hold on real quotes &mdash; and the test exposed a silent accounting gap.</b>Alloy, Ramjet and Keel kept 96&ndash;97% of their growth on QuantConnect. The same test found 721 spread exits on non-trading days that earlier QuantConnect totals had silently left out: book with strict look-ups and print how many trades are moved or dropped.</li>
       <li><b>After fixing a shared step, re-run everything that used it.</b>With the missing spread exits booked, the Kelly account went from $1.05M (&ldquo;holds up&rdquo;) to $6.73M (robust) on QuantConnect, and all 12 accounts keep 84&ndash;97% of their saved-file growth. Identical QuantConnect runs differed by 2&ndash;3% in end value: read cloud end values to two significant figures.</li>
+      <li><b>Record every reported number at the source, and block publishing without it.</b>252 of 385 rows in the model table had no trade count or win rate, because most experiments built accounts by adding and subtracting other accounts&rsquo; daily returns and never kept the trades taken. Every account is now reported with its trade list and a check that fails if any table field is missing (standard v1.8).</li>
     </ol>
-    <p class="howread" style="margin-top:12px">Full record of every model&rsquo;s pros, cons and lesson (188 lessons): <code>docs/LESSONS_LEARNED_MODELS.md</code> in the project repository.</p>
+    <p class="howread" style="margin-top:12px">Full record of every model&rsquo;s pros, cons and lesson (189 lessons): <code>docs/LESSONS_LEARNED_MODELS.md</code> in the project repository.</p>
   </section>
   <section id="method">
     <h2>How we test</h2>
@@ -4076,4 +4077,4 @@ document.querySelectorAll('a[href^="#d"],a[href^="#exp"]').forEach(function(a){a
 
 </body>
 </html>
-<!-- p9-updated: 2026-11-12 models-l-s-status -->
+<!-- p9-updated: 2026-11-12 lesson-189 -->
