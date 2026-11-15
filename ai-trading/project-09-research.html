@@ -97,7 +97,7 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
     <p class="lede">The research phase in one place: what each model tried, what $10,000 would have become, and what we learned. Every test uses real bid/ask prices and fees, keeps each position within 5% of the account, retrains the model each year and judges it only on years it never saw.</p>
     <p style="margin-top:12px;max-width:720px"><strong>Major goal:</strong> grow the account <strong>more than 5% a trading day</strong> after all costs, with +1% and +2% a day as milestones. That is far beyond anything tested so far, so progress is measured on a ladder of realistic steps: first beat the simple Elastic Net benchmark (L0), then +0.05% a day (L1), +0.10% (L2) and +0.25% (L3).</p>
     <p style="margin-top:14px"><span class="tag warn">Status: 16 experiments &middot; positions now 5% of the account (charter v1.9) &middot; Experiment 9 reaches L2 in development, with ~50% drops</span> <span class="tag muted">Started Nov 6, 2026</span> <span class="tag muted">Last updated Nov 8, 2026 &middot; 17 experiments</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#stand">Where we stand</a><a href="#milestones">Top 12</a><a href="#progress">Progress</a><a href="#models">Every model</a><a href="#families">By strategy family</a><a href="#method">How we test</a><a href="#next">Next</a><a href="#details">Details &amp; charts</a><a href="#disclosure">Disclosures</a></nav>
+    <nav class="toc" aria-label="On this page"><a href="#stand">Where we stand</a><a href="#milestones">Top 12</a><a href="#progress">Progress</a><a href="#models">Every model</a><a href="#families">By strategy family</a><a href="#method">How we test</a><a href="#details">Details &amp; charts</a><a href="#disclosure">Disclosures</a></nav>
   </section>
 
   <section aria-label="At a glance">
@@ -210,29 +210,7 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
     </div>
   </section>
 
-  <section id="next">
-    <h2>Next</h2>
-    <div class="card"><p style="margin:0"><strong>Experiment 20 is complete.</strong> None of the five Top 10 put-spread + Elastic Net accounts survives real intraday quotes (the Elastic Net leg fails); every spread part does, and the gated 0.25-delta put spread is the best and steadiest. <strong>Experiment 21</strong> (a graph network over each option chain on intraday quotes) is done: no pass. <strong>Experiment 22</strong> (both graph networks on daily data) is done: no pass. <strong>Next:</strong> group every experiment into strategy families, then redo all experiments on the saved SPY/QQQ/IWM file (see below).</p></div>
-      <div class="card" style="margin-top:12px;border-left:4px solid var(--warn)"><p style="margin:0"><strong>Data rule (Nov 9, 2026):</strong> from now on, daily models use <strong>only the SPY/QQQ/IWM end-of-day file</strong> (full option chains, 2008&ndash;2025), which a cross-check against three other sources and the VIX showed is trustworthy. DoltHub is no longer used. <strong>To redo later:</strong> every experiment that used DoltHub &mdash; Experiments 5, 6, 10, 12, 13 and 22, the stock parts of 14 and 15, and the DoltHub-based 2026 checks of Experiments 1 and 9 &mdash; will be re-run on the SPY/QQQ/IWM file. Until then their results are marked as weaker.</p></div>
-      <div class="card" style="margin-top:12px;border-left:4px solid var(--accent)"><p style="margin:0 0 6px"><strong>After Experiment 21: one fixed test setup for every model (Nov 9, 2026).</strong> So that models and experiments can be compared fairly, only the model will change:</p>
-      <ul style="margin:0">
-        <li><strong>QuantConnect standard test:</strong> the same instruments (SPY and QQQ only &mdash; IWM dropped on Nov 9; the 24-stock list deferred), the same test years (2014&ndash;2025; no 2026 check &mdash; owner, Nov 10), training from 2012 for both SPY and QQQ (QuantConnect&rsquo;s option data starts in January 2012 &mdash; a data limit; the saved file trains SPY from 2010), one decision a day at <strong>12 PM ET</strong> plus a run on the <strong>last hourly quote of the day (the 4:00 PM bar)</strong>, closest to the saved file&rsquo;s 4 PM close (a 3:45 PM run needs minute quotes, about 40 hours on the free plan), buy at the ask and sell at the bid with fees, every exit at a real quote, $10,000 with 5% per position, and the same benchmarks in every run.</li>
-        <li><strong>Daily models:</strong> only the saved SPY/QQQ/IWM file.</li>
-        <li><strong>SPY and QQQ only (Nov 9, 2026):</strong> both sources now trade and learn from SPY and QQQ only. In the first redo the Elastic Net lost 1.2% a trade on IWM while making about +1.5% on SPY and QQQ, so IWM is dropped and every redo runs again on SPY/QQQ.</li>
-        <li><strong>Test window (Nov 9, 2026):</strong> every model is tested on <strong>2014&ndash;2025</strong> on both sources, the saved file and QuantConnect, so all are compared on the same 12 years. Learning models train on the years before each test year.</li>
-        <li><strong>Training start (Nov 9, 2026):</strong> on both sources, learning models train only on SPY data from 2010 and QQQ data from 2012, as Experiment 1 did. Training SPY from 2008 (the 2008&ndash;09 crisis) gave a weaker Elastic Net than Experiment 1, so every redo runs again with this start; the runs trained from 2008 stay as records.</li>
-        <li><strong>Cross-check:</strong> index models run on both sources. Similar results mean a robust model; a big gap means it depends on the exact trading time (like the 1-day Elastic Net: +0.6% a trade daily, &minus;2.2% at 2 PM).</li>
-        <li><strong>Order:</strong> (1) redo on the saved SPY/QQQ/IWM file every experiment that didn&rsquo;t use it &mdash; the DoltHub experiments <em>and</em> the QuantConnect experiments (2, 16&ndash;21); with only SPY and QQQ, the many-stock families C (stock call picking) and E (graph networks) and Exp. 10 are not redone (owner, Nov 10; they stay as pre-standard records) &rarr; (2) rank every model on that one file and pick the new Top 10 &rarr; (3) run only those Top 10 on the QuantConnect standard test. Older results stay, marked &ldquo;pre-standard&rdquo;.</li>
-      </ul></div>
-      <div class="card" style="margin-top:12px;border-left:4px solid var(--loss)"><p style="margin:0 0 6px"><strong>Down markets (Nov 9, 2026).</strong> Our best strategies win when the market rises or stays calm and lose in declines: in 2022 the put spread lost 17% (end-of-day) to 42% (2 PM quotes) and momentum calls 44&ndash;87%. From the redo on, every model must also handle falls:</p>
-      <ul style="margin:0">
-        <li><strong>Judge the downside:</strong> every model reports its worst year and its results in 2018, 2020 and 2022.</li>
-        <li><strong>Test 2014&ndash;2025</strong> on both sources (2018, 2020 and 2022 are the declines in the window); models still learn from 2008 onward, including the 2008 crash.</li>
-        <li><strong>Standard market gate:</strong> the 200-day trend plus the VIX term structure (short-term fear above 3-month fear); every model tested with and without it.</li>
-        <li><strong>Protection over prediction:</strong> call spreads, cash or a cheap put hedge in downtrends, rather than trying to time the fall exactly.</li>
-        <li><strong>Profit from falls (two-way design):</strong> predict up / down / unclear and pick the trade &mdash; sell a put spread, sell a call spread or buy a put spread, or stay in cash. The Experiment 11 trend rule already did this: +53% in 2022 with Elastic Net, but false signals cost it in choppy years (2016 &minus;8%, 2023 &minus;24%).</li>
-      </ul></div>
-  </section>
+  
   <section id="details">
     <h2>Details &amp; charts</h2>
     <p class="howread">Each chart shows what <strong>$10,000</strong> would have become with one model, putting 5% of the account into each trade (the project&rsquo;s risk limit), after the bid/ask spread and fees. Same scale on every chart, so they can be compared at a glance. Dashed line: start of the sealed 2024&ndash;2025 test, run only for the models carried forward. Open an experiment to see each model&rsquo;s chart.</p>
@@ -3394,4 +3372,4 @@ document.querySelectorAll('a[href^="#d"],a[href^="#exp"]').forEach(function(a){a
 
 </body>
 </html>
-<!-- p9-updated: 2026-11-15 lessons section removed -->
+<!-- p9-updated: 2026-11-15 next section removed -->
