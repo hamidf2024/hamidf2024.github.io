@@ -4,14 +4,22 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Property Scout — Hamid Faghidi</title>
-<meta name="description" content="Project 14: daily scouting of Southern California homes across 10 ways to buy, from short sales and bank-owned homes to HUD, probate, auction and relocation sales, with listing links and official sources.">
+<meta name="description" content="Project 14: daily scouting of homes in Southern California, Phoenix and Austin across 10 ways to buy, from short sales and bank-owned homes to HUD, probate, auction and relocation sales, with listing links and official sources.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../style.css">
 <style>
+.mtabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:8px 0 4px}
+.mtabs button{font:inherit;text-align:left;padding:14px 18px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;display:flex;flex-direction:column;gap:2px;border-top:4px solid transparent}
+.mtabs button:hover{border-color:var(--c-home)}
+.mtabs button[aria-selected=true]{border-color:var(--c-home);border-top-color:var(--c-home);box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.mtabs .mt{font-weight:700;font-size:16px}
+.mtabs .mc{font-size:13px;color:var(--muted)}
+@media (max-width:640px){.mtabs{grid-template-columns:1fr}}
 .cats14{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
 .cat14{display:flex;flex-direction:column;gap:4px;text-decoration:none;color:inherit;padding:14px 16px;border-left:4px solid var(--c-home)}
 .cat14:hover{box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.cat14.empty{border-left-color:var(--line);opacity:.8}
 .cat14 .n{font-size:12px;font-weight:700;color:var(--c-home);letter-spacing:.04em}
 .cat14 .t{font-weight:600;font-size:15px}
 .cat14 .c{font-size:13px}
@@ -22,6 +30,7 @@
 .badge14{flex:none;display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;background:color-mix(in srgb,var(--c-home) 14%,transparent);color:var(--c-home);font-weight:700;font-family:var(--serif);font-size:18px}
 .lede.sm{font-size:15px;margin:0}
 .fine{font-size:13px;color:var(--muted);margin:12px 0 0}
+.emptybox{border-style:dashed}
 a.go{white-space:nowrap;font-weight:600}
 .srclist{list-style:none;padding:0;margin:0}
 .srclist li{padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
@@ -42,18 +51,9 @@ a.go{white-space:nowrap;font-weight:600}
   <section class="hero" style="padding-top:28px">
     <div class="eyebrow">Project 14 &middot; Real estate &middot; Opportunity scouting</div>
     <h1>Project 14: Property Scout</h1>
-    <p class="lede">A daily search for ways to buy a home in <strong>Southern California</strong> beyond the standard listing. Homes are grouped into 10 sale categories, each with current listings, a direct link to apply or bid, and the official sources that confirm them. Working website name: <strong>SoCal Home Radar</strong>, "Discover more ways to buy a home".</p>
+    <p class="lede">A daily search for ways to buy a home beyond the standard listing, in three markets: <strong>Southern California</strong>, <strong>Phoenix, Arizona</strong> and <strong>Austin, Texas</strong>. Each market has the same 10 sale categories, with current homes, a direct link to apply or bid, and the official sources that confirm them.</p>
     <p style="margin-top:10px"><span class="tag warn">Status: Phase 1, daily scouting</span> <span class="tag muted">Started Nov 16, 2026</span> <span class="tag muted">Last updated Nov 16, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#overview">Overview</a><a href="#browse">Browse by category</a><a href="#process">How it works</a><a href="#rules">California rules</a><a href="#next">Next steps</a><a href="#disclosure">Disclosures</a></nav>
-  </section>
-
-  <section id="overview" aria-label="At a glance">
-    <div class="statstrip">
-      <div class="primary"><div class="k">Current homes</div><div class="v">57</div><div class="s">with direct listing links</div></div>
-      <div><div class="k">Categories</div><div class="v">10</div><div class="s">ways to buy</div></div>
-      <div><div class="k">Counties</div><div class="v">6</div><div class="s">LA, Orange, Riverside, San Bernardino, San Diego, Ventura</div></div>
-      <div><div class="k">Links checked</div><div class="v">57 / 57</div><div class="s">live on Nov 16, 2026</div></div>
-    </div>
+    <nav class="toc" aria-label="On this page"><a href="#markets">Markets</a><a href="#process">How it works</a><a href="#disclosure">Disclosures</a></nav>
   </section>
 
   <section>
@@ -65,163 +65,181 @@ a.go{white-space:nowrap;font-weight:600}
         <div class="stage">Launch<br><small>Feb 15 – Mar 31, 2027</small></div>
         <div class="stage">Scale<br><small>Apr 2027 on</small></div>
       </div>
-      <p style="margin-top:18px;margin-bottom:0">Every listing link below was opened and found live on Nov 16, 2026. <strong>Availability can change daily</strong>: confirm with the listing agent, trustee, HUD broker or court before you offer or bid.</p>
+      <p style="margin-top:18px;margin-bottom:0">156 homes across three markets; every listing link was opened and found live on Nov 16, 2026. <strong>Availability can change daily</strong>: confirm with the listing agent, trustee, HUD broker or court before you offer or bid. The original 1–13 numbering is kept, so #7, #9 and #12 are left out on purpose; one home can appear in more than one category.</p>
     </div>
   </section>
 
-  <section id="browse">
-    <h2>Browse by category</h2>
-    <p class="note">The original 1–13 numbering is kept, so #7 traditional sale, #9 new construction and #12 as-is sale are left out on purpose. One home can appear in more than one category. Within each category, homes are listed from lowest to highest price.</p>
-    <div class="cats14">
-      <a class="card cat14" href="#cat-1"><span class="n">#1</span><span class="t">Off-market</span><span class="c">5 homes</span><span class="r">$280K – $1.75M</span></a>
-      <a class="card cat14" href="#cat-2"><span class="n">#2</span><span class="t">Short sale</span><span class="c">4 homes</span><span class="r">$398K – $535K</span></a>
-      <a class="card cat14" href="#cat-3"><span class="n">#3</span><span class="t">Bank-owned (REO)</span><span class="c">6 homes</span><span class="r">$290K – $910K</span></a>
-      <a class="card cat14" href="#cat-4"><span class="n">#4</span><span class="t">HUD home</span><span class="c">7 homes</span><span class="r">$207K – $1.12M</span></a>
-      <a class="card cat14" href="#cat-5"><span class="n">#5</span><span class="t">Foreclosure auction</span><span class="c">4 homes</span><span class="r">Price on request</span></a>
-      <a class="card cat14" href="#cat-6"><span class="n">#6</span><span class="t">Pre-foreclosure</span><span class="c">4 homes</span><span class="r">$525K – $1.52M</span></a>
-      <a class="card cat14" href="#cat-8"><span class="n">#8</span><span class="t">For sale by owner</span><span class="c">5 homes</span><span class="r">$529K – $1.40M</span></a>
-      <a class="card cat14" href="#cat-10"><span class="n">#10</span><span class="t">Estate / probate</span><span class="c">16 homes</span><span class="r">$336K – $2.50M</span></a>
-      <a class="card cat14" href="#cat-11"><span class="n">#11</span><span class="t">Auction</span><span class="c">4 homes</span><span class="r">$175K – $465K</span></a>
-      <a class="card cat14" href="#cat-13"><span class="n">#13</span><span class="t">Relocation (RELO)</span><span class="c">3 homes</span><span class="r">$1.25M – $2.29M</span></a>
+  <section id="markets">
+    <h2>Choose a market</h2>
+    <div class="mtabs" role="tablist" aria-label="Markets">
+    <button role="tab" id="tab-socal" aria-controls="panel-socal" aria-selected="true" data-tab="socal"><span class="mt">Southern California</span><span class="mc">57 homes</span></button>
+    <button role="tab" id="tab-phoenix" aria-controls="panel-phoenix" aria-selected="false" data-tab="phoenix"><span class="mt">Phoenix, Arizona</span><span class="mc">55 homes</span></button>
+    <button role="tab" id="tab-austin" aria-controls="panel-austin" aria-selected="false" data-tab="austin"><span class="mt">Austin, Texas</span><span class="mc">44 homes</span></button>
     </div>
   </section>
 
-  <section id="cat-1" class="catsec">
-    <div class="cathd"><span class="badge14">#1</span><div><h2>Off-market</h2><p class="lede sm">Homes not publicly listed for sale, shared privately through a broker&#x27;s network.</p></div></div>
-    <p class="note"><strong>For buyers:</strong> First confirm the owner actually wants to sell. Addresses are often withheld until you ask the listing agent. Not automatically cheaper.</p>
-    <div class="card"><div class="table-scroll"><table>
-      <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
-      <tbody>
-        <tr><td>Town Square, Santa Ana</td><td>Orange</td><td class="num">$280,000</td><td>Asking</td><td class="num">1 / 768</td><td>Tenant occupied</td><td><a class="go" href="https://www.ellieyung.com/off-market-exclusives" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Northwood, Irvine</td><td>Orange</td><td class="num">$980,000</td><td>Asking</td><td class="num">2 / 1,276</td><td>Seller wants long-term leaseback</td><td><a class="go" href="https://www.ellieyung.com/off-market-exclusives" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Oak Creek, Irvine (townhome)</td><td>Orange</td><td class="num">$1,249,000</td><td>Asking</td><td class="num">3 / 1,525</td><td>Request address</td><td><a class="go" href="https://www.ellieyung.com/off-market-exclusives" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Hollywood Hills East, Los Angeles (address withheld)</td><td>Los Angeles</td><td class="num">$1,699,000</td><td>Asking</td><td class="num">3 / 1,867</td><td>Compass Private Exclusive; broker to confirm</td><td><a class="go" href="https://angelofierrogroup.com/properties/compass-private-exclusive-hollywood-hills-east" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Belvedere, Mission Viejo</td><td>Orange</td><td class="num">$1,750,000</td><td>Asking</td><td class="num">4 / 2,816</td><td>Off-market / upcoming</td><td><a class="go" href="https://www.ellieyung.com/off-market-exclusives" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-      </tbody>
-    </table></div>
-    <p class="fine">5 homes, lowest price first; "price on request" last. Links checked Nov 16, 2026.</p></div>
-    <div class="grid g2" style="margin-top:16px">
-      <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+  <div class="panel" id="panel-socal" role="tabpanel" aria-labelledby="tab-socal">
+    <section aria-label="SoCal at a glance">
+      <div class="statstrip">
+        <div class="primary"><div class="k">Current homes</div><div class="v">57</div><div class="s">in Southern California</div></div>
+        <div><div class="k">Categories</div><div class="v">10</div><div class="s">ways to buy</div></div>
+        <div><div class="k">Counties</div><div class="v">6</div><div class="s">LA, Orange, Riverside, San Bernardino, San Diego, Ventura</div></div>
+        <div><div class="k">Links checked</div><div class="v">57 / 57</div><div class="s">live on Nov 16, 2026</div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Browse SoCal by category</h2>
+      <div class="cats14">
+        <a class="card cat14" href="#socal-cat-1"><span class="n">#1</span><span class="t">Off-market</span><span class="c">5 homes</span><span class="r">$280K – $1.75M</span></a>
+        <a class="card cat14" href="#socal-cat-2"><span class="n">#2</span><span class="t">Short sale</span><span class="c">4 homes</span><span class="r">$398K – $535K</span></a>
+        <a class="card cat14" href="#socal-cat-3"><span class="n">#3</span><span class="t">Bank-owned (REO)</span><span class="c">6 homes</span><span class="r">$290K – $910K</span></a>
+        <a class="card cat14" href="#socal-cat-4"><span class="n">#4</span><span class="t">HUD home</span><span class="c">7 homes</span><span class="r">$207K – $1.12M</span></a>
+        <a class="card cat14" href="#socal-cat-5"><span class="n">#5</span><span class="t">Foreclosure auction</span><span class="c">4 homes</span><span class="r">Price on request</span></a>
+        <a class="card cat14" href="#socal-cat-6"><span class="n">#6</span><span class="t">Pre-foreclosure</span><span class="c">4 homes</span><span class="r">$525K – $1.52M</span></a>
+        <a class="card cat14" href="#socal-cat-8"><span class="n">#8</span><span class="t">For sale by owner</span><span class="c">5 homes</span><span class="r">$529K – $1.40M</span></a>
+        <a class="card cat14" href="#socal-cat-10"><span class="n">#10</span><span class="t">Estate / probate</span><span class="c">16 homes</span><span class="r">$336K – $2.50M</span></a>
+        <a class="card cat14" href="#socal-cat-11"><span class="n">#11</span><span class="t">Auction</span><span class="c">4 homes</span><span class="r">$175K – $465K</span></a>
+        <a class="card cat14" href="#socal-cat-13"><span class="n">#13</span><span class="t">Relocation (RELO)</span><span class="c">3 homes</span><span class="r">$1.25M – $2.29M</span></a>
+      </div>
+    </section>
+
+    <section id="socal-cat-1" class="catsec">
+      <div class="cathd"><span class="badge14">#1</span><div><h2>Off-market</h2><p class="lede sm">Homes not publicly listed for sale, shared privately through a broker&#x27;s network.</p></div></div>
+      <p class="note"><strong>For buyers in SoCal:</strong> First confirm the owner actually wants to sell. Addresses are often withheld until you ask the listing agent. Not automatically cheaper.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>Town Square, Santa Ana</td><td>Orange</td><td class="num">$280,000</td><td>Asking</td><td class="num">1 / 768</td><td>Tenant occupied</td><td><a class="go" href="https://www.ellieyung.com/off-market-exclusives" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Northwood, Irvine</td><td>Orange</td><td class="num">$980,000</td><td>Asking</td><td class="num">2 / 1,276</td><td>Seller wants long-term leaseback</td><td><a class="go" href="https://www.ellieyung.com/off-market-exclusives" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Oak Creek, Irvine (townhome)</td><td>Orange</td><td class="num">$1,249,000</td><td>Asking</td><td class="num">3 / 1,525</td><td>Request address</td><td><a class="go" href="https://www.ellieyung.com/off-market-exclusives" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Hollywood Hills East, Los Angeles (address withheld)</td><td>Los Angeles</td><td class="num">$1,699,000</td><td>Asking</td><td class="num">3 / 1,867</td><td>Compass Private Exclusive; broker to confirm</td><td><a class="go" href="https://angelofierrogroup.com/properties/compass-private-exclusive-hollywood-hills-east" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Belvedere, Mission Viejo</td><td>Orange</td><td class="num">$1,750,000</td><td>Asking</td><td class="num">4 / 2,816</td><td>Off-market / upcoming</td><td><a class="go" href="https://www.ellieyung.com/off-market-exclusives" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">5 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.compass.com/private-exclusives/" target="_blank" rel="noopener">Compass Private Exclusives</a><span>Off-MLS homes shared within the Compass network; ask a Compass agent for access</span></li>
           <li><a href="https://www.nar.realtor/newsroom/nar-introduces-new-mls-policy-to-expand-choice-for-consumers" target="_blank" rel="noopener">NAR: Multiple Listing Options for Sellers</a><span>Explains office-exclusive and delayed-marketing listings that stay off public sites</span></li>
           <li><a href="https://www.nar.realtor/sites/default/files/2025-05/multiple-listing-options-for-sellers-faq-2025-05-21.pdf" target="_blank" rel="noopener">NAR policy FAQ (PDF)</a><span>Details on when private listings must go to the MLS</span></li>
           <li><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&amp;sectionNum=2079.26" target="_blank" rel="noopener">Civil Code §2079.26 (AB 851)</a><span>No unsolicited purchase offers in listed LA and Ventura ZIP codes until Jan 1, 2027</span></li>
           <li><a href="https://www2.dre.ca.gov/publicasp/pplinfo.asp" target="_blank" rel="noopener">DRE public license lookup</a><span>Verify any broker before sharing information</span></li>
-      </ul></div>
-      <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.compass.com/private-exclusives/" target="_blank" rel="noopener">Compass Private Exclusives &rarr;</a></p></div>
-    </div>
-  </section>
-  <section id="cat-2" class="catsec">
-    <div class="cathd"><span class="badge14">#2</span><div><h2>Short sale</h2><p class="lede sm">The lender agrees to accept less than the mortgage owed.</p></div></div>
-    <p class="note"><strong>For buyers:</strong> The seller&#x27;s acceptance is not enough; the lender must approve, which can take months. Ask the listing agent what approval exists.</p>
-    <div class="card"><div class="table-scroll"><table>
-      <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
-      <tbody>
-        <tr><td>Desert View Dr, Palmdale</td><td>Los Angeles</td><td class="num">$398,000</td><td>Asking</td><td class="num">3 / 1,313</td><td>Lender approval; bath count conflicts</td><td><a class="go" href="https://www.coldwellbanker.com/ca/palmdale/38751-desert-view-dr/lid-P00800000HJHFTEHACmmWO0jk7xOUYHX6XVdd2zB" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Herb St, El Monte</td><td>Los Angeles</td><td class="num">$500,000</td><td>Asking</td><td class="num">4 / 1,213</td><td>Short sale</td><td><a class="go" href="https://www.zillow.com/homedetails/11418-Herb-St-El-Monte-CA-91733/21415041_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Luther St, Riverside</td><td>Riverside</td><td class="num">$525,000</td><td>Asking</td><td class="num">3 / 1,117</td><td>NOD; partition referee; lender + court approval</td><td><a class="go" href="https://www.redfin.com/CA/Riverside/4909-Luther-St-92504/home/4977000" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Mercantile Ct, Valencia</td><td>Los Angeles</td><td class="num">$535,000</td><td>Asking</td><td class="num">3 / 1,430</td><td>Lender approval; HOA $548/mo</td><td><a class="go" href="https://www.zillow.com/homedetails/27466-Mercantile-Ct-305-Valencia-CA-91381/339398712_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-      </tbody>
-    </table></div>
-    <p class="fine">4 homes, lowest price first; "price on request" last. Links checked Nov 16, 2026.</p></div>
-    <div class="grid g2" style="margin-top:16px">
-      <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.compass.com/private-exclusives/" target="_blank" rel="noopener">Compass Private Exclusives &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="socal-cat-2" class="catsec">
+      <div class="cathd"><span class="badge14">#2</span><div><h2>Short sale</h2><p class="lede sm">The lender agrees to accept less than the mortgage owed.</p></div></div>
+      <p class="note"><strong>For buyers in SoCal:</strong> The seller&#x27;s acceptance is not enough; the lender must approve, which can take months. Ask the listing agent what approval exists.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>Desert View Dr, Palmdale</td><td>Los Angeles</td><td class="num">$398,000</td><td>Asking</td><td class="num">3 / 1,313</td><td>Lender approval; bath count conflicts</td><td><a class="go" href="https://www.coldwellbanker.com/ca/palmdale/38751-desert-view-dr/lid-P00800000HJHFTEHACmmWO0jk7xOUYHX6XVdd2zB" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Herb St, El Monte</td><td>Los Angeles</td><td class="num">$500,000</td><td>Asking</td><td class="num">4 / 1,213</td><td>Short sale</td><td><a class="go" href="https://www.zillow.com/homedetails/11418-Herb-St-El-Monte-CA-91733/21415041_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Luther St, Riverside</td><td>Riverside</td><td class="num">$525,000</td><td>Asking</td><td class="num">3 / 1,117</td><td>NOD; partition referee; lender + court approval</td><td><a class="go" href="https://www.redfin.com/CA/Riverside/4909-Luther-St-92504/home/4977000" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Mercantile Ct, Valencia</td><td>Los Angeles</td><td class="num">$535,000</td><td>Asking</td><td class="num">3 / 1,430</td><td>Lender approval; HOA $548/mo</td><td><a class="go" href="https://www.zillow.com/homedetails/27466-Mercantile-Ct-305-Valencia-CA-91381/339398712_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">4 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.consumerfinance.gov/ask-cfpb/what-is-a-short-sale-en-290/" target="_blank" rel="noopener">CFPB: What is a short sale?</a><span>Plain-language federal explanation, including deficiency risk</span></li>
           <li><a href="https://www.consumerfinance.gov/find-a-housing-counselor/" target="_blank" rel="noopener">CFPB: Find a housing counselor</a><span>HUD-approved counselors, free or low cost</span></li>
           <li><a href="https://www2.dre.ca.gov/publicasp/pplinfo.asp" target="_blank" rel="noopener">DRE public license lookup</a><span>Verify the listing agent handling lender approval</span></li>
-      </ul></div>
-      <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.zillow.com/" target="_blank" rel="noopener">Zillow (filter: short sale) &rarr;</a></p></div>
-    </div>
-  </section>
-  <section id="cat-3" class="catsec">
-    <div class="cathd"><span class="badge14">#3</span><div><h2>Bank-owned (REO)</h2><p class="lede sm">The lender, Fannie Mae, Freddie Mac or a federal agency already owns the home after foreclosure.</p></div></div>
-    <p class="note"><strong>For buyers:</strong> You buy from the institution, usually as is; repairs are yours. Owner-occupants often get a first-look period.</p>
-    <div class="card"><div class="table-scroll"><table>
-      <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
-      <tbody>
-        <tr><td>Crest Forest Dr, Crestline</td><td>San Bernardino</td><td class="num">$289,900</td><td>Asking</td><td class="num">4 / —</td><td>Freddie Mac REO; Active</td><td><a class="go" href="https://www.homesteps.com/listingdetails/22650-crest-forest-drive-crestline-ca-92325" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>B St, San Diego</td><td>San Diego</td><td class="num">$389,900</td><td>Asking</td><td class="num">1 / 560</td><td>Freddie Mac REO condo</td><td><a class="go" href="https://www.homesteps.com/listingdetails/2728-b-st-101-san-diego-ca-92102" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Cassler Dr, Idyllwild</td><td>Riverside</td><td class="num">$423,900</td><td>Asking</td><td class="num">6 / 2,184</td><td>Freddie Mac REO; Active</td><td><a class="go" href="https://www.homesteps.com/listingdetails/25825-cassler-dr-idyllwild-ca-92549" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>El Cid, Palm Springs</td><td>Riverside</td><td class="num">$654,900</td><td>Asking</td><td class="num">3 / 1,452</td><td>Pool and spa</td><td><a class="go" href="https://www.homesteps.com/listingdetails/917-el-cid-palm-springs-ca-92262" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Ritchey St, San Diego</td><td>San Diego</td><td class="num">$769,900</td><td>Asking</td><td class="num">4 / 2,378</td><td>Active</td><td><a class="go" href="https://www.homesteps.com/listingdetails/249-ritchey-st-san-diego-ca-92114" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>N Canary Way, Los Angeles</td><td>Los Angeles</td><td class="num">$909,900</td><td>Asking</td><td class="num">2 / 1,472</td><td>Bath count conflicts</td><td><a class="go" href="https://www.homesteps.com/listingdetails/3288-n-canary-way-los-angeles-ca-90065" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-      </tbody>
-    </table></div>
-    <p class="fine">6 homes, lowest price first; "price on request" last. Links checked Nov 16, 2026.</p></div>
-    <div class="grid g2" style="margin-top:16px">
-      <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.zillow.com/" target="_blank" rel="noopener">Zillow (filter: short sale) &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="socal-cat-3" class="catsec">
+      <div class="cathd"><span class="badge14">#3</span><div><h2>Bank-owned (REO)</h2><p class="lede sm">The lender, Fannie Mae, Freddie Mac or a federal agency already owns the home after foreclosure.</p></div></div>
+      <p class="note"><strong>For buyers in SoCal:</strong> You buy from the institution, usually as is; repairs are yours. Owner-occupants often get a first-look period.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>Crest Forest Dr, Crestline</td><td>San Bernardino</td><td class="num">$289,900</td><td>Asking</td><td class="num">4 / —</td><td>Freddie Mac REO; Active</td><td><a class="go" href="https://www.homesteps.com/listingdetails/22650-crest-forest-drive-crestline-ca-92325" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>B St, San Diego</td><td>San Diego</td><td class="num">$389,900</td><td>Asking</td><td class="num">1 / 560</td><td>Freddie Mac REO condo</td><td><a class="go" href="https://www.homesteps.com/listingdetails/2728-b-st-101-san-diego-ca-92102" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Cassler Dr, Idyllwild</td><td>Riverside</td><td class="num">$423,900</td><td>Asking</td><td class="num">6 / 2,184</td><td>Freddie Mac REO; Active</td><td><a class="go" href="https://www.homesteps.com/listingdetails/25825-cassler-dr-idyllwild-ca-92549" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>El Cid, Palm Springs</td><td>Riverside</td><td class="num">$654,900</td><td>Asking</td><td class="num">3 / 1,452</td><td>Pool and spa</td><td><a class="go" href="https://www.homesteps.com/listingdetails/917-el-cid-palm-springs-ca-92262" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Ritchey St, San Diego</td><td>San Diego</td><td class="num">$769,900</td><td>Asking</td><td class="num">4 / 2,378</td><td>Active</td><td><a class="go" href="https://www.homesteps.com/listingdetails/249-ritchey-st-san-diego-ca-92114" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>N Canary Way, Los Angeles</td><td>Los Angeles</td><td class="num">$909,900</td><td>Asking</td><td class="num">2 / 1,472</td><td>Bath count conflicts</td><td><a class="go" href="https://www.homesteps.com/listingdetails/3288-n-canary-way-los-angeles-ca-90065" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">6 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.homesteps.com/listing/search?search=California" target="_blank" rel="noopener">Freddie Mac HomeSteps</a><span>Official Freddie Mac REO listings</span></li>
           <li><a href="https://www.homepath.fanniemae.com/" target="_blank" rel="noopener">Fannie Mae HomePath</a><span>Official Fannie Mae REO search (also shows some non-Fannie listings; check the listing type)</span></li>
           <li><a href="https://foreclosures.bankofamerica.com/" target="_blank" rel="noopener">Bank of America Real Estate Center</a><span>Bank-owned homes from Bank of America</span></li>
           <li><a href="https://listings.vrmco.com/" target="_blank" rel="noopener">VA-owned homes (VRM)</a><span>VA REO inventory managed by Vendor Resource Management</span></li>
           <li><a href="https://properties.sc.egov.usda.gov/resales/public/home" target="_blank" rel="noopener">USDA RD/FSA properties</a><span>Federal single-family homes for sale by USDA</span></li>
-      </ul></div>
-      <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.homesteps.com/listing/search?search=California" target="_blank" rel="noopener">HomeSteps: California &rarr;</a> <a class="tag good srch" href="https://www.homepath.fanniemae.com/" target="_blank" rel="noopener">Fannie Mae HomePath &rarr;</a></p></div>
-    </div>
-  </section>
-  <section id="cat-4" class="catsec">
-    <div class="cathd"><span class="badge14">#4</span><div><h2>HUD home</h2><p class="lede sm">HUD owns the home after foreclosure on an FHA-insured mortgage.</p></div></div>
-    <p class="note"><strong>For buyers:</strong> Bids go through a HUD-registered broker during the posted bid period; owner-occupants get priority. Sold as is.</p>
-    <div class="card"><div class="table-scroll"><table>
-      <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
-      <tbody>
-        <tr><td>CA-189, Twin Peaks</td><td>San Bernardino</td><td class="num">$207,000</td><td>Asking</td><td class="num">1 / —</td><td>HUD case 194-216133</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=194-216133" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Seven Hills Dr, Hemet</td><td>Riverside</td><td class="num">$240,000</td><td>Asking</td><td class="num">2 / —</td><td>HUD case 048-447956</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=048-447956" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Lake Morena Dr, Campo</td><td>San Diego</td><td class="num">$257,300</td><td>Asking</td><td class="num">3 / 1,504</td><td>HUD case 044-589335</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=044-589335" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Leadhill Dr, Lake Hughes</td><td>Los Angeles</td><td class="num">$385,000</td><td>Asking</td><td class="num">3 / —</td><td>HUD case 197-354117; bids open 2026-11-17</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=197-354117" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Elliot Ct, Hemet</td><td>Riverside</td><td class="num">$393,000</td><td>Asking</td><td class="num">3 / —</td><td>HUD case 194-223999; bids open 2026-11-17</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=194-223999" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Potomac Dr, Menifee (Sun City)</td><td>Riverside</td><td class="num">$437,000</td><td>Asking</td><td class="num">2 / 1,550</td><td>HUD case 048-425809; 55+ community; sq ft approximate</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=048-425809" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>E Glenoaks Blvd, Glendale</td><td>Los Angeles</td><td class="num">$1,116,000</td><td>Asking</td><td class="num">3 / 2,205</td><td>HUD owned; price reduced</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=197-452868" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-      </tbody>
-    </table></div>
-    <p class="fine">7 homes, lowest price first; "price on request" last. Links checked Nov 16, 2026.</p></div>
-    <div class="grid g2" style="margin-top:16px">
-      <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.homesteps.com/listing/search?search=California" target="_blank" rel="noopener">HomeSteps: California &rarr;</a> <a class="tag good srch" href="https://www.homepath.fanniemae.com/" target="_blank" rel="noopener">Fannie Mae HomePath &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="socal-cat-4" class="catsec">
+      <div class="cathd"><span class="badge14">#4</span><div><h2>HUD home</h2><p class="lede sm">HUD owns the home after foreclosure on an FHA-insured mortgage.</p></div></div>
+      <p class="note"><strong>For buyers in SoCal:</strong> Bids go through a HUD-registered broker during the posted bid period; owner-occupants get priority. Sold as is.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>CA-189, Twin Peaks</td><td>San Bernardino</td><td class="num">$207,000</td><td>Asking</td><td class="num">1 / —</td><td>HUD case 194-216133</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=194-216133" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Seven Hills Dr, Hemet</td><td>Riverside</td><td class="num">$240,000</td><td>Asking</td><td class="num">2 / —</td><td>HUD case 048-447956</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=048-447956" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Lake Morena Dr, Campo</td><td>San Diego</td><td class="num">$257,300</td><td>Asking</td><td class="num">3 / 1,504</td><td>HUD case 044-589335</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=044-589335" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Leadhill Dr, Lake Hughes</td><td>Los Angeles</td><td class="num">$385,000</td><td>Asking</td><td class="num">3 / —</td><td>HUD case 197-354117; bids open 2026-11-17</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=197-354117" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Elliot Ct, Hemet</td><td>Riverside</td><td class="num">$393,000</td><td>Asking</td><td class="num">3 / —</td><td>HUD case 194-223999; bids open 2026-11-17</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=194-223999" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Potomac Dr, Menifee (Sun City)</td><td>Riverside</td><td class="num">$437,000</td><td>Asking</td><td class="num">2 / 1,550</td><td>HUD case 048-425809; 55+ community; sq ft approximate</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=048-425809" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>E Glenoaks Blvd, Glendale</td><td>Los Angeles</td><td class="num">$1,116,000</td><td>Asking</td><td class="num">3 / 2,205</td><td>HUD owned; price reduced</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=197-452868" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">7 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.hudhomestore.gov/searchresult?citystate=CA" target="_blank" rel="noopener">HUD Home Store</a><span>The official listing and bidding site for HUD homes</span></li>
           <li><a href="https://www.hud.gov/states/california" target="_blank" rel="noopener">HUD California</a><span>HUD&#x27;s California page and FHA contacts</span></li>
           <li><a href="https://www.hud.gov/program_offices/housing/sfh/reo/goodn" target="_blank" rel="noopener">HUD Good Neighbor Next Door</a><span>50% discount program for eligible teachers, police, firefighters and EMTs</span></li>
-      </ul></div>
-      <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.hudhomestore.gov/searchresult?citystate=CA" target="_blank" rel="noopener">HUD Home Store: California &rarr;</a></p></div>
-    </div>
-  </section>
-  <section id="cat-5" class="catsec">
-    <div class="cathd"><span class="badge14">#5</span><div><h2>Foreclosure auction</h2><p class="lede sm">A trustee sells the home at public auction over unpaid mortgage debt.</p></div></div>
-    <p class="note"><strong>For buyers:</strong> Opening (credit) bids are often unpublished and sales are frequently postponed. Confirm with the trustee named in the Notice of Trustee&#x27;s Sale.</p>
-    <div class="card"><div class="table-scroll"><table>
-      <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
-      <tbody>
-        <tr><td>Chesapeake Way, Corona</td><td>Riverside</td><td class="num">—</td><td>Credit bid unpublished</td><td class="num">3 / 1,829</td><td>Auction 2026-11-18 9:00 a.m., Corona Civic Center</td><td><a class="go" href="https://www.auction.com/details/1813-chesapeake-way-corona-ca-2205394" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Bilberry Rd, San Bernardino</td><td>San Bernardino</td><td class="num">—</td><td>Credit bid unpublished</td><td class="num">4 / 1,821</td><td>Auction 2026-11-24 9:00 a.m., Chino Municipal Court</td><td><a class="go" href="https://www.auction.com/details/3895-bilberry-rd-san-bernardino-ca-2210345" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Glenburn Ln, Menifee</td><td>Riverside</td><td class="num">—</td><td>Credit bid unpublished</td><td class="num">4 / 1,344</td><td>Auction 2026-11-25 9:00 a.m., Corona Civic Center</td><td><a class="go" href="https://www.auction.com/details/25805-glenburn-ln-menifee-ca-2213204" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>54th St, Jurupa Valley</td><td>Riverside</td><td class="num">—</td><td>Credit bid unpublished</td><td class="num">2 / 1,164</td><td>Auction 2026-11-25 9:00 a.m., Corona Civic Center</td><td><a class="go" href="https://www.auction.com/details/10576-54th-st-jurupa-valley-ca-2230464" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-      </tbody>
-    </table></div>
-    <p class="fine">4 homes, lowest price first; "price on request" last. Links checked Nov 16, 2026.</p></div>
-    <div class="grid g2" style="margin-top:16px">
-      <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.hudhomestore.gov/searchresult?citystate=CA" target="_blank" rel="noopener">HUD Home Store: California &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="socal-cat-5" class="catsec">
+      <div class="cathd"><span class="badge14">#5</span><div><h2>Foreclosure auction</h2><p class="lede sm">A trustee sells the home at public auction over unpaid mortgage debt.</p></div></div>
+      <p class="note"><strong>For buyers in SoCal:</strong> Opening (credit) bids are often unpublished and sales are frequently postponed. Confirm with the trustee named in the Notice of Trustee&#x27;s Sale.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>Chesapeake Way, Corona</td><td>Riverside</td><td class="num">—</td><td>Credit bid unpublished</td><td class="num">3 / 1,829</td><td>Auction 2026-11-18 9:00 a.m., Corona Civic Center</td><td><a class="go" href="https://www.auction.com/details/1813-chesapeake-way-corona-ca-2205394" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Bilberry Rd, San Bernardino</td><td>San Bernardino</td><td class="num">—</td><td>Credit bid unpublished</td><td class="num">4 / 1,821</td><td>Auction 2026-11-24 9:00 a.m., Chino Municipal Court</td><td><a class="go" href="https://www.auction.com/details/3895-bilberry-rd-san-bernardino-ca-2210345" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Glenburn Ln, Menifee</td><td>Riverside</td><td class="num">—</td><td>Credit bid unpublished</td><td class="num">4 / 1,344</td><td>Auction 2026-11-25 9:00 a.m., Corona Civic Center</td><td><a class="go" href="https://www.auction.com/details/25805-glenburn-ln-menifee-ca-2213204" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>54th St, Jurupa Valley</td><td>Riverside</td><td class="num">—</td><td>Credit bid unpublished</td><td class="num">2 / 1,164</td><td>Auction 2026-11-25 9:00 a.m., Corona Civic Center</td><td><a class="go" href="https://www.auction.com/details/10576-54th-st-jurupa-valley-ca-2230464" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">4 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.auction.com/" target="_blank" rel="noopener">Auction.com</a><span>Largest trustee-sale and bank-owned auction platform</span></li>
           <li><a href="https://www.xome.com/" target="_blank" rel="noopener">Xome</a><span>Foreclosure and bank-owned online auctions</span></li>
           <li><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&amp;sectionNum=2924f" target="_blank" rel="noopener">Civil Code §2924f</a><span>Notice of sale rules, including the trustee&#x27;s postponement phone line or website</span></li>
           <li><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&amp;sectionNum=2924m" target="_blank" rel="noopener">Civil Code §2924m</a><span>Eligible tenants and bidders can buy after some 1-4 unit auctions, so a result may not be final</span></li>
-      </ul></div>
-      <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.auction.com/" target="_blank" rel="noopener">Auction.com &rarr;</a> <a class="tag good srch" href="https://www.xome.com/" target="_blank" rel="noopener">Xome &rarr;</a></p></div>
-    </div>
-  </section>
-  <section id="cat-6" class="catsec">
-    <div class="cathd"><span class="badge14">#6</span><div><h2>Pre-foreclosure</h2><p class="lede sm">The owner is behind and has a recorded Notice of Default, before any sale.</p></div></div>
-    <p class="note"><strong>For buyers:</strong> The owner may sell, catch up or keep the home. A notice is not proof the home is for sale; confirm in county records.</p>
-    <div class="card"><div class="table-scroll"><table>
-      <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
-      <tbody>
-        <tr><td>Luther St, Riverside</td><td>Riverside</td><td class="num">$525,000</td><td>Asking</td><td class="num">3 / 1,117</td><td>NOD; partition referee; lender + court approval</td><td><a class="go" href="https://www.redfin.com/CA/Riverside/4909-Luther-St-92504/home/4977000" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Merrill Ave, Riverside</td><td>Riverside</td><td class="num">$649,000</td><td>Asking</td><td class="num">4 / 1,762</td><td>NOD; older pages show other prices</td><td><a class="go" href="https://www.coldwellbankerhomes.com/ca/riverside/4578-merrill/pid_73113158/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Montclair St, San Diego</td><td>San Diego</td><td class="num">$1,199,990</td><td>Asking</td><td class="num">2 / 855</td><td>NOD; foreclosure stage unconfirmed; sq ft approximate</td><td><a class="go" href="https://showcase.realestatedigital.com/property-details/2536-montclair-st-san-diego-ca-92104-060007958948?l=437498473" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Bretton Woods Pl, Riverside</td><td>Riverside</td><td class="num">$1,525,000</td><td>Asking</td><td class="num">6 / 4,986</td><td>NOD; price reduced</td><td><a class="go" href="https://andersonreg.com/listing/crmls/RS26231920/Riverside/17595-Bretton-Woods/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-      </tbody>
-    </table></div>
-    <p class="fine">4 homes, lowest price first; "price on request" last. Links checked Nov 16, 2026.</p></div>
-    <div class="grid g2" style="margin-top:16px">
-      <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.auction.com/" target="_blank" rel="noopener">Auction.com &rarr;</a> <a class="tag good srch" href="https://www.xome.com/" target="_blank" rel="noopener">Xome &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="socal-cat-6" class="catsec">
+      <div class="cathd"><span class="badge14">#6</span><div><h2>Pre-foreclosure</h2><p class="lede sm">The owner is behind and has a recorded Notice of Default, before any sale.</p></div></div>
+      <p class="note"><strong>For buyers in SoCal:</strong> The owner may sell, catch up or keep the home. A notice is not proof the home is for sale; confirm in county records.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>Luther St, Riverside</td><td>Riverside</td><td class="num">$525,000</td><td>Asking</td><td class="num">3 / 1,117</td><td>NOD; partition referee; lender + court approval</td><td><a class="go" href="https://www.redfin.com/CA/Riverside/4909-Luther-St-92504/home/4977000" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Merrill Ave, Riverside</td><td>Riverside</td><td class="num">$649,000</td><td>Asking</td><td class="num">4 / 1,762</td><td>NOD; older pages show other prices</td><td><a class="go" href="https://www.coldwellbankerhomes.com/ca/riverside/4578-merrill/pid_73113158/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Montclair St, San Diego</td><td>San Diego</td><td class="num">$1,199,990</td><td>Asking</td><td class="num">2 / 855</td><td>NOD; foreclosure stage unconfirmed; sq ft approximate</td><td><a class="go" href="https://showcase.realestatedigital.com/property-details/2536-montclair-st-san-diego-ca-92104-060007958948?l=437498473" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Bretton Woods Pl, Riverside</td><td>Riverside</td><td class="num">$1,525,000</td><td>Asking</td><td class="num">6 / 4,986</td><td>NOD; price reduced</td><td><a class="go" href="https://andersonreg.com/listing/crmls/RS26231920/Riverside/17595-Bretton-Woods/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">4 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.lavote.gov/home/recorder/real-estate-records" target="_blank" rel="noopener">LA County Registrar-Recorder</a><span>Recorded documents; not searchable online, request by mail or appointment</span></li>
           <li><a href="https://cr.occlerkrecorder.gov/RecorderWorksInternet/" target="_blank" rel="noopener">Orange County Clerk-Recorder index</a><span>Online grantor/grantee index since 1982</span></li>
           <li><a href="https://rivcoacr.org/" target="_blank" rel="noopener">Riverside County Assessor-Clerk-Recorder</a><span>Official records index search and copies</span></li>
@@ -229,60 +247,60 @@ a.go{white-space:nowrap;font-weight:600}
           <li><a href="https://arcc-acclaim.sdcounty.ca.gov/search" target="_blank" rel="noopener">San Diego County ARCC records</a><span>Grantor/grantee index (APN search removed)</span></li>
           <li><a href="https://clerkrecorderselfservice.venturacounty.gov/web/user/disclaimer" target="_blank" rel="noopener">Ventura County Clerk-Recorder</a><span>Self-service official records search</span></li>
           <li><a href="https://www.propertyradar.com/" target="_blank" rel="noopener">PropertyRadar (paid)</a><span>Commercial foreclosure tracking and owner data</span></li>
-      </ul></div>
-      <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.redfin.com/state/California/foreclosures" target="_blank" rel="noopener">Redfin: California foreclosures &rarr;</a></p></div>
-    </div>
-  </section>
-  <section id="cat-8" class="catsec">
-    <div class="cathd"><span class="badge14">#8</span><div><h2>For sale by owner</h2><p class="lede sm">The owner sells without a listing agent.</p></div></div>
-    <p class="note"><strong>For buyers:</strong> You deal with the owner directly; you can still use your own agent. Run a title search to confirm ownership and liens.</p>
-    <div class="card"><div class="table-scroll"><table>
-      <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
-      <tbody>
-        <tr><td>Hortense St, North Hollywood</td><td>Los Angeles</td><td class="num">$529,000</td><td>Asking</td><td class="num">3 / 1,145</td><td>Vacant; HOA $550/mo</td><td><a class="go" href="https://www.trulia.com/home/10757-hortense-st-119-north-hollywood-ca-91602-20043113" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Gentry Ave, North Hollywood</td><td>Los Angeles</td><td class="num">$830,000</td><td>Asking</td><td class="num">3 / 1,438</td><td>FSBO</td><td><a class="go" href="https://www.zillow.com/homedetails/8127-Gentry-Ave-North-Hollywood-CA-91605/19999781_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Margate St, North Hollywood</td><td>Los Angeles</td><td class="num">$950,000</td><td>Asking</td><td class="num">3 / 1,051</td><td>Listed Nov 6</td><td><a class="go" href="https://www.zillow.com/homedetails/10427-Margate-St-North-Hollywood-CA-91601/20041274_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>San Jose St, Porter Ranch</td><td>Los Angeles</td><td class="num">$1,290,000</td><td>Asking</td><td class="num">3 / 1,600</td><td>Reduced Oct 26</td><td><a class="go" href="https://www.zillow.com/homedetails/18312-San-Jose-St-Porter-Ranch-CA-91326/20167774_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Beachwood Ter, Los Angeles</td><td>Los Angeles</td><td class="num">$1,395,000</td><td>Asking</td><td class="num">3 / 1,610</td><td>FSBO</td><td><a class="go" href="https://www.zillow.com/homedetails/2174-Beachwood-Ter-Los-Angeles-CA-90068/20807546_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-      </tbody>
-    </table></div>
-    <p class="fine">5 homes, lowest price first; "price on request" last. Links checked Nov 16, 2026.</p></div>
-    <div class="grid g2" style="margin-top:16px">
-      <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.redfin.com/state/California/foreclosures" target="_blank" rel="noopener">Redfin: California foreclosures &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="socal-cat-8" class="catsec">
+      <div class="cathd"><span class="badge14">#8</span><div><h2>For sale by owner</h2><p class="lede sm">The owner sells without a listing agent.</p></div></div>
+      <p class="note"><strong>For buyers in SoCal:</strong> You deal with the owner directly; you can still use your own agent. Run a title search to confirm ownership and liens.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>Hortense St, North Hollywood</td><td>Los Angeles</td><td class="num">$529,000</td><td>Asking</td><td class="num">3 / 1,145</td><td>Vacant; HOA $550/mo</td><td><a class="go" href="https://www.trulia.com/home/10757-hortense-st-119-north-hollywood-ca-91602-20043113" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Gentry Ave, North Hollywood</td><td>Los Angeles</td><td class="num">$830,000</td><td>Asking</td><td class="num">3 / 1,438</td><td>FSBO</td><td><a class="go" href="https://www.zillow.com/homedetails/8127-Gentry-Ave-North-Hollywood-CA-91605/19999781_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Margate St, North Hollywood</td><td>Los Angeles</td><td class="num">$950,000</td><td>Asking</td><td class="num">3 / 1,051</td><td>Listed Nov 6</td><td><a class="go" href="https://www.zillow.com/homedetails/10427-Margate-St-North-Hollywood-CA-91601/20041274_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>San Jose St, Porter Ranch</td><td>Los Angeles</td><td class="num">$1,290,000</td><td>Asking</td><td class="num">3 / 1,600</td><td>Reduced Oct 26</td><td><a class="go" href="https://www.zillow.com/homedetails/18312-San-Jose-St-Porter-Ranch-CA-91326/20167774_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Beachwood Ter, Los Angeles</td><td>Los Angeles</td><td class="num">$1,395,000</td><td>Asking</td><td class="num">3 / 1,610</td><td>FSBO</td><td><a class="go" href="https://www.zillow.com/homedetails/2174-Beachwood-Ter-Los-Angeles-CA-90068/20807546_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">5 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.forsalebyowner.com/" target="_blank" rel="noopener">ForSaleByOwner.com</a><span>Owner-listed homes</span></li>
           <li><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&amp;sectionNum=1102" target="_blank" rel="noopener">Civil Code §1102 (Transfer Disclosure Statement)</a><span>FSBO sellers of 1-4 unit homes must still give the statutory disclosures</span></li>
           <li><a href="https://www2.dre.ca.gov/publicasp/pplinfo.asp" target="_blank" rel="noopener">DRE public license lookup</a><span>Verify your own buyer&#x27;s agent</span></li>
-      </ul></div>
-      <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.forsalebyowner.com/" target="_blank" rel="noopener">ForSaleByOwner.com &rarr;</a> <a class="tag good srch" href="https://www.zillow.com/" target="_blank" rel="noopener">Zillow (filter: by owner) &rarr;</a></p></div>
-    </div>
-  </section>
-  <section id="cat-10" class="catsec">
-    <div class="cathd"><span class="badge14">#10</span><div><h2>Estate / probate</h2><p class="lede sm">Sold while settling a deceased person&#x27;s estate or a trust.</p></div></div>
-    <p class="note"><strong>For buyers:</strong> Court confirmation and open-court overbidding may apply, but not always. Bring a cashier&#x27;s check and proof of funds; the minimum overbid is the price to start competing.</p>
-    <div class="card"><div class="table-scroll"><table>
-      <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
-      <tbody>
-        <tr><td>Florentina Ave, Alhambra</td><td>Los Angeles</td><td class="num">$336,500</td><td>Minimum overbid</td><td class="num">2 / 787</td><td>Hearing 2026-11-23 8:30 a.m.; accepted bid $320,000</td><td><a class="go" href="https://bidnda.com/property/2501-florentina-avenue" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Greenfield Ave, Los Angeles</td><td>Los Angeles</td><td class="num">$404,750</td><td>Minimum overbid</td><td class="num">2 / 989</td><td>Probate condo; LA County probate hearing list</td><td><a class="go" href="https://bidnda.com/property/1849-greenfield-avenue-106" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Berg St, Sylmar</td><td>Los Angeles</td><td class="num">$473,000</td><td>Minimum overbid</td><td class="num">3 / 956</td><td>Probate sale; LA County probate hearing list</td><td><a class="go" href="https://bidnda.com/property/14224-berg-street" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>E Bort St, Long Beach</td><td>Los Angeles</td><td class="num">$604,250</td><td>Minimum overbid</td><td class="num">3 / 1,132</td><td>Probate sale; LA County probate hearing list</td><td><a class="go" href="https://bidnda.com/property/210-east-bort-street" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Crookshank Dr, Santa Clarita</td><td>Los Angeles</td><td class="num">$662,000</td><td>Minimum overbid</td><td class="num">2 / 1,006</td><td>Hearing 2026-12-15 8:30 a.m.; accepted bid $630,000</td><td><a class="go" href="https://bidnda.com/property/27854-crookshank-drive" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Stewart and Gray Rd, Downey</td><td>Los Angeles</td><td class="num">$735,500</td><td>Minimum overbid</td><td class="num">2 / 794</td><td>Probate sale; LA County probate hearing list</td><td><a class="go" href="https://bidnda.com/property/8618-stewart-and-gray-road" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>E Penrod Dr, Carson</td><td>Los Angeles</td><td class="num">$756,500</td><td>Minimum overbid</td><td class="num">3 / 3,142</td><td>Trust sale; court confirmation required; court date TBD</td><td><a class="go" href="https://bidnda.com/property/802-east-penrod-drive" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Radio Dr, Los Angeles</td><td>Los Angeles</td><td class="num">$982,250</td><td>Minimum overbid</td><td class="num">2 / 1,322</td><td>Probate sale; LA County probate hearing list</td><td><a class="go" href="https://bidnda.com/property/11790-radio-drive" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Hortense St, Valley Village</td><td>Los Angeles</td><td class="num">$995,000</td><td>Asking</td><td class="num">3 / 1,333</td><td>Probate, no court confirmation</td><td><a class="go" href="https://bidnda.com/property/11547-hortense-street" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>N Bronson Ave, Los Angeles</td><td>Los Angeles</td><td class="num">$1,239,500</td><td>Minimum overbid</td><td class="num">2 / 1,376</td><td>Hearing 2026-11-25 8:30 a.m.; accepted bid $1,180,000</td><td><a class="go" href="https://bidnda.com/property/316-north-bronson-avenue" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Ivy Rd, Oceanside</td><td>San Diego</td><td class="num">$2,450,000</td><td>Asking</td><td class="num">— / —</td><td>Estate-auction listing; confirm sale type and terms</td><td><a class="go" href="https://bidnda.com/property/2535-ivy-road" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Ivy Rd, Oceanside</td><td>San Diego</td><td class="num">$2,499,000</td><td>Asking</td><td class="num">— / —</td><td>Estate-auction listing; confirm sale type and terms</td><td><a class="go" href="https://bidnda.com/property/2527-ivy-road" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Placidia Ave, Toluca Lake</td><td>Los Angeles</td><td class="num">—</td><td>Price on request</td><td class="num">3 / 2,417</td><td>Trust sale; no court confirmation required</td><td><a class="go" href="https://bidnda.com/property/4740-placidia-avenue" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Euclid Ave, Long Beach</td><td>Los Angeles</td><td class="num">—</td><td>Price on request</td><td class="num">2 / 1,407</td><td>Probate sale (Belmont Heights)</td><td><a class="go" href="https://bidnda.com/property/242-euclid-avenue" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>N Crescent Heights Blvd, Los Angeles</td><td>Los Angeles</td><td class="num">—</td><td>Price on request</td><td class="num">6 / 5,266</td><td>Probate sale</td><td><a class="go" href="https://bidnda.com/property/1771-n-crescent-heights-boulevard" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>18th St, Santa Monica</td><td>Los Angeles</td><td class="num">—</td><td>Price on request</td><td class="num">— / —</td><td>Trust sale; ZIP 90402 is an AB 851 ZIP (no unsolicited offers)</td><td><a class="go" href="https://bidnda.com/property/439-18th-street" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-      </tbody>
-    </table></div>
-    <p class="fine">16 homes, lowest price first; "price on request" last. Links checked Nov 16, 2026.</p></div>
-    <div class="grid g2" style="margin-top:16px">
-      <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.forsalebyowner.com/" target="_blank" rel="noopener">ForSaleByOwner.com &rarr;</a> <a class="tag good srch" href="https://www.zillow.com/" target="_blank" rel="noopener">Zillow (filter: by owner) &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="socal-cat-10" class="catsec">
+      <div class="cathd"><span class="badge14">#10</span><div><h2>Estate / probate</h2><p class="lede sm">Sold while settling a deceased person&#x27;s estate or a trust.</p></div></div>
+      <p class="note"><strong>For buyers in SoCal:</strong> Court confirmation and open-court overbidding may apply, but not always. Bring a cashier&#x27;s check and proof of funds; the minimum overbid is the price to start competing.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>Florentina Ave, Alhambra</td><td>Los Angeles</td><td class="num">$336,500</td><td>Minimum overbid</td><td class="num">2 / 787</td><td>Hearing 2026-11-23 8:30 a.m.; accepted bid $320,000</td><td><a class="go" href="https://bidnda.com/property/2501-florentina-avenue" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Greenfield Ave, Los Angeles</td><td>Los Angeles</td><td class="num">$404,750</td><td>Minimum overbid</td><td class="num">2 / 989</td><td>Probate condo; LA County probate hearing list</td><td><a class="go" href="https://bidnda.com/property/1849-greenfield-avenue-106" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Berg St, Sylmar</td><td>Los Angeles</td><td class="num">$473,000</td><td>Minimum overbid</td><td class="num">3 / 956</td><td>Probate sale; LA County probate hearing list</td><td><a class="go" href="https://bidnda.com/property/14224-berg-street" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>E Bort St, Long Beach</td><td>Los Angeles</td><td class="num">$604,250</td><td>Minimum overbid</td><td class="num">3 / 1,132</td><td>Probate sale; LA County probate hearing list</td><td><a class="go" href="https://bidnda.com/property/210-east-bort-street" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Crookshank Dr, Santa Clarita</td><td>Los Angeles</td><td class="num">$662,000</td><td>Minimum overbid</td><td class="num">2 / 1,006</td><td>Hearing 2026-12-15 8:30 a.m.; accepted bid $630,000</td><td><a class="go" href="https://bidnda.com/property/27854-crookshank-drive" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Stewart and Gray Rd, Downey</td><td>Los Angeles</td><td class="num">$735,500</td><td>Minimum overbid</td><td class="num">2 / 794</td><td>Probate sale; LA County probate hearing list</td><td><a class="go" href="https://bidnda.com/property/8618-stewart-and-gray-road" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>E Penrod Dr, Carson</td><td>Los Angeles</td><td class="num">$756,500</td><td>Minimum overbid</td><td class="num">3 / 3,142</td><td>Trust sale; court confirmation required; court date TBD</td><td><a class="go" href="https://bidnda.com/property/802-east-penrod-drive" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Radio Dr, Los Angeles</td><td>Los Angeles</td><td class="num">$982,250</td><td>Minimum overbid</td><td class="num">2 / 1,322</td><td>Probate sale; LA County probate hearing list</td><td><a class="go" href="https://bidnda.com/property/11790-radio-drive" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Hortense St, Valley Village</td><td>Los Angeles</td><td class="num">$995,000</td><td>Asking</td><td class="num">3 / 1,333</td><td>Probate, no court confirmation</td><td><a class="go" href="https://bidnda.com/property/11547-hortense-street" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>N Bronson Ave, Los Angeles</td><td>Los Angeles</td><td class="num">$1,239,500</td><td>Minimum overbid</td><td class="num">2 / 1,376</td><td>Hearing 2026-11-25 8:30 a.m.; accepted bid $1,180,000</td><td><a class="go" href="https://bidnda.com/property/316-north-bronson-avenue" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Ivy Rd, Oceanside</td><td>San Diego</td><td class="num">$2,450,000</td><td>Asking</td><td class="num">— / —</td><td>Estate-auction listing; confirm sale type and terms</td><td><a class="go" href="https://bidnda.com/property/2535-ivy-road" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Ivy Rd, Oceanside</td><td>San Diego</td><td class="num">$2,499,000</td><td>Asking</td><td class="num">— / —</td><td>Estate-auction listing; confirm sale type and terms</td><td><a class="go" href="https://bidnda.com/property/2527-ivy-road" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Placidia Ave, Toluca Lake</td><td>Los Angeles</td><td class="num">—</td><td>Price on request</td><td class="num">3 / 2,417</td><td>Trust sale; no court confirmation required</td><td><a class="go" href="https://bidnda.com/property/4740-placidia-avenue" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Euclid Ave, Long Beach</td><td>Los Angeles</td><td class="num">—</td><td>Price on request</td><td class="num">2 / 1,407</td><td>Probate sale (Belmont Heights)</td><td><a class="go" href="https://bidnda.com/property/242-euclid-avenue" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>N Crescent Heights Blvd, Los Angeles</td><td>Los Angeles</td><td class="num">—</td><td>Price on request</td><td class="num">6 / 5,266</td><td>Probate sale</td><td><a class="go" href="https://bidnda.com/property/1771-n-crescent-heights-boulevard" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>18th St, Santa Monica</td><td>Los Angeles</td><td class="num">—</td><td>Price on request</td><td class="num">— / —</td><td>Trust sale; ZIP 90402 is an AB 851 ZIP (no unsolicited offers)</td><td><a class="go" href="https://bidnda.com/property/439-18th-street" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">16 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.bidnda.com/" target="_blank" rel="noopener">BidNDA</a><span>LA County Public Administrator&#x27;s real-property sales plus other estate and trust sales</span></li>
           <li><a href="https://ttc.lacounty.gov/public-administrator-frequently-asked-questions/" target="_blank" rel="noopener">LA County Public Administrator</a><span>How the county administers and sells estates</span></li>
           <li><a href="https://www.sandiegocounty.gov/content/sdc/hhsa/programs/ais/Services/Probate-Real-Estate-Sale.html" target="_blank" rel="noopener">San Diego County Public Administrator sales</a><span>Probate homes listed on the MLS; 10% deposit</span></li>
@@ -291,25 +309,25 @@ a.go{white-space:nowrap;font-weight:600}
           <li><a href="https://selfhelp.courts.ca.gov/probate" target="_blank" rel="noopener">California Courts Self-Help: probate</a><span>Official guide to property after someone dies</span></li>
           <li><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&amp;sectionNum=10300" target="_blank" rel="noopener">Probate Code §10300</a><span>Notice of sale of estate real property</span></li>
           <li><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&amp;sectionNum=10311" target="_blank" rel="noopener">Probate Code §10311</a><span>Overbid rules at the confirmation hearing</span></li>
-      </ul></div>
-      <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.bidnda.com/" target="_blank" rel="noopener">BidNDA &rarr;</a></p></div>
-    </div>
-  </section>
-  <section id="cat-11" class="catsec">
-    <div class="cathd"><span class="badge14">#11</span><div><h2>Auction</h2><p class="lede sm">Buyers compete by bidding: bank-owned online auctions and county tax-defaulted property sales.</p></div></div>
-    <p class="note"><strong>For buyers:</strong> Opening bids can be below the seller&#x27;s reserve; many sales are cash only with a buyer&#x27;s premium. Tax sales can include vacant land.</p>
-    <div class="card"><div class="table-scroll"><table>
-      <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
-      <tbody>
-        <tr><td>Landon Ct, Adelanto</td><td>San Bernardino</td><td class="num">$175,000</td><td>Opening bid</td><td class="num">4 / 2,105</td><td>Bank-owned; reserve not met</td><td><a class="go" href="https://www.auction.com/details/17940-landon-ct-adelanto-ca-2244546" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>E Benedict Rd, San Bernardino</td><td>San Bernardino</td><td class="num">$200,000</td><td>Opening bid</td><td class="num">4 / 1,198</td><td>Online event 2026-11-16 to 2026-11-18; sq ft approximate</td><td><a class="go" href="https://www.auction.com/details/24809-e-benedict-rd-san-bernardino-ca-2152483" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Jennifer Ln, Jurupa Valley</td><td>Riverside</td><td class="num">$225,000</td><td>Opening bid</td><td class="num">3 / 1,476</td><td>Bank-owned online auction</td><td><a class="go" href="https://www.auction.com/details/6150-jennifer-ln-jurupa-valley-ca-2243821" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>31st Street West, Acton</td><td>Los Angeles</td><td class="num">$465,000</td><td>Starting bid</td><td class="num">3 / 2,026</td><td>Event ending 2026-11-17; cash only; occupied; 3% buyer&#x27;s premium</td><td><a class="go" href="https://www.xome.com/auctions/35453-31st-street-west-acton-ca-93510-423603252" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-      </tbody>
-    </table></div>
-    <p class="fine">4 homes, lowest price first; "price on request" last. Links checked Nov 16, 2026.</p></div>
-    <div class="grid g2" style="margin-top:16px">
-      <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.bidnda.com/" target="_blank" rel="noopener">BidNDA &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="socal-cat-11" class="catsec">
+      <div class="cathd"><span class="badge14">#11</span><div><h2>Auction</h2><p class="lede sm">Buyers compete by bidding: bank-owned online auctions and county tax-defaulted property sales.</p></div></div>
+      <p class="note"><strong>For buyers in SoCal:</strong> Opening bids can be below the seller&#x27;s reserve; many sales are cash only with a buyer&#x27;s premium. Tax sales can include vacant land.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>Landon Ct, Adelanto</td><td>San Bernardino</td><td class="num">$175,000</td><td>Opening bid</td><td class="num">4 / 2,105</td><td>Bank-owned; reserve not met</td><td><a class="go" href="https://www.auction.com/details/17940-landon-ct-adelanto-ca-2244546" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>E Benedict Rd, San Bernardino</td><td>San Bernardino</td><td class="num">$200,000</td><td>Opening bid</td><td class="num">4 / 1,198</td><td>Online event 2026-11-16 to 2026-11-18; sq ft approximate</td><td><a class="go" href="https://www.auction.com/details/24809-e-benedict-rd-san-bernardino-ca-2152483" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Jennifer Ln, Jurupa Valley</td><td>Riverside</td><td class="num">$225,000</td><td>Opening bid</td><td class="num">3 / 1,476</td><td>Bank-owned online auction</td><td><a class="go" href="https://www.auction.com/details/6150-jennifer-ln-jurupa-valley-ca-2243821" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>31st Street West, Acton</td><td>Los Angeles</td><td class="num">$465,000</td><td>Starting bid</td><td class="num">3 / 2,026</td><td>Event ending 2026-11-17; cash only; occupied; 3% buyer&#x27;s premium</td><td><a class="go" href="https://www.xome.com/auctions/35453-31st-street-west-acton-ca-93510-423603252" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">4 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://sco.ca.gov/ardtax_public_auction.html" target="_blank" rel="noopener">CA State Controller: tax-sale auctions</a><span>How county tax-defaulted property auctions work</span></li>
           <li><a href="https://ttc.lacounty.gov/schedule-of-upcoming-auctions/" target="_blank" rel="noopener">LA County tax auction schedule</a><span>Next follow-up auction Dec 5-8, 2026 on GovEase</span></li>
           <li><a href="https://www.govease.com/los-angeles" target="_blank" rel="noopener">LA County on GovEase</a><span>Registration and bidding for LA County tax sales</span></li>
@@ -318,40 +336,641 @@ a.go{white-space:nowrap;font-weight:600}
           <li><a href="https://sbcounty.mytaxsale.com/" target="_blank" rel="noopener">San Bernardino County tax sale</a><span>Official online tax-sale site</span></li>
           <li><a href="https://sdttc.mytaxsale.com/" target="_blank" rel="noopener">San Diego County tax sale</a><span>Official online tax-sale site</span></li>
           <li><a href="https://venturacounty.gov/ttc/current-auction/" target="_blank" rel="noopener">Ventura County tax auction</a><span>Current auction information (held on Bid4Assets)</span></li>
-      </ul></div>
-      <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.auction.com/" target="_blank" rel="noopener">Auction.com &rarr;</a> <a class="tag good srch" href="https://www.bid4assets.com/county-tax-sales" target="_blank" rel="noopener">Bid4Assets county tax sales &rarr;</a></p></div>
-    </div>
-  </section>
-  <section id="cat-13" class="catsec">
-    <div class="cathd"><span class="badge14">#13</span><div><h2>Relocation (RELO)</h2><p class="lede sm">An employer&#x27;s relocation company sells or buys out a transferring employee&#x27;s home.</p></div></div>
-    <p class="note"><strong>For buyers:</strong> Expect relocation-company addenda and approvals (for example Cartus or BGRS). Relocation sales are found through listing remarks; there is no public inventory.</p>
-    <div class="card"><div class="table-scroll"><table>
-      <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
-      <tbody>
-        <tr><td>Alsuna Ln, Huntington Beach</td><td>Orange</td><td class="num">$1,249,000</td><td>Asking</td><td class="num">3 / 1,349</td><td>Relocation-company approval</td><td><a class="go" href="https://www.rubyhome.com/idx/1817-alsuna-ln-huntington-beach-ca-92648/1809762407_spid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Winfield Dr, Ladera Ranch</td><td>Orange</td><td class="num">$1,875,000</td><td>Asking</td><td class="num">4 / 3,150</td><td>BGRS seller; relo addenda</td><td><a class="go" href="https://www.rubyhome.com/idx/36-winfield-dr-ladera-ranch-ca-92694/1810529035_spid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-        <tr><td>Julia St, Ladera Ranch</td><td>Orange</td><td class="num">$2,290,000</td><td>Asking</td><td class="num">4 / 3,227</td><td>Cartus approval process</td><td><a class="go" href="https://www.trulia.com/home/15-julia-st-mission-viejo-ca-92694-64472818" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-      </tbody>
-    </table></div>
-    <p class="fine">3 homes, lowest price first; "price on request" last. Links checked Nov 16, 2026.</p></div>
-    <div class="grid g2" style="margin-top:16px">
-      <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.auction.com/" target="_blank" rel="noopener">Auction.com &rarr;</a> <a class="tag good srch" href="https://www.bid4assets.com/county-tax-sales" target="_blank" rel="noopener">Bid4Assets county tax sales &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="socal-cat-13" class="catsec">
+      <div class="cathd"><span class="badge14">#13</span><div><h2>Relocation (RELO)</h2><p class="lede sm">An employer&#x27;s relocation company sells or buys out a transferring employee&#x27;s home.</p></div></div>
+      <p class="note"><strong>For buyers in SoCal:</strong> Expect relocation-company addenda and approvals (for example Cartus or BGRS). Relocation sales are found through listing remarks; there is no public inventory.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>Alsuna Ln, Huntington Beach</td><td>Orange</td><td class="num">$1,249,000</td><td>Asking</td><td class="num">3 / 1,349</td><td>Relocation-company approval</td><td><a class="go" href="https://www.rubyhome.com/idx/1817-alsuna-ln-huntington-beach-ca-92648/1809762407_spid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Winfield Dr, Ladera Ranch</td><td>Orange</td><td class="num">$1,875,000</td><td>Asking</td><td class="num">4 / 3,150</td><td>BGRS seller; relo addenda</td><td><a class="go" href="https://www.rubyhome.com/idx/36-winfield-dr-ladera-ranch-ca-92694/1810529035_spid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Julia St, Ladera Ranch</td><td>Orange</td><td class="num">$2,290,000</td><td>Asking</td><td class="num">4 / 3,227</td><td>Cartus approval process</td><td><a class="go" href="https://www.trulia.com/home/15-julia-st-mission-viejo-ca-92694-64472818" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">3 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.cartus.com/" target="_blank" rel="noopener">Cartus</a><span>Major relocation management company</span></li>
           <li><a href="https://www.sirva.com/" target="_blank" rel="noopener">Sirva (BGRS parent)</a><span>Relocation management company</span></li>
           <li><a href="https://www.worldwideerc.org/" target="_blank" rel="noopener">Worldwide ERC</a><span>Industry body that sets relocation home-sale and appraisal standards</span></li>
-      </ul></div>
-      <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.zillow.com/" target="_blank" rel="noopener">Zillow (keyword: relocation) &rarr;</a></p></div>
-    </div>
-  </section>
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.zillow.com/" target="_blank" rel="noopener">Zillow (keyword: relocation) &rarr;</a></p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>California rules that shape the project</h2>
+      <div class="grid g3">
+        <div class="card"><h3>AB 851</h3><p>Until Jan 1, 2027, unsolicited purchase offers are banned in 15 fire-affected Los Angeles and Ventura ZIP codes. <a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&amp;sectionNum=2079.26" target="_blank" rel="noopener">Civil Code §2079.26</a></p></div>
+        <div class="card"><h3>Civil Code §2924m</h3><p>Eligible tenants and bidders can buy after some 1–4 unit foreclosure auctions, so an auction result may not be final. <a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&amp;sectionNum=2924m" target="_blank" rel="noopener">Read the law</a></p></div>
+        <div class="card"><h3>Probate confirmation</h3><p>Court confirmation and overbidding apply only to some estate sales, depending on the representative&#x27;s authority. <a href="https://selfhelp.courts.ca.gov/probate" target="_blank" rel="noopener">Courts self-help guide</a></p></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="grid g2">
+        <div class="card"><h2>Next steps in SoCal</h2><ol class="steps">
+          <li>Re-check this week&#x27;s deadlines: online auctions ending Nov 17–18, HUD bids opening Nov 17, probate hearings Nov 23 and 25.</li>
+          <li>Run the daily scan and add new homes to each category.</li>
+          <li>Engage a DRE-licensed partner broker for verification and HUD bids.</li>
+        </ol></div>
+        <div class="card"><h2>Main challenges</h2><ul>
+          <li><span class="tag warn">Data</span> Off-market ads withhold addresses; foreclosure credit bids are often unpublished.</li>
+          <li><span class="tag warn">Records</span> LA County recorder records can&#x27;t be browsed online; San Diego removed online parcel search.</li>
+        </ul></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="panel" id="panel-phoenix" role="tabpanel" aria-labelledby="tab-phoenix" hidden>
+    <section aria-label="Phoenix at a glance">
+      <div class="statstrip">
+        <div class="primary"><div class="k">Current homes</div><div class="v">55</div><div class="s">in the Phoenix metro (Maricopa County)</div></div>
+        <div><div class="k">Categories</div><div class="v">10</div><div class="s">ways to buy</div></div>
+        <div><div class="k">County</div><div class="v">1</div><div class="s">Maricopa (Phoenix, Mesa, Chandler, Gilbert, Glendale, Scottsdale, West Valley)</div></div>
+        <div><div class="k">Links checked</div><div class="v">55 / 55</div><div class="s">live on Nov 16, 2026</div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Browse Phoenix by category</h2>
+      <div class="cats14">
+        <a class="card cat14 empty" href="#phoenix-cat-1"><span class="n">#1</span><span class="t">Off-market</span><span class="c">0 homes</span><span class="r">Sources only today</span></a>
+        <a class="card cat14" href="#phoenix-cat-2"><span class="n">#2</span><span class="t">Short sale</span><span class="c">5 homes</span><span class="r">$238K – $397K</span></a>
+        <a class="card cat14" href="#phoenix-cat-3"><span class="n">#3</span><span class="t">Bank-owned (REO)</span><span class="c">17 homes</span><span class="r">$65K – $570K</span></a>
+        <a class="card cat14" href="#phoenix-cat-4"><span class="n">#4</span><span class="t">HUD home</span><span class="c">15 homes</span><span class="r">$154K – $735K</span></a>
+        <a class="card cat14" href="#phoenix-cat-5"><span class="n">#5</span><span class="t">Foreclosure auction</span><span class="c">8 homes</span><span class="r">$173K – $340K</span></a>
+        <a class="card cat14" href="#phoenix-cat-6"><span class="n">#6</span><span class="t">Pre-foreclosure</span><span class="c">1 home</span><span class="r">$463K</span></a>
+        <a class="card cat14" href="#phoenix-cat-8"><span class="n">#8</span><span class="t">For sale by owner</span><span class="c">5 homes</span><span class="r">$265K – $550K</span></a>
+        <a class="card cat14" href="#phoenix-cat-10"><span class="n">#10</span><span class="t">Estate / probate</span><span class="c">1 home</span><span class="r">$355K</span></a>
+        <a class="card cat14" href="#phoenix-cat-11"><span class="n">#11</span><span class="t">Auction</span><span class="c">9 homes</span><span class="r">$65K – $428K</span></a>
+        <a class="card cat14" href="#phoenix-cat-13"><span class="n">#13</span><span class="t">Relocation (RELO)</span><span class="c">3 homes</span><span class="r">$274K – $4.24M</span></a>
+      </div>
+    </section>
+
+    <section id="phoenix-cat-1" class="catsec">
+      <div class="cathd"><span class="badge14">#1</span><div><h2>Off-market</h2><p class="lede sm">Homes not publicly listed for sale, shared privately through a broker&#x27;s network.</p></div></div>
+      <p class="note"><strong>For buyers in Phoenix:</strong> Arizona allows private (office-exclusive) listings; ask a buyer&#x27;s agent which networks they can see. Confirm the seller and price in writing.</p>
+      <div class="card emptybox"><p style="margin:0"><strong>No confirmed home with a public address today.</strong> Use the searches and sources below; this category is re-checked every day.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+          <li><a href="https://www.compass.com/private-exclusives/" target="_blank" rel="noopener">Compass Private Exclusives</a><span>Off-MLS homes shared within the Compass network; ask a Compass agent for access</span></li>
+          <li><a href="https://www.nar.realtor/newsroom/nar-introduces-new-mls-policy-to-expand-choice-for-consumers" target="_blank" rel="noopener">NAR: Multiple Listing Options for Sellers</a><span>Explains office-exclusive and delayed-marketing listings that stay off public sites</span></li>
+          <li><a href="https://services.azre.gov/publicdatabase/" target="_blank" rel="noopener">Arizona Dept. of Real Estate license lookup</a><span>Check any agent or broker&#x27;s Arizona license</span></li>
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.compass.com/private-exclusives/" target="_blank" rel="noopener">Compass Private Exclusives &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="phoenix-cat-2" class="catsec">
+      <div class="cathd"><span class="badge14">#2</span><div><h2>Short sale</h2><p class="lede sm">The lender agrees to accept less than the mortgage owed.</p></div></div>
+      <p class="note"><strong>For buyers in Phoenix:</strong> Lender approval is required and can take weeks to months; &#x27;approved short sale&#x27; in the remarks means the lender has already agreed to a price.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>E Chambers St, Phoenix</td><td>Maricopa</td><td class="num">$238,000</td><td>Asking</td><td class="num">3 / 966</td><td>Approved short sale (per listing)</td><td><a class="go" href="https://www.zillow.com/homedetails/1427-E-Chambers-St-Phoenix-AZ-85040/7525654_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>N 48th Ln, Phoenix</td><td>Maricopa</td><td class="num">$265,000</td><td>Asking</td><td class="num">4 / 1,288</td><td>Approved short sale (per listing)</td><td><a class="go" href="https://www.zillow.com/homedetails/2830-N-48th-Ln-Phoenix-AZ-85035/7499023_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>N 73rd Ln, Phoenix</td><td>Maricopa</td><td class="num">$295,000</td><td>Asking</td><td class="num">3 / 1,579</td><td>Short sale</td><td><a class="go" href="https://www.zillow.com/homedetails/2366-N-73rd-Ln-Phoenix-AZ-85035/95127240_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Melody Ln, Laveen</td><td>Maricopa</td><td class="num">$390,000</td><td>Asking</td><td class="num">4 / 2,139</td><td>Short sale</td><td><a class="go" href="https://www.zillow.com/homedetails/4937-W-Melody-Ln-Laveen-AZ-85339/71614023_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>S 50th Gln, Laveen</td><td>Maricopa</td><td class="num">$397,000</td><td>Asking</td><td class="num">5 / 2,634</td><td>Short sale; file with lender</td><td><a class="go" href="https://www.zillow.com/homedetails/6922-S-50th-Gln-Laveen-AZ-85339/71492061_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">5 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+          <li><a href="https://www.consumerfinance.gov/ask-cfpb/what-is-a-short-sale-en-290/" target="_blank" rel="noopener">CFPB: What is a short sale?</a><span>Plain-language federal explanation, including deficiency risk</span></li>
+          <li><a href="https://www.consumerfinance.gov/find-a-housing-counselor/" target="_blank" rel="noopener">CFPB: Find a housing counselor</a><span>HUD-approved counselors, free or low cost</span></li>
+          <li><a href="https://services.azre.gov/publicdatabase/" target="_blank" rel="noopener">Arizona Dept. of Real Estate license lookup</a><span>Check any agent or broker&#x27;s Arizona license</span></li>
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.zillow.com/phoenix-az/?searchQueryState=%7B%22usersSearchTerm%22%3A%22Phoenix%2C%20AZ%22%2C%22isListVisible%22%3Atrue%2C%22filterState%22%3A%7B%22att%22%3A%7B%22value%22%3A%22short%20sale%22%7D%7D%7D" target="_blank" rel="noopener">Zillow Phoenix (keyword: short sale) &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="phoenix-cat-3" class="catsec">
+      <div class="cathd"><span class="badge14">#3</span><div><h2>Bank-owned (REO)</h2><p class="lede sm">The lender, Fannie Mae, Freddie Mac or a federal agency already owns the home after foreclosure.</p></div></div>
+      <p class="note"><strong>For buyers in Phoenix:</strong> Bank- and agency-owned homes sell as is. HomeSteps and HomePath give owner-occupants a first-look window.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>N 110th Ave, Sun City</td><td>Maricopa</td><td class="num">$65,000</td><td>Opening bid</td><td class="num">2 / 1,210</td><td>Bank owned; online auction starts Nov 17</td><td><a class="go" href="https://www.auction.com/details/13615-n-110th-ave-sun-city-az-2246822" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>E Inverness Ave, Mesa</td><td>Maricopa</td><td class="num">$75,000</td><td>Opening bid</td><td class="num">2 / 804</td><td>Bank owned; online auction starts Nov 17</td><td><a class="go" href="https://www.auction.com/details/7717-e-inverness-ave-mesa-az-2248319" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>S 389th Ave, Tonopah</td><td>Maricopa</td><td class="num">$95,000</td><td>Opening bid</td><td class="num">4 / 2,052</td><td>Bank owned; online auction starts Nov 17</td><td><a class="go" href="https://www.auction.com/details/7119-s-389th-ave-tonopah-az-2246241" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Michigan Ave, Glendale</td><td>Maricopa</td><td class="num">$95,000</td><td>Opening bid</td><td class="num">3 / 1,156</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/4727-w-michigan-ave-glendale-az-2250372" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Rio Vista Ln, Buckeye</td><td>Maricopa</td><td class="num">$100,000</td><td>Opening bid</td><td class="num">5 / 2,574</td><td>Bank owned; online auction starts Nov 17</td><td><a class="go" href="https://www.auction.com/details/25652-w-rio-vista-ln-buckeye-az-2248968" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>S 368th Ave, Tonopah</td><td>Maricopa</td><td class="num">$153,400</td><td>Current bid</td><td class="num">3 / 1,918</td><td>Bank owned; online auction ends ~Nov 18</td><td><a class="go" href="https://www.auction.com/details/114-s-368th-ave-tonopah-az-2246454" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Voltaire Ave, El Mirage</td><td>Maricopa</td><td class="num">$210,509</td><td>Current bid</td><td class="num">3 / 1,145</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/12725-w-voltaire-ave-el-mirage-az-2247718" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>N 36th Ave, Glendale</td><td>Maricopa</td><td class="num">$216,800</td><td>Current bid</td><td class="num">3 / 1,457</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/21655-n-36th-ave-glendale-az-2244568" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>N 26th St, Phoenix</td><td>Maricopa</td><td class="num">$234,900</td><td>Asking</td><td class="num">3 / 1,364</td><td>Freddie Mac REO; owner-occupant first look may apply</td><td><a class="go" href="https://www.homesteps.com/listingdetails/19641-n-26th-st-phoenix-az-85050" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>S Val Vista Dr, Mesa</td><td>Maricopa</td><td class="num">$309,900</td><td>Asking</td><td class="num">2 / 1,258</td><td>Freddie Mac REO; owner-occupant first look may apply</td><td><a class="go" href="https://www.homesteps.com/listingdetails/440-s-val-vista-dr-unit-80-mesa-az-85204" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Shannon St, Gilbert</td><td>Maricopa</td><td class="num">$369,900</td><td>Asking</td><td class="num">3 / —</td><td>Freddie Mac REO; owner-occupant first look may apply</td><td><a class="go" href="https://www.homesteps.com/listingdetails/172-w-shannon-st-gilbert-az-85233" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>S 211th Way, Queen Creek</td><td>Maricopa</td><td class="num">$374,900</td><td>Asking</td><td class="num">4 / 2,486</td><td>Freddie Mac REO; owner-occupant first look may apply</td><td><a class="go" href="https://www.homesteps.com/listingdetails/22335-south-211th-way-queen-creek-az-85142" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>E Sabino Dr, Chandler</td><td>Maricopa</td><td class="num">$428,000</td><td>Current bid</td><td class="num">4 / 2,239</td><td>Bank owned; online auction ends ~Nov 18</td><td><a class="go" href="https://www.auction.com/details/1149-e-sabino-dr-chandler-az-2245949" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>E Honda Bow Rd, Phoenix</td><td>Maricopa</td><td class="num">$454,900</td><td>Asking</td><td class="num">3 / 1,871</td><td>Freddie Mac REO; owner-occupant first look may apply</td><td><a class="go" href="https://www.homesteps.com/listingdetails/407-e-honda-bow-road-phoenix-az-85086" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Agave Rd, Goodyear</td><td>Maricopa</td><td class="num">$469,900</td><td>Asking</td><td class="num">3 / 2,421</td><td>Freddie Mac REO; owner-occupant first look may apply</td><td><a class="go" href="https://www.homesteps.com/listingdetails/17909-w-agave-rd-goodyear-az-85338" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Alice Ave, Waddell</td><td>Maricopa</td><td class="num">$499,900</td><td>Asking</td><td class="num">4 / —</td><td>Freddie Mac REO; owner-occupant first look may apply</td><td><a class="go" href="https://www.homesteps.com/listingdetails/17088-w-alice-ave-waddell-az-85355" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>S Feliz, Mesa</td><td>Maricopa</td><td class="num">$569,900</td><td>Asking</td><td class="num">3 / —</td><td>Freddie Mac REO; owner-occupant first look may apply</td><td><a class="go" href="https://www.homesteps.com/listingdetails/5611-s-feliz-mesa-az-85212" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">17 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+          <li><a href="https://www.homesteps.com/listing/search?search=California" target="_blank" rel="noopener">Freddie Mac HomeSteps</a><span>Official Freddie Mac REO listings</span></li>
+          <li><a href="https://www.homepath.fanniemae.com/" target="_blank" rel="noopener">Fannie Mae HomePath</a><span>Official Fannie Mae REO search (also shows some non-Fannie listings; check the listing type)</span></li>
+          <li><a href="https://foreclosures.bankofamerica.com/" target="_blank" rel="noopener">Bank of America Real Estate Center</a><span>Bank-owned homes from Bank of America</span></li>
+          <li><a href="https://listings.vrmco.com/" target="_blank" rel="noopener">VA-owned homes (VRM)</a><span>VA REO inventory managed by Vendor Resource Management</span></li>
+          <li><a href="https://properties.sc.egov.usda.gov/resales/public/home" target="_blank" rel="noopener">USDA RD/FSA properties</a><span>Federal single-family homes for sale by USDA</span></li>
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.homesteps.com/listing/search?search=Arizona" target="_blank" rel="noopener">HomeSteps: Arizona &rarr;</a> <a class="tag good srch" href="https://www.auction.com/residential/AZ/Maricopa-county" target="_blank" rel="noopener">Auction.com: Maricopa bank-owned &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="phoenix-cat-4" class="catsec">
+      <div class="cathd"><span class="badge14">#4</span><div><h2>HUD home</h2><p class="lede sm">HUD owns the home after foreclosure on an FHA-insured mortgage.</p></div></div>
+      <p class="note"><strong>For buyers in Phoenix:</strong> Bids go through a HUD-registered broker during the posted bid period; owner-occupants get priority. Many Maricopa HUD homes are in Sun City and the West Valley.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>W Norma St, Gila Bend</td><td>Maricopa</td><td class="num">$154,000</td><td>Asking</td><td class="num">3 / —</td><td>HUD case 023-294708</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-294708" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Sun City Blvd, Sun City</td><td>Maricopa</td><td class="num">$176,000</td><td>Asking</td><td class="num">2 / —</td><td>HUD case 023-239507</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-239507" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>N 99th Dr, Sun City</td><td>Maricopa</td><td class="num">$195,000</td><td>Asking</td><td class="num">2 / —</td><td>HUD case 023-229674</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-229674" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>N Desert Glen Dr, Sun City West</td><td>Maricopa</td><td class="num">$200,000</td><td>Asking</td><td class="num">2 / —</td><td>HUD case 023-313184</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-313184" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Bell Rd, Surprise</td><td>Maricopa</td><td class="num">$210,000</td><td>Asking</td><td class="num">2 / —</td><td>HUD case 023-350330</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-350330" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>S 230th Dr, Buckeye</td><td>Maricopa</td><td class="num">$225,000</td><td>Asking</td><td class="num">2 / —</td><td>HUD case 023-240145</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-240145" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>N Bush St, Wittmann</td><td>Maricopa</td><td class="num">$245,000</td><td>Asking</td><td class="num">4 / —</td><td>HUD case 023-995092</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-995092" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Illini St, Tonopah</td><td>Maricopa</td><td class="num">$290,000</td><td>Asking</td><td class="num">4 / —</td><td>HUD case 023-945280</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-945280" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Grant St, Buckeye</td><td>Maricopa</td><td class="num">$320,000</td><td>Asking</td><td class="num">4 / —</td><td>HUD case 023-953643</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-953643" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>E 2nd St, Mesa</td><td>Maricopa</td><td class="num">$330,000</td><td>Asking</td><td class="num">3 / —</td><td>HUD case 023-982450</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-982450" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>S 241st Ln, Buckeye</td><td>Maricopa</td><td class="num">$373,000</td><td>Asking</td><td class="num">4 / —</td><td>HUD case 023-997474</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-997474" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Marco Polo Rd, Sun City</td><td>Maricopa</td><td class="num">$460,000</td><td>Asking</td><td class="num">2 / —</td><td>HUD case 023-337963</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-337963" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Shasta St, Buckeye</td><td>Maricopa</td><td class="num">$525,000</td><td>Asking</td><td class="num">4 / —</td><td>HUD case 025-031118</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=025-031118" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>E Kaibab Pl, Chandler</td><td>Maricopa</td><td class="num">$660,000</td><td>Asking</td><td class="num">3 / —</td><td>HUD case 023-315201</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-315201" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>N 79th St, Scottsdale</td><td>Maricopa</td><td class="num">$735,000</td><td>Asking</td><td class="num">3 / —</td><td>HUD case 023-374267</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-374267" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">15 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+          <li><a href="https://www.hudhomestore.gov/searchresult?citystate=CA" target="_blank" rel="noopener">HUD Home Store</a><span>The official listing and bidding site for HUD homes</span></li>
+          <li><a href="https://www.hud.gov/program_offices/housing/sfh/reo/goodn" target="_blank" rel="noopener">HUD Good Neighbor Next Door</a><span>50% discount program for eligible teachers, police, firefighters and EMTs</span></li>
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.hudhomestore.gov/searchresult?citystate=AZ" target="_blank" rel="noopener">HUD Home Store: Arizona &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="phoenix-cat-5" class="catsec">
+      <div class="cathd"><span class="badge14">#5</span><div><h2>Foreclosure auction</h2><p class="lede sm">A trustee sells the home at public auction over unpaid mortgage debt.</p></div></div>
+      <p class="note"><strong>For buyers in Phoenix:</strong> Arizona trustee sales are usually held at the Maricopa County Courthouse (201 W. Jefferson). They are cash sales and are often postponed; confirm with the trustee the day before.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>W Mitchell Dr, Phoenix</td><td>Maricopa</td><td class="num">$172,649</td><td>Credit bid (estimated)</td><td class="num">4 / 1,172</td><td>Trustee sale Nov 19, 2026 10:00 a.m.</td><td><a class="go" href="https://www.auction.com/details/4431-w-mitchell-dr-phoenix-az-2135499" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Mitchell Dr, Phoenix</td><td>Maricopa</td><td class="num">$297,719</td><td>Opening bid</td><td class="num">— / —</td><td>Trustee sale Nov 17, 2026 10:00 a.m., Maricopa County Courthouse; may be postponed</td><td><a class="go" href="https://fs.tblaw.com/Sales/PendingSalesAz.aspx" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Village Dr, Phoenix</td><td>Maricopa</td><td class="num">$340,403</td><td>Opening bid</td><td class="num">— / —</td><td>Trustee sale Nov 17, 2026 10:00 a.m., Maricopa County Courthouse; may be postponed</td><td><a class="go" href="https://fs.tblaw.com/Sales/PendingSalesAz.aspx" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>N Lebaron, Mesa</td><td>Maricopa</td><td class="num">—</td><td>Credit bid unpublished</td><td class="num">4 / 1,708</td><td>Trustee sale Nov 17, 2026 (time TBD); est. value $350,636</td><td><a class="go" href="https://www.auction.com/details/1921-n-lebaron-mesa-az-2190462" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>N 29th Dr, Phoenix</td><td>Maricopa</td><td class="num">—</td><td>Unpublished</td><td class="num">3 / 1,461</td><td>Listed for foreclosure auction; date on listing</td><td><a class="go" href="https://www.zillow.com/homedetails/15023-N-29th-Dr-Phoenix-AZ-85053/7952716_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>E Bell Rd, Phoenix</td><td>Maricopa</td><td class="num">—</td><td>Unpublished</td><td class="num">2 / 1,158</td><td>Listed for foreclosure auction; date on listing</td><td><a class="go" href="https://www.zillow.com/homedetails/2150-E-Bell-Rd-UNIT-1158-Phoenix-AZ-85022/67782394_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Eva St, Phoenix</td><td>Maricopa</td><td class="num">—</td><td>Unpublished</td><td class="num">3 / 1,371</td><td>Listed for foreclosure auction; date on listing</td><td><a class="go" href="https://www.zillow.com/homedetails/1602-W-Eva-St-Phoenix-AZ-85021/7782690_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Devonshire Ave, Phoenix</td><td>Maricopa</td><td class="num">—</td><td>Unpublished</td><td class="num">2 / 956</td><td>Listed for foreclosure auction; date on listing</td><td><a class="go" href="https://www.zillow.com/homedetails/11221-W-Devonshire-Ave-Phoenix-AZ-85037/50185901_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">8 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+          <li><a href="https://fs.tblaw.com/Sales/PendingSalesAz.aspx" target="_blank" rel="noopener">Tiffany &amp; Bosco: pending Arizona trustee sales</a><span>A major Arizona trustee&#x27;s live sale list with opening bids</span></li>
+          <li><a href="https://www.auction.com/" target="_blank" rel="noopener">Auction.com</a><span>Largest trustee-sale and bank-owned auction platform</span></li>
+          <li><a href="https://www.xome.com/" target="_blank" rel="noopener">Xome</a><span>Foreclosure and bank-owned online auctions</span></li>
+          <li><a href="https://www.azleg.gov/ars/33/00808.htm" target="_blank" rel="noopener">A.R.S. §33-808: notice of trustee&#x27;s sale</a><span>Sale can be no sooner than the 91st day after the notice is recorded</span></li>
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.auction.com/residential/AZ/Maricopa-county" target="_blank" rel="noopener">Auction.com: Maricopa &rarr;</a> <a class="tag good srch" href="https://fs.tblaw.com/Sales/PendingSalesAz.aspx" target="_blank" rel="noopener">Tiffany &amp; Bosco pending sales &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="phoenix-cat-6" class="catsec">
+      <div class="cathd"><span class="badge14">#6</span><div><h2>Pre-foreclosure</h2><p class="lede sm">The owner is behind and has a recorded Notice of Default, before any sale.</p></div></div>
+      <p class="note"><strong>For buyers in Phoenix:</strong> A recorded Notice of Trustee&#x27;s Sale gives the owner at least 90 days to sell, refinance or catch up. A notice is not proof the home is for sale.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>W Rovey Ave, Phoenix</td><td>Maricopa</td><td class="num">$463,000</td><td>Asking</td><td class="num">3 / 2,152</td><td>Listing cites a trustee sale; confirm the sale date with the trustee</td><td><a class="go" href="https://www.zillow.com/homedetails/1720-W-Rovey-Ave-Phoenix-AZ-85015/7774302_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">1 home, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+          <li><a href="https://recorder.maricopa.gov/recording/document-search.html" target="_blank" rel="noopener">Maricopa County Recorder: document search</a><span>Search recorded Notices of Trustee&#x27;s Sale by date or document type</span></li>
+          <li><a href="https://www.azleg.gov/ars/33/00808.htm" target="_blank" rel="noopener">A.R.S. §33-808: notice of trustee&#x27;s sale</a><span>Sale can be no sooner than the 91st day after the notice is recorded</span></li>
+          <li><a href="https://www.consumerfinance.gov/find-a-housing-counselor/" target="_blank" rel="noopener">CFPB: Find a housing counselor</a><span>HUD-approved counselors, free or low cost</span></li>
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.zillow.com/phoenix-az/?searchQueryState=%7B%22usersSearchTerm%22%3A%22Phoenix%2C%20AZ%22%2C%22isListVisible%22%3Atrue%2C%22filterState%22%3A%7B%22att%22%3A%7B%22value%22%3A%22trustee%20sale%22%7D%7D%7D" target="_blank" rel="noopener">Zillow Phoenix (keyword: trustee sale) &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="phoenix-cat-8" class="catsec">
+      <div class="cathd"><span class="badge14">#8</span><div><h2>For sale by owner</h2><p class="lede sm">The owner sells without a listing agent.</p></div></div>
+      <p class="note"><strong>For buyers in Phoenix:</strong> You deal with the owner directly; you can still hire your own agent. Ask for the seller&#x27;s property disclosure and run a title search.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>E Eugie Ave, Phoenix</td><td>Maricopa</td><td class="num">$265,000</td><td>Asking</td><td class="num">3 / 1,200</td><td>For sale by owner</td><td><a class="go" href="https://www.zillow.com/homedetails/702-E-Eugie-Ave-Phoenix-AZ-85022/2144651760_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Minton St, Phoenix</td><td>Maricopa</td><td class="num">$445,000</td><td>Asking</td><td class="num">3 / 1,791</td><td>For sale by owner</td><td><a class="go" href="https://www.zillow.com/homedetails/1823-W-Minton-St-Phoenix-AZ-85041/121857291_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>E Surrey Ave, Phoenix</td><td>Maricopa</td><td class="num">$478,888</td><td>Asking</td><td class="num">3 / 1,342</td><td>For sale by owner</td><td><a class="go" href="https://www.zillow.com/homedetails/3919-E-Surrey-Ave-Phoenix-AZ-85032/7814211_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Glenrosa Ave, Phoenix</td><td>Maricopa</td><td class="num">$525,000</td><td>Asking</td><td class="num">3 / 1,249</td><td>For sale by owner</td><td><a class="go" href="https://www.zillow.com/homedetails/117-W-Glenrosa-Ave-Phoenix-AZ-85013/7770207_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>N 18th Pl, Phoenix</td><td>Maricopa</td><td class="num">$549,900</td><td>Asking</td><td class="num">3 / 1,444</td><td>For sale by owner</td><td><a class="go" href="https://www.zillow.com/homedetails/15867-N-18th-Pl-Phoenix-AZ-85022/8004199_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">5 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+          <li><a href="https://www.forsalebyowner.com/" target="_blank" rel="noopener">ForSaleByOwner.com</a><span>Owner-listed homes</span></li>
+          <li><a href="https://services.azre.gov/publicdatabase/" target="_blank" rel="noopener">Arizona Dept. of Real Estate license lookup</a><span>Check any agent or broker&#x27;s Arizona license</span></li>
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.zillow.com/phoenix-az/fsbo/" target="_blank" rel="noopener">Zillow Phoenix: by owner &rarr;</a> <a class="tag good srch" href="https://www.forsalebyowner.com/" target="_blank" rel="noopener">ForSaleByOwner.com &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="phoenix-cat-10" class="catsec">
+      <div class="cathd"><span class="badge14">#10</span><div><h2>Estate / probate</h2><p class="lede sm">Sold while settling a deceased person&#x27;s estate or a trust.</p></div></div>
+      <p class="note"><strong>For buyers in Phoenix:</strong> In Arizona a personal representative can usually sell without a court order (A.R.S. §14-3715); supervised estates need court confirmation.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>N 26th St, Phoenix</td><td>Maricopa</td><td class="num">$355,000</td><td>Asking</td><td class="num">3 / 1,357</td><td>Estate sale; back on market</td><td><a class="go" href="https://www.zillow.com/homedetails/3145-N-26th-St-Phoenix-AZ-85016/7538948_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">1 home, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+          <li><a href="https://www.azleg.gov/ars/14/03715.htm" target="_blank" rel="noopener">A.R.S. §14-3715: personal representative powers</a><span>Lists what a personal representative can do, including selling real property</span></li>
+          <li><a href="https://www.maricopa.gov/515/About" target="_blank" rel="noopener">Maricopa County Public Fiduciary</a><span>Administers estates when no one else can; sells estate property</span></li>
+          <li><a href="https://superiorcourt.maricopa.gov/probate-and-mental-health/" target="_blank" rel="noopener">Maricopa Superior Court: Probate</a><span>Probate department: case information and forms</span></li>
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.zillow.com/phoenix-az/?searchQueryState=%7B%22usersSearchTerm%22%3A%22Phoenix%2C%20AZ%22%2C%22isListVisible%22%3Atrue%2C%22filterState%22%3A%7B%22att%22%3A%7B%22value%22%3A%22estate%20sale%22%7D%7D%7D" target="_blank" rel="noopener">Zillow Phoenix (keyword: estate sale) &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="phoenix-cat-11" class="catsec">
+      <div class="cathd"><span class="badge14">#11</span><div><h2>Auction</h2><p class="lede sm">Buyers compete by bidding: bank-owned online auctions and county tax-defaulted property sales.</p></div></div>
+      <p class="note"><strong>For buyers in Phoenix:</strong> Online auctions often charge a buyer&#x27;s premium and may need lender approval. Arizona tax sales sell liens, not homes; a lien can take 3+ years to become a deed.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>N 110th Ave, Sun City</td><td>Maricopa</td><td class="num">$65,000</td><td>Opening bid</td><td class="num">2 / 1,210</td><td>Bank owned; online auction starts Nov 17</td><td><a class="go" href="https://www.auction.com/details/13615-n-110th-ave-sun-city-az-2246822" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>E Inverness Ave, Mesa</td><td>Maricopa</td><td class="num">$75,000</td><td>Opening bid</td><td class="num">2 / 804</td><td>Bank owned; online auction starts Nov 17</td><td><a class="go" href="https://www.auction.com/details/7717-e-inverness-ave-mesa-az-2248319" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>S 389th Ave, Tonopah</td><td>Maricopa</td><td class="num">$95,000</td><td>Opening bid</td><td class="num">4 / 2,052</td><td>Bank owned; online auction starts Nov 17</td><td><a class="go" href="https://www.auction.com/details/7119-s-389th-ave-tonopah-az-2246241" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Michigan Ave, Glendale</td><td>Maricopa</td><td class="num">$95,000</td><td>Opening bid</td><td class="num">3 / 1,156</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/4727-w-michigan-ave-glendale-az-2250372" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Rio Vista Ln, Buckeye</td><td>Maricopa</td><td class="num">$100,000</td><td>Opening bid</td><td class="num">5 / 2,574</td><td>Bank owned; online auction starts Nov 17</td><td><a class="go" href="https://www.auction.com/details/25652-w-rio-vista-ln-buckeye-az-2248968" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>S 368th Ave, Tonopah</td><td>Maricopa</td><td class="num">$153,400</td><td>Current bid</td><td class="num">3 / 1,918</td><td>Bank owned; online auction ends ~Nov 18</td><td><a class="go" href="https://www.auction.com/details/114-s-368th-ave-tonopah-az-2246454" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Voltaire Ave, El Mirage</td><td>Maricopa</td><td class="num">$210,509</td><td>Current bid</td><td class="num">3 / 1,145</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/12725-w-voltaire-ave-el-mirage-az-2247718" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>N 36th Ave, Glendale</td><td>Maricopa</td><td class="num">$216,800</td><td>Current bid</td><td class="num">3 / 1,457</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/21655-n-36th-ave-glendale-az-2244568" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>E Sabino Dr, Chandler</td><td>Maricopa</td><td class="num">$428,000</td><td>Current bid</td><td class="num">4 / 2,239</td><td>Bank owned; online auction ends ~Nov 18</td><td><a class="go" href="https://www.auction.com/details/1149-e-sabino-dr-chandler-az-2245949" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">9 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+          <li><a href="https://www.auction.com/" target="_blank" rel="noopener">Auction.com</a><span>Largest trustee-sale and bank-owned auction platform</span></li>
+          <li><a href="https://www.xome.com/" target="_blank" rel="noopener">Xome</a><span>Foreclosure and bank-owned online auctions</span></li>
+          <li><a href="https://treasurer.maricopa.gov/TaxLienInformation/" target="_blank" rel="noopener">Maricopa County Treasurer: tax lien information</a><span>Annual February tax lien sale; liens, not homes</span></li>
+          <li><a href="https://maricopa.arizonataxsale.com/" target="_blank" rel="noopener">Maricopa tax lien sale (bidder site)</a><span>Register to bid in the online lien sale</span></li>
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.auction.com/residential/AZ/Maricopa-county" target="_blank" rel="noopener">Auction.com: Maricopa &rarr;</a> <a class="tag good srch" href="https://www.xome.com/auctions" target="_blank" rel="noopener">Xome auctions &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="phoenix-cat-13" class="catsec">
+      <div class="cathd"><span class="badge14">#13</span><div><h2>Relocation (RELO)</h2><p class="lede sm">An employer&#x27;s relocation company sells or buys out a transferring employee&#x27;s home.</p></div></div>
+      <p class="note"><strong>For buyers in Phoenix:</strong> Relocation sales are found through listing remarks. Expect a relocation-company addendum and a quick, firm timeline.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>N 3rd Ave, Phoenix</td><td>Maricopa</td><td class="num">$274,000</td><td>Asking</td><td class="num">1 / 741</td><td>Owner relocating internationally</td><td><a class="go" href="https://www.zillow.com/homedetails/3633-N-3rd-Ave-UNIT-1027-Phoenix-AZ-85013/68957286_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Bonanza Dr, Phoenix</td><td>Maricopa</td><td class="num">$669,900</td><td>Asking</td><td class="num">4 / 2,457</td><td>Seller relocating out of state for work</td><td><a class="go" href="https://www.zillow.com/homedetails/1724-W-Bonanza-Dr-Phoenix-AZ-85085/125118480_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>E Monte Vista Rd, Phoenix</td><td>Maricopa</td><td class="num">$4,242,042</td><td>Asking</td><td class="num">6 / 8,225</td><td>International relocation; price cut</td><td><a class="go" href="https://www.zillow.com/homedetails/341-E-Monte-Vista-Rd-Phoenix-AZ-85004/7537216_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">3 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+          <li><a href="https://www.cartus.com/" target="_blank" rel="noopener">Cartus</a><span>Major relocation management company</span></li>
+          <li><a href="https://www.sirva.com/" target="_blank" rel="noopener">Sirva (BGRS parent)</a><span>Relocation management company</span></li>
+          <li><a href="https://www.worldwideerc.org/" target="_blank" rel="noopener">Worldwide ERC</a><span>Industry body that sets relocation home-sale and appraisal standards</span></li>
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.zillow.com/phoenix-az/?searchQueryState=%7B%22usersSearchTerm%22%3A%22Phoenix%2C%20AZ%22%2C%22isListVisible%22%3Atrue%2C%22filterState%22%3A%7B%22att%22%3A%7B%22value%22%3A%22relocation%22%7D%7D%7D" target="_blank" rel="noopener">Zillow Phoenix (keyword: relocation) &rarr;</a></p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Arizona rules that shape the project</h2>
+      <div class="grid g3">
+        <div class="card"><h3>91-day trustee sale</h3><p>Most Arizona foreclosures are non-judicial trustee sales, held no sooner than the 91st day after the notice is recorded, and they can be postponed. <a href="https://www.azleg.gov/ars/33/00808.htm" target="_blank" rel="noopener">A.R.S. §33-808</a></p></div>
+        <div class="card"><h3>Tax liens, not deeds</h3><p>Maricopa County&#x27;s February tax sale sells liens on unpaid taxes, not homes. Treat tax sales as an investment, not a way to buy a house this year. <a href="https://treasurer.maricopa.gov/TaxLienInformation/" target="_blank" rel="noopener">Treasurer: tax liens</a></p></div>
+        <div class="card"><h3>Probate without court sale</h3><p>A personal representative can usually sell estate property without a court order; supervised estates are the exception. <a href="https://www.azleg.gov/ars/14/03715.htm" target="_blank" rel="noopener">A.R.S. §14-3715</a></p></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="grid g2">
+        <div class="card"><h2>Next steps in Phoenix</h2><ol class="steps">
+          <li>Re-check this week&#x27;s deadlines: trustee sales Nov 17 and 19, online auctions starting Nov 17.</li>
+          <li>Add Maricopa trustee-sale notices from the Recorder&#x27;s document search each week.</li>
+          <li>Find an ADRE-licensed partner broker for HUD bids and verification.</li>
+        </ol></div>
+        <div class="card"><h2>Main challenges</h2><ul>
+          <li><span class="tag warn">Data</span> No public off-market addresses were found today; private exclusives are shared through agents.</li>
+          <li><span class="tag warn">Volume</span> Most HUD homes sit in Sun City and the far West Valley; check commute and age-restricted (55+) communities.</li>
+        </ul></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="panel" id="panel-austin" role="tabpanel" aria-labelledby="tab-austin" hidden>
+    <section aria-label="Austin at a glance">
+      <div class="statstrip">
+        <div class="primary"><div class="k">Current homes</div><div class="v">44</div><div class="s">in the Austin metro (Travis, Williamson and Hays counties)</div></div>
+        <div><div class="k">Categories</div><div class="v">10</div><div class="s">ways to buy</div></div>
+        <div><div class="k">Counties</div><div class="v">3</div><div class="s">Travis, Williamson, Hays</div></div>
+        <div><div class="k">Links checked</div><div class="v">44 / 44</div><div class="s">live on Nov 16, 2026</div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Browse Austin by category</h2>
+      <div class="cats14">
+        <a class="card cat14 empty" href="#austin-cat-1"><span class="n">#1</span><span class="t">Off-market</span><span class="c">0 homes</span><span class="r">Sources only today</span></a>
+        <a class="card cat14" href="#austin-cat-2"><span class="n">#2</span><span class="t">Short sale</span><span class="c">8 homes</span><span class="r">$252K – $470K</span></a>
+        <a class="card cat14" href="#austin-cat-3"><span class="n">#3</span><span class="t">Bank-owned (REO)</span><span class="c">20 homes</span><span class="r">$85K – $620K</span></a>
+        <a class="card cat14" href="#austin-cat-4"><span class="n">#4</span><span class="t">HUD home</span><span class="c">5 homes</span><span class="r">$90K – $395K</span></a>
+        <a class="card cat14" href="#austin-cat-5"><span class="n">#5</span><span class="t">Foreclosure auction</span><span class="c">1 home</span><span class="r">$142K</span></a>
+        <a class="card cat14" href="#austin-cat-6"><span class="n">#6</span><span class="t">Pre-foreclosure</span><span class="c">3 homes</span><span class="r">$340K – $400K</span></a>
+        <a class="card cat14" href="#austin-cat-8"><span class="n">#8</span><span class="t">For sale by owner</span><span class="c">4 homes</span><span class="r">$100K – $348K</span></a>
+        <a class="card cat14" href="#austin-cat-10"><span class="n">#10</span><span class="t">Estate / probate</span><span class="c">6 homes</span><span class="r">$329K – $1.20M</span></a>
+        <a class="card cat14" href="#austin-cat-11"><span class="n">#11</span><span class="t">Auction</span><span class="c">14 homes</span><span class="r">$85K – $400K</span></a>
+        <a class="card cat14 empty" href="#austin-cat-13"><span class="n">#13</span><span class="t">Relocation (RELO)</span><span class="c">0 homes</span><span class="r">Sources only today</span></a>
+      </div>
+    </section>
+
+    <section id="austin-cat-1" class="catsec">
+      <div class="cathd"><span class="badge14">#1</span><div><h2>Off-market</h2><p class="lede sm">Homes not publicly listed for sale, shared privately through a broker&#x27;s network.</p></div></div>
+      <p class="note"><strong>For buyers in Austin:</strong> Austin has an active private-listing market (Compass Private Exclusives and broker networks). Addresses are often shared only through an agent.</p>
+      <div class="card emptybox"><p style="margin:0"><strong>No confirmed home with a public address today.</strong> Use the searches and sources below; this category is re-checked every day.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+          <li><a href="https://www.compass.com/private-exclusives/" target="_blank" rel="noopener">Compass Private Exclusives</a><span>Off-MLS homes shared within the Compass network; ask a Compass agent for access</span></li>
+          <li><a href="https://www.nar.realtor/newsroom/nar-introduces-new-mls-policy-to-expand-choice-for-consumers" target="_blank" rel="noopener">NAR: Multiple Listing Options for Sellers</a><span>Explains office-exclusive and delayed-marketing listings that stay off public sites</span></li>
+          <li><a href="https://www.trec.texas.gov/apps/license-holder-search/" target="_blank" rel="noopener">TREC license holder search</a><span>Check any Texas agent or broker&#x27;s license</span></li>
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.compass.com/private-exclusives/" target="_blank" rel="noopener">Compass Private Exclusives &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="austin-cat-2" class="catsec">
+      <div class="cathd"><span class="badge14">#2</span><div><h2>Short sale</h2><p class="lede sm">The lender agrees to accept less than the mortgage owed.</p></div></div>
+      <p class="note"><strong>For buyers in Austin:</strong> Lender approval is required; ask the listing agent whether a short-sale package has been submitted and how long approval is taking.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>Dovewood Dr, Austin</td><td>Travis</td><td class="num">$252,000</td><td>Asking</td><td class="num">3 / 974</td><td>Short sale; process started with lender</td><td><a class="go" href="https://www.zillow.com/homedetails/4407-Dovewood-Dr-Austin-TX-78744/29500106_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Blaine Rd, Austin</td><td>Travis</td><td class="num">$289,999</td><td>Asking</td><td class="num">3 / 1,643</td><td>Short sale, lender approval needed</td><td><a class="go" href="https://www.zillow.com/homedetails/12706-Blaine-Rd-Austin-TX-78753/29437842_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Thurgood Ave, Austin</td><td>Travis</td><td class="num">$340,000</td><td>Asking</td><td class="num">3 / 1,262</td><td>Pre-foreclosure; short sale; 0.35-acre lot</td><td><a class="go" href="https://www.zillow.com/homedetails/6302-Thurgood-Ave-Austin-TX-78721/29385725_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Nickols Ave, Austin</td><td>Travis</td><td class="num">$350,000</td><td>Asking</td><td class="num">3 / 1,914</td><td>Short sale; cash or conventional</td><td><a class="go" href="https://www.zillow.com/homedetails/1160-Nickols-Ave-A-Austin-TX-78721/124844882_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Quinn Trl, Austin</td><td>Travis</td><td class="num">$375,000</td><td>Asking</td><td class="num">3 / 1,479</td><td>Pre-foreclosure; short sale</td><td><a class="go" href="https://www.zillow.com/homedetails/12911-Quinn-Trl-Austin-TX-78727/29447163_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Kevin Taylor Dr, Austin</td><td>Travis</td><td class="num">$400,000</td><td>Asking</td><td class="num">3 / 2,205</td><td>Pre-foreclosure; short sale</td><td><a class="go" href="https://www.zillow.com/homedetails/813-Kevin-Taylor-Dr-Austin-TX-78745/80090485_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Ganymede Dr, Austin</td><td>Travis</td><td class="num">$464,990</td><td>Asking</td><td class="num">4 / 1,639</td><td>Short sale</td><td><a class="go" href="https://www.zillow.com/homedetails/4802-Ganymede-Dr-Austin-TX-78727/29444145_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Winchell Ln, Austin</td><td>Travis</td><td class="num">$470,000</td><td>Asking</td><td class="num">3 / 1,267</td><td>Short sale</td><td><a class="go" href="https://www.zillow.com/homedetails/2513-Winchell-Ln-Austin-TX-78725/89552012_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">8 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+          <li><a href="https://www.consumerfinance.gov/ask-cfpb/what-is-a-short-sale-en-290/" target="_blank" rel="noopener">CFPB: What is a short sale?</a><span>Plain-language federal explanation, including deficiency risk</span></li>
+          <li><a href="https://www.consumerfinance.gov/find-a-housing-counselor/" target="_blank" rel="noopener">CFPB: Find a housing counselor</a><span>HUD-approved counselors, free or low cost</span></li>
+          <li><a href="https://www.trec.texas.gov/apps/license-holder-search/" target="_blank" rel="noopener">TREC license holder search</a><span>Check any Texas agent or broker&#x27;s license</span></li>
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.zillow.com/austin-tx/?searchQueryState=%7B%22usersSearchTerm%22%3A%22Austin%2C%20TX%22%2C%22isListVisible%22%3Atrue%2C%22filterState%22%3A%7B%22att%22%3A%7B%22value%22%3A%22short%20sale%22%7D%7D%7D" target="_blank" rel="noopener">Zillow Austin (keyword: short sale) &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="austin-cat-3" class="catsec">
+      <div class="cathd"><span class="badge14">#3</span><div><h2>Bank-owned (REO)</h2><p class="lede sm">The lender, Fannie Mae, Freddie Mac or a federal agency already owns the home after foreclosure.</p></div></div>
+      <p class="note"><strong>For buyers in Austin:</strong> Bank- and agency-owned homes sell as is. HomeSteps and HomePath give owner-occupants a first-look window.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>Summerwood Dr, Liberty Hill</td><td>Williamson</td><td class="num">$85,000</td><td>Opening bid</td><td class="num">3 / —</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/403-summerwood-dr-liberty-hill-tx-2244690" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Phebe Foster St, Manor</td><td>Travis</td><td class="num">$100,000</td><td>Opening bid</td><td class="num">3 / —</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/20602-phebe-foster-st-manor-tx-2241207" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Cantania Cv, Pflugerville</td><td>Travis</td><td class="num">$150,000</td><td>Opening bid</td><td class="num">3 / —</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/16236-cantania-cv-pflugerville-tx-2241203" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Stone Gate Dr, Austin</td><td>Travis</td><td class="num">$175,000</td><td>Opening bid</td><td class="num">3 / 1,870</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/5205-stone-gate-dr-austin-tx-2245926" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Vista View, Georgetown</td><td>Williamson</td><td class="num">$175,000</td><td>Current bid</td><td class="num">3 / 1,754</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/1020-vista-view-dr-georgetown-tx-2244688" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Hees Ct, Pflugerville</td><td>Travis</td><td class="num">$195,000</td><td>Current bid</td><td class="num">4 / 1,802</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/4509-hees-ct-pflugerville-tx-2244676" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Copper Leaf Ln, Leander</td><td>Travis</td><td class="num">$200,000</td><td>Opening bid</td><td class="num">4 / 2,343</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/16217-copper-leaf-ln-leander-tx-2245982" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Briarcliff Dr, Spicewood</td><td>Travis</td><td class="num">$200,000</td><td>Opening bid</td><td class="num">3 / —</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/22111-briarcliff-dr-spicewood-tx-2241201" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Panzano Dr, Georgetown</td><td>Williamson</td><td class="num">$200,000</td><td>Opening bid</td><td class="num">4 / 2,578</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/512-panzano-dr-georgetown-tx-2243759" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Plover Pass, Georgetown</td><td>Williamson</td><td class="num">$239,900</td><td>Asking</td><td class="num">2 / 931</td><td>Freddie Mac REO; owner-occupant first look may apply</td><td><a class="go" href="https://www.homesteps.com/listingdetails/114-plover-pass-georgetown-tx-78633" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Harrogate Dr, Austin</td><td>Travis</td><td class="num">$250,000</td><td>Opening bid</td><td class="num">— / —</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/6400-harrogate-dr-austin-tx-2241198" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Titanium St, Austin</td><td>Travis</td><td class="num">$269,900</td><td>Asking</td><td class="num">3 / 1,216</td><td>Freddie Mac REO; owner-occupant first look may apply</td><td><a class="go" href="https://www.homesteps.com/listingdetails/13013-titanium-st-austin-tx-78754" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Hurricane Haze Dr, Austin</td><td>Travis</td><td class="num">$271,099</td><td>Current bid</td><td class="num">4 / 2,409</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/11908-hurricane-haze-dr-austin-tx-2244674" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Drifting Leaf Dr, Cedar Park</td><td>Williamson</td><td class="num">$276,099</td><td>Current bid</td><td class="num">3 / 2,429</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/2409-drifting-leaf-dr-cedar-park-tx-2244681" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Brooks Ranch Dr, Kyle</td><td>Hays</td><td class="num">$284,900</td><td>Asking</td><td class="num">2 / 1,474</td><td>Freddie Mac REO; owner-occupant first look may apply</td><td><a class="go" href="https://www.homesteps.com/listingdetails/165-brooks-ranch-drive-kyle-tx-78640" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>S Congress Ave, Austin</td><td>Travis</td><td class="num">$299,900</td><td>Asking</td><td class="num">2 / 1,081</td><td>Freddie Mac REO; owner-occupant first look may apply</td><td><a class="go" href="https://www.homesteps.com/listingdetails/4361-s-congress-ave-unit-209-austin-tx-78745" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Howry Dr, Georgetown</td><td>Williamson</td><td class="num">$299,900</td><td>Asking</td><td class="num">3 / 1,868</td><td>Freddie Mac REO; owner-occupant first look may apply</td><td><a class="go" href="https://www.homesteps.com/listingdetails/2407-howry-dr-georgetown-tx-78626" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Ottawa St, Leander</td><td>Williamson</td><td class="num">$400,000</td><td>Current bid</td><td class="num">4 / 2,912</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/3016-ottawa-st-leander-tx-2244775" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Coleman Bend, Liberty Hill</td><td>Williamson</td><td class="num">$400,000</td><td>Current bid</td><td class="num">4 / 2,993</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/137-coleman-bnd-liberty-hill-tx-2247704" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Ranch Road 2222, Austin</td><td>Travis</td><td class="num">$619,900</td><td>Asking</td><td class="num">2 / 1,823</td><td>Freddie Mac REO; owner-occupant first look may apply</td><td><a class="go" href="https://www.homesteps.com/listingdetails/8110-ranch-road-2222-apt-48-austin-tx-78730" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">20 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+          <li><a href="https://www.homesteps.com/listing/search?search=California" target="_blank" rel="noopener">Freddie Mac HomeSteps</a><span>Official Freddie Mac REO listings</span></li>
+          <li><a href="https://www.homepath.fanniemae.com/" target="_blank" rel="noopener">Fannie Mae HomePath</a><span>Official Fannie Mae REO search (also shows some non-Fannie listings; check the listing type)</span></li>
+          <li><a href="https://foreclosures.bankofamerica.com/" target="_blank" rel="noopener">Bank of America Real Estate Center</a><span>Bank-owned homes from Bank of America</span></li>
+          <li><a href="https://listings.vrmco.com/" target="_blank" rel="noopener">VA-owned homes (VRM)</a><span>VA REO inventory managed by Vendor Resource Management</span></li>
+          <li><a href="https://properties.sc.egov.usda.gov/resales/public/home" target="_blank" rel="noopener">USDA RD/FSA properties</a><span>Federal single-family homes for sale by USDA</span></li>
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.homesteps.com/listing/search?search=Texas" target="_blank" rel="noopener">HomeSteps: Texas &rarr;</a> <a class="tag good srch" href="https://www.auction.com/residential/TX/Travis-county" target="_blank" rel="noopener">Auction.com: Travis bank-owned &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="austin-cat-4" class="catsec">
+      <div class="cathd"><span class="badge14">#4</span><div><h2>HUD home</h2><p class="lede sm">HUD owns the home after foreclosure on an FHA-insured mortgage.</p></div></div>
+      <p class="note"><strong>For buyers in Austin:</strong> Bids go through a HUD-registered broker during the posted bid period; owner-occupants get priority.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>Llano St, Manor</td><td>Travis</td><td class="num">$90,000</td><td>Asking</td><td class="num">2 / —</td><td>HUD case 495-820285</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=495-820285" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Reinli St, Austin</td><td>Travis</td><td class="num">$129,200</td><td>Asking</td><td class="num">1 / —</td><td>HUD case 514-359155</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=514-359155" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Highland Lake, Lago Vista</td><td>Travis</td><td class="num">$135,000</td><td>Asking</td><td class="num">1 / —</td><td>HUD case 514-234261</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=514-234261" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Quarter Ave, Buda</td><td>Hays</td><td class="num">$240,000</td><td>Asking</td><td class="num">3 / —</td><td>HUD case 514-247273</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=514-247273" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Talferd Trl, Austin</td><td>Travis</td><td class="num">$395,000</td><td>Asking</td><td class="num">3 / —</td><td>HUD case 514-348320</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=514-348320" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">5 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+          <li><a href="https://www.hudhomestore.gov/searchresult?citystate=CA" target="_blank" rel="noopener">HUD Home Store</a><span>The official listing and bidding site for HUD homes</span></li>
+          <li><a href="https://www.hud.gov/program_offices/housing/sfh/reo/goodn" target="_blank" rel="noopener">HUD Good Neighbor Next Door</a><span>50% discount program for eligible teachers, police, firefighters and EMTs</span></li>
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.hudhomestore.gov/searchresult?citystate=TX" target="_blank" rel="noopener">HUD Home Store: Texas &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="austin-cat-5" class="catsec">
+      <div class="cathd"><span class="badge14">#5</span><div><h2>Foreclosure auction</h2><p class="lede sm">A trustee sells the home at public auction over unpaid mortgage debt.</p></div></div>
+      <p class="note"><strong>For buyers in Austin:</strong> Texas foreclosures are held on the first Tuesday of each month between 10 a.m. and 4 p.m. at the county&#x27;s designated spot. Notices are posted 21 days before; many sales are cancelled.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>Cabinet Dr, Manor</td><td>Travis</td><td class="num">$141,858</td><td>Credit bid (estimated)</td><td class="num">3 / 1,400</td><td>Trustee sale Dec 1, 2026 10:00 a.m. (first Tuesday)</td><td><a class="go" href="https://www.auction.com/details/13224-cabinet-dr-manor-tx-2183262" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">1 home, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+          <li><a href="https://countyclerk.traviscountytx.gov/departments/recording/meetings/" target="_blank" rel="noopener">Travis County Clerk: foreclosure notices</a><span>Non-tax foreclosure notices; sales on the first Tuesday of each month</span></li>
+          <li><a href="https://apps.wilco.org/countyclerk/trustee_sales" target="_blank" rel="noopener">Williamson County Clerk: trustee sales calendar</a><span>Monthly notice lists, posted 21 days before each first-Tuesday sale</span></li>
+          <li><a href="https://www.auction.com/" target="_blank" rel="noopener">Auction.com</a><span>Largest trustee-sale and bank-owned auction platform</span></li>
+          <li><a href="https://statutes.capitol.texas.gov/Docs/PR/htm/PR.51.htm#51.002" target="_blank" rel="noopener">Texas Property Code §51.002</a><span>Foreclosure sales: first Tuesday, 10 a.m.–4 p.m., 21 days&#x27; notice</span></li>
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.auction.com/residential/TX/Travis-county" target="_blank" rel="noopener">Auction.com: Travis &rarr;</a> <a class="tag good srch" href="https://www.auction.com/residential/TX/Williamson-county" target="_blank" rel="noopener">Auction.com: Williamson &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="austin-cat-6" class="catsec">
+      <div class="cathd"><span class="badge14">#6</span><div><h2>Pre-foreclosure</h2><p class="lede sm">The owner is behind and has a recorded Notice of Default, before any sale.</p></div></div>
+      <p class="note"><strong>For buyers in Austin:</strong> Texas foreclosure is fast: about 41 days from the notice of default to sale. Owners in pre-foreclosure often list as short sales.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>Thurgood Ave, Austin</td><td>Travis</td><td class="num">$340,000</td><td>Asking</td><td class="num">3 / 1,262</td><td>Pre-foreclosure; short sale; 0.35-acre lot</td><td><a class="go" href="https://www.zillow.com/homedetails/6302-Thurgood-Ave-Austin-TX-78721/29385725_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Quinn Trl, Austin</td><td>Travis</td><td class="num">$375,000</td><td>Asking</td><td class="num">3 / 1,479</td><td>Pre-foreclosure; short sale</td><td><a class="go" href="https://www.zillow.com/homedetails/12911-Quinn-Trl-Austin-TX-78727/29447163_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Kevin Taylor Dr, Austin</td><td>Travis</td><td class="num">$400,000</td><td>Asking</td><td class="num">3 / 2,205</td><td>Pre-foreclosure; short sale</td><td><a class="go" href="https://www.zillow.com/homedetails/813-Kevin-Taylor-Dr-Austin-TX-78745/80090485_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">3 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+          <li><a href="https://countyclerk.traviscountytx.gov/departments/recording/meetings/" target="_blank" rel="noopener">Travis County Clerk: foreclosure notices</a><span>Non-tax foreclosure notices; sales on the first Tuesday of each month</span></li>
+          <li><a href="https://apps.wilco.org/countyclerk/trustee_sales" target="_blank" rel="noopener">Williamson County Clerk: trustee sales calendar</a><span>Monthly notice lists, posted 21 days before each first-Tuesday sale</span></li>
+          <li><a href="https://www.tccsearch.org/" target="_blank" rel="noopener">Travis County Clerk: recording search</a><span>Search recorded deeds, liens and foreclosure documents</span></li>
+          <li><a href="https://www.consumerfinance.gov/find-a-housing-counselor/" target="_blank" rel="noopener">CFPB: Find a housing counselor</a><span>HUD-approved counselors, free or low cost</span></li>
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.zillow.com/austin-tx/?searchQueryState=%7B%22usersSearchTerm%22%3A%22Austin%2C%20TX%22%2C%22isListVisible%22%3Atrue%2C%22filterState%22%3A%7B%22att%22%3A%7B%22value%22%3A%22pre-foreclosure%22%7D%7D%7D" target="_blank" rel="noopener">Zillow Austin (keyword: pre-foreclosure) &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="austin-cat-8" class="catsec">
+      <div class="cathd"><span class="badge14">#8</span><div><h2>For sale by owner</h2><p class="lede sm">The owner sells without a listing agent.</p></div></div>
+      <p class="note"><strong>For buyers in Austin:</strong> Texas sellers of most homes must give a written Seller&#x27;s Disclosure Notice (Property Code §5.008). Use a TREC contract form and a title company.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>Beethoven Run, Austin</td><td>Travis</td><td class="num">$100,000</td><td>Asking</td><td class="num">3 / 1,080</td><td>For sale by owner</td><td><a class="go" href="https://www.zillow.com/homedetails/8806-Beethoven-Run-Austin-TX-78724/447488183_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Hearthstone Dr, Austin</td><td>Travis</td><td class="num">$299,000</td><td>Asking</td><td class="num">2 / 1,100</td><td>For sale by owner; condo</td><td><a class="go" href="https://www.zillow.com/homedetails/1913-Hearthstone-Dr-A-Austin-TX-78757/331625871_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Turner Dr, Austin</td><td>Travis</td><td class="num">$320,000</td><td>Asking</td><td class="num">3 / 989</td><td>For sale by owner</td><td><a class="go" href="https://www.zillow.com/homedetails/10613-Turner-Dr-Austin-TX-78753/29430199_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Diamondleaf Bnd, Austin</td><td>Travis</td><td class="num">$348,000</td><td>Asking</td><td class="num">4 / 2,095</td><td>For sale by owner</td><td><a class="go" href="https://www.zillow.com/homedetails/6100-Diamondleaf-Bnd-Austin-TX-78724/305429122_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">4 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+          <li><a href="https://www.forsalebyowner.com/" target="_blank" rel="noopener">ForSaleByOwner.com</a><span>Owner-listed homes</span></li>
+          <li><a href="https://statutes.capitol.texas.gov/Docs/PR/htm/PR.5.htm#5.008" target="_blank" rel="noopener">Texas Property Code §5.008: seller&#x27;s disclosure</a><span>Required seller&#x27;s disclosure of property condition</span></li>
+          <li><a href="https://www.trec.texas.gov/apps/license-holder-search/" target="_blank" rel="noopener">TREC license holder search</a><span>Check any Texas agent or broker&#x27;s license</span></li>
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.zillow.com/austin-tx/fsbo/" target="_blank" rel="noopener">Zillow Austin: by owner &rarr;</a> <a class="tag good srch" href="https://www.forsalebyowner.com/" target="_blank" rel="noopener">ForSaleByOwner.com &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="austin-cat-10" class="catsec">
+      <div class="cathd"><span class="badge14">#10</span><div><h2>Estate / probate</h2><p class="lede sm">Sold while settling a deceased person&#x27;s estate or a trust.</p></div></div>
+      <p class="note"><strong>For buyers in Austin:</strong> An independent executor can usually sell without court approval (Estates Code §402.052); dependent administrations need the probate court&#x27;s order.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>Crystalbrook Dr, Austin</td><td>Travis</td><td class="num">$329,000</td><td>Asking</td><td class="num">4 / 1,435</td><td>Estate sale, as is</td><td><a class="go" href="https://www.zillow.com/homedetails/7208-Crystalbrook-Dr-Austin-TX-78724/29404633_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Dunbury Dr, Austin</td><td>Travis</td><td class="num">$355,000</td><td>Asking</td><td class="num">3 / 1,116</td><td>Sale needs Travis County Probate Court approval</td><td><a class="go" href="https://www.zillow.com/homedetails/6004-Dunbury-Dr-Austin-TX-78723/29409805_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Woodglen Dr, Austin</td><td>Travis</td><td class="num">$365,000</td><td>Asking</td><td class="num">3 / 1,677</td><td>Estate sale</td><td><a class="go" href="https://www.zillow.com/homedetails/10001-Woodglen-Dr-Austin-TX-78753/29425790_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Boneta Trl, Austin</td><td>Williamson</td><td class="num">$478,000</td><td>Asking</td><td class="num">3 / 2,296</td><td>Estate sale</td><td><a class="go" href="https://www.zillow.com/homedetails/8001-Boneta-Trl-Austin-TX-78729/29558221_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Pineridge Dr, Austin</td><td>Williamson</td><td class="num">$479,900</td><td>Asking</td><td class="num">5 / 2,042</td><td>Estate sale, as is; duplex</td><td><a class="go" href="https://www.zillow.com/homedetails/8713-Pineridge-Dr-A-B-Austin-TX-78729/466149082_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Alta Vista Ave, Austin</td><td>Travis</td><td class="num">$1,198,800</td><td>Asking</td><td class="num">— / —</td><td>Subject to completion of probate</td><td><a class="go" href="https://www.zillow.com/homedetails/2103-Alta-Vista-Ave-Austin-TX-78704/29460912_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">6 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+          <li><a href="https://statutes.capitol.texas.gov/Docs/ES/htm/ES.402.htm#402.052" target="_blank" rel="noopener">Texas Estates Code §402.052</a><span>Independent executor&#x27;s power to sell without a court order</span></li>
+          <li><a href="https://www.traviscountytx.gov/probate" target="_blank" rel="noopener">Travis County Probate Courts</a><span>Probate Court No. 1 and No. 2: hearings and contacts</span></li>
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.zillow.com/austin-tx/?searchQueryState=%7B%22usersSearchTerm%22%3A%22Austin%2C%20TX%22%2C%22isListVisible%22%3Atrue%2C%22filterState%22%3A%7B%22att%22%3A%7B%22value%22%3A%22estate%20sale%22%7D%7D%7D" target="_blank" rel="noopener">Zillow Austin (keyword: estate sale) &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="austin-cat-11" class="catsec">
+      <div class="cathd"><span class="badge14">#11</span><div><h2>Auction</h2><p class="lede sm">Buyers compete by bidding: bank-owned online auctions and county tax-defaulted property sales.</p></div></div>
+      <p class="note"><strong>For buyers in Austin:</strong> Texas tax sales sell the property (a deed), but the former owner can redeem a homestead for 2 years. Register as a bidder in advance; online auctions add a buyer&#x27;s premium.</p>
+      <div class="card"><div class="table-scroll"><table>
+        <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
+        <tbody>
+          <tr><td>Summerwood Dr, Liberty Hill</td><td>Williamson</td><td class="num">$85,000</td><td>Opening bid</td><td class="num">3 / —</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/403-summerwood-dr-liberty-hill-tx-2244690" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Phebe Foster St, Manor</td><td>Travis</td><td class="num">$100,000</td><td>Opening bid</td><td class="num">3 / —</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/20602-phebe-foster-st-manor-tx-2241207" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Cantania Cv, Pflugerville</td><td>Travis</td><td class="num">$150,000</td><td>Opening bid</td><td class="num">3 / —</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/16236-cantania-cv-pflugerville-tx-2241203" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Stone Gate Dr, Austin</td><td>Travis</td><td class="num">$175,000</td><td>Opening bid</td><td class="num">3 / 1,870</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/5205-stone-gate-dr-austin-tx-2245926" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Vista View, Georgetown</td><td>Williamson</td><td class="num">$175,000</td><td>Current bid</td><td class="num">3 / 1,754</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/1020-vista-view-dr-georgetown-tx-2244688" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Hees Ct, Pflugerville</td><td>Travis</td><td class="num">$195,000</td><td>Current bid</td><td class="num">4 / 1,802</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/4509-hees-ct-pflugerville-tx-2244676" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Copper Leaf Ln, Leander</td><td>Travis</td><td class="num">$200,000</td><td>Opening bid</td><td class="num">4 / 2,343</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/16217-copper-leaf-ln-leander-tx-2245982" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Briarcliff Dr, Spicewood</td><td>Travis</td><td class="num">$200,000</td><td>Opening bid</td><td class="num">3 / —</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/22111-briarcliff-dr-spicewood-tx-2241201" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Panzano Dr, Georgetown</td><td>Williamson</td><td class="num">$200,000</td><td>Opening bid</td><td class="num">4 / 2,578</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/512-panzano-dr-georgetown-tx-2243759" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Harrogate Dr, Austin</td><td>Travis</td><td class="num">$250,000</td><td>Opening bid</td><td class="num">— / —</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/6400-harrogate-dr-austin-tx-2241198" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Hurricane Haze Dr, Austin</td><td>Travis</td><td class="num">$271,099</td><td>Current bid</td><td class="num">4 / 2,409</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/11908-hurricane-haze-dr-austin-tx-2244674" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Drifting Leaf Dr, Cedar Park</td><td>Williamson</td><td class="num">$276,099</td><td>Current bid</td><td class="num">3 / 2,429</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/2409-drifting-leaf-dr-cedar-park-tx-2244681" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Ottawa St, Leander</td><td>Williamson</td><td class="num">$400,000</td><td>Current bid</td><td class="num">4 / 2,912</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/3016-ottawa-st-leander-tx-2244775" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>Coleman Bend, Liberty Hill</td><td>Williamson</td><td class="num">$400,000</td><td>Current bid</td><td class="num">4 / 2,993</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/137-coleman-bnd-liberty-hill-tx-2247704" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="fine">14 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+          <li><a href="https://www.auction.com/" target="_blank" rel="noopener">Auction.com</a><span>Largest trustee-sale and bank-owned auction platform</span></li>
+          <li><a href="https://tax-office.traviscountytx.gov/properties/foreclosed" target="_blank" rel="noopener">Travis County Tax Office: foreclosed properties</a><span>Tax sales, bidder registration and FAQ</span></li>
+          <li><a href="https://travis.texas.realforeclose.com/" target="_blank" rel="noopener">Travis tax sales on RealAuction</a><span>Online first-Tuesday tax sale calendar and bidding</span></li>
+          <li><a href="https://www.wilco.org/Elected-Officials/Tax-Assessor-Collector/Property-Tax/Tax-Sales" target="_blank" rel="noopener">Williamson County tax sales</a><span>First-Tuesday tax sales at the Justice Center Annex, Georgetown</span></li>
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.auction.com/residential/TX/Travis-county" target="_blank" rel="noopener">Auction.com: Travis &rarr;</a> <a class="tag good srch" href="https://travis.texas.realforeclose.com/" target="_blank" rel="noopener">Travis tax sales (RealAuction) &rarr;</a></p></div>
+      </div>
+    </section>
+    <section id="austin-cat-13" class="catsec">
+      <div class="cathd"><span class="badge14">#13</span><div><h2>Relocation (RELO)</h2><p class="lede sm">An employer&#x27;s relocation company sells or buys out a transferring employee&#x27;s home.</p></div></div>
+      <p class="note"><strong>For buyers in Austin:</strong> Relocation sales are found through listing remarks. Expect a relocation-company addendum; none were confirmed in Austin listing remarks today.</p>
+      <div class="card emptybox"><p style="margin:0"><strong>No confirmed home with a public address today.</strong> Use the searches and sources below; this category is re-checked every day.</p></div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card"><h3>Reliable sources</h3><ul class="srclist">
+          <li><a href="https://www.cartus.com/" target="_blank" rel="noopener">Cartus</a><span>Major relocation management company</span></li>
+          <li><a href="https://www.sirva.com/" target="_blank" rel="noopener">Sirva (BGRS parent)</a><span>Relocation management company</span></li>
+          <li><a href="https://www.worldwideerc.org/" target="_blank" rel="noopener">Worldwide ERC</a><span>Industry body that sets relocation home-sale and appraisal standards</span></li>
+        </ul></div>
+        <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.zillow.com/austin-tx/?searchQueryState=%7B%22usersSearchTerm%22%3A%22Austin%2C%20TX%22%2C%22isListVisible%22%3Atrue%2C%22filterState%22%3A%7B%22att%22%3A%7B%22value%22%3A%22relocation%22%7D%7D%7D" target="_blank" rel="noopener">Zillow Austin (keyword: relocation) &rarr;</a></p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Texas rules that shape the project</h2>
+      <div class="grid g3">
+        <div class="card"><h3>First-Tuesday sales</h3><p>Foreclosure and tax sales happen on the first Tuesday of the month, 10 a.m.–4 p.m.; notices are posted 21 days before. Next sale day: Dec 1, 2026. <a href="https://statutes.capitol.texas.gov/Docs/PR/htm/PR.51.htm#51.002" target="_blank" rel="noopener">Property Code §51.002</a></p></div>
+        <div class="card"><h3>Tax-sale redemption</h3><p>Texas tax sales transfer a deed, but a homestead can be redeemed for 2 years, so a tax-sale buyer may not keep the home. <a href="https://tax-office.traviscountytx.gov/properties/foreclosed" target="_blank" rel="noopener">Travis Tax Office</a></p></div>
+        <div class="card"><h3>Seller&#x27;s disclosure</h3><p>Most resale sellers, including FSBO owners, must give a written Seller&#x27;s Disclosure Notice before the contract. <a href="https://statutes.capitol.texas.gov/Docs/PR/htm/PR.5.htm#5.008" target="_blank" rel="noopener">Property Code §5.008</a></p></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="grid g2">
+        <div class="card"><h2>Next steps in Austin</h2><ol class="steps">
+          <li>Work through the Dec 1 trustee-sale notices from Travis and Williamson (posted by Nov 10).</li>
+          <li>Re-check online bank-owned auctions and HUD bid deadlines this week.</li>
+          <li>Find a TREC-licensed partner broker for HUD bids and verification.</li>
+        </ol></div>
+        <div class="card"><h2>Main challenges</h2><ul>
+          <li><span class="tag warn">Data</span> No relocation or public off-market listings were confirmed today; check listing remarks daily.</li>
+          <li><span class="tag warn">Timing</span> Texas foreclosures move fast, about 41 days from default notice to sale, so pre-foreclosure windows are short.</li>
+        </ul></div>
+      </div>
+    </section>
+  </div>
 
   <section id="process">
     <div class="grid g2">
       <div class="card">
         <h2>How it works</h2>
         <ol class="steps">
-          <li><strong>Re-check</strong>: revisit every home with an auction, hearing or bid deadline in the next 7 days.</li>
-          <li><strong>Scan</strong>: work through each category's sources, newest first, in the six counties.</li>
-          <li><strong>Log</strong>: one record per address, with every category it fits as a tag.</li>
+          <li><strong>Re-check</strong>: revisit every home with an auction, sale or bid deadline in the next 7 days.</li>
+          <li><strong>Scan</strong>: work through each category's sources in all three markets, newest first.</li>
+          <li><strong>Log</strong>: one record per address, with its market and every category it fits.</li>
           <li><strong>Verify</strong>: confirm with the listing broker, trustee, HUD portal or court calendar.</li>
           <li><strong>Publish</strong>: post the day's homes with working links, lowest price first.</li>
         </ol>
@@ -359,43 +978,11 @@ a.go{white-space:nowrap;font-weight:600}
       <div class="card">
         <h2>Before you apply or bid</h2>
         <ul>
-          <li>Know the price type: an asking price, an opening bid and a probate minimum overbid are different amounts.</li>
+          <li>Know the price type: an asking price, an opening bid, a credit bid and a probate minimum overbid are different amounts.</li>
           <li>HUD bids go through a HUD-registered broker during the posted bid period.</li>
-          <li>Auctions and probate hearings usually need registration, a deposit and proof of funds in advance.</li>
-          <li>Verify any agent with the <a href="https://www2.dre.ca.gov/publicasp/pplinfo.asp" target="_blank" rel="noopener">DRE license lookup</a>.</li>
+          <li>Auctions and trustee sales usually need registration, a deposit and proof of funds in advance.</li>
+          <li>Verify any agent: <a href="https://www2.dre.ca.gov/publicasp/pplinfo.asp" target="_blank" rel="noopener">DRE license lookup</a>, <a href="https://services.azre.gov/publicdatabase/" target="_blank" rel="noopener">ADRE license lookup</a>, <a href="https://www.trec.texas.gov/apps/license-holder-search/" target="_blank" rel="noopener">TREC license search</a>.</li>
           <li>Free advice: <a href="https://www.consumerfinance.gov/find-a-housing-counselor/" target="_blank" rel="noopener">HUD-approved housing counselors</a>.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section id="rules">
-    <h2>California rules that shape the project</h2>
-    <div class="grid g3">
-      <div class="card"><h3>AB 851</h3><p>Until Jan 1, 2027, unsolicited purchase offers are banned in 15 fire-affected Los Angeles and Ventura ZIP codes. <a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=2079.26" target="_blank" rel="noopener">Civil Code §2079.26</a></p></div>
-      <div class="card"><h3>Civil Code §2924m</h3><p>Eligible tenants and bidders can buy after some 1–4 unit foreclosure auctions, so an auction result may not be final. <a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=2924m" target="_blank" rel="noopener">Read the law</a></p></div>
-      <div class="card"><h3>Probate confirmation</h3><p>Court confirmation and overbidding apply only to some estate sales, depending on the representative's authority. <a href="https://selfhelp.courts.ca.gov/probate" target="_blank" rel="noopener">Courts self-help guide</a></p></div>
-    </div>
-  </section>
-
-  <section id="next">
-    <div class="grid g2">
-      <div class="card">
-        <h2>Next steps</h2>
-        <ol class="steps">
-          <li>Re-check this week's deadlines: online auctions ending Nov 17–18, HUD bids opening Nov 17, probate hearings Nov 23 and 25.</li>
-          <li>Run the daily scan and add new homes to each category.</li>
-          <li>Engage a DRE-licensed partner broker for verification and HUD bids.</li>
-          <li>Check domain and trademark availability for SoCal Home Radar.</li>
-        </ol>
-      </div>
-      <div class="card">
-        <h2>Main challenges</h2>
-        <ul>
-          <li><span class="tag warn">Data</span> Off-market ads withhold addresses; foreclosure credit bids are often unpublished.</li>
-          <li><span class="tag warn">Timing</span> Listings change daily; auctions get postponed and hearings move.</li>
-          <li><span class="tag warn">Records</span> LA County recorder records can't be browsed online; San Diego removed online parcel search.</li>
-          <li><span class="tag muted">Scope</span> A sale label doesn't prove the home is still available.</li>
         </ul>
       </div>
     </div>
@@ -411,5 +998,26 @@ a.go{white-space:nowrap;font-weight:600}
 </main>
 
 <footer><div class="wrap">&copy; 2026 Hamid Faghidi &middot; Research leads only. Nothing on this page is an offer, a listing or investment advice.</div></footer>
+<script>
+(function(){
+  var ids=['socal','phoenix','austin'];
+  function show(id,scroll){
+    ids.forEach(function(x){
+      document.getElementById('tab-'+x).setAttribute('aria-selected',x===id?'true':'false');
+      document.getElementById('panel-'+x).hidden=(x!==id);
+    });
+    if(scroll){document.getElementById(scroll).scrollIntoView();}
+  }
+  document.querySelectorAll('.mtabs button').forEach(function(b){
+    b.addEventListener('click',function(){show(b.dataset.tab); history.replaceState(null,'','#'+b.dataset.tab);});
+  });
+  function fromHash(){
+    var h=location.hash.slice(1); if(!h) return;
+    var m=h.split('-cat-')[0];
+    if(ids.indexOf(m)>-1){ show(m, h.indexOf('-cat-')>-1 ? h : null); }
+  }
+  window.addEventListener('hashchange',fromHash); fromHash();
+})();
+</script>
 </body>
 </html>
