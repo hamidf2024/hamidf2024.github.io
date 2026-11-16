@@ -578,9 +578,9 @@
     var rows = summary.comps.map(function (c, i) {
       var recentTag = i === 0 ? ('<span class="most-recent-tag">' + (summary.hasDistance ? "Closest" : "Most recent") + '</span>') : "";
       var extraCells = summary.hasCond ?
-        ('\n      <td>' + (c.condition || "Not stated — inferred from price only") + "</td>" +
-         '\n      <td>' + (c.pool ? "Yes" : "No") + "</td>" +
-         '\n      <td class="num mono">' + (c.distanceMi !== undefined ? c.distanceMi.toFixed(2) + " mi" : "—") + "</td>") : "";
+        ('\n      <td>' + (c.pool ? "Yes" : "No") + "</td>" +
+         '\n      <td class="num mono">' + (c.distanceMi !== undefined ? c.distanceMi.toFixed(2) + " mi" : "—") + "</td>" +
+         '\n      <td>' + (c.condition || "Not stated — inferred from price only") + "</td>") : "";
       return '\n    <tr>' +
         '\n      <td><span class="comp-rank">' + (i + 1) + '.</span><span class="comp-name">' + compAddr(c) + "</span>" + recentTag + "</td>" +
         '\n      <td class="sold-date">' + fmtDate(c.soldDate) + "</td>" +
@@ -658,7 +658,7 @@
       '\n              <th class="num">Home sqft</th>' +
       '\n              <th class="num">Lot sqft</th>' +
       '\n              <th class="num">Year built (age)</th>' +
-      (summary.hasCond ? ("\n              <th>Condition</th>" + "\n              <th>Pool</th>" + '\n              <th class="num">Distance</th>') : "") +
+      (summary.hasCond ? ('\n              <th>Pool</th>' + '\n              <th class="num">Distance</th>' + "\n              <th>Condition</th>") : "") +
       "\n            </tr>" +
       "\n          </thead>" +
       "\n          <tbody>" +
