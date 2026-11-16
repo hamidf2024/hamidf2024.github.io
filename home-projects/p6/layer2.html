@@ -251,6 +251,7 @@
   .occ-pill.low { background: var(--sage-tint); color: var(--sage); }
   .occ-pill.mid { background: var(--amber-tint); color: var(--amber); }
   .occ-pill.high { background: var(--red-tint); color: var(--red); }
+  .occ-pill.unknown { background: var(--clay-tint); color: var(--clay); }
   .price-line { font-size: 12.5px; color: var(--ink-soft); }
   .price-line .lbl { color: var(--ink-faint); }
   .est-flag { font-size: 10.5px; color: var(--brass-strong); font-weight: 700; }
@@ -374,9 +375,10 @@
   var RESOLVED_REQUESTS = STATE.resolvedRequests;
   var market = "CA";
 
-  var fmt$ = function (n) { return "$" + n.toFixed(2); };
+  var fmt$ = function (n) { return (n === null || n === undefined || isNaN(n)) ? "—" : "$" + n.toFixed(2); };
   var fmt0 = function (n) { return "$" + Math.round(n).toLocaleString(); };
-  var occClass = function (o) { return o < 30 ? "low" : o < 60 ? "mid" : "high"; };
+  var occClass = function (o) { return (o === null || o === undefined || isNaN(o)) ? "unknown" : o < 30 ? "low" : o < 60 ? "mid" : "high"; };
+  var fmtPct = function (n) { return (n === null || n === undefined || isNaN(n)) ? "—" : n + "%"; };
   // Days in each of a property's 3 tracked months, derived from its monthLabels
   // (e.g. "Sept 2026" -> 30). Falls back to 30 for a label this can't parse.
   var DAYS_IN_MONTH_BY_NAME = { jan: 31, feb: 28, mar: 31, apr: 30, may: 31, jun: 30, jul: 31, aug: 31, sep: 30, oct: 31, nov: 30, dec: 31 };
@@ -431,7 +433,7 @@
     var rows = prop.comps.map(function (c) {
       var monthCells = c.months.map(function (m) {
         return '\n      <td class="month-cell">' +
-          '\n        <div class="occ-pill ' + occClass(m.occ) + '">' + m.occ + '% occ</div>' +
+          '\n        <div class="occ-pill ' + occClass(m.occ) + '">' + fmtPct(m.occ) + ' occ</div>' +
           '\n        <div class="price-line"><span class="lbl">High</span> ' + fmt$(m.high) + '/nt</div>' +
           '\n        <div class="price-line"><span class="lbl">Low</span> ' + fmt$(m.low) + '/nt</div>' +
           (m.note ? '\n        <div class="est-flag" style="color:var(--ink-faint)">' + m.note + "</div>" : "") +
