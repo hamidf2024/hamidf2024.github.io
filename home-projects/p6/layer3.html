@@ -212,6 +212,7 @@
   .cond-price { font-weight: 600; color: var(--ink); font-family: "Fraunces", Georgia, serif; font-size: 14px; }
   .cond-n { color: var(--ink-faint); font-size: 11px; }
   .cond-ppsf { font-weight: 400; color: var(--ink-faint); font-size: 11px; }
+  .cond-thin-note { margin: -6px 0 22px; font-size: 12.5px; color: var(--ink-soft); background: var(--amber-tint); border: 1px solid var(--amber); border-radius: var(--radius-m); padding: 10px 14px; line-height: 1.5; }
 
   /* comps table */
   .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius-l); background: var(--paper); margin-bottom: 14px; }
@@ -441,6 +442,7 @@
       ppsf: avgAllPpsf,
       impliedValue: subjSqft ? avgAllPpsf * subjSqft : null
     }];
+    var anyThin = false;
     CONDITION_BUCKETS.forEach(function (b) {
       var bucketComps = byBucket[b];
       if (bucketComps.length === 0) {
@@ -450,15 +452,18 @@
       var bPrices = bucketComps.map(function (c) { return c.soldPrice; });
       var bPpsf = bucketComps.map(function (c) { return c.pricePerSqft; });
       var bAvgPpsf = average(bPpsf);
+      var isThin = bucketComps.length <= 2;
+      if (isThin) anyThin = true;
       rows.push({
         label: b,
         count: bucketComps.length,
         price: average(bPrices),
         ppsf: bAvgPpsf,
-        impliedValue: subjSqft ? bAvgPpsf * subjSqft : null
+        impliedValue: subjSqft ? bAvgPpsf * subjSqft : null,
+        thin: isThin
       });
     });
-    return { rows: rows, unclassified: unclassified };
+    return { rows: rows, unclassified: unclassified, anyThin: anyThin };
   }
 
   function condCardRows(rows, valueKey) {
@@ -477,7 +482,7 @@
         '\n            <div class="cond-row">' +
         '\n              <span class="cond-name">' + r.label + "</span>" +
         '\n              <span class="cond-price">' + val + ppsfNote + "</span>" +
-        '\n              <span class="cond-n">n=' + r.count + "</span>" +
+        '\n              <span class="cond-n">n=' + r.count + (r.thin ? " \u2020" : "") + "</span>" +
         "\n            </div>"
       );
     }).join("");
@@ -538,7 +543,8 @@
       '\n          <div class="cond-rows">' + condCardRows(cb.rows, "impliedValue") + "\n          </div>" +
       '\n          <div class="stat-note">avg $/sqft per condition \u00d7 subject\u2019s ' + fmtNum(summary.subjSqft) + " sqft</div>" +
       "\n        </div>" +
-      "\n      </div>"
+      "\n      </div>" +
+      (cb.anyThin ? ('\n      <div class="cond-thin-note">\u2020 Based on 2 or fewer comps \u2014 at that sample size, a single comp\u2019s lot size, age, or location can move its $/sqft more than its condition tier does. A \u201ccheaper\u201d tier can price higher than a \u201cbetter\u201d one for reasons unrelated to condition; check that comp\u2019s own note in the table below before treating a thin tier\u2019s figure as a reliable signal.</div>') : "")
     );
   }
 
