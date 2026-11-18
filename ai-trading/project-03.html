@@ -3,15 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CNQ Zone Strategy — Hamid Faghidi</title>
-<meta name="description" content="Project 3: a discretionary CNQ 5-minute zone strategy turned into testable rules, backtested through eight versions, and compared with competing tools and research.">
+<title>CNQ 5-Minute Zone Day Trading — Hamid Faghidi</title>
+<meta name="description" content="Project 3: a discretionary CNQ 5-minute zone-bounce habit turned into 8 precise, backtested rule versions with no look-ahead bias. V7.1: 75 trades, 72.9% win rate, +2.69/share gross (+1.19 after realistic trading costs).">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../style.css">
 <style>
-.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
-.flow div{background:var(--accent-soft);border-radius:10px;padding:12px;font-size:14px}
-.flow b{display:block;color:var(--accent);font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.phase{display:grid;grid-template-columns:minmax(0,1fr) 120px 60px;gap:12px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}
+.phase:last-child{border-bottom:0}
+.phase .n{color:var(--muted);text-align:right}
+.sbar{display:flex;height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.sbar i{display:block;height:100%}.sbar .d{background:var(--accent)}.sbar .p{background:var(--warn)}
+@media (max-width:600px){.phase{grid-template-columns:minmax(0,1fr) 70px 54px}}
 </style>
 </head>
 <body>
@@ -23,242 +26,224 @@
 <main class="wrap">
   <div class="crumbs" style="padding-top:20px"><a href="../">Home</a><span class="sep">/</span><a href="./">AI Trading</a><span class="sep">/</span><span>Project 3</span></div>
   <section class="hero" style="padding-top:28px">
-    <div class="eyebrow">Project 3 &middot; Trading strategy research &middot; Backtesting</div>
-    <h1>Project 3: CNQ 5-Minute Zone Strategy</h1>
-    <p class="lede">My own discretionary day-trading strategy for CNQ, turned into precise, testable rules and refined version by version. The goal is the model with the <strong>highest profit</strong>, then the <strong>highest win rate</strong>, with a <strong>reasonable number of trades</strong>.</p>
-    <p style="margin-top:14px"><span class="tag good">Phase 1: research &amp; validation</span> <span class="tag muted">Current version: V7.1</span> <span class="tag muted">Last updated Oct 28, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#performance">Performance</a><a href="#results">Results</a><a href="#benchmark">Benchmark</a><a href="#strategy">Strategy</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
+    <div class="eyebrow">Project 3 &middot; Intraday mean-reversion &middot; CNQ (single stock) &middot; Rule-based zones</div>
+    <h1>Project 3: CNQ 5-Minute Zone Day Trading</h1>
+    <p class="lede">Can a discretionary "buy the bounce off a zone" habit on CNQ's 5-minute chart be turned into a precise, mechanical rule set? Eight versions were built and backtested without look-ahead bias, each one walk-forward tested and regression-checked against the last. The final version, <strong>V7.1</strong>, rejects a specific flawed bounce pattern that was dragging down open-zone entries &mdash; a single, broad-based fix, not a curve-fit, that improved every headline metric at once.</p>
+    <p style="margin-top:12px;max-width:680px"><strong>Owner's goal, in priority order:</strong> (1) maximum net profit, and it must hold on weeks the rules weren't tuned on; (2) a higher win rate; (3) a reasonable number of trades (about 1&ndash;3/day). By these priorities the current best is V7.1: +2.69 $/share gross, 72.9% win rate, 75 trades over Jul 1 &ndash; Aug 14, 2026. Against the stated numeric targets &mdash; win rate &gt; 60% and net &gt; 1.0 $/share per week &mdash; V7.1 clears the win-rate bar but falls short on weekly net profit (best legitimate pace: 0.42/week), and that gap widens once realistic trading costs are modeled in.</p>
+    <p style="margin-top:14px"><span class="tag warn">Status: Phase 1 research &middot; net-of-cost goal not yet met</span> <span class="tag muted">Started Aug 19, 2026</span> <span class="tag muted">Last updated Nov 18, 2026</span></p>
+    <nav class="toc" aria-label="On this page"><a href="#method">Method</a><a href="#versions">Versions V1&ndash;V7.1</a><a href="#rootcause">Root cause</a><a href="#mlexperiment">ML experiment</a><a href="#cost">Trading costs</a><a href="#benchmark">Benchmark</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
   </section>
 
   <section aria-label="At a glance">
     <div class="statstrip">
-      <div class="primary"><div class="k">Net profit</div><div class="v">+2.69</div><div class="s">$/share, gross, V7.1</div></div>
-      <div><div class="k">After 2¢ costs</div><div class="v">+1.19</div><div class="s">$/share round-trip cost</div></div>
-      <div><div class="k">Win rate</div><div class="v">72.9%</div><div class="s">target &gt; 60%</div></div>
-      <div><div class="k">Trades</div><div class="v">75</div><div class="s">about 2.3 per day</div></div>
-      <div><div class="k">Profit factor</div><div class="v">3.81</div><div class="s">gross</div></div>
-      <div><div class="k">Max drawdown</div><div class="v">−0.34</div><div class="s">$/share</div></div>
-      <div><div class="k">Period</div><div class="v sm">Jul 1 – Aug 14</div><div class="s">2026, 32 trading days</div></div>
+      <div class="primary"><div class="k">Best result</div><div class="v">+2.69/share</div><div class="s">V7.1, gross &middot; Jul 1 &ndash; Aug 14, 2026</div></div>
+      <div><div class="k">Versions tested</div><div class="v">8</div><div class="s">V1 &rarr; V7.1</div></div>
+      <div><div class="k">Win rate</div><div class="v">72.9%</div><div class="s">V7.1, 75 trades</div></div>
+      <div><div class="k">Profit factor</div><div class="v">3.81</div><div class="s">V7.1</div></div>
+      <div><div class="k">Net at 2&cent; cost</div><div class="v sm">+1.19</div><div class="s">down from 2.69 gross</div></div>
+      <div><div class="k">Data history</div><div class="v sm">6.4 weeks</div><div class="s">CNQ 5-min, May 20&ndash;Aug 14, 2026</div></div>
     </div>
   </section>
 
-  <section id="performance">
-    <h2>Performance — V7.1</h2>
-    <div class="card">
-      <div class="chart-title"><h3>Cumulative profit, $/share</h3><div class="legend-inline"><span style="--c:var(--gain)">Gross, before costs</span></div></div>
-      <p class="chart-note">Each point is one closed trade, in order. Hover for the trade.</p>
-      <div id="equity"></div>
+  <section id="findings">
+    <h2>What the research found</h2>
+    <div class="card" style="border-left:4px solid var(--warn)">
+      <div class="eyebrow" style="margin-bottom:8px">Main conclusion</div>
+      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0">Seven rounds of disciplined, anti-overfitting iteration turned a discretionary habit into a real, repeatable edge &mdash; V7.1 earns over 10&times; the baseline's net profit, with a causal, broad-based fix rather than a curve-fit. But the backtester has never modeled trading costs, and at a realistic 2&cent;/share round-trip cost, net drops from +2.69 to +1.19 and only two of the eight versions (V7, V7.1) stay profitable at all. The strategy is also structurally weaker in multi-week downtrends &mdash; a long-only design fighting the trend &mdash; and that weakness is root-caused but not yet fixed.</p>
     </div>
-    <div class="grid g2x2" style="margin-top:16px">
+  </section>
+
+  <section id="method">
+    <h2>Method</h2>
+    <div class="grid g2">
       <div class="card">
-        <h3>Drawdown, $/share</h3>
-        <p class="chart-note">Distance below the previous peak after each trade.</p>
-        <div id="dd"></div>
+        <h3>The entry rule (V7.1)</h3>
+        <ol class="steps">
+          <li><strong>Zones</strong>: the day's open (Zone 1), prior-day high/low/close, and intraday highs/lows &mdash; but only once confirmed by a second pullback, never the first print of a new low or high.</li>
+          <li><strong>Confirmation</strong>: price touches an established zone and the same candle confirms &mdash; a strong green candle beating the prior red candle, or a long lower wick (at OPEN zones, the wick must also close back above the day's open &mdash; the V7.1 fix).</li>
+          <li><strong>Risk</strong>: stop &minus;0.10 / floor +0.20 ($/share; &minus;0.15 / +0.30 on wide days), stop moved to breakeven after a green close.</li>
+          <li><strong>Exit</strong>: next zone reached with no further strong signal; one trade at a time, long only, 09:30&ndash;16:00 ET.</li>
+        </ol>
       </div>
       <div class="card">
-        <h3>Profit by week, $/share</h3>
-        <p class="chart-note">The two July weeks are out-of-sample for V7's tuning.</p>
-        <div id="weekly"></div>
-      </div>
-      <div class="card">
-        <h3>Trade results distribution</h3>
-        <p class="chart-note">Number of trades by profit per trade ($/share). Many breakeven scratches, few losses.</p>
-        <div id="hist"></div>
-      </div>
-      <div class="card">
-        <h3>Net profit vs. trading cost</h3>
-        <p class="chart-note">Net $/share over the period at each round-trip cost per share. Break-even at about 3.6¢.</p>
-        <div id="cost"></div>
+        <h3>How it was tested</h3>
+        <ol class="steps">
+          <li><strong>Walk-forward, no look-ahead</strong>: every decision uses only information available at that candle; trend and zone-strength helpers are computed strictly from prior days' closes.</li>
+          <li><strong>Regression discipline</strong>: every code change was re-checked against V6's known-good output (n=12, 60.0% win rate, PF 3.31) before trusting new results.</li>
+          <li><strong>Anti-overfitting gate</strong>: candidate fixes were tested and rejected when they turned out to be single-trade curve-fitting artifacts (e.g. widening the stop, tuning the entry cutoff), or when they improved one metric while reducing net profit overall.</li>
+          <li><strong>Reproducibility</strong>: one unified backtester (<code>src/bt7_unified_backtester_v1_to_v71.py</code>) reproduces every version, V1 through V7.1, from the same raw CSV.</li>
+        </ol>
       </div>
     </div>
   </section>
 
-  <section id="results">
-    <h2>Results — all versions</h2>
-    <p style="color:var(--muted);margin:-6px 0 14px">Ranked by the project's priorities: <strong style="color:var(--ink)">1. net profit</strong> (after a 2¢/share round-trip cost), then 2. win rate, then 3. a reasonable number of trades. Full range Jul 1 – Aug 14, 2026.</p>
+  <section id="versions">
+    <h2>Versions V1 &rarr; V7.1</h2>
     <div class="card">
-      <div class="table-scroll"><table>
-        <thead><tr><th>Rank</th><th>Version</th><th>What changed</th><th>Net after 2¢</th><th>Gross</th><th>Win rate</th><th>Trades</th></tr></thead>
+      <div class="chart-title"><h3>Net profit by version, in development order</h3></div>
+      <p class="chart-note">Full range Jul 1 &ndash; Aug 14, 2026. Net is $ per share, before any trading costs.</p>
+      <div id="verchart"></div>
+      <div class="table-scroll" style="margin-top:14px"><table>
+        <thead><tr><th>Rank</th><th>Version</th><th>Key change</th><th>Net $/share</th><th>Win rate</th><th>Trades</th><th>Profit factor</th></tr></thead>
         <tbody>
-          <tr><td>1</td><td><strong>V7.1</strong></td><td><strong>Reject open-zone wick bounces that don't reclaim the open</strong></td><td class="num"><strong>+1.19</strong></td><td class="num">+2.69</td><td class="num">72.9%</td><td class="num">75</td></tr>
-          <tr><td>2</td><td>V7</td><td>Tuned parameters (on Jul 27 – Aug 14)</td><td class="num">+0.80</td><td class="num">+2.50</td><td class="num">68.4%</td><td class="num">85</td></tr>
-          <tr><td>3</td><td>V4</td><td>Max 2 entries per zone per day</td><td class="num">−0.15</td><td class="num">+1.60</td><td class="num">48.8%</td><td class="num">87</td></tr>
-          <tr><td>4</td><td>V6</td><td>Opening-range zone used for exits only</td><td class="num">−0.25</td><td class="num">+1.19</td><td class="num">58.5%</td><td class="num">72</td></tr>
-          <tr><td>5</td><td>V5</td><td>Exit when there's no more <em>strong</em> signal</td><td class="num">−0.49</td><td class="num">+1.27</td><td class="num">59.0%</td><td class="num">88</td></tr>
-          <tr><td>6</td><td>V3</td><td>Opening-range zone (first 3 candles) added</td><td class="num">−0.86</td><td class="num">+1.28</td><td class="num">45.0%</td><td class="num">107</td></tr>
-          <tr><td>7</td><td>V1</td><td>Baseline: rules as first formalized</td><td class="num">−1.19</td><td class="num">+0.25</td><td class="num">33.3%</td><td class="num">72</td></tr>
-          <tr><td>8</td><td>V2</td><td>Default exit becomes "next zone + weak price action"</td><td class="num">−1.42</td><td class="num">+0.20</td><td class="num">40.9%</td><td class="num">81</td></tr>
+          <tr><td>1</td><td><strong>V7.1</strong></td><td>Reject open-zone wick bounces that don't reclaim the open</td><td class="num"><strong>2.690</strong></td><td class="num"><strong>72.9%</strong></td><td class="num"><strong>75</strong></td><td class="num"><strong>3.81</strong></td></tr>
+          <tr><td>2</td><td>V7</td><td>Tuned parameters (Jul 27 &ndash; Aug 14)</td><td class="num">2.495</td><td class="num">68.4%</td><td class="num">85</td><td class="num">2.72</td></tr>
+          <tr><td>3</td><td>V4</td><td>Max 2 entries per zone per day</td><td class="num">1.595</td><td class="num">48.8%</td><td class="num">87</td><td class="num">1.71</td></tr>
+          <tr><td>4</td><td>V3</td><td>Opening-range zone added</td><td class="num">1.279</td><td class="num">45.0%</td><td class="num">107</td><td class="num">1.42</td></tr>
+          <tr><td>5</td><td>V5</td><td>Exit when no more <em>strong</em> signal</td><td class="num">1.274</td><td class="num">59.0%</td><td class="num">88</td><td class="num">1.55</td></tr>
+          <tr><td>6</td><td>V6</td><td>Opening-range zone, exit-only</td><td class="num">1.194</td><td class="num">58.5%</td><td class="num">72</td><td class="num">1.59</td></tr>
+          <tr><td>7</td><td>V1</td><td>Baseline</td><td class="num">0.250</td><td class="num">33.3%</td><td class="num">72</td><td class="num">1.10</td></tr>
+          <tr><td>8</td><td>V2</td><td>"Next zone + weak action" becomes default exit</td><td class="num">0.199</td><td class="num">40.9%</td><td class="num">81</td><td class="num">1.09</td></tr>
         </tbody>
       </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">The backtester doesn't model costs yet, so "Net after 2¢" subtracts 2¢ per share per trade from the gross result. That covers commission plus spread and slippage. Only V7.1 and V7 stay profitable. Adding real costs to the backtester is now the top roadmap item.</p>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Win rate excludes scratch (breakeven) trades. Reproducibility check (2026-10-28): running the unified backtester on the raw CSV reproduces V1, V4, V7 and V7.1 exactly as reported here.</p>
+    </div>
+  </section>
+
+  <section id="rootcause">
+    <h2>Root cause, not just tuning</h2>
+    <div class="grid g2">
+      <div class="card">
+        <h3>Why V7.1 beats V7</h3>
+        <p>V7's win rate dropped sharply in some weeks. Breaking trades down by entry-confirmation type, zone kind and entry price vs. the day's open isolated the cause: wick-confirmed bounces at the day's-open zone that <em>didn't reclaim the open</em> were systematically weak. Requiring the close to beat the open for that specific case (OPEN-zone wick entries only) fixed it.</p>
+        <p style="margin-top:8px"><span class="tag good">Adopted</span> Broad-based (not one trade), causally explicable, improved every headline metric at once &mdash; the bar for a real fix here.</p>
+        <p style="margin-top:8px;font-size:13px;color:var(--muted)">Rejected along the way: widening the stop and fine-tuning the entry cutoff &mdash; both traced back to a single trade each, not a general effect.</p>
+      </div>
+      <div class="card">
+        <h3>Why June&ndash;July lagged</h3>
+        <p>V7 and V7.1 both showed weaker net P&amp;L in June/July. Root cause: a real, multi-week downtrend in CNQ during that window. The strategy is long-only, so during downtrends the average win shrinks and the average loss grows <em>at the same time</em>, even though the win rate itself holds up reasonably well.</p>
+        <p style="margin-top:8px">Three mechanical fixes were tried and tested honestly:</p>
+        <ul style="margin:6px 0 0">
+          <li><span class="tag bad">Rejected</span> a trailing trend filter &mdash; made results worse</li>
+          <li><span class="tag bad">Rejected</span> a downtrend stop multiplier &mdash; made results worse</li>
+          <li><span class="tag warn">Shelved</span> a downtrend zone filter &mdash; small improvement, but on only 7 trades &mdash; too fragile to adopt</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="mlexperiment">
+    <h2>Stage 8: could ML beat the hand rules?</h2>
+    <div class="card">
+      <p style="margin-top:0"><strong>Question asked:</strong> could a transformer learn this strategy directly from the 11 annotated chart screenshots? <strong>Answer: no</strong> &mdash; 11 images can't train any neural network, vision or otherwise, and the screenshots are a lossy picture of data already held exactly as numbers. Built the viable alternative instead: a gradient-boosted model over the real OHLCV bars plus V7.1's own zone/candle features, trained on May&ndash;Jun 2026, tested out of sample on the same Jul 1 &ndash; Aug 14 window V7.1's numbers are reported on.</p>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Approach</th><th>Trades</th><th>Win rate</th><th>Profit factor</th><th>Net $/share</th></tr></thead>
+        <tbody>
+          <tr><td><strong>V7.1 (hand rules)</strong></td><td class="num">75</td><td class="num">72.9%</td><td class="num">3.81</td><td class="num"><strong>2.690</strong></td></tr>
+          <tr><td>ML model alone</td><td class="num">31</td><td class="num">73.1%</td><td class="num">1.42</td><td class="num">0.294</td></tr>
+          <tr><td>Rule OR model</td><td class="num">83</td><td class="num">71.9%</td><td class="num">2.60</td><td class="num">2.230</td></tr>
+          <tr><td>Rule AND model agrees</td><td class="num">17</td><td class="num">83.3%</td><td class="num">17.6</td><td class="num">1.031</td></tr>
+        </tbody>
+      </table></div>
+      <p style="margin-top:8px"><span class="tag bad">Rejected</span> none of the three ML variants beat V7.1's net profit, the stated #1 priority &mdash; so V7.1 stays the live configuration. The ML model matches V7.1's win rate almost exactly but is not a refinement of it: only 5 of its 36 highest-confidence picks overlap with the 95 rule-confirmed candidates in the test window, meaning it learned a different, weaker signal, not a better version of the same one.</p>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Kept on file: the "rule AND model agrees" variant's 83.3% win rate and 17.6 profit factor are the best of any version tried in this project, just on too few trades (17) to win on net profit yet. Worth revisiting once more CNQ history (Stage 7.2) gives it room to generate more trades. Validated before trusting any of this: restricting the ML candidate pool to V7.1's own confirmed signals and replaying them reproduced V7.1's official numbers exactly, bar-for-bar, with 0 mismatches. Full write-up: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/06_Lessons_Learned.docx">06_Lessons_Learned.docx</a>, 2026-11-18 entry; code: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/src/ml_v8_gbm_experiment.py">src/ml_v8_gbm_experiment.py</a>.</p>
+    </div>
+  </section>
+
+  <section id="cost">
+    <h2>Trading costs: the biggest open gap</h2>
+    <div class="card">
+      <p style="margin-top:0">The backtester has never modeled commissions, spread or slippage &mdash; every number above is gross. At a realistic round-trip cost per share, only the two best versions stay profitable at all:</p>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Version</th><th>Trades</th><th>Gross</th><th>1&cent; cost</th><th>2&cent; cost</th><th>Win rate</th></tr></thead>
+        <tbody>
+          <tr><td><strong>V7.1</strong></td><td class="num">75</td><td class="num">2.690</td><td class="num">1.940</td><td class="num"><strong>1.190</strong></td><td class="num">72.9%</td></tr>
+          <tr><td>V7</td><td class="num">85</td><td class="num">2.495</td><td class="num">1.645</td><td class="num">0.795</td><td class="num">68.4%</td></tr>
+          <tr><td>V4</td><td class="num">87</td><td class="num">1.595</td><td class="num">0.725</td><td class="num">&minus;0.145</td><td class="num">48.8%</td></tr>
+          <tr><td>V6</td><td class="num">72</td><td class="num">1.194</td><td class="num">0.474</td><td class="num">&minus;0.246</td><td class="num">58.5%</td></tr>
+          <tr><td>V5</td><td class="num">88</td><td class="num">1.274</td><td class="num">0.394</td><td class="num">&minus;0.486</td><td class="num">59.0%</td></tr>
+          <tr><td>V3</td><td class="num">107</td><td class="num">1.279</td><td class="num">0.209</td><td class="num">&minus;0.861</td><td class="num">45.0%</td></tr>
+          <tr><td>V1</td><td class="num">72</td><td class="num">0.250</td><td class="num">&minus;0.470</td><td class="num">&minus;1.190</td><td class="num">33.3%</td></tr>
+          <tr><td>V2</td><td class="num">81</td><td class="num">0.199</td><td class="num">&minus;0.611</td><td class="num">&minus;1.421</td><td class="num">40.9%</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">V7.1 break-even cost: &asymp;3.6&cent;/share round-trip. Maximum drawdown (gross, trade sequence): &minus;0.34 $/share.</p>
     </div>
   </section>
 
   <section id="benchmark">
     <h2>Benchmark</h2>
-    <p style="color:var(--muted);margin:-6px 0 14px">Tools and research that do the same job: turning zone and price-action trading into tested rules.</p>
+    <p style="color:var(--muted);margin:-6px 0 14px">Commercial zone/backtesting tools and published research on the same kind of setup.</p>
     <div class="card">
       <div class="table-scroll"><table>
-        <thead><tr><th>Capability</th><th>This project</th><th>LuxAlgo</th><th>TrendSpider</th><th>Trade Ideas Holly</th><th>ORB study (2024)</th></tr></thead>
+        <thead><tr><th>Capability</th><th>This project</th><th>LuxAlgo</th><th>TrendSpider</th><th>5-min ORB research</th></tr></thead>
         <tbody>
-          <tr><td>Zone / level detection</td><td><span class="yes">✓</span> Rules from my real trades</td><td><span class="yes">✓</span> Supply/demand indicators</td><td><span class="yes">✓</span> Auto support/resistance</td><td><span class="part">◐</span> Within 70 strategies</td><td><span class="part">◐</span> Opening range only</td></tr>
-          <tr><td>Full rules and trade log published</td><td><span class="yes">✓</span> Every trade explained</td><td><span class="part">◐</span> Indicator logic</td><td><span class="part">◐</span> User's own rules</td><td><span class="no">✗</span> Proprietary</td><td><span class="yes">✓</span> Paper</td></tr>
-          <tr><td>Trading costs in backtest</td><td><span class="no">✗</span> Not yet (top priority)</td><td><span class="part">◐</span> Not stated</td><td><span class="yes">✓</span> Commission + slippage</td><td><span class="part">◐</span> Not stated</td><td><span class="part">◐</span> Commission only</td></tr>
-          <tr><td>History tested</td><td><span class="no">✗</span> 6.4 weeks</td><td><span class="yes">✓</span> User-selected</td><td><span class="yes">✓</span> Variance testing</td><td><span class="yes">✓</span> Continuous</td><td><span class="yes">✓</span> 8 years</td></tr>
-          <tr><td>Many symbols</td><td><span class="no">✗</span> CNQ only</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span> Group tester</td><td><span class="yes">✓</span> Thousands</td><td><span class="yes">✓</span> 7,000 stocks</td></tr>
-          <tr><td>Long and short</td><td><span class="no">✗</span> Long only</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-          <tr><td>Overfitting checks</td><td><span class="yes">✓</span> Out-of-sample weeks, curve-fit rejections</td><td><span class="part">◐</span> Monte Carlo</td><td><span class="part">◐</span> Variance tests</td><td><span class="no">✗</span> Not disclosed</td><td><span class="part">◐</span> One period</td></tr>
-          <tr><td>Automated execution</td><td><span class="no">✗</span> Phase 2</td><td><span class="part">◐</span> Alerts</td><td><span class="yes">✓</span> Bots + brokers</td><td><span class="yes">✓</span> Auto-trading</td><td><span class="no">✗</span></td></tr>
+          <tr><td>Approach</td><td>Hand-built zone rules, long only, one symbol</td><td>Supply/demand zone indicators + AI backtester</td><td>Auto S/R + no-code strategy tester</td><td>5-min opening-range breakout, long/short</td></tr>
+          <tr><td>Trading costs</td><td><span class="no">✗</span> gross only</td><td><span class="yes">✓</span> commissions/slippage inputs</td><td><span class="yes">✓</span> commissions/slippage inputs</td><td><span class="part">◐</span> commission only, no slippage</td></tr>
+          <tr><td>History tested</td><td>6.4 weeks, one stock</td><td>User-defined</td><td>Variance testing across timeframes/dates</td><td>8 years (2016&ndash;2023)</td></tr>
+          <tr><td>Robustness stats</td><td>Week-by-week table, manual curve-fit audit</td><td><span class="yes">✓</span> Monte Carlo, prop-firm stress tests</td><td><span class="yes">✓</span> variance &amp; group testing</td><td>Sharpe ratio reported</td></tr>
+          <tr><td>Cost</td><td>Claude + free data</td><td>Subscription</td><td>$82&ndash;321/mo</td><td>Research</td></tr>
         </tbody>
       </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">✓ yes &middot; ◐ partial or unclear &middot; ✗ no. Based on public product pages, reviews and papers as of Oct 2026 (sources below).</p>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">✓ yes &middot; ◐ partial &middot; ✗ no. Competitor figures are their own claims or published research. Full landscape (incl. Trade Ideas Holly AI, Chung &amp; Bellotti, Osler, TradeZella/Edgewonk) in the project's competitive analysis.</p>
     </div>
     <div class="grid g3" style="margin-top:16px">
-      <div class="card"><h3>Where we're ahead</h3><p>Transparent, explainable rules built from real annotated trades, plus a full trade ledger. Curve-fit results are actively rejected. Most commercial tools don't publish this.</p></div>
-      <div class="card"><h3>Where we're behind</h3><p>No trading costs in the backtest, 6.4 weeks of data, one stock and long trades only. Competitors test across years and many symbols.</p></div>
-      <div class="card"><h3>What we're adopting</h3><p>Costs, multi-year data, a basket of similar stocks, a relative-volume filter, zone-strength scoring, a short side, Monte Carlo, and a path to automated execution.</p></div>
-    </div>
-  </section>
-
-  <section>
-    <h2>Goals &amp; objectives</h2>
-    <div class="grid g3">
-      <div class="card"><h3>1. Maximum profit</h3><p>The top priority: the highest net profit after costs, and it has to hold up on weeks the rules weren't tuned on.</p></div>
-      <div class="card"><h3>2. Higher win rate</h3><p>Among versions with similar profit, prefer the one that wins more often. The target is above 60%.</p></div>
-      <div class="card"><h3>3. Reasonable trade count</h3><p>About 1–3 trades a day. Enough to trust the statistics, without overtrading.</p></div>
-    </div>
-  </section>
-
-  <section id="strategy">
-    <h2>Strategy &amp; parameters (V7.1)</h2>
-    <div class="flow">
-      <div><b>Zones</b>Day's open, prior-day high/low/close, and intraday levels confirmed by a second pullback</div>
-      <div><b>Entry</b>Touch an established zone and confirm on the same candle: a strong green bar or a long lower wick</div>
-      <div><b>Risk</b>Stop −0.10, floor +0.20 (−0.15 / +0.30 on wide days); stop to breakeven after a green close</div>
-      <div><b>Exit</b>Next zone reached with no more strong signal; hard stop; end of day</div>
-      <div><b>Never</b>Buy the first print of a new low, trade after the cutoff, or use future candles</div>
-    </div>
-    <div class="grid g2" style="margin-top:16px">
-      <div class="card">
-        <h3>Research findings</h3>
-        <ul>
-          <li>My own annotated trades always exited at "next zone + no more strong signal", never at a fixed target. That became the default exit.</li>
-          <li>Re-trading one level many times a day was mostly losses. Capping entries at 2 per zone per day helped.</li>
-          <li>The opening-range zone works as an exit checkpoint, not as an entry trigger.</li>
-          <li>Wick "bounces" off the day's open that close below the open won only 44%. Rejecting them improved every metric (V7.1).</li>
-          <li>Rejected as curve-fitting: a wider wide-day stop that fit one trade's exact low, and an entry cutoff of exactly 14:35.</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Data &amp; methods</h3>
-        <ul>
-          <li>CNQ 5-minute bars, May 20 – Aug 14, 2026. Backtest range Jul 1 – Aug 14; Jul 1–24 kept out of sample for V7 tuning.</li>
-          <li>11 annotated chart screenshots (14 real trades) used to align the rules.</li>
-          <li>No look-ahead: every decision uses only the candles and zones that existed at that moment.</li>
-          <li>One unified backtester reproduces every version from V1 to V7.1, with the same numbers on re-run.</li>
-          <li>Every rule change is logged with its hypothesis, result and accept/reject decision.</li>
-        </ul>
-      </div>
+      <div class="card"><h3>Where we're ahead</h3><p>Fully transparent, hand-auditable rules with an explicit no-look-ahead discipline and a documented, honest root-cause process &mdash; including rejected ideas, not just wins.</p></div>
+      <div class="card"><h3>Where we're behind</h3><p>No trading costs modeled until now, one stock, 6.4 weeks of data, long only, and no Monte Carlo or deflated-Sharpe correction for the number of versions tried.</p></div>
+      <div class="card"><h3>What to add</h3><p>Costs baked into version ranking, a multi-year basket test across similar liquid energy stocks, a relative-volume filter, and a short-side mirror.</p></div>
     </div>
   </section>
 
   <section id="roadmap">
     <h2>Status &amp; roadmap</h2>
     <div class="card">
-      <div class="timeline" aria-label="Project stages">
-        <div class="stage done">Rules formalized</div>
-        <div class="stage done">Baseline backtest</div>
-        <div class="stage done">Refine (V2–V7.1)</div>
-        <div class="stage now">Competitive upgrades &amp; validation</div>
-        <div class="stage">Paper trading</div>
-        <div class="stage">Live automation</div>
-      </div>
+      <h3>Progress by phase</h3>
+      <div id="phases"></div>
     </div>
     <div class="grid g2" style="margin-top:16px">
       <div class="card">
-        <h3>Next: Stage 7, competitive-review upgrades</h3>
+        <h3>Stage 7 &mdash; competitive-review upgrades, in priority order</h3>
         <ol class="steps">
-          <li><strong>Trading costs in the backtester</strong>, then re-rank every version on net profit.</li>
-          <li><strong>More history</strong>: 1–2 years of CNQ 5-minute data, tested month by month.</li>
-          <li><strong>Basket test</strong>: run V7.1 unchanged on similar stocks (SU, CVE, IMO, XOM, CVX).</li>
-          <li><strong>Relative-volume filter</strong>: trade only when early volume is above normal.</li>
-          <li><strong>Zone strength score</strong>: prior bounces and zone age.</li>
-          <li><strong>Short side</strong>, then <strong>Monte Carlo</strong>, risk-based sizing and a live trade journal.</li>
+          <li><strong>Trading costs in the backtester</strong> &mdash; commission + spread/slippage per share; re-rank all versions net of cost. <em>Highest priority: can change which version is best.</em></li>
+          <li><strong>More history</strong> &mdash; at least 1&ndash;2 years of CNQ 5-minute data, walk-forward by month.</li>
+          <li><strong>Basket test</strong> &mdash; run V7.1 unchanged on similar liquid stocks (e.g. SU, CVE, IMO, XOM, CVX).</li>
+          <li><strong>Relative-volume filter, zone-strength score, short-side mirror, Monte Carlo + Deflated Sharpe, risk-based sizing, live journal</strong> &mdash; six further upgrades queued behind the above.</li>
         </ol>
       </div>
       <div class="card">
-        <h3>Main challenges</h3>
+        <h3>Main risks</h3>
         <ul>
-          <li><span class="tag bad">Costs</span> Profit shrinks to +1.19 at 2¢/share and vanishes at about 3.6¢.</li>
-          <li><span class="tag warn">Small sample</span> 6.4 weeks and one stock. Profit isn't proven across market conditions.</li>
-          <li><span class="tag warn">Regime</span> Choppy weeks (Jul 6–17) stay below 60% win rate for every version.</li>
-          <li><span class="tag warn">Profit target</span> +0.42/week gross vs. a 1.0/week goal.</li>
-          <li><span class="tag muted">Definitions</span> "Strong" and "second pullback" still use provisional thresholds.</li>
+          <li><span class="tag bad">Costs not modeled</span> Every result above is gross; net-of-cost ranking could change the winner.</li>
+          <li><span class="tag warn">Single stock, short window</span> 6.4 weeks of CNQ is too little to trust as a lasting edge.</li>
+          <li><span class="tag warn">Downtrend drag</span> Long-only design is structurally weaker in multi-week downtrends; no adopted fix yet.</li>
         </ul>
       </div>
     </div>
   </section>
 
-  <section>
-    <h2>Lessons learned</h2>
-    <div class="grid g2">
-      <div class="card"><p style="margin:0">My most common discretionary mistake was entering on the first touch of a new low before the zone was confirmed. The rules now forbid it.</p></div>
-      <div class="card"><p style="margin:0">A big jump in results from one parameter is a warning sign. Check trade by trade whether it's a real edge or one lucky candle.</p></div>
-      <div class="card"><p style="margin:0">With many small trades, costs decide profitability. A strategy that looks best before costs may not be best after them.</p></div>
-      <div class="card"><p style="margin:0">Real annotated trades are the best calibration source. They changed the exit rule more than any parameter sweep did.</p></div>
-    </div>
-  </section>
-
   <section id="disclosure">
     <h2>Disclosures</h2>
-    <div class="disclosure">Results on this page are <strong>hypothetical backtest results</strong> on historical data. They are not live trading results and don't include commissions, spreads or slippage unless stated. Backtests are built with hindsight, and past performance doesn't guarantee future results. Profit is shown in $ per share traded, for one share per trade. The full project, including rules, test reports, trade ledgers, code, data and session records, is kept in a private GitHub repository. Nothing here is investment advice.</div>
+    <div class="card"><p style="margin:0">Research and education only, not investment advice; the author isn't a licensed financial advisor. All results are hypothetical backtests on one stock (CNQ) over 6.4 weeks, in $ per share, with no trading costs included unless stated (see the cost-sensitivity table above). Real fills, spreads and commissions will reduce results further. Past backtested performance does not guarantee future results.</p></div>
   </section>
 
   <section>
     <h2>Sources</h2>
-    <ul class="sources">
-      <li>LuxAlgo — <a href="https://www.luxalgo.com/library/indicator/VDv1AnDA-supply-and-demand-zones/">Supply and Demand Zones</a>; <a href="https://luxalgo.com/backtesting">AI backtesting</a></li>
-      <li>Day Trading Toolkit — <a href="https://daytradingtoolkit.com/reviews/trendspider-review">TrendSpider review</a> (updated Sep 24, 2026)</li>
-      <li>Liberated Stock Trader — <a href="https://www.liberatedstocktrader.com/trade-ideas-review/">Trade Ideas Holly AI review</a></li>
-      <li>Zarattini, Barbon &amp; Aziz (2024) — <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4729284">A Profitable Day Trading Strategy for the U.S. Equity Market</a>; <a href="https://blog.tradoki.com/posts/opening-range-breakout-stocks-in-play-research">Tradoki analysis</a></li>
-      <li>Chung &amp; Bellotti (2021) — <a href="https://arxiv.org/html/2101.07410v1">Evidence and Behaviour of Support and Resistance Levels in Financial Time Series</a></li>
-      <li>Osler (2000) — <a href="https://ideas.repec.org/a/fip/fednep/y2000ijulp53-68nv.6no.2.html">Support for Resistance: Technical Analysis and Intraday Exchange Rates</a></li>
-      <li>TradeZella — <a href="https://www.tradezella.com/vs/edgewonk">TradeZella vs. Edgewonk</a></li>
-    </ul>
+    <div class="card"><ul style="margin:0">
+      <li><a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader">Project 3 repository</a> &mdash; full charter, test protocol, strategy rules, backtester code, raw data, screenshots and competitive analysis</li>
+      <li><a href="https://www.luxalgo.com/library/indicator/VDv1AnDA-supply-and-demand-zones/">LuxAlgo Supply and Demand Zones</a></li>
+      <li><a href="https://daytradingtoolkit.com/reviews/trendspider-review">TrendSpider review (Day Trading Toolkit)</a></li>
+      <li><a href="https://www.liberatedstocktrader.com/trade-ideas-review/">Trade Ideas review (Liberated Stock Trader)</a></li>
+      <li><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4729284">Zarattini, Barbon &amp; Aziz (2024) &mdash; 5-min ORB on Stocks in Play</a></li>
+      <li><a href="https://arxiv.org/html/2101.07410v1">Chung &amp; Bellotti (2021) &mdash; Support/resistance levels in financial time series</a></li>
+      <li><a href="https://papers.ssrn.com/abstract=2460551">Bailey &amp; L&oacute;pez de Prado &mdash; The Deflated Sharpe Ratio (2014)</a></li>
+    </ul></div>
   </section>
 
   <a class="back" href="./">&larr; Back to AI Trading</a>
   <section><h2 style="text-align:center">Browse categories</h2><nav class="catnav" aria-label="Project categories"><a class="c-ai on" href="../ai-trading/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 38 L17 26 L25 32 L41 13"/><path d="M33 13h8v8"/><path d="M6 42h36"/></svg></span>AI Trading</a><a class="c-stk" href="../stocks-investment/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M13 8v32"/><rect x="9" y="15" width="8" height="14" rx="1.5"/><path d="M24 12v28"/><rect x="20" y="20" width="8" height="12" rx="1.5"/><path d="M35 6v30"/><rect x="31" y="10" width="8" height="16" rx="1.5"/></svg></span>Stocks Investment</a><a class="c-home" href="../home-projects/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 22 L24 8 L41 22"/><path d="M12 19v21h24V19"/><path d="M21 40V29h6v11"/></svg></span>Home Projects</a><a class="c-biz" href="../business/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="15" width="34" height="24" rx="3"/><path d="M18 15v-4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"/><path d="M7 26h34"/><path d="M22 26v4h4v-4"/></svg></span>Business Projects</a><a class="c-gen" href="../general/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="3"/><rect x="27" y="8" width="13" height="13" rx="3"/><rect x="8" y="27" width="13" height="13" rx="3"/><circle cx="33.5" cy="33.5" r="6.5"/></svg></span>General Projects</a></nav></section>
 </main>
-
-<footer><div class="wrap">&copy; 2026 Hamid Faghidi &middot; Hypothetical backtest results. Nothing on this page is investment advice.</div></footer>
-
+<footer><div class="wrap">&copy; 2026 Hamid Faghidi &middot; Trading results are hypothetical backtests. Nothing on this site is investment advice.</div></footer>
 <script src="../charts.js"></script>
 <script>
-var P3={"trades":[["2026-07-01","10:10","10:15","PDL",0.01,"Next zone, weak candle"],["2026-07-01","13:10","13:40","INTRA_LOW",0.0,"Hard stop"],["2026-07-01","13:50","14:20","INTRA_LOW",0.0,"Hard stop"],["2026-07-06","12:25","12:40","PDC",-0.15,"Hard stop"],["2026-07-07","10:15","10:25","PDH",0.0,"Hard stop"],["2026-07-07","11:40","11:50","PDH",0.0,"Hard stop"],["2026-07-07","12:55","14:10","PDH",0.25,"Hard stop"],["2026-07-09","10:20","10:30","INTRA_LOW",0.0,"Hard stop"],["2026-07-10","10:00","10:05","PDL",0.06,"Next zone, weak candle"],["2026-07-10","10:10","10:15","PDL",0.04,"Next zone, weak candle"],["2026-07-10","10:50","11:10","PDL",-0.15,"Hard stop"],["2026-07-10","11:10","11:20","INTRA_LOW",0.063,"Next zone, weak candle"],["2026-07-10","11:25","11:30","PDL",-0.055,"Next zone, weak candle"],["2026-07-10","12:50","13:20","INTRA_LOW",-0.001,"Next zone, weak candle"],["2026-07-10","13:40","13:45","INTRA_LOW",-0.045,"Next zone, weak candle"],["2026-07-13","10:40","10:50","OPEN",-0.15,"Hard stop"],["2026-07-13","11:10","11:35","OPEN",0.0,"Hard stop"],["2026-07-13","11:35","12:00","OPEN",0.12,"Next zone, weak candle"],["2026-07-14","13:55","15:55","INTRA_LOW",0.159,"EOD flatten"],["2026-07-15","10:10","10:15","INTRA_LOW",-0.012,"Next zone, weak candle"],["2026-07-15","10:50","11:15","PDL",0.0,"Hard stop"],["2026-07-15","11:25","12:05","PDL",0.0,"Hard stop"],["2026-07-15","12:20","12:45","PDL",0.135,"Hard stop"],["2026-07-16","10:50","11:35","INTRA_LOW",0.0,"Hard stop"],["2026-07-16","12:30","12:40","INTRA_LOW",0.0,"Hard stop"],["2026-07-16","12:50","13:00","INTRA_LOW",-0.015,"Next zone, weak candle"],["2026-07-16","13:05","13:10","INTRA_LOW",-0.005,"Next zone, weak candle"],["2026-07-16","13:30","13:40","PDC",0.0,"Hard stop"],["2026-07-17","11:05","11:20","PDH",0.12,"Next zone, weak candle"],["2026-07-17","11:20","11:25","INTRA_LOW",-0.05,"Next zone, weak candle"],["2026-07-17","12:05","12:10","INTRA_LOW",-0.005,"Next zone, weak candle"],["2026-07-17","12:10","12:15","INTRA_LOW",0.015,"Next zone, weak candle"],["2026-07-20","11:20","12:30","OPEN",0.0,"Hard stop"],["2026-07-20","12:50","13:05","OPEN",0.0,"Hard stop"],["2026-07-21","11:20","11:50","INTRA_HIGH",0.0,"Hard stop"],["2026-07-23","13:55","14:10","INTRA_HIGH",0.04,"Hard stop"],["2026-07-24","11:40","11:45","PDL",0.015,"Next zone, weak candle"],["2026-07-24","12:25","13:00","PDL",0.0,"Hard stop"],["2026-07-27","11:30","12:30","OPEN",0.0,"Hard stop"],["2026-07-28","09:45","09:50","PDL",0.115,"Next zone, weak candle"],["2026-07-28","11:25","11:35","INTRA_LOW",0.0,"Hard stop"],["2026-07-28","11:40","11:50","INTRA_LOW",0.0,"Hard stop"],["2026-07-28","12:00","12:25","INTRA_LOW",0.095,"Hard stop"],["2026-07-28","12:40","13:00","INTRA_LOW",0.015,"Hard stop"],["2026-07-28","13:30","13:40","INTRA_LOW",0.0,"Hard stop"],["2026-07-28","13:40","14:05","INTRA_LOW",0.0,"Hard stop"],["2026-07-30","11:30","11:40","INTRA_HIGH",-0.15,"Hard stop"],["2026-07-30","11:50","12:25","INTRA_HIGH",0.0,"Hard stop"],["2026-07-31","10:25","10:40","PDH",0.255,"Next zone, weak candle"],["2026-07-31","11:00","11:25","OPEN",0.2,"Hard stop"],["2026-08-03","10:20","10:30","OPEN",0.159,"Next zone, weak candle"],["2026-08-03","13:05","13:15","OPEN",0.0,"Hard stop"],["2026-08-04","10:00","10:05","PDL",-0.15,"Hard stop"],["2026-08-04","10:35","10:50","PDL",0.38,"Next zone, weak candle"],["2026-08-04","12:45","13:10","PDL",0.0,"Hard stop"],["2026-08-06","11:10","11:20","INTRA_LOW",0.04,"Next zone, weak candle"],["2026-08-06","11:20","11:25","INTRA_LOW",0.035,"Next zone, weak candle"],["2026-08-06","11:45","11:55","INTRA_LOW",0.081,"Hard stop"],["2026-08-06","13:30","13:40","INTRA_LOW",0.1,"Next zone, weak candle"],["2026-08-06","13:50","14:10","INTRA_LOW",0.09,"Next zone, weak candle"],["2026-08-07","10:00","10:20","PDL",0.305,"Next zone, weak candle"],["2026-08-07","10:40","10:45","PDL",0.07,"Next zone, weak candle"],["2026-08-07","13:20","13:25","PDC",0.015,"Next zone, weak candle"],["2026-08-11","10:55","11:20","OPEN",0.055,"Next zone, weak candle"],["2026-08-12","09:40","10:00","PDC",0.05,"Next zone, weak candle"],["2026-08-12","10:30","10:35","OPEN",0.09,"Next zone, weak candle"],["2026-08-12","11:00","11:10","OPEN",0.0,"Hard stop"],["2026-08-12","11:15","11:55","PDH",0.0,"Hard stop"],["2026-08-12","13:05","13:10","PDH",0.026,"Next zone, weak candle"],["2026-08-12","13:35","13:40","PDH",0.01,"Next zone, weak candle"],["2026-08-12","13:55","14:30","INTRA_HIGH",0.045,"Hard stop"],["2026-08-13","11:00","11:30","OPEN",0.36,"Hard stop"],["2026-08-13","11:30","11:35","PDL",-0.02,"Next zone, weak candle"],["2026-08-13","12:10","12:15","PDL",0.004,"Next zone, weak candle"],["2026-08-13","12:15","12:25","PDL",0.025,"Next zone, weak candle"]],"weeks":[["2026-06-29",0.01,3],["2026-07-06",0.012,12],["2026-07-13",0.312,17],["2026-07-20",0.055,6],["2026-07-27",0.53,12],["2026-08-03",1.125,13],["2026-08-10",0.645,12]]};
-function d2(s){var m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];var p=s.split('-');return m[+p[1]-1]+' '+(+p[2]);}
-function sg(v,n){return (v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(n==null?2:n);}
-function draw(){
-  var cum=0,peak=0,eq=[],dd=[],xl=[],lastMonth='';
-  P3.trades.forEach(function(t,i){cum+=t[4];peak=Math.max(peak,cum);
-    var tip=d2(t[0])+' '+t[1]+'–'+t[2]+' &middot; '+t[3]+'<br>Trade '+sg(t[4],3)+' &middot; Total '+sg(cum);
-    eq.push({value:+cum.toFixed(3),tip:tip});dd.push({value:+(cum-peak).toFixed(3),tip:d2(t[0])+' &middot; Drawdown '+sg(cum-peak)});
-    var wk=Math.floor((Date.parse(t[0])-Date.parse('2026-06-29'))/(14*864e5));if(wk!==lastMonth){xl.push({i:i,text:d2(t[0])});lastMonth=wk;}});
-  lineChart(document.getElementById('equity'),eq,{height:260,area:true,fmt:function(v){return sg(v)},xLabels:xl});
-  lineChart(document.getElementById('dd'),dd,{height:200,area:true,color:getComputedStyle(document.documentElement).getPropertyValue('--loss').trim(),fmt:function(v){return sg(v)},xLabels:xl});
-  barChart(document.getElementById('weekly'),P3.weeks.map(function(w){return{label:d2(w[0]),value:w[1],tip:'Week of '+d2(w[0])+': '+sg(w[1],3)+' &middot; '+w[2]+' trades'}}),{height:200,fmt:function(v){return sg(v,1)}});
-  var edges=[-0.15,-0.10,-0.05,0,0.05,0.10,0.15,0.20,0.25,0.30,0.40],bins=[];
-  for(var b=0;b<edges.length-1;b++)bins.push({lo:edges[b],hi:edges[b+1],n:0});
-  P3.trades.forEach(function(t){var v=t[4];for(var b=0;b<bins.length;b++){var last=b===bins.length-1;if((v>=bins[b].lo-1e-9&&v<bins[b].hi-1e-9)||(last&&v<=bins[b].hi+1e-9)){bins[b].n++;break;}}});
-  var hd=bins.map(function(b){return{label:sg(b.lo),value:b.n,tip:sg(b.lo)+' to '+sg(b.hi)+': '+b.n+' trades'}});
-  barChart(document.getElementById('hist'),hd,{height:200,fmt:function(v){return v},labelEvery:2,neg:bins});
-  /* colour histogram bins by side of zero */
-  var bars=document.querySelectorAll('#hist svg path');bins.forEach(function(b,i){if(bars[i]&&b.hi<=0)bars[i].setAttribute('fill',getComputedStyle(document.documentElement).getPropertyValue('--loss').trim());});
-  var n=P3.trades.length,g=P3.trades.reduce(function(a,t){return a+t[4]},0),cs=[];
-  for(var c=0;c<=4.0001;c+=0.25)cs.push({value:+(g-n*c/100).toFixed(3),tip:c.toFixed(2)+'¢ per share: net '+sg(g-n*c/100)});
-  lineChart(document.getElementById('cost'),cs,{height:200,fmt:function(v){return sg(v,1)},xLabels:[0,4,8,12,16].map(function(i){return{i:i,text:(i/4)+'¢'}}),markers:[{value:0,text:'break-even ≈ 3.6¢'}]});
-}
-draw();var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(draw,150)});
+(function(){
+var V=[["V1",0.250],["V2",0.199],["V3",1.279],["V4",1.595],["V5",1.274],["V6",1.194],["V7",2.495],["V7.1",2.690]];
+function usd(v){return (v<0?'−$':'$')+Math.abs(v).toFixed(2);}
+function draw(){var narrow=window.innerWidth<600;
+ barChart(document.getElementById('verchart'),V.map(function(d){return{label:d[0],value:d[1],tip:d[0]+': '+(d[1]>=0?'+':'')+usd(d[1])+'/share'}}),{height:260,rotate:narrow,fmt:usd});}
+draw();var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,150)});
+var phases=[["1 &middot; Baseline (V1) &amp; iterate zone rules (V2&ndash;V6)",1,0],["2 &middot; Tune parameters, final version (V7 &rarr; V7.1)",1,0],["3 &middot; Root-cause audits (entry logic, downtrend P&amp;L)",1,0],["4 &middot; Competitive review &amp; cost-sensitivity analysis",1,0],["5 &middot; Stage 7: trading costs, more history, basket test",0,1,"Now"],["6 &middot; Phase 2: alerts/webhooks &rarr; broker paper trading",0,0,"Later"]];var host=document.getElementById('phases');
+phases.forEach(function(p){var r=document.createElement('div');r.className='phase';r.innerHTML='<div>'+p[0]+'</div><div class="sbar"><i class="d" style="width:'+(p[1]?100:0)+'%"></i><i class="p" style="width:'+(p[2]?100:0)+'%"></i></div><div class="n">'+(p[1]?'Done':(p[3]||'Next'))+'</div>';host.appendChild(r);});
+})();
 </script>
 </body>
 </html>
