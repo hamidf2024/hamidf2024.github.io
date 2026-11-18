@@ -31,7 +31,7 @@
     <p class="lede">Can a discretionary "buy the bounce off a zone" habit on CNQ's 5-minute chart be turned into a precise, mechanical rule set? Eight versions were built and backtested without look-ahead bias, each one walk-forward tested and regression-checked against the last. The final version, <strong>V7.1</strong>, rejects a specific flawed bounce pattern that was dragging down open-zone entries &mdash; a single, broad-based fix, not a curve-fit, that improved every headline metric at once.</p>
     <p style="margin-top:12px;max-width:680px"><strong>Owner's goal, in priority order:</strong> (1) maximum net profit, and it must hold on weeks the rules weren't tuned on; (2) a higher win rate; (3) a reasonable number of trades (about 1&ndash;3/day). By these priorities the current best is V7.1: +2.69 $/share gross, 72.9% win rate, 75 trades over Jul 1 &ndash; Aug 14, 2026. Against the stated numeric targets &mdash; win rate &gt; 60% and net &gt; 1.0 $/share per week &mdash; V7.1 clears the win-rate bar but falls short on weekly net profit (best legitimate pace: 0.42/week), and that gap widens once realistic trading costs are modeled in.</p>
     <p style="margin-top:14px"><span class="tag warn">Status: Phase 1 research &middot; net-of-cost goal not yet met</span> <span class="tag muted">Started Aug 19, 2026</span> <span class="tag muted">Last updated Nov 18, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#method">Method</a><a href="#versions">Versions V1&ndash;V7.1</a><a href="#rootcause">Root cause</a><a href="#cost">Trading costs</a><a href="#benchmark">Benchmark</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
+    <nav class="toc" aria-label="On this page"><a href="#method">Method</a><a href="#versions">Versions V1&ndash;V7.1</a><a href="#rootcause">Root cause</a><a href="#mlexperiment">ML experiment</a><a href="#cost">Trading costs</a><a href="#benchmark">Benchmark</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
   </section>
 
   <section aria-label="At a glance">
@@ -119,6 +119,24 @@
           <li><span class="tag warn">Shelved</span> a downtrend zone filter &mdash; small improvement, but on only 7 trades &mdash; too fragile to adopt</li>
         </ul>
       </div>
+    </div>
+  </section>
+
+  <section id="mlexperiment">
+    <h2>Stage 8: could ML beat the hand rules?</h2>
+    <div class="card">
+      <p style="margin-top:0"><strong>Question asked:</strong> could a transformer learn this strategy directly from the 11 annotated chart screenshots? <strong>Answer: no</strong> &mdash; 11 images can't train any neural network, vision or otherwise, and the screenshots are a lossy picture of data already held exactly as numbers. Built the viable alternative instead: a gradient-boosted model over the real OHLCV bars plus V7.1's own zone/candle features, trained on May&ndash;Jun 2026, tested out of sample on the same Jul 1 &ndash; Aug 14 window V7.1's numbers are reported on.</p>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Approach</th><th>Trades</th><th>Win rate</th><th>Profit factor</th><th>Net $/share</th></tr></thead>
+        <tbody>
+          <tr><td><strong>V7.1 (hand rules)</strong></td><td class="num">75</td><td class="num">72.9%</td><td class="num">3.81</td><td class="num"><strong>2.690</strong></td></tr>
+          <tr><td>ML model alone</td><td class="num">31</td><td class="num">73.1%</td><td class="num">1.42</td><td class="num">0.294</td></tr>
+          <tr><td>Rule OR model</td><td class="num">83</td><td class="num">71.9%</td><td class="num">2.60</td><td class="num">2.230</td></tr>
+          <tr><td>Rule AND model agrees</td><td class="num">17</td><td class="num">83.3%</td><td class="num">17.6</td><td class="num">1.031</td></tr>
+        </tbody>
+      </table></div>
+      <p style="margin-top:8px"><span class="tag bad">Rejected</span> none of the three ML variants beat V7.1's net profit, the stated #1 priority &mdash; so V7.1 stays the live configuration. The ML model matches V7.1's win rate almost exactly but is not a refinement of it: only 5 of its 36 highest-confidence picks overlap with the 95 rule-confirmed candidates in the test window, meaning it learned a different, weaker signal, not a better version of the same one.</p>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Kept on file: the "rule AND model agrees" variant's 83.3% win rate and 17.6 profit factor are the best of any version tried in this project, just on too few trades (17) to win on net profit yet. Worth revisiting once more CNQ history (Stage 7.2) gives it room to generate more trades. Validated before trusting any of this: restricting the ML candidate pool to V7.1's own confirmed signals and replaying them reproduced V7.1's official numbers exactly, bar-for-bar, with 0 mismatches. Full write-up: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/06_Lessons_Learned.docx">06_Lessons_Learned.docx</a>, 2026-11-18 entry; code: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/src/ml_v8_gbm_experiment.py">src/ml_v8_gbm_experiment.py</a>.</p>
     </div>
   </section>
 
