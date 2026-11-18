@@ -167,21 +167,38 @@
   <section id="cost">
     <h2>Trading costs: the biggest open gap</h2>
     <div class="card">
-      <p style="margin-top:0">The backtester has never modeled commissions, spread or slippage &mdash; every number above is gross. At a realistic round-trip cost per share, only the two best versions stay profitable at all:</p>
+      <p style="margin-top:0">The backtester has never modeled commissions, spread or slippage. <strong>&ldquo;Gross&rdquo;</strong> means before those costs are subtracted &mdash; the raw cumulative $/share P&amp;L total, same basis as every other table on this page, just not yet charged for trading costs. At a realistic round-trip cost per share, only the two best versions stay profitable at all &mdash; <strong>this table covers the original Jul 1&ndash;Aug 14, 2026 tuning/test window only</strong> (same period every version above was scored on):</p>
       <div class="table-scroll"><table>
-        <thead><tr><th>Version</th><th>Trades</th><th>Gross</th><th>1&cent; cost</th><th>2&cent; cost</th><th>Win rate</th></tr></thead>
+        <thead><tr><th>Version</th><th>Trades</th><th>Gross (total)</th><th>Gross (per trade)</th><th>1&cent; cost</th><th>2&cent; cost</th><th>Win rate</th></tr></thead>
         <tbody>
-          <tr><td><strong>V7.1</strong></td><td class="num">75</td><td class="num">2.690</td><td class="num">1.940</td><td class="num"><strong>1.190</strong></td><td class="num">72.9%</td></tr>
-          <tr><td>V7</td><td class="num">85</td><td class="num">2.495</td><td class="num">1.645</td><td class="num">0.795</td><td class="num">68.4%</td></tr>
-          <tr><td>V4</td><td class="num">87</td><td class="num">1.595</td><td class="num">0.725</td><td class="num">&minus;0.145</td><td class="num">48.8%</td></tr>
-          <tr><td>V6</td><td class="num">72</td><td class="num">1.194</td><td class="num">0.474</td><td class="num">&minus;0.246</td><td class="num">58.5%</td></tr>
-          <tr><td>V5</td><td class="num">88</td><td class="num">1.274</td><td class="num">0.394</td><td class="num">&minus;0.486</td><td class="num">59.0%</td></tr>
-          <tr><td>V3</td><td class="num">107</td><td class="num">1.279</td><td class="num">0.209</td><td class="num">&minus;0.861</td><td class="num">45.0%</td></tr>
-          <tr><td>V1</td><td class="num">72</td><td class="num">0.250</td><td class="num">&minus;0.470</td><td class="num">&minus;1.190</td><td class="num">33.3%</td></tr>
-          <tr><td>V2</td><td class="num">81</td><td class="num">0.199</td><td class="num">&minus;0.611</td><td class="num">&minus;1.421</td><td class="num">40.9%</td></tr>
+          <tr><td><strong>V7.1</strong></td><td class="num">75</td><td class="num">2.690</td><td class="num"><strong>0.0359</strong></td><td class="num">1.940</td><td class="num"><strong>1.190</strong></td><td class="num">72.9%</td></tr>
+          <tr><td>V7</td><td class="num">85</td><td class="num">2.495</td><td class="num">0.0294</td><td class="num">1.645</td><td class="num">0.795</td><td class="num">68.4%</td></tr>
+          <tr><td>V4</td><td class="num">87</td><td class="num">1.595</td><td class="num">0.0183</td><td class="num">0.725</td><td class="num">&minus;0.145</td><td class="num">48.8%</td></tr>
+          <tr><td>V6</td><td class="num">72</td><td class="num">1.194</td><td class="num">0.0166</td><td class="num">0.474</td><td class="num">&minus;0.246</td><td class="num">58.5%</td></tr>
+          <tr><td>V5</td><td class="num">88</td><td class="num">1.274</td><td class="num">0.0145</td><td class="num">0.394</td><td class="num">&minus;0.486</td><td class="num">59.0%</td></tr>
+          <tr><td>V3</td><td class="num">107</td><td class="num">1.279</td><td class="num">0.0120</td><td class="num">0.209</td><td class="num">&minus;0.861</td><td class="num">45.0%</td></tr>
+          <tr><td>V1</td><td class="num">72</td><td class="num">0.250</td><td class="num">0.0035</td><td class="num">&minus;0.470</td><td class="num">&minus;1.190</td><td class="num">33.3%</td></tr>
+          <tr><td>V2</td><td class="num">81</td><td class="num">0.199</td><td class="num">0.0025</td><td class="num">&minus;0.611</td><td class="num">&minus;1.421</td><td class="num">40.9%</td></tr>
         </tbody>
       </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">V7.1 break-even cost: &asymp;3.6&cent;/share round-trip. Maximum drawdown (gross, trade sequence): &minus;0.34 $/share.</p>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">V7.1 break-even cost (this window only): &asymp;3.6&cent;/share round-trip. Maximum drawdown (gross, trade sequence): &minus;0.34 $/share.</p>
+
+      <h3 style="margin-top:28px">Same question, full 6.3-year history (V7.1, year by year)</h3>
+      <p style="color:var(--muted);margin:-4px 0 14px">The table above uses the same 32-day window every version was tuned on. Applying the same 1&cent;/2&cent; round-trip cost to V7.1's full Stage 9 history (2020-07-27 to 2026-11-18, see <a href="#fullhistory">Full-history validation</a>) tells a much less forgiving story:</p>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Year</th><th>Trades</th><th>Win rate</th><th>Gross (total)</th><th>Gross (per trade)</th><th>1&cent; cost</th><th>2&cent; cost</th></tr></thead>
+        <tbody>
+          <tr><td>2020</td><td class="num">304</td><td class="num">67.8%</td><td class="num">2.173</td><td class="num">0.0071</td><td class="num">&minus;0.867</td><td class="num">&minus;3.907</td></tr>
+          <tr><td>2021</td><td class="num">584</td><td class="num">63.7%</td><td class="num">2.812</td><td class="num">0.0048</td><td class="num">&minus;3.028</td><td class="num">&minus;8.868</td></tr>
+          <tr><td>2022</td><td class="num">518</td><td class="num">61.4%</td><td class="num">8.403</td><td class="num">0.0162</td><td class="num"><strong>3.223</strong></td><td class="num">&minus;1.957</td></tr>
+          <tr><td>2023</td><td class="num">519</td><td class="num">60.4%</td><td class="num">4.302</td><td class="num">0.0083</td><td class="num">&minus;0.888</td><td class="num">&minus;6.078</td></tr>
+          <tr><td>2024</td><td class="num">571</td><td class="num">60.8%</td><td class="num">2.697</td><td class="num">0.0047</td><td class="num">&minus;3.013</td><td class="num">&minus;8.723</td></tr>
+          <tr><td>2025</td><td class="num">618</td><td class="num">60.0%</td><td class="num">2.675</td><td class="num">0.0043</td><td class="num">&minus;3.505</td><td class="num">&minus;9.685</td></tr>
+          <tr><td>2026 (to date)</td><td class="num">491</td><td class="num">57.3%</td><td class="num">4.884</td><td class="num">0.0099</td><td class="num">&minus;0.026</td><td class="num">&minus;4.936</td></tr>
+          <tr><td><strong>All 7 years</strong></td><td class="num">3,605</td><td class="num">61.3%</td><td class="num">27.947</td><td class="num">0.0078</td><td class="num"><strong>&minus;8.103</strong></td><td class="num">&minus;44.153</td></tr>
+        </tbody>
+      </table></div>
+      <p style="margin-top:8px"><span class="tag bad">Does not hold up after costs</span> at a 1&cent;/share round-trip cost &mdash; half of what the narrow-window table above used as its "high cost" scenario &mdash; V7.1 is net <strong>negative in 6 of the last 7 years</strong>, and negative overall (&minus;8.103 across all 3,605 trades). 2022 is the only year that stays profitable after costs. At 2&cent;/share it's negative in every single year. The narrow Jul1&ndash;Aug14 2026 window happened to fall in a period cheap enough (break-even &asymp;3.6&cent;) to look viable; that was not representative of the other 6.5 years in the data. This is the single most important number on this page for deciding whether V7.1 is tradeable with real money: at realistic retail costs, the honest answer across 6.3 years is mostly no.</p>
     </div>
   </section>
 
