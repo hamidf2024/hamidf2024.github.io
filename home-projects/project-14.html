@@ -37,6 +37,9 @@ a.go{white-space:nowrap;font-weight:600}
 .srclist li:last-child{border-bottom:0}
 .srclist li a{font-weight:600;display:block}
 .srclist li span{color:var(--muted);font-size:13px}
+.warnnote{border-left-color:#b45309;background:color-mix(in srgb,#b45309 8%,transparent)}
+.cautioncard{border-left:4px solid #b45309}
+.cautioncard li{margin-bottom:6px}
 .srch{display:inline-block;margin:0 6px 8px 0;text-decoration:none;font-size:13.5px;padding:7px 12px}
 </style>
 </head>
@@ -52,8 +55,8 @@ a.go{white-space:nowrap;font-weight:600}
     <div class="eyebrow">Project 14 &middot; Real estate &middot; Opportunity scouting</div>
     <h1>Project 14: Property Scout</h1>
     <p class="lede">A daily search for ways to buy a home beyond the standard listing, in three markets: <strong>Southern California</strong>, <strong>Phoenix, Arizona</strong> and <strong>Austin, Texas</strong>. Each market has the same 10 sale categories, with current homes, a direct link to apply or bid, and the official sources that confirm them.</p>
-    <p style="margin-top:10px"><span class="tag warn">Status: Phase 1, daily scouting</span> <span class="tag muted">Started Nov 16, 2026</span> <span class="tag muted">Last updated Nov 16, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#markets">Markets</a><a href="#process">How it works</a><a href="#disclosure">Disclosures</a></nav>
+    <p style="margin-top:10px"><span class="tag warn">Status: Phase 1, daily scouting</span> <span class="tag muted">Started Nov 16, 2026</span> <span class="tag muted">Last updated Nov 18, 2026</span></p>
+    <nav class="toc" aria-label="On this page"><a href="#markets">Markets</a><a href="#hud-guide">Apply for a HUD home</a><a href="#caution">Sites to avoid</a><a href="#process">How it works</a><a href="#disclosure">Disclosures</a></nav>
   </section>
 
   <section>
@@ -65,7 +68,7 @@ a.go{white-space:nowrap;font-weight:600}
         <div class="stage">Launch<br><small>Feb 15 – Mar 31, 2027</small></div>
         <div class="stage">Scale<br><small>Apr 2027 on</small></div>
       </div>
-      <p style="margin-top:18px;margin-bottom:0">209 homes across three markets; every listing link was opened and found live on Nov 16, 2026. <strong>Availability can change daily</strong>: confirm with the listing agent, trustee, HUD broker or court before you offer or bid. The original 1–13 numbering is kept, so #7, #9 and #12 are left out on purpose; one home can appear in more than one category.</p>
+      <p style="margin-top:18px;margin-bottom:0">207 homes across three markets; every listing link was opened and found live when checked (Nov 16–18, 2026). <strong>Availability can change daily</strong>: confirm with the listing agent, trustee, HUD broker or court before you offer or bid. The original 1–13 numbering is kept, so #7, #9 and #12 are left out on purpose; one home can appear in more than one category.</p>
     </div>
   </section>
 
@@ -73,7 +76,7 @@ a.go{white-space:nowrap;font-weight:600}
     <h2>Choose a market</h2>
     <div class="mtabs" role="tablist" aria-label="Markets">
     <button role="tab" id="tab-socal" aria-controls="panel-socal" aria-selected="true" data-tab="socal"><span class="mt">Southern California</span><span class="mc">57 homes</span></button>
-    <button role="tab" id="tab-phoenix" aria-controls="panel-phoenix" aria-selected="false" data-tab="phoenix"><span class="mt">Phoenix, Arizona</span><span class="mc">83 homes</span></button>
+    <button role="tab" id="tab-phoenix" aria-controls="panel-phoenix" aria-selected="false" data-tab="phoenix"><span class="mt">Phoenix, Arizona</span><span class="mc">81 homes</span></button>
     <button role="tab" id="tab-austin" aria-controls="panel-austin" aria-selected="false" data-tab="austin"><span class="mt">Austin, Texas</span><span class="mc">69 homes</span></button>
     </div>
   </section>
@@ -84,7 +87,7 @@ a.go{white-space:nowrap;font-weight:600}
         <div class="primary"><div class="k">Current homes</div><div class="v">57</div><div class="s">in Southern California</div></div>
         <div><div class="k">Categories</div><div class="v">10</div><div class="s">ways to buy</div></div>
         <div><div class="k">Counties</div><div class="v">6</div><div class="s">LA, Orange, Riverside, San Bernardino, San Diego, Ventura</div></div>
-        <div><div class="k">Links checked</div><div class="v">57 / 57</div><div class="s">live on Nov 16, 2026</div></div>
+        <div><div class="k">Links checked</div><div class="v">57 / 57</div><div class="s">checked Nov 16–18, 2026</div></div>
       </div>
     </section>
 
@@ -117,7 +120,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>Belvedere, Mission Viejo</td><td>Orange</td><td class="num">$1,750,000</td><td>Asking</td><td class="num">4 / 2,816</td><td>Off-market / upcoming</td><td><a class="go" href="https://www.ellieyung.com/off-market-exclusives" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">5 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">5 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.compass.com/private-exclusives/" target="_blank" rel="noopener">Compass Private Exclusives</a><span>Off-MLS homes shared within the Compass network; ask a Compass agent for access</span></li>
@@ -141,7 +144,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>Mercantile Ct, Valencia</td><td>Los Angeles</td><td class="num">$535,000</td><td>Asking</td><td class="num">3 / 1,430</td><td>Lender approval; HOA $548/mo</td><td><a class="go" href="https://www.zillow.com/homedetails/27466-Mercantile-Ct-305-Valencia-CA-91381/339398712_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">4 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">4 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.consumerfinance.gov/ask-cfpb/what-is-a-short-sale-en-290/" target="_blank" rel="noopener">CFPB: What is a short sale?</a><span>Plain-language federal explanation, including deficiency risk</span></li>
@@ -165,7 +168,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>N Canary Way, Los Angeles</td><td>Los Angeles</td><td class="num">$909,900</td><td>Asking</td><td class="num">2 / 1,472</td><td>Bath count conflicts</td><td><a class="go" href="https://www.homesteps.com/listingdetails/3288-n-canary-way-los-angeles-ca-90065" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">6 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">6 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.homesteps.com/listing/search?search=California" target="_blank" rel="noopener">Freddie Mac HomeSteps</a><span>Official Freddie Mac REO listings</span></li>
@@ -180,6 +183,7 @@ a.go{white-space:nowrap;font-weight:600}
     <section id="socal-cat-4" class="catsec">
       <div class="cathd"><span class="badge14">#4</span><div><h2>HUD home</h2><p class="lede sm">HUD owns the home after foreclosure on an FHA-insured mortgage.</p></div></div>
       <p class="note"><strong>For buyers in SoCal:</strong> Bids go through a HUD-registered broker during the posted bid period; owner-occupants get priority. Sold as is.</p>
+      <p class="note warnnote"><strong>Apply only through the official, free HUD Home Store.</strong> Paid look-alike sites such as HUDforeclosed.com are not HUD. <a href="#hud-guide">How to apply for a HUD home &rarr;</a></p>
       <div class="card"><div class="table-scroll"><table>
         <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
         <tbody>
@@ -192,12 +196,14 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>E Glenoaks Blvd, Glendale</td><td>Los Angeles</td><td class="num">$1,116,000</td><td>Asking</td><td class="num">3 / 2,205</td><td>HUD owned; price reduced</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=197-452868" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">7 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">7 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.hudhomestore.gov/searchresult?citystate=CA" target="_blank" rel="noopener">HUD Home Store</a><span>The official listing and bidding site for HUD homes</span></li>
           <li><a href="https://www.hud.gov/states/california" target="_blank" rel="noopener">HUD California</a><span>HUD&#x27;s California page and FHA contacts</span></li>
           <li><a href="https://www.hud.gov/program_offices/housing/sfh/reo/goodn" target="_blank" rel="noopener">HUD Good Neighbor Next Door</a><span>50% discount program for eligible teachers, police, firefighters and EMTs</span></li>
+          <li><a href="https://www.hudhomestore.gov/brokersearch" target="_blank" rel="noopener">HUD Home Store: find a registered broker</a><span>Official search for brokers who can submit your bid</span></li>
+          <li><a href="https://www.hudhomestore.gov/bidresults" target="_blank" rel="noopener">HUD Home Store: bid results</a><span>Official results after each bid deadline</span></li>
         </ul></div>
         <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.hudhomestore.gov/searchresult?citystate=CA" target="_blank" rel="noopener">HUD Home Store: California &rarr;</a></p></div>
       </div>
@@ -214,7 +220,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>54th St, Jurupa Valley</td><td>Riverside</td><td class="num">—</td><td>Credit bid unpublished</td><td class="num">2 / 1,164</td><td>Auction 2026-11-25 9:00 a.m., Corona Civic Center</td><td><a class="go" href="https://www.auction.com/details/10576-54th-st-jurupa-valley-ca-2230464" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">4 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">4 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.auction.com/" target="_blank" rel="noopener">Auction.com</a><span>Largest trustee-sale and bank-owned auction platform</span></li>
@@ -237,7 +243,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>Bretton Woods Pl, Riverside</td><td>Riverside</td><td class="num">$1,525,000</td><td>Asking</td><td class="num">6 / 4,986</td><td>NOD; price reduced</td><td><a class="go" href="https://andersonreg.com/listing/crmls/RS26231920/Riverside/17595-Bretton-Woods/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">4 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">4 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.lavote.gov/home/recorder/real-estate-records" target="_blank" rel="noopener">LA County Registrar-Recorder</a><span>Recorded documents; not searchable online, request by mail or appointment</span></li>
@@ -264,7 +270,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>Beachwood Ter, Los Angeles</td><td>Los Angeles</td><td class="num">$1,395,000</td><td>Asking</td><td class="num">3 / 1,610</td><td>FSBO</td><td><a class="go" href="https://www.zillow.com/homedetails/2174-Beachwood-Ter-Los-Angeles-CA-90068/20807546_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">5 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">5 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.forsalebyowner.com/" target="_blank" rel="noopener">ForSaleByOwner.com</a><span>Owner-listed homes</span></li>
@@ -298,7 +304,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>18th St, Santa Monica</td><td>Los Angeles</td><td class="num">—</td><td>Price on request</td><td class="num">— / —</td><td>Trust sale; ZIP 90402 is an AB 851 ZIP (no unsolicited offers)</td><td><a class="go" href="https://bidnda.com/property/439-18th-street" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">16 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">16 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.bidnda.com/" target="_blank" rel="noopener">BidNDA</a><span>LA County Public Administrator&#x27;s real-property sales plus other estate and trust sales</span></li>
@@ -325,7 +331,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>31st Street West, Acton</td><td>Los Angeles</td><td class="num">$465,000</td><td>Starting bid</td><td class="num">3 / 2,026</td><td>Event ending 2026-11-17; cash only; occupied; 3% buyer&#x27;s premium</td><td><a class="go" href="https://www.xome.com/auctions/35453-31st-street-west-acton-ca-93510-423603252" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">4 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">4 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://sco.ca.gov/ardtax_public_auction.html" target="_blank" rel="noopener">CA State Controller: tax-sale auctions</a><span>How county tax-defaulted property auctions work</span></li>
@@ -351,7 +357,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>Julia St, Ladera Ranch</td><td>Orange</td><td class="num">$2,290,000</td><td>Asking</td><td class="num">4 / 3,227</td><td>Cartus approval process</td><td><a class="go" href="https://www.trulia.com/home/15-julia-st-mission-viejo-ca-92694-64472818" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">3 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">3 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.cartus.com/" target="_blank" rel="noopener">Cartus</a><span>Major relocation management company</span></li>
@@ -389,10 +395,10 @@ a.go{white-space:nowrap;font-weight:600}
   <div class="panel" id="panel-phoenix" role="tabpanel" aria-labelledby="tab-phoenix" hidden>
     <section aria-label="Phoenix at a glance">
       <div class="statstrip">
-        <div class="primary"><div class="k">Current homes</div><div class="v">83</div><div class="s">in the Phoenix metro (Maricopa County)</div></div>
+        <div class="primary"><div class="k">Current homes</div><div class="v">81</div><div class="s">in the Phoenix metro (Maricopa County)</div></div>
         <div><div class="k">Categories</div><div class="v">10</div><div class="s">ways to buy</div></div>
         <div><div class="k">County</div><div class="v">1</div><div class="s">Maricopa (Phoenix, Mesa, Chandler, Gilbert, Glendale, Scottsdale, West Valley)</div></div>
-        <div><div class="k">Links checked</div><div class="v">83 / 83</div><div class="s">live on Nov 16, 2026</div></div>
+        <div><div class="k">Links checked</div><div class="v">81 / 81</div><div class="s">checked Nov 16–18, 2026</div></div>
       </div>
     </section>
 
@@ -402,7 +408,7 @@ a.go{white-space:nowrap;font-weight:600}
         <a class="card cat14" href="#phoenix-cat-1"><span class="n">#1</span><span class="t">Off-market</span><span class="c">3 homes</span><span class="r">$190K – $318K</span></a>
         <a class="card cat14" href="#phoenix-cat-2"><span class="n">#2</span><span class="t">Short sale</span><span class="c">8 homes</span><span class="r">$200K – $445K</span></a>
         <a class="card cat14" href="#phoenix-cat-3"><span class="n">#3</span><span class="t">Bank-owned (REO)</span><span class="c">22 homes</span><span class="r">$65K – $570K</span></a>
-        <a class="card cat14" href="#phoenix-cat-4"><span class="n">#4</span><span class="t">HUD home</span><span class="c">15 homes</span><span class="r">$154K – $735K</span></a>
+        <a class="card cat14" href="#phoenix-cat-4"><span class="n">#4</span><span class="t">HUD home</span><span class="c">13 homes</span><span class="r">$105K – $735K</span></a>
         <a class="card cat14" href="#phoenix-cat-5"><span class="n">#5</span><span class="t">Foreclosure auction</span><span class="c">16 homes</span><span class="r">$173K – $340K</span></a>
         <a class="card cat14" href="#phoenix-cat-6"><span class="n">#6</span><span class="t">Pre-foreclosure</span><span class="c">4 homes</span><span class="r">$200K – $463K</span></a>
         <a class="card cat14" href="#phoenix-cat-8"><span class="n">#8</span><span class="t">For sale by owner</span><span class="c">7 homes</span><span class="r">$194K – $550K</span></a>
@@ -423,7 +429,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>N 39th Ave, Phoenix</td><td>Maricopa</td><td class="num">$318,000</td><td>Wholesale asking</td><td class="num">4 / 1,806</td><td>Wholesale (contract assignment); $10,000 earnest money</td><td><a class="go" href="https://inventory.first48offers.com/d/14202-n-39th-ave" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">3 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">3 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.compass.com/private-exclusives/" target="_blank" rel="noopener">Compass Private Exclusives</a><span>Off-MLS homes shared within the Compass network; ask a Compass agent for access</span></li>
@@ -450,7 +456,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>E Mountain Vista Dr, Phoenix</td><td>Maricopa</td><td class="num">$445,000</td><td>Asking</td><td class="num">3 / 1,846</td><td>Short sale; price cut $5K</td><td><a class="go" href="https://www.redfin.com/AZ/Phoenix/4740-E-Mountain-Vista-Dr-85048/home/27992130" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">8 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">8 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.consumerfinance.gov/ask-cfpb/what-is-a-short-sale-en-290/" target="_blank" rel="noopener">CFPB: What is a short sale?</a><span>Plain-language federal explanation, including deficiency risk</span></li>
@@ -491,7 +497,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>S Feliz, Mesa</td><td>Maricopa</td><td class="num">$569,900</td><td>Asking</td><td class="num">3 / —</td><td>Freddie Mac REO; owner-occupant first look may apply</td><td><a class="go" href="https://www.homesteps.com/listingdetails/5611-s-feliz-mesa-az-85212" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">22 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">22 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.homesteps.com/listing/search?search=California" target="_blank" rel="noopener">Freddie Mac HomeSteps</a><span>Official Freddie Mac REO listings</span></li>
@@ -506,14 +512,14 @@ a.go{white-space:nowrap;font-weight:600}
     <section id="phoenix-cat-4" class="catsec">
       <div class="cathd"><span class="badge14">#4</span><div><h2>HUD home</h2><p class="lede sm">HUD owns the home after foreclosure on an FHA-insured mortgage.</p></div></div>
       <p class="note"><strong>For buyers in Phoenix:</strong> Bids go through a HUD-registered broker during the posted bid period; owner-occupants get priority. Many Maricopa HUD homes are in Sun City and the West Valley.</p>
+      <p class="note warnnote"><strong>Apply only through the official, free HUD Home Store.</strong> Paid look-alike sites such as HUDforeclosed.com are not HUD. <a href="#hud-guide">How to apply for a HUD home &rarr;</a></p>
       <div class="card"><div class="table-scroll"><table>
         <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
         <tbody>
-          <tr><td>W Norma St, Gila Bend</td><td>Maricopa</td><td class="num">$154,000</td><td>Asking</td><td class="num">3 / —</td><td>HUD case 023-294708</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-294708" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Thunderbird Blvd, Sun City</td><td>Maricopa</td><td class="num">$105,000</td><td>Asking</td><td class="num">2 / 1,037</td><td>HUD case 023-242952; listed Nov 18; FHA insured, 203(k) eligible; HOA $286/mo</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-242952" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>N Desert Glen Dr, Sun City West</td><td>Maricopa</td><td class="num">$176,000</td><td>Asking</td><td class="num">2 / —</td><td>HUD case 023-313184</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-313184" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
           <tr><td>W Sun City Blvd, Sun City</td><td>Maricopa</td><td class="num">$176,000</td><td>Asking</td><td class="num">2 / —</td><td>HUD case 023-239507</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-239507" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
           <tr><td>N 99th Dr, Sun City</td><td>Maricopa</td><td class="num">$195,000</td><td>Asking</td><td class="num">2 / —</td><td>HUD case 023-229674</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-229674" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-          <tr><td>N Desert Glen Dr, Sun City West</td><td>Maricopa</td><td class="num">$200,000</td><td>Asking</td><td class="num">2 / —</td><td>HUD case 023-313184</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-313184" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-          <tr><td>W Bell Rd, Surprise</td><td>Maricopa</td><td class="num">$210,000</td><td>Asking</td><td class="num">2 / —</td><td>HUD case 023-350330</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-350330" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
           <tr><td>S 230th Dr, Buckeye</td><td>Maricopa</td><td class="num">$225,000</td><td>Asking</td><td class="num">2 / —</td><td>HUD case 023-240145</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-240145" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
           <tr><td>N Bush St, Wittmann</td><td>Maricopa</td><td class="num">$245,000</td><td>Asking</td><td class="num">4 / —</td><td>HUD case 023-995092</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-995092" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
           <tr><td>W Illini St, Tonopah</td><td>Maricopa</td><td class="num">$290,000</td><td>Asking</td><td class="num">4 / —</td><td>HUD case 023-945280</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-945280" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
@@ -521,16 +527,17 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>E 2nd St, Mesa</td><td>Maricopa</td><td class="num">$330,000</td><td>Asking</td><td class="num">3 / —</td><td>HUD case 023-982450</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-982450" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
           <tr><td>S 241st Ln, Buckeye</td><td>Maricopa</td><td class="num">$373,000</td><td>Asking</td><td class="num">4 / —</td><td>HUD case 023-997474</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-997474" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
           <tr><td>W Marco Polo Rd, Sun City</td><td>Maricopa</td><td class="num">$460,000</td><td>Asking</td><td class="num">2 / —</td><td>HUD case 023-337963</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-337963" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-          <tr><td>W Shasta St, Buckeye</td><td>Maricopa</td><td class="num">$525,000</td><td>Asking</td><td class="num">4 / —</td><td>HUD case 025-031118</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=025-031118" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
-          <tr><td>E Kaibab Pl, Chandler</td><td>Maricopa</td><td class="num">$660,000</td><td>Asking</td><td class="num">3 / —</td><td>HUD case 023-315201</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-315201" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
+          <tr><td>W Shasta St, Buckeye</td><td>Maricopa</td><td class="num">$465,000</td><td>Asking</td><td class="num">4 / —</td><td>HUD case 025-031118</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=025-031118" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
           <tr><td>N 79th St, Scottsdale</td><td>Maricopa</td><td class="num">$735,000</td><td>Asking</td><td class="num">3 / —</td><td>HUD case 023-374267</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=023-374267" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">15 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">13 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.hudhomestore.gov/searchresult?citystate=CA" target="_blank" rel="noopener">HUD Home Store</a><span>The official listing and bidding site for HUD homes</span></li>
           <li><a href="https://www.hud.gov/program_offices/housing/sfh/reo/goodn" target="_blank" rel="noopener">HUD Good Neighbor Next Door</a><span>50% discount program for eligible teachers, police, firefighters and EMTs</span></li>
+          <li><a href="https://www.hudhomestore.gov/brokersearch" target="_blank" rel="noopener">HUD Home Store: find a registered broker</a><span>Official search for brokers who can submit your bid</span></li>
+          <li><a href="https://www.hudhomestore.gov/bidresults" target="_blank" rel="noopener">HUD Home Store: bid results</a><span>Official results after each bid deadline</span></li>
         </ul></div>
         <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.hudhomestore.gov/searchresult?citystate=AZ" target="_blank" rel="noopener">HUD Home Store: Arizona &rarr;</a></p></div>
       </div>
@@ -559,7 +566,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>N 83rd Dr, Phoenix</td><td>Maricopa</td><td class="num">—</td><td>Credit bid unpublished</td><td class="num">— / 1,522</td><td>Trustee sale scheduled Dec 1, 2026; may be postponed</td><td><a class="go" href="https://www.servicelinkauction.com/property-details/2349-n-83rd-dr-phoenix-85037-az-united-states-tps" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">16 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">16 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://fs.tblaw.com/Sales/PendingSalesAz.aspx" target="_blank" rel="noopener">Tiffany &amp; Bosco: pending Arizona trustee sales</a><span>A major Arizona trustee&#x27;s live sale list with opening bids</span></li>
@@ -583,7 +590,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>W Rovey Ave, Phoenix</td><td>Maricopa</td><td class="num">$463,000</td><td>Asking</td><td class="num">3 / 2,152</td><td>Listing cites a trustee sale; confirm the sale date with the trustee</td><td><a class="go" href="https://www.zillow.com/homedetails/1720-W-Rovey-Ave-Phoenix-AZ-85015/7774302_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">4 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">4 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://recorder.maricopa.gov/recording/document-search.html" target="_blank" rel="noopener">Maricopa County Recorder: document search</a><span>Search recorded Notices of Trustee&#x27;s Sale by date or document type</span></li>
@@ -609,7 +616,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>N 18th Pl, Phoenix</td><td>Maricopa</td><td class="num">$549,900</td><td>Asking</td><td class="num">3 / 1,444</td><td>For sale by owner</td><td><a class="go" href="https://www.zillow.com/homedetails/15867-N-18th-Pl-Phoenix-AZ-85022/8004199_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">7 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">7 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.forsalebyowner.com/" target="_blank" rel="noopener">ForSaleByOwner.com</a><span>Owner-listed homes</span></li>
@@ -630,7 +637,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>N 42nd Dr, Glendale</td><td>Maricopa</td><td class="num">$475,000</td><td>Asking</td><td class="num">3 / 1,870</td><td>MLS identifies probate</td><td><a class="go" href="https://www.trulia.com/home/23814-n-42nd-dr-glendale-az-85310-7929974" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">4 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">4 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.azleg.gov/ars/14/03715.htm" target="_blank" rel="noopener">A.R.S. §14-3715: personal representative powers</a><span>Lists what a personal representative can do, including selling real property</span></li>
@@ -664,7 +671,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>E Sabino Dr, Chandler</td><td>Maricopa</td><td class="num">$428,000</td><td>Current bid</td><td class="num">4 / 2,239</td><td>Bank owned; online auction ends ~Nov 18</td><td><a class="go" href="https://www.auction.com/details/1149-e-sabino-dr-chandler-az-2245949" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">15 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">15 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.auction.com/" target="_blank" rel="noopener">Auction.com</a><span>Largest trustee-sale and bank-owned auction platform</span></li>
@@ -689,7 +696,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>E Monte Vista Rd, Phoenix</td><td>Maricopa</td><td class="num">$4,242,042</td><td>Asking</td><td class="num">6 / 8,225</td><td>International relocation; price cut</td><td><a class="go" href="https://www.zillow.com/homedetails/341-E-Monte-Vista-Rd-Phoenix-AZ-85004/7537216_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">5 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">5 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.cartus.com/" target="_blank" rel="noopener">Cartus</a><span>Major relocation management company</span></li>
@@ -731,7 +738,7 @@ a.go{white-space:nowrap;font-weight:600}
         <div class="primary"><div class="k">Current homes</div><div class="v">69</div><div class="s">in the Austin metro (Travis, Williamson and Hays counties)</div></div>
         <div><div class="k">Categories</div><div class="v">10</div><div class="s">ways to buy</div></div>
         <div><div class="k">Counties</div><div class="v">3</div><div class="s">Travis, Williamson, Hays</div></div>
-        <div><div class="k">Links checked</div><div class="v">69 / 69</div><div class="s">live on Nov 16, 2026</div></div>
+        <div><div class="k">Links checked</div><div class="v">69 / 69</div><div class="s">checked Nov 16–18, 2026</div></div>
       </div>
     </section>
 
@@ -762,7 +769,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>Address withheld, Dripping Springs</td><td>Travis</td><td class="num">$299,990</td><td>Wholesale asking</td><td class="num">4 / —</td><td>Wholesale lead; address on request</td><td><a class="go" href="https://vestorshub.com/marketplace/349538" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">3 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">3 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.compass.com/private-exclusives/" target="_blank" rel="noopener">Compass Private Exclusives</a><span>Off-MLS homes shared within the Compass network; ask a Compass agent for access</span></li>
@@ -791,7 +798,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>Winchell Ln, Austin</td><td>Travis</td><td class="num">$470,000</td><td>Asking</td><td class="num">3 / 1,267</td><td>Short sale</td><td><a class="go" href="https://www.zillow.com/homedetails/2513-Winchell-Ln-Austin-TX-78725/89552012_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">10 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">10 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.consumerfinance.gov/ask-cfpb/what-is-a-short-sale-en-290/" target="_blank" rel="noopener">CFPB: What is a short sale?</a><span>Plain-language federal explanation, including deficiency risk</span></li>
@@ -837,7 +844,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>Ranch Road 2222, Austin</td><td>Travis</td><td class="num">$619,900</td><td>Asking</td><td class="num">2 / 1,823</td><td>Freddie Mac REO; owner-occupant first look may apply</td><td><a class="go" href="https://www.homesteps.com/listingdetails/8110-ranch-road-2222-apt-48-austin-tx-78730" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">27 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">27 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.homesteps.com/listing/search?search=California" target="_blank" rel="noopener">Freddie Mac HomeSteps</a><span>Official Freddie Mac REO listings</span></li>
@@ -852,6 +859,7 @@ a.go{white-space:nowrap;font-weight:600}
     <section id="austin-cat-4" class="catsec">
       <div class="cathd"><span class="badge14">#4</span><div><h2>HUD home</h2><p class="lede sm">HUD owns the home after foreclosure on an FHA-insured mortgage.</p></div></div>
       <p class="note"><strong>For buyers in Austin:</strong> Bids go through a HUD-registered broker during the posted bid period; owner-occupants get priority.</p>
+      <p class="note warnnote"><strong>Apply only through the official, free HUD Home Store.</strong> Paid look-alike sites such as HUDforeclosed.com are not HUD. <a href="#hud-guide">How to apply for a HUD home &rarr;</a></p>
       <div class="card"><div class="table-scroll"><table>
         <thead><tr><th>Street &middot; city</th><th>County</th><th class="num">Price</th><th>Price type</th><th class="num">Beds / sq ft</th><th>Key date or condition</th><th>Listing</th></tr></thead>
         <tbody>
@@ -862,11 +870,13 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>Talferd Trl, Austin</td><td>Travis</td><td class="num">$395,000</td><td>Asking</td><td class="num">3 / —</td><td>HUD case 514-348320</td><td><a class="go" href="https://www.hudhomestore.gov/propertydetails?caseNumber=514-348320" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">5 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">5 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.hudhomestore.gov/searchresult?citystate=CA" target="_blank" rel="noopener">HUD Home Store</a><span>The official listing and bidding site for HUD homes</span></li>
           <li><a href="https://www.hud.gov/program_offices/housing/sfh/reo/goodn" target="_blank" rel="noopener">HUD Good Neighbor Next Door</a><span>50% discount program for eligible teachers, police, firefighters and EMTs</span></li>
+          <li><a href="https://www.hudhomestore.gov/brokersearch" target="_blank" rel="noopener">HUD Home Store: find a registered broker</a><span>Official search for brokers who can submit your bid</span></li>
+          <li><a href="https://www.hudhomestore.gov/bidresults" target="_blank" rel="noopener">HUD Home Store: bid results</a><span>Official results after each bid deadline</span></li>
         </ul></div>
         <div class="card"><h3>See all current listings</h3><p style="font-size:14px;color:var(--muted)">Inventory changes daily. These searches show what is available right now.</p><p><a class="tag good srch" href="https://www.hudhomestore.gov/searchresult?citystate=TX" target="_blank" rel="noopener">HUD Home Store: Texas &rarr;</a></p></div>
       </div>
@@ -882,7 +892,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>Santa Barbara Loop, Round Rock</td><td>Williamson</td><td class="num">—</td><td>Unpublished</td><td class="num">4 / 2,298</td><td>Trustee sale Dec 1, 2026 (first Tuesday)</td><td><a class="go" href="https://www.auction.com/details/2776-santa-barbara-loop-round-rock-tx-2220900" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">3 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">3 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://countyclerk.traviscountytx.gov/departments/recording/meetings/" target="_blank" rel="noopener">Travis County Clerk: foreclosure notices</a><span>Non-tax foreclosure notices; sales on the first Tuesday of each month</span></li>
@@ -907,7 +917,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>Kevin Taylor Dr, Austin</td><td>Travis</td><td class="num">$400,000</td><td>Asking</td><td class="num">3 / 2,205</td><td>Pre-foreclosure; short sale</td><td><a class="go" href="https://www.zillow.com/homedetails/813-Kevin-Taylor-Dr-Austin-TX-78745/80090485_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">6 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">6 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://countyclerk.traviscountytx.gov/departments/recording/meetings/" target="_blank" rel="noopener">Travis County Clerk: foreclosure notices</a><span>Non-tax foreclosure notices; sales on the first Tuesday of each month</span></li>
@@ -934,7 +944,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>Grimsley Dr, Austin</td><td>Travis</td><td class="num">$466,000</td><td>Asking</td><td class="num">4 / 1,487</td><td>For sale by owner</td><td><a class="go" href="https://www.trulia.com/home/12102-grimsley-dr-austin-tx-78759-58306241" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">8 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">8 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.forsalebyowner.com/" target="_blank" rel="noopener">ForSaleByOwner.com</a><span>Owner-listed homes</span></li>
@@ -960,7 +970,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>Alta Vista Ave, Austin</td><td>Travis</td><td class="num">$1,198,800</td><td>Asking</td><td class="num">— / —</td><td>Subject to completion of probate</td><td><a class="go" href="https://www.zillow.com/homedetails/2103-Alta-Vista-Ave-Austin-TX-78704/29460912_zpid/" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">8 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">8 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://statutes.capitol.texas.gov/Docs/ES/htm/ES.402.htm#402.052" target="_blank" rel="noopener">Texas Estates Code §402.052</a><span>Independent executor&#x27;s power to sell without a court order</span></li>
@@ -995,7 +1005,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>Coleman Bend, Liberty Hill</td><td>Williamson</td><td class="num">$400,000</td><td>Current bid</td><td class="num">4 / 2,993</td><td>Bank owned; online auction</td><td><a class="go" href="https://www.auction.com/details/137-coleman-bnd-liberty-hill-tx-2247704" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">18 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">18 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.auction.com/" target="_blank" rel="noopener">Auction.com</a><span>Largest trustee-sale and bank-owned auction platform</span></li>
@@ -1018,7 +1028,7 @@ a.go{white-space:nowrap;font-weight:600}
           <tr><td>Sendero Springs Dr, Round Rock</td><td>Williamson</td><td class="num">$850,000</td><td>Asking</td><td class="num">6 / 4,123</td><td>MLS: Relocation Addendum Required</td><td><a class="go" href="https://www.realtyaustin.com/5105-sendero-springs-dr-round-rock-tx-78681-2877661.html" target="_blank" rel="noopener">View listing &rarr;</a></td></tr>
         </tbody>
       </table></div>
-      <p class="fine">4 homes, lowest price first; unpublished prices last. Links checked Nov 16, 2026.</p></div>
+      <p class="fine">4 homes, lowest price first; unpublished prices last. Links checked Nov 16–18, 2026.</p></div>
       <div class="grid g2" style="margin-top:16px">
         <div class="card"><h3>Reliable sources</h3><ul class="srclist">
           <li><a href="https://www.cartus.com/" target="_blank" rel="noopener">Cartus</a><span>Major relocation management company</span></li>
@@ -1054,6 +1064,42 @@ a.go{white-space:nowrap;font-weight:600}
     </section>
   </div>
 
+
+  <section id="hud-guide">
+    <h2>How to apply for a HUD home</h2>
+    <p class="lede sm" style="margin-bottom:14px">HUD homes are sold only through bids on the official HUD Home Store (hudhomestore.gov), which is free. You can&#x27;t bid yourself: a HUD-registered real estate broker submits the bid for you. Applies to all three markets. Checked Nov 18, 2026.</p>
+    <div class="grid g2">
+      <div class="card"><ol class="steps">
+          <li><strong>Find the home on the official site</strong>: Search hudhomestore.gov by state, county or ZIP. Each listing shows the case number, list price, listing period (Exclusive or Extended), bid deadline and whether FHA financing is available (IN = insured, IE = insured with repair escrow, UI = uninsured). <a href="https://www.hudhomestore.gov/" target="_blank" rel="noopener">HUD Home Store</a></li>
+          <li><strong>Get pre-approved or show proof of funds</strong>: Line up FHA, conventional or cash financing before you bid. FHA 203(k) loans can include repair costs. Some listings carry HUD&#x27;s $100-down incentive for owner-occupants using FHA; ask an FHA lender that participates. <a href="https://www.hud.gov/sites/documents/publicfaq.pdf" target="_blank" rel="noopener">HUD Home Store FAQ (PDF)</a></li>
+          <li><strong>Hire a HUD-registered broker</strong>: Only a broker registered with HUD (with a NAID number) can submit your bid. Most licensed agents can register; use HUD&#x27;s broker search. <a href="https://www.hudhomestore.gov/brokersearch" target="_blank" rel="noopener">Find a registered broker</a></li>
+          <li><strong>Bid in the right period</strong>: Owner-occupants (who will live in the home for at least 12 months) get an exclusive first period, usually up to 30 days for FHA-insurable homes, before investors may bid. Bids are opened at the deadline; HUD accepts the bid with the highest net return. <a href="https://www.law.cornell.edu/cfr/text/24/291.205" target="_blank" rel="noopener">24 CFR §291.205(a), (d)</a></li>
+          <li><strong>Send the contract and earnest money</strong>: If HUD accepts your bid, your broker sends the signed sales contract and earnest money, usually within 2 business days. Earnest money is $500 for homes at $50,000 or less; above that the local HUD office sets $500–$2,000. It counts toward closing; you can lose it if you back out without a valid reason. <a href="https://www.law.cornell.edu/cfr/text/24/291.205" target="_blank" rel="noopener">24 CFR §291.205(h)</a></li>
+          <li><strong>Inspect, then close</strong>: HUD sells as is. Inspect at contract acceptance and again before closing; closing usually takes 30–60 days. Check bid results and asset-manager contacts on the HUD Home Store. <a href="https://www.hudhomestore.gov/bidresults" target="_blank" rel="noopener">HUD bid results</a></li>
+      </ol></div>
+      <div class="card"><h3>Programs that lower the cost</h3><ul class="srclist">
+          <li><a href="https://hud.gov/helping-americans/good-neighbor" target="_blank" rel="noopener">Good Neighbor Next Door</a><span>Full-time law enforcement officers, pre-K–12 teachers, firefighters and EMTs can buy eligible homes in revitalization areas at 50% off list price if they live there 36 months. Listings are offered for 7 days.</span></li>
+          <li><a href="https://www.hudhomestore.gov/" target="_blank" rel="noopener">$100 down (when offered)</a><span>A HUD sales incentive for owner-occupants using FHA (including 203(k)) on eligible HUD homes; offered by region and time, so check the listing and ask an FHA lender.</span></li>
+          <li><a href="https://www.consumerfinance.gov/find-a-housing-counselor/" target="_blank" rel="noopener">HUD-approved housing counselors</a><span>Free or low-cost help with budgeting, financing and the bid process.</span></li>
+      </ul></div>
+    </div>
+  </section>
+
+  <section id="caution">
+    <h2>Sites to use with caution</h2>
+    <div class="card cautioncard">
+      <h3>HUDforeclosed.com <span class="tag warn">Use with caution, not a source of record</span></h3>
+      <ul>
+        <li><strong>What it is:</strong> A privately run, paid listing site. Its footer says it is not affiliated with, endorsed, authorized or approved by the federal government or HUD.</li>
+        <li><strong>Cost:</strong> Addresses, prices and contacts are hidden until you register. Its terms describe a $1.00 trial for 21 days that becomes $49.60 a month until cancelled, or $99 for 3 months.</li>
+        <li><strong>Reputation:</strong> Trustpilot score about 1.5 / 5; BBB lists 17 complaints in 3 years, mostly about trial-to-subscription billing and hard-to-cancel accounts.</li>
+        <li><strong>Our check:</strong> On Nov 18, 2026, a search for ZIP 85282 (Tempe) showed &#x27;909 listings in and around 85282&#x27;, all labeled bank-owned on page 1, with no street addresses. The official HUD Home Store had 0 HUD homes in Tempe and 13 in all of Maricopa County that day.</li>
+        <li><strong>Use instead:</strong> <a href="https://www.hudhomestore.gov/" target="_blank" rel="noopener">HUD Home Store (free, official)</a>, <a href="https://www.homesteps.com/" target="_blank" rel="noopener">Freddie Mac HomeSteps</a>, <a href="https://homepath.fanniemae.com/" target="_blank" rel="noopener">Fannie Mae HomePath</a></li>
+      </ul>
+      <p class="fine">Sources: <a href="https://www.bbb.org/us/ca/westlake-village/profile/foreclosures/hudforeclosedcom-1236-92003396" target="_blank" rel="noopener">BBB profile</a> · <a href="https://www.trustpilot.com/review/hudforeclosed.com" target="_blank" rel="noopener">Trustpilot reviews</a> · <a href="https://www.hudforeclosed.com/terms-of-use.html" target="_blank" rel="noopener">Site terms of use</a>. Added Nov 18, 2026. We did not register or pay.</p>
+    </div>
+  </section>
+
   <section id="process">
     <div class="grid g2">
       <div class="card">
@@ -1081,7 +1127,7 @@ a.go{white-space:nowrap;font-weight:600}
 
   <section id="disclosure">
     <h2>Disclosures</h2>
-    <div class="card"><p style="margin:0">Personal research. Listings are snapshots of public sale pages checked on Nov 16, 2026; availability, prices and dates can change at any time. House numbers are left off this page; the linked listing shows full details. This project finds and verifies leads only; it does not bid, make offers or act as a broker. Not investment, legal or tax advice; verify with licensed professionals before buying.</p></div>
+    <div class="card"><p style="margin:0">Personal research. Listings are snapshots of public sale pages checked Nov 16–18, 2026; availability, prices and dates can change at any time. House numbers are left off this page; the linked listing shows full details. This project finds and verifies leads only; it does not bid, make offers or act as a broker. Not investment, legal or tax advice; verify with licensed professionals before buying.</p></div>
   </section>
 
   <a class="back" href="./">&larr; Back to Home Projects</a>
