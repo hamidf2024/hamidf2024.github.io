@@ -175,6 +175,15 @@ table.score{min-width:1160px}
 table.score th:nth-child(3){width:196px}
 table.score{min-width:1210px}
 .score .yr.two{grid-template-columns:auto 1fr}
+table.score th:nth-child(8){width:176px}table.score th:nth-child(9){width:auto}
+table.score{min-width:1180px}
+.score .risk{font-size:13px}
+.score .rl{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:4px}
+.score .rl span{color:var(--muted);font-size:12px}
+.score .rl b{font-variant-numeric:tabular-nums}
+.score .rl b.pos{color:var(--good)}.score .rl b.neg{color:var(--bad)}
+.score .rl.sep{border-top:1px solid var(--line);padding-top:6px;margin-top:6px;margin-bottom:0}
+.score .rl .lv{font-size:11px}
 
 </style>
 </head>
@@ -302,7 +311,7 @@ table.score{min-width:1210px}
     <div class="tabs" role="group" aria-label="Filter models"><button type="button" id="f-all" aria-pressed="true" data-f="">All</button><button type="button" id="f-same" aria-pressed="false" data-f="Same-day">Same-day</button><button type="button" id="f-multi" aria-pressed="false" data-f="Multi-day">Multi-day</button></div>
     <div class="card" style="padding:6px 0 0">
       <p class="swipe" style="padding:10px 16px 0">Swipe sideways to see every column.</p><div class="table-scroll"><table class="score" id="score">
-        <thead><tr><th class="num">Rank</th><th>Model</th><th>G &middot; profit per trade; then each year: average, and $1,000 at year end</th><th>WR &middot; win rate; then each year</th><th>S &middot; steady months; then each year</th><th>GM &middot; months of 5% or more; then each year</th><th>Levels</th><th class="num">Worst trade</th><th class="num">After costs, per $1,000 trade</th></tr></thead>
+        <thead><tr><th class="num">Rank</th><th>Model</th><th>G &middot; profit per trade; then each year: average, and $1,000 at year end</th><th>WR &middot; win rate; then each year</th><th>S &middot; steady months; then each year</th><th>GM &middot; months of 5% or more; then each year</th><th>Levels</th><th>Worst trade, and profit after costs</th></tr></thead>
         <tbody><tr data-kind="Multi-day">
       <td class="num rk">1</td>
       <td class="nm"><strong>M. One-a-month, 15% stop <span class="tag newtag">New</span></strong><span>Multi-day · 35 trades</span></td>
@@ -311,8 +320,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">9.8 of 12</div><div class="m-track hit" role="img" aria-label="S meter"><i style="width:81.67%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">10 of 12</b><span>2025</span><b class="">12 of 12</b><span>2026</span><b class="">9 of 11</b></div></td>
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">1 of 12</b><span>2026</span><b class="">0 of 11</b></div></td>
       <td class="lvs"><span class="lv on">G1</span><span class="lv on">WR3</span><span class="lv on">S1</span><span class="lv ">GM0</span></td>
-      <td class="num">−15.7%<br><span class="lv mid">within 15%</span></td>
-      <td class="num pos">+$18.18</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−15.7%</b></div><div class="rl"><span></span><span class="lv mid">within 15%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="pos">+$18.18</b></div></td>
     </tr><tr data-kind="Multi-day">
       <td class="num rk">2</td>
       <td class="nm"><strong>E. Peer-Fusion GBM <span class="tag newtag">New</span></strong><span>Multi-day · 39 trades</span></td>
@@ -321,8 +329,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">4 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:33.33%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">6 of 12</b><span>2025</span><b class="">4 of 12</b><span>2026</span><b class="">4 of 11</b></div></td>
       <td class="mc"><div class="mv">2 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:16.67%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">3 of 12</b><span>2025</span><b class="">2 of 12</b><span>2026</span><b class="">2 of 11</b></div></td>
       <td class="lvs"><span class="lv on">G1</span><span class="lv on">WR1</span><span class="lv ">S0</span><span class="lv ">GM0</span></td>
-      <td class="num">−7.1%<br><span class="lv mid">within 15%</span></td>
-      <td class="num pos">+$13.77</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−7.1%</b></div><div class="rl"><span></span><span class="lv mid">within 15%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="pos">+$13.77</b></div></td>
     </tr><tr data-kind="Multi-day">
       <td class="num rk">3</td>
       <td class="nm"><strong>L. Peer-Fusion GBM, 5% stop <span class="tag newtag">New</span></strong><span>Multi-day · 39 trades</span></td>
@@ -331,8 +338,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">3.3 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:27.50%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">6 of 12</b><span>2025</span><b class="">4 of 12</b><span>2026</span><b class="">3 of 11</b></div></td>
       <td class="mc"><div class="mv">1.1 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:9.17%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">3 of 12</b><span>2025</span><b class="">3 of 12</b><span>2026</span><b class="">1 of 11</b></div></td>
       <td class="lvs"><span class="lv on">G1</span><span class="lv on">WR1</span><span class="lv ">S0</span><span class="lv ">GM0</span></td>
-      <td class="num">−5.0%<br><span class="lv on">within 5%</span></td>
-      <td class="num pos">+$10.17</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−5.0%</b></div><div class="rl"><span></span><span class="lv on">within 5%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="pos">+$10.17</b></div></td>
     </tr><tr data-kind="Multi-day">
       <td class="num rk">4</td>
       <td class="nm"><strong>K. One-a-month, 5% stop <span class="tag newtag">New</span></strong><span>Multi-day · 35 trades</span></td>
@@ -341,8 +347,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">7.6 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:63.33%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">8 of 12</b><span>2025</span><b class="">10 of 12</b><span>2026</span><b class="">7 of 11</b></div></td>
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">0 of 12</b><span>2026</span><b class="">0 of 11</b></div></td>
       <td class="lvs"><span class="lv ">G0</span><span class="lv on">WR2</span><span class="lv ">S0</span><span class="lv ">GM0</span></td>
-      <td class="num">−5.4%<br><span class="lv on">within 5%</span></td>
-      <td class="num neg">−$0.12</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−5.4%</b></div><div class="rl"><span></span><span class="lv on">within 5%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="neg">−$0.12</b></div></td>
     </tr><tr data-kind="Multi-day">
       <td class="num rk">5</td>
       <td class="nm"><strong>H. Peer-Fusion, target and stop <span class="tag newtag">New</span></strong><span>Multi-day · 38 trades</span></td>
@@ -351,8 +356,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">2.2 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:18.33%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">6 of 12</b><span>2025</span><b class="">3 of 12</b><span>2026</span><b class="">2 of 11</b></div></td>
       <td class="mc"><div class="mv">1.1 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:9.17%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">3 of 12</b><span>2025</span><b class="">3 of 12</b><span>2026</span><b class="">1 of 11</b></div></td>
       <td class="lvs"><span class="lv ">G0</span><span class="lv on">WR1</span><span class="lv ">S0</span><span class="lv ">GM0</span></td>
-      <td class="num">−5.0%<br><span class="lv on">within 5%</span></td>
-      <td class="num pos">+$8.22</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−5.0%</b></div><div class="rl"><span></span><span class="lv on">within 5%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="pos">+$8.22</b></div></td>
     </tr><tr data-kind="Multi-day">
       <td class="num rk">6</td>
       <td class="nm"><strong>C. Transformer probe</strong><span>Multi-day · 51 trades</span></td>
@@ -361,8 +365,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">3 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:25.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">3 of 12</b><span>2025</span><b class="">3 of 12</b><span>2026</span><b class="">5 of 11</b></div></td>
       <td class="mc"><div class="mv">1 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:8.33%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">1 of 12</b><span>2025</span><b class="">2 of 12</b><span>2026</span><b class="">4 of 11</b></div></td>
       <td class="lvs"><span class="lv ">G0</span><span class="lv on">WR1</span><span class="lv ">S0</span><span class="lv ">GM0</span></td>
-      <td class="num">−7.3%<br><span class="lv mid">within 15%</span></td>
-      <td class="num pos">+$6.09</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−7.3%</b></div><div class="rl"><span></span><span class="lv mid">within 15%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="pos">+$6.09</b></div></td>
     </tr><tr data-kind="Multi-day">
       <td class="num rk">7</td>
       <td class="nm"><strong>G. Fusion ensemble <span class="tag newtag">New</span></strong><span>Multi-day · 38 trades</span></td>
@@ -371,8 +374,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">1 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:8.33%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">1 of 12</b><span>2025</span><b class="">3 of 12</b><span>2026</span><b class="">3 of 11</b></div></td>
       <td class="mc"><div class="mv">1 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:8.33%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">1 of 12</b><span>2025</span><b class="">3 of 12</b><span>2026</span><b class="">2 of 11</b></div></td>
       <td class="lvs"><span class="lv ">G0</span><span class="lv on">WR1</span><span class="lv ">S0</span><span class="lv ">GM0</span></td>
-      <td class="num">−7.5%<br><span class="lv mid">within 15%</span></td>
-      <td class="num pos">+$7.85</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−7.5%</b></div><div class="rl"><span></span><span class="lv mid">within 15%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="pos">+$7.85</b></div></td>
     </tr><tr data-kind="Multi-day">
       <td class="num rk">8</td>
       <td class="nm"><strong>F. Peer-and-oil spring <span class="tag newtag">New</span></strong><span>Multi-day · 56 trades</span></td>
@@ -381,8 +383,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">3 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:25.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">3 of 12</b><span>2025</span><b class="">6 of 12</b><span>2026</span><b class="">4 of 11</b></div></td>
       <td class="mc"><div class="mv">1 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:8.33%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">1 of 12</b><span>2025</span><b class="">3 of 12</b><span>2026</span><b class="">3 of 11</b></div></td>
       <td class="lvs"><span class="lv ">G0</span><span class="lv on">WR1</span><span class="lv ">S0</span><span class="lv ">GM0</span></td>
-      <td class="num">−8.0%<br><span class="lv mid">within 15%</span></td>
-      <td class="num pos">+$4.04</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−8.0%</b></div><div class="rl"><span></span><span class="lv mid">within 15%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="pos">+$4.04</b></div></td>
     </tr><tr data-kind="Multi-day">
       <td class="num rk">9</td>
       <td class="nm"><strong>B. Field-Fusion GBM</strong><span>Multi-day · 25 trades</span></td>
@@ -391,8 +392,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">2 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:16.67%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">3 of 12</b><span>2025</span><b class="">2 of 12</b><span>2026</span><b class="">2 of 11</b></div></td>
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">1 of 12</b><span>2025</span><b class="">0 of 12</b><span>2026</span><b class="">1 of 11</b></div></td>
       <td class="lvs"><span class="lv ">G0</span><span class="lv ">WR0</span><span class="lv ">S0</span><span class="lv ">GM0</span></td>
-      <td class="num">−7.3%<br><span class="lv mid">within 15%</span></td>
-      <td class="num pos">+$9.65</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−7.3%</b></div><div class="rl"><span></span><span class="lv mid">within 15%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="pos">+$9.65</b></div></td>
     </tr><tr data-kind="Multi-day">
       <td class="num rk">10</td>
       <td class="nm"><strong>D. Fusion gate</strong><span>Multi-day · 19 trades</span></td>
@@ -401,8 +401,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">2 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:16.67%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">4 of 12</b><span>2025</span><b class="">2 of 12</b><span>2026</span><b class="">2 of 11</b></div></td>
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">1 of 12</b><span>2025</span><b class="">0 of 12</b><span>2026</span><b class="">1 of 11</b></div></td>
       <td class="lvs"><span class="lv ">G0</span><span class="lv on">WR1</span><span class="lv ">S0</span><span class="lv ">GM0</span></td>
-      <td class="num">−7.7%<br><span class="lv mid">within 15%</span></td>
-      <td class="num pos">+$4.88</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−7.7%</b></div><div class="rl"><span></span><span class="lv mid">within 15%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="pos">+$4.88</b></div></td>
     </tr><tr data-kind="Same-day">
       <td class="num rk">11</td>
       <td class="nm"><strong>V7.1 percent-scaled</strong><span>Same-day · 1,411 trades</span></td>
@@ -411,8 +410,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">0 of 12</b><span>2026</span><b class="">0 of 11</b></div></td>
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">1 of 12</b><span>2026</span><b class="">0 of 11</b></div></td>
       <td class="lvs"><span class="lv ">G0</span><span class="lv on">WR2</span><span class="lv ">S0</span><span class="lv ">GM0</span></td>
-      <td class="num">−2.0%<br><span class="lv on">within 5%</span></td>
-      <td class="num neg">−$0.08</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−2.0%</b></div><div class="rl"><span></span><span class="lv on">within 5%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="neg">−$0.08</b></div></td>
     </tr><tr data-kind="Same-day">
       <td class="num rk">12</td>
       <td class="nm"><strong>Rule OR Model</strong><span>Same-day · 3,890 trades</span></td>
@@ -421,8 +419,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">0 of 12</b><span>2026</span><b class="">0 of 11</b></div></td>
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">1 of 12</b><span>2026</span><b class="">4 of 11</b></div></td>
       <td class="lvs"><span class="lv ">G0</span><span class="lv on">WR1</span><span class="lv ">S0</span><span class="lv ">GM0</span></td>
-      <td class="num">−0.6%<br><span class="lv on">within 5%</span></td>
-      <td class="num neg">−$0.10</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−0.6%</b></div><div class="rl"><span></span><span class="lv on">within 5%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="neg">−$0.10</b></div></td>
     </tr><tr data-kind="Same-day">
       <td class="num rk">13</td>
       <td class="nm"><strong>V7</strong><span>Same-day · 1,834 trades</span></td>
@@ -431,8 +428,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">0 of 12</b><span>2026</span><b class="">0 of 11</b></div></td>
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">0 of 12</b><span>2026</span><b class="">0 of 11</b></div></td>
       <td class="lvs"><span class="lv ">G0</span><span class="lv on">WR1</span><span class="lv ">S0</span><span class="lv ">GM0</span></td>
-      <td class="num">−0.6%<br><span class="lv on">within 5%</span></td>
-      <td class="num neg">−$0.10</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−0.6%</b></div><div class="rl"><span></span><span class="lv on">within 5%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="neg">−$0.10</b></div></td>
     </tr><tr data-kind="Same-day">
       <td class="num rk">14</td>
       <td class="nm"><strong>V7.1</strong><span>Same-day · 1,597 trades</span></td>
@@ -441,8 +437,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">0 of 12</b><span>2026</span><b class="">0 of 11</b></div></td>
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">0 of 12</b><span>2026</span><b class="">0 of 11</b></div></td>
       <td class="lvs"><span class="lv ">G0</span><span class="lv on">WR1</span><span class="lv ">S0</span><span class="lv ">GM0</span></td>
-      <td class="num">−0.6%<br><span class="lv on">within 5%</span></td>
-      <td class="num neg">−$0.08</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−0.6%</b></div><div class="rl"><span></span><span class="lv on">within 5%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="neg">−$0.08</b></div></td>
     </tr><tr data-kind="Multi-day">
       <td class="num rk">15</td>
       <td class="nm"><strong>A. Spring-release</strong><span>Multi-day · 21 trades</span></td>
@@ -451,8 +446,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">1 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:8.33%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">4 of 12</b><span>2025</span><b class="">1 of 12</b><span>2026</span><b class="">2 of 11</b></div></td>
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">1 of 12</b><span>2025</span><b class="">0 of 12</b><span>2026</span><b class="">1 of 11</b></div></td>
       <td class="lvs"><span class="lv ">G0</span><span class="lv ">WR0</span><span class="lv ">S0</span><span class="lv ">GM0</span></td>
-      <td class="num">−9.9%<br><span class="lv mid">within 15%</span></td>
-      <td class="num neg">−$7.32</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−9.9%</b></div><div class="rl"><span></span><span class="lv mid">within 15%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="neg">−$7.32</b></div></td>
     </tr><tr data-kind="Same-day">
       <td class="num rk">16</td>
       <td class="nm"><strong>V5</strong><span>Same-day · 2,284 trades</span></td>
@@ -461,8 +455,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">0 of 12</b><span>2026</span><b class="">0 of 11</b></div></td>
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">0 of 12</b><span>2026</span><b class="">1 of 11</b></div></td>
       <td class="lvs"><span class="lv ">G0</span><span class="lv on">WR1</span><span class="lv ">S0</span><span class="lv ">GM0</span></td>
-      <td class="num">−0.6%<br><span class="lv on">within 5%</span></td>
-      <td class="num neg">−$0.18</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−0.6%</b></div><div class="rl"><span></span><span class="lv on">within 5%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="neg">−$0.18</b></div></td>
     </tr><tr data-kind="Same-day">
       <td class="num rk">17</td>
       <td class="nm"><strong>V6</strong><span>Same-day · 1,794 trades</span></td>
@@ -471,8 +464,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">0 of 12</b><span>2026</span><b class="">0 of 11</b></div></td>
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">0 of 12</b><span>2026</span><b class="">0 of 11</b></div></td>
       <td class="lvs"><span class="lv ">G0</span><span class="lv on">WR1</span><span class="lv ">S0</span><span class="lv ">GM0</span></td>
-      <td class="num">−0.6%<br><span class="lv on">within 5%</span></td>
-      <td class="num neg">−$0.13</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−0.6%</b></div><div class="rl"><span></span><span class="lv on">within 5%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="neg">−$0.13</b></div></td>
     </tr><tr data-kind="Same-day">
       <td class="num rk">18</td>
       <td class="nm"><strong>V4</strong><span>Same-day · 2,188 trades</span></td>
@@ -481,8 +473,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">0 of 12</b><span>2026</span><b class="">0 of 11</b></div></td>
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">1 of 12</b><span>2026</span><b class="">1 of 11</b></div></td>
       <td class="lvs"><span class="lv ">G0</span><span class="lv ">WR0</span><span class="lv ">S0</span><span class="lv ">GM0</span></td>
-      <td class="num">−0.6%<br><span class="lv on">within 5%</span></td>
-      <td class="num neg">−$0.16</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−0.6%</b></div><div class="rl"><span></span><span class="lv on">within 5%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="neg">−$0.16</b></div></td>
     </tr><tr data-kind="Same-day">
       <td class="num rk">19</td>
       <td class="nm"><strong>V3</strong><span>Same-day · 2,741 trades</span></td>
@@ -491,8 +482,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">0 of 12</b><span>2026</span><b class="">0 of 11</b></div></td>
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">1 of 12</b><span>2026</span><b class="">1 of 11</b></div></td>
       <td class="lvs"><span class="lv ">G0</span><span class="lv ">WR0</span><span class="lv ">S0</span><span class="lv ">GM0</span></td>
-      <td class="num">−0.6%<br><span class="lv on">within 5%</span></td>
-      <td class="num neg">−$0.16</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−0.6%</b></div><div class="rl"><span></span><span class="lv on">within 5%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="neg">−$0.16</b></div></td>
     </tr><tr data-kind="Same-day">
       <td class="num rk">20</td>
       <td class="nm"><strong>V2</strong><span>Same-day · 2,124 trades</span></td>
@@ -501,8 +491,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">0 of 12</b><span>2026</span><b class="">0 of 11</b></div></td>
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">0 of 12</b><span>2026</span><b class="">0 of 11</b></div></td>
       <td class="lvs"><span class="lv ">G0</span><span class="lv ">WR0</span><span class="lv ">S0</span><span class="lv ">GM0</span></td>
-      <td class="num">−0.6%<br><span class="lv on">within 5%</span></td>
-      <td class="num neg">−$0.18</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−0.6%</b></div><div class="rl"><span></span><span class="lv on">within 5%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="neg">−$0.18</b></div></td>
     </tr><tr data-kind="Same-day">
       <td class="num rk">21</td>
       <td class="nm"><strong>V1</strong><span>Same-day · 1,654 trades</span></td>
@@ -511,8 +500,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">0 of 12</b><span>2026</span><b class="">0 of 11</b></div></td>
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">1 of 12</b><span>2026</span><b class="">0 of 11</b></div></td>
       <td class="lvs"><span class="lv ">G0</span><span class="lv ">WR0</span><span class="lv ">S0</span><span class="lv ">GM0</span></td>
-      <td class="num">−0.6%<br><span class="lv on">within 5%</span></td>
-      <td class="num neg">−$0.13</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−0.6%</b></div><div class="rl"><span></span><span class="lv on">within 5%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="neg">−$0.13</b></div></td>
     </tr><tr data-kind="Multi-day">
       <td class="num rk">22</td>
       <td class="nm"><strong>Donchian swing, long+short</strong><span>Multi-day · 17 trades</span></td>
@@ -521,8 +509,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">2 of 12</b><span>2025</span><b class="">0 of 12</b><span>2026</span><b class="">1 of 11</b></div></td>
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">0 of 12</b><span>2026</span><b class="">1 of 11</b></div></td>
       <td class="lvs"><span class="lv ">G0</span><span class="lv ">WR0</span><span class="lv ">S0</span><span class="lv ">GM0</span></td>
-      <td class="num">−7.2%<br><span class="lv mid">within 15%</span></td>
-      <td class="num neg">−$16.16</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−7.2%</b></div><div class="rl"><span></span><span class="lv mid">within 15%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="neg">−$16.16</b></div></td>
     </tr><tr data-kind="Multi-day">
       <td class="num rk">–</td>
       <td class="nm"><strong>J. One-a-month campaign <span class="tag newtag">New</span></strong><span>Multi-day · 35 trades</span></td>
@@ -531,8 +518,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">9.8 of 12</div><div class="m-track hit" role="img" aria-label="S meter"><i style="width:81.67%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">10 of 12</b><span>2025</span><b class="">12 of 12</b><span>2026</span><b class="">9 of 11</b></div></td>
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">0 of 12</b><span>2025</span><b class="">1 of 12</b><span>2026</span><b class="">0 of 11</b></div></td>
       <td class="lvs"><span class="lv on">G2</span><span class="lv on">WR3</span><span class="lv on">S1</span><span class="lv ">GM0</span></td>
-      <td class="num">−17.3%<br><span class="lv over">over 15%</span></td>
-      <td class="num pos">+$22.14</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−17.3%</b></div><div class="rl"><span></span><span class="lv over">over 15%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="pos">+$22.14</b></div></td>
     </tr><tr data-kind="Multi-day">
       <td class="num rk">–</td>
       <td class="nm"><strong>I. First-passage campaign <span class="tag newtag">New</span></strong><span>Multi-day · 78 trades</span></td>
@@ -541,8 +527,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">6 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:50.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">6 of 12</b><span>2025</span><b class="">7 of 12</b><span>2026</span><b class="">9 of 11</b></div></td>
       <td class="mc"><div class="mv">1 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:8.33%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">3 of 12</b><span>2025</span><b class="">1 of 12</b><span>2026</span><b class="">4 of 11</b></div></td>
       <td class="lvs"><span class="lv ">G0</span><span class="lv on">WR3</span><span class="lv ">S0</span><span class="lv ">GM0</span></td>
-      <td class="num">−17.3%<br><span class="lv over">over 15%</span></td>
-      <td class="num pos">+$5.65</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−17.3%</b></div><div class="rl"><span></span><span class="lv over">over 15%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="pos">+$5.65</b></div></td>
     </tr><tr data-kind="Multi-day">
       <td class="num rk">–</td>
       <td class="nm"><strong>Donchian swing, long-only</strong><span>Multi-day · 9 trades</span></td>
@@ -551,8 +536,7 @@ table.score{min-width:1210px}
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">1 of 12</b><span>2025</span><b class="">0 of 12</b><span>2026</span><b class="">1 of 11</b></div></td>
       <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="GM meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="yr two"><span>2024</span><b class="">1 of 12</b><span>2025</span><b class="">0 of 12</b><span>2026</span><b class="">1 of 11</b></div></td>
       <td class="lvs"><span class="lv ">G0</span><span class="lv ">WR0</span><span class="lv ">S0</span><span class="lv ">GM0</span></td>
-      <td class="num">−5.0%<br><span class="lv on">within 5%</span></td>
-      <td class="num neg">−$0.75</td>
+      <td class="risk"><div class="rl"><span>Worst trade</span><b>−5.0%</b></div><div class="rl"><span></span><span class="lv on">within 5%</span></div><div class="rl sep"><span>After costs, per $1,000 trade</span><b class="neg">−$0.75</b></div></td>
     </tr></tbody>
       </table></div>
     </div>
