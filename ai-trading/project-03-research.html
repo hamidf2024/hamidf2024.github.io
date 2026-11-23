@@ -29,9 +29,9 @@ main code{overflow-wrap:anywhere}
   <section class="hero" style="padding-top:28px">
     <div class="eyebrow">Project 3 &middot; Research record</div>
     <h1>How each CNQ model was built and tested</h1>
-    <p class="lede">The stage-by-stage record behind the <a href="project-03.html">Project 3 scoreboard</a>: the zone rules V1 to V7.1, the root-cause audits, the machine-learning experiments, walk-forward training, and the Stage 11 and Stage 12 swing models. Dollar columns assume $1,000 invested per trade.</p>
+    <p class="lede">The stage-by-stage record behind the <a href="project-03.html">Project 3 scoreboard</a>: the zone rules V1 to V7.1, the root-cause audits, the machine-learning experiments, walk-forward training, the Stage 11 and Stage 12 swing models, and the Stage 13 peer-and-oil models E to Q. Dollar columns assume $1,000 invested per trade.</p>
     <p style="margin-top:14px"><a class="tag" href="project-03.html" style="text-decoration:none">&larr; Scoreboard: all models against the goals</a> <span class="tag muted">Started Aug 19, 2026</span> <span class="tag muted">Last updated Nov 23, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#method">Method</a><a href="#versions">Versions V1&ndash;V7.1</a><a href="#rootcause">Root cause</a><a href="#mlexperiment">ML experiment</a><a href="#fullhistory">Full-history validation</a><a href="#cost">Trading costs</a><a href="#stage10">Walk-forward test</a><a href="#benchmark">Benchmark</a><a href="#goals">Earlier target</a><a href="#stage11">Stage 11</a><a href="#stage12">Stage 12</a><a href="#stage13">Stage 13</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
+    <nav class="toc" aria-label="On this page"><a href="#method">Method</a><a href="#versions">Versions V1&ndash;V7.1</a><a href="#rootcause">Root cause</a><a href="#mlexperiment">ML experiment</a><a href="#fullhistory">Full-history validation</a><a href="#cost">Trading costs</a><a href="#stage10">Walk-forward test</a><a href="#benchmark">Benchmark</a><a href="#goals">Earlier target</a><a href="#stage11">Stage 11</a><a href="#stage12">Stage 12</a><a href="#stage13">Stage 13</a><a href="#stage13b">Models K to Q</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
   </section>
 
   <section id="findings">
@@ -448,6 +448,7 @@ main code{overflow-wrap:anywhere}
       <div class="eyebrow" style="margin-bottom:8px">Result</div>
       <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0"><strong>Level 1 reached on all three goals by model J, still to be confirmed.</strong> J made +2.24% per trade with an 88.6% win rate and 10, 12 and 9-of-11 qualifying months. Model E, a single model trained on six oil stocks, is the first in the project to clear 1% per trade with a plain 5-day hold: +1.41% over 39 trades, positive in every year.</p>
     </div>
+    <p style="font-size:13.5px;color:var(--muted);margin:12px 0 0">Later the same day the owner set loss limits of 5% and 15% on the worst trade. Model J has no stop and lost up to 17% on a trade, so its levels no longer count. The next section follows what happened after that.</p>
     <div class="card" style="margin-top:16px">
       <h3>Six models, each run once on 2024&ndash;2026</h3>
       <div class="table-scroll"><table>
@@ -479,6 +480,52 @@ main code{overflow-wrap:anywhere}
       </div>
     </div>
     <p style="font-size:13px;color:var(--muted);margin:16px 0 0">Full write-up, validation tables and sources: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/12_Stage13_Peer_Fusion_Research.md">docs/12_Stage13_Peer_Fusion_Research.md</a>. Code: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/src/stage13_peer_fusion.py">stage13_peer_fusion.py</a>. Price data is not published.</p>
+  </section>
+
+  <section id="stage13b">
+    <h2>Stage 13, continued &mdash; loss limits, a fourth goal, and models K to Q</h2>
+    <p style="color:var(--muted);margin:-6px 0 14px">Added 2026-11-23. During the day the owner added three rules: a limit on the worst trade (5% strict, 15% wide), a fourth goal GM (months per year whose trades add up to 5% or more: 8, 10 or 12 of 12), and a counting rule (trades opened at exactly the same time count as one trade; trades opened at different times count separately). The request each time was the same: train on 2020&ndash;2023, test on 2024&ndash;2026, repeat until level 1 is reached on all four goals.</p>
+    <div class="card" style="border-left:4px solid var(--warn)">
+      <div class="eyebrow" style="margin-bottom:8px">Result</div>
+      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0"><strong>Level 1 on all four goals is not reached by any model.</strong> Each goal has been reached by some model: M has profit per trade, win rate and steady months; O has win rate and both month goals. The test years have now been used for 22 runs, and the next evidence has to come from new trades or new data.</p>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>Six more models, each run once on 2024&ndash;2026</h3>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Model</th><th>Idea</th><th class="num">Trades</th><th class="num">Avg gross %/trade</th><th class="num">Win rate</th><th class="num">S months (2024 / 2025 / 2026)</th><th class="num">GM months (2024 / 2025 / 2026)</th><th class="num">Worst trade</th><th>Levels</th></tr></thead>
+        <tbody><tr><td>K. One-a-month, 5% stop</td><td>J&rsquo;s idea re-selected with a 5% stop: 2% target, 20 days</td><td class="num">35</td><td class="num">+0.02%</td><td class="num">71.4%</td><td class="num">8 / 10 / 7</td><td class="num">0 / 0 / 0</td><td class="num">&minus;5.4%</td><td>WR2</td></tr><tr><td>L. Peer-Fusion GBM, 5% stop</td><td>Model E with a 5% stop</td><td class="num">39</td><td class="num">+1.05%</td><td class="num">60.5%</td><td class="num">6 / 4 / 3</td><td class="num">3 / 3 / 1</td><td class="num">&minus;5.0%</td><td>G1, WR1</td></tr><tr><td><strong>M. One-a-month, 15% stop</strong></td><td>Model J with a 15% stop: one trade a month, 4% target, 60 days</td><td class="num">35</td><td class="num"><strong>+1.85%</strong></td><td class="num">88.6%</td><td class="num">10 / 12 / 9</td><td class="num">0 / 1 / 0</td><td class="num">&minus;15.7%</td><td>G1, WR3, S1</td></tr><tr><td>N. Two-a-month campaign</td><td>Two trades a month, 6% target, 15% stop</td><td class="num">68</td><td class="num">+0.74%</td><td class="num">70.6%</td><td class="num">6 / 8 / 5</td><td class="num">6 / 8 / 5</td><td class="num">&minus;15.7%</td><td>WR2</td></tr><tr><td>P. Dip-timed campaign</td><td>Waits for a 5% drop, then buys twice the next day; 3% target, 15% stop; no machine learning</td><td class="num">70</td><td class="num">&minus;0.21%</td><td class="num">80.0%</td><td class="num">7 / 10 / 10</td><td class="num">7 / 10 / 10</td><td class="num">&minus;15.0%</td><td>WR3</td></tr><tr><td><strong>O. One-a-month, two buys</strong></td><td>Model M&rsquo;s signal and exit, bought twice the next day at 10:00 and 1:00 pm</td><td class="num">70</td><td class="num">+0.23%</td><td class="num">78.6%</td><td class="num">9 / 10 / 8</td><td class="num"><strong>8 / 10 / 8</strong></td><td class="num">&minus;15.1%</td><td>WR3, S1, GM1</td></tr></tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Level 1 needs 1% per trade, a 50% win rate, and 8 of 12 months on each month goal (8 of 11 in 2026). S counts months whose average trade made more than 1%; GM counts months whose trades add up to 5% or more. Model O had not passed the stricter training test and was run at the owner&rsquo;s standing instruction; its run is recorded that way.</p>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <h3>What was tried on the training years and not run</h3>
+        <ul>
+          <li><strong>A second, later entry</strong> (five or ten days later, on a dip, on a rise): 112 settings, none passed.</li>
+          <li><strong>Stop sizes from 1% to 15%</strong> (owner&rsquo;s request): 1,620 settings, none passed. The widest stop, 15%, did best; stops of 1% to 3% cut the win rate below 50%.</li>
+          <li><strong>Model Q, selling short when the trend is down:</strong> 24 settings, none passed; most did worse than always buying.</li>
+        </ul>
+        <p style="font-size:13.5px;color:var(--muted);margin:10px 0 0">After model N a new model had to pass the training years with a month to spare, and hold on the five peer stocks, before it could be run on the test years.</p>
+      </div>
+      <div class="card">
+        <h3>What the last runs showed</h3>
+        <ul>
+          <li><strong>Model P passed every training check and still failed.</strong> 96% of its trades won on the training years, 80% on the test years; a 3% target with a 15% stop needs 83% to break even. Checks drawn from rising years cannot test for a slide.</li>
+          <li><strong>Model M is fragile.</strong> O buys on M&rsquo;s signals a few hours later. M had 4 stops in 35 trades, O had 13 in 70. In three months M won on an overnight jump and both of O&rsquo;s buys, made after it, were stopped.</li>
+          <li><strong>Losses come together.</strong> Almost all stops in M, N, O and P were entered between May 2024 and February 2025, while CNQ kept falling.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>A combination that shows level 1 on all four goals, and why it is not counted</h3>
+      <p>Put together afterwards from trades already tested, M&rsquo;s buy at the close plus a second buy at 10:00 the next day shows +1.05% per trade, an 82.9% win rate, S 9 / 10 / 8 and GM 8 / 10 / 8. It is one of seven arrangements of the same buys and the only one that passes. It was picked with the answers in view, the training years chose a different arrangement (model O), and it has no room to spare, so it is not recorded as a result. The table is on the <a href="project-03.html#afterfact">scoreboard page</a>.</p>
+      <h3 style="margin-top:18px">What happens next</h3>
+      <ul>
+        <li><strong>Forward test.</strong> Models M, O and L and the combination above were frozen on November 23, 2026. Only trades opened after November 20 will be scored, and nothing about the models may be changed.</li>
+        <li><strong>New information.</strong> Price data for 18 more symbols is being added from the same source: a 12-month oil fund and a Brent fund (the slope of the oil futures curve and the Brent&ndash;WTI gap), natural gas, refiners, pipelines, the Canadian dollar, the stock market and its volatility, bonds and gold. The next models will be trained with these on 2020&ndash;2023 before any run on the test years.</li>
+      </ul>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin:16px 0 0">Full write-up: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/12_Stage13_Peer_Fusion_Research.md">docs/12_Stage13_Peer_Fusion_Research.md</a>, Sections 9 to 18. Goals and scorecard: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/07_Goals_and_Targets.md">docs/07_Goals_and_Targets.md</a>. Price data is not published.</p>
   </section>
 
   <section id="roadmap">
