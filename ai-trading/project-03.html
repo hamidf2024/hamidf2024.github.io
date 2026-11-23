@@ -30,8 +30,8 @@
     <h1>Project 3: CNQ 5-Minute Zone Day Trading</h1>
     <p class="lede">Can a discretionary "buy the bounce off a zone" habit on CNQ's 5-minute chart be turned into a precise, mechanical rule set? Eight versions were built and backtested without look-ahead bias, each one walk-forward tested and regression-checked against the last. The final version, <strong>V7.1</strong>, rejects a specific flawed bounce pattern that was dragging down open-zone entries &mdash; a single, broad-based fix, not a curve-fit, that improved every headline metric at once.</p>
     <p style="margin-top:12px;max-width:680px"><strong>Owner's goal, in priority order:</strong> (1) maximum net profit, and it must hold on weeks the rules weren't tuned on; (2) a higher win rate; (3) a reasonable number of trades (about 1&ndash;3/day). By these priorities the current best is V7.1: +2.69 $/share gross, 72.9% win rate, 75 trades over Jul 1 &ndash; Aug 14, 2026. Against the stated numeric targets &mdash; win rate &gt; 60% and net &gt; 1.0 $/share per week &mdash; V7.1 clears the win-rate bar but falls short on weekly net profit (best legitimate pace: 0.42/week), and that gap widens once realistic trading costs are modeled in.</p>
-    <p style="margin-top:14px"><span class="tag warn">Status: Phase 1 research &middot; net-of-cost goal not yet met</span> <span class="tag muted">Started Aug 19, 2026</span> <span class="tag muted">Last updated Nov 18, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#method">Method</a><a href="#versions">Versions V1&ndash;V7.1</a><a href="#rootcause">Root cause</a><a href="#mlexperiment">ML experiment</a><a href="#fullhistory">Full-history validation</a><a href="#cost">Trading costs</a><a href="#benchmark">Benchmark</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
+    <p style="margin-top:14px"><span class="tag warn">Status: Phase 1 research &middot; net-of-cost goal not yet met</span> <span class="tag muted">Started Aug 19, 2026</span> <span class="tag muted">Last updated Nov 23, 2026</span></p>
+    <nav class="toc" aria-label="On this page"><a href="#method">Method</a><a href="#versions">Versions V1&ndash;V7.1</a><a href="#rootcause">Root cause</a><a href="#mlexperiment">ML experiment</a><a href="#fullhistory">Full-history validation</a><a href="#cost">Trading costs</a><a href="#stage10">Walk-forward test</a><a href="#benchmark">Benchmark</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
   </section>
 
   <section aria-label="At a glance">
@@ -199,6 +199,72 @@
         </tbody>
       </table></div>
       <p style="margin-top:8px"><span class="tag bad">Does not hold up after costs</span> at a 1&cent;/share round-trip cost &mdash; half of what the narrow-window table above used as its "high cost" scenario &mdash; V7.1 is net <strong>negative in 6 of the last 7 years</strong>, and negative overall (&minus;8.103 across all 3,605 trades). 2022 is the only year that stays profitable after costs. At 2&cent;/share it's negative in every single year. The narrow Jul1&ndash;Aug14 2026 window happened to fall in a period cheap enough (break-even &asymp;3.6&cent;) to look viable; that was not representative of the other 6.5 years in the data. This is the single most important number on this page for deciding whether V7.1 is tradeable with real money: at realistic retail costs, the honest answer across 6.3 years is mostly no.</p>
+    </div>
+  </section>
+
+  <section id="stage10">
+    <h2>Stage 10: walk-forward training (2020&ndash;2023) vs blind test (2024&ndash;2026)</h2>
+    <div class="card">
+      <p style="margin-top:0">Every result above used the hand-picked V1&ndash;V7.1 parameters as-is, unchanged, across whatever date range was being tested &mdash; including Stage 9's 6.3-year run. That is not the same thing as training on one period and testing on another: nothing above was ever genuinely re-fit on past data alone and then evaluated on data it had never seen. This stage does that properly, for the project's top 3 methods by net profit: <strong>V7.1</strong>, <strong>V7</strong>, and Stage 8's best ML variant, <strong>Rule OR Model</strong> (the hand rule confirms OR the ML model's probability clears a threshold). Train: 2020&ndash;2023 (861 trading days). Test: 2024, 2025 and 2026, each touched exactly once, after training was frozen &mdash; never used to pick or re-pick anything.</p>
+
+      <h3 style="margin-top:20px">Method &mdash; and how overfitting was kept in check</h3>
+      <ol class="steps">
+        <li><strong>Walk-forward folds inside the training window only</strong>: train on 2020 &rarr; validate (blind) on 2021; train on 2020&ndash;2021 &rarr; validate on 2022; train on 2020&ndash;2022 &rarr; validate on 2023. 2024&ndash;2026 are never touched during this step.</li>
+        <li><strong>Selection by out-of-sample fold performance, not in-sample fit</strong>: for V7/V7.1, each fold picks whichever (zone-touch band, entry-cutoff time) combination had the best net-per-trade on that fold's training years &mdash; a deliberately narrow 3&times;3 grid, not a search over per-trade special-case rules (the kind of curve-fitting this project's own lessons-learned doc already flags and rejects). A floor of 30 trades per candidate stops any combination from winning on a lucky handful of trades.</li>
+        <li><strong>Rule OR Model</strong> reuses V7.1's exact, already-validated zone/entry logic (unchanged) to label every zone touch with its would-be P&amp;L, then retrains a small gradient-boosted classifier (identical architecture to Stage 8) on only the fold's training years, with its probability threshold picked on an internal time-split within that training window &mdash; the validation/test year is never used to pick the threshold.</li>
+        <li><strong>Final frozen configuration</strong> for each method is selected the same way, using all of 2020&ndash;2023 as training, then run <em>once</em>, blind, on each of 2024, 2025 and 2026 &mdash; no retuning between years, no peeking.</li>
+      </ol>
+
+      <h3 style="margin-top:28px">Walk-forward folds (within training, 2020&ndash;2023) &mdash; out-of-sample validation every time</h3>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Method</th><th>Fold</th><th>Trained on</th><th>Chosen setting</th><th>Validated on</th><th>Trades</th><th>Win rate</th><th>Profit factor</th><th>Net $/share</th></tr></thead>
+        <tbody>
+          <tr><td>V7</td><td>1</td><td>2020</td><td>band=0.012, cutoff=12:55</td><td>2021</td><td class="num">561</td><td class="num">62.0%</td><td class="num">1.23</td><td class="num">2.408</td></tr>
+          <tr><td>V7</td><td>2</td><td>2020&ndash;2021</td><td>band=0.02, cutoff=12:55</td><td>2022</td><td class="num">532</td><td class="num">58.2%</td><td class="num">1.39</td><td class="num">6.833</td></tr>
+          <tr><td>V7</td><td>3</td><td>2020&ndash;2022</td><td>band=0.012, cutoff=13:55</td><td>2023</td><td class="num">576</td><td class="num">62.1%</td><td class="num">1.37</td><td class="num">5.208</td></tr>
+          <tr><td>V7.1</td><td>1</td><td>2020</td><td>band=0.012, cutoff=12:55</td><td>2021</td><td class="num">474</td><td class="num">63.5%</td><td class="num">1.27</td><td class="num">2.478</td></tr>
+          <tr><td>V7.1</td><td>2</td><td>2020&ndash;2021</td><td>band=0.02, cutoff=12:55</td><td>2022</td><td class="num">462</td><td class="num">58.7%</td><td class="num">1.48</td><td class="num">7.190</td></tr>
+          <tr><td>V7.1</td><td>3</td><td>2020&ndash;2022</td><td>band=0.02, cutoff=12:55</td><td>2023</td><td class="num">523</td><td class="num">60.0%</td><td class="num">1.38</td><td class="num">5.295</td></tr>
+          <tr><td>Rule OR Model</td><td>1</td><td>2020</td><td>threshold=0.350</td><td>2021</td><td class="num">1,142</td><td class="num">65.7%</td><td class="num">1.33</td><td class="num">7.200</td></tr>
+          <tr><td>Rule OR Model</td><td>2</td><td>2020&ndash;2021</td><td>threshold=0.375</td><td>2022</td><td class="num">1,253</td><td class="num">60.5%</td><td class="num">1.32</td><td class="num">13.583</td></tr>
+          <tr><td>Rule OR Model</td><td>3</td><td>2020&ndash;2022</td><td>threshold=0.350</td><td>2023</td><td class="num">1,073</td><td class="num">60.3%</td><td class="num">1.24</td><td class="num">7.245</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Every validation number above is out-of-sample &mdash; the year being scored was never part of that row's training window. All nine validation folds stay win-rate &gt; 58% and profit-factor &gt; 1.2, with no sign of collapsing from one fold to the next &mdash; the basic signature of overfitting (great on training years, falls apart the moment it sees a new one) doesn't show up here.</p>
+
+      <h3 style="margin-top:28px">Final frozen configuration (trained on all of 2020&ndash;2023)</h3>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Method</th><th>Frozen setting</th><th>Training trades</th><th>Training win rate</th><th>Training PF</th><th>Training Net $/share</th><th>Training Gross %</th></tr></thead>
+        <tbody>
+          <tr><td>V7</td><td>band=0.02, cutoff=12:55</td><td class="num">2,217</td><td class="num">61.3%</td><td class="num">1.39</td><td class="num">19.500</td><td class="num">0.0415%</td></tr>
+          <tr><td>V7.1</td><td>band=0.02, cutoff=12:55</td><td class="num">1,922</td><td class="num">61.4%</td><td class="num">1.43</td><td class="num">19.040</td><td class="num">0.0467%</td></tr>
+          <tr><td>Rule OR Model</td><td>threshold=0.350</td><td class="num">4,037</td><td class="num">63.1%</td><td class="num">1.35</td><td class="num">35.968</td><td class="num">0.0423%</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Worth noting on its own: walk-forward selection landed on <strong>band=0.02</strong> in the final config and 2 of 3 folds for both V7 and V7.1 &mdash; wider than the <strong>0.012</strong> hand-picked on the original 32-day window &mdash; and <strong>cutoff=12:55</strong> rather than the hand-picked <strong>13:55</strong>. The narrow parameters that looked best on 6.4 weeks of data were not the ones that generalized best across 4 years of walk-forward selection.</p>
+
+      <h3 style="margin-top:28px">Blind test: 2024, 2025, 2026 (each year touched exactly once)</h3>
+      <p style="color:var(--muted);margin:-4px 0 14px">The frozen configuration above, unchanged, run once per year. No retuning between years.</p>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Method</th><th>Year</th><th>Trades</th><th>Win rate</th><th>Profit factor</th><th>Net $/share</th><th>$100/trade avg</th><th>Gross %</th><th>$100 @1&cent; avg</th></tr></thead>
+        <tbody>
+          <tr><td>V7</td><td>2024</td><td class="num">664</td><td class="num"><strong>60.9%</strong></td><td class="num">1.26</td><td class="num">4.005</td><td class="num">$0.0183</td><td class="num">0.0183%</td><td class="num">&minus;$0.0108</td></tr>
+          <tr><td>V7</td><td>2025</td><td class="num">715</td><td class="num">60.4%</td><td class="num">1.21</td><td class="num">3.425</td><td class="num">$0.0153</td><td class="num">0.0153%</td><td class="num">&minus;$0.0171</td></tr>
+          <tr><td>V7</td><td>2026</td><td class="num">455</td><td class="num">57.6%</td><td class="num">1.36</td><td class="num">5.053</td><td class="num">$0.0253</td><td class="num">0.0253%</td><td class="num">$0.0030</td></tr>
+          <tr><td>V7</td><td><strong>Combined</strong></td><td class="num">1,834</td><td class="num">59.9%</td><td class="num">1.27</td><td class="num">12.483</td><td class="num">$0.0189</td><td class="num">0.0189%</td><td class="num">&minus;$0.0098</td></tr>
+          <tr><td>V7.1</td><td>2024</td><td class="num">589</td><td class="num">59.5%</td><td class="num">1.21</td><td class="num">3.110</td><td class="num">$0.0161</td><td class="num">0.0161%</td><td class="num">&minus;$0.0129</td></tr>
+          <tr><td>V7.1</td><td>2025</td><td class="num">599</td><td class="num">60.6%</td><td class="num">1.26</td><td class="num">3.635</td><td class="num">$0.0193</td><td class="num">0.0193%</td><td class="num">&minus;$0.0131</td></tr>
+          <tr><td>V7.1</td><td>2026</td><td class="num">409</td><td class="num">57.4%</td><td class="num"><strong>1.40</strong></td><td class="num">4.923</td><td class="num"><strong>$0.0281</strong></td><td class="num"><strong>0.0281%</strong></td><td class="num"><strong>$0.0058</strong></td></tr>
+          <tr><td>V7.1</td><td><strong>Combined</strong></td><td class="num">1,597</td><td class="num">59.4%</td><td class="num">1.28</td><td class="num">11.668</td><td class="num">$0.0204</td><td class="num">0.0204%</td><td class="num">&minus;$0.0082</td></tr>
+          <tr><td>Rule OR Model</td><td>2024</td><td class="num">1,194</td><td class="num">60.7%</td><td class="num">1.18</td><td class="num">5.883</td><td class="num">$0.0143</td><td class="num">0.0143%</td><td class="num">&minus;$0.0146</td></tr>
+          <tr><td>Rule OR Model</td><td>2025</td><td class="num">1,343</td><td class="num">60.3%</td><td class="num">1.15</td><td class="num">5.715</td><td class="num">$0.0145</td><td class="num">0.0145%</td><td class="num">&minus;$0.0179</td></tr>
+          <tr><td>Rule OR Model</td><td>2026</td><td class="num">1,353</td><td class="num">58.8%</td><td class="num">1.31</td><td class="num">14.244</td><td class="num">$0.0241</td><td class="num">0.0241%</td><td class="num">$0.0019</td></tr>
+          <tr><td>Rule OR Model</td><td><strong>Combined</strong></td><td class="num"><strong>3,890</strong></td><td class="num">59.9%</td><td class="num">1.22</td><td class="num"><strong>25.841</strong></td><td class="num">$0.0178</td><td class="num">0.0178%</td><td class="num">&minus;$0.0100</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Gross edge survives blind testing: all three methods stay net-positive, before costs, in all three unseen years, with win rates (57&ndash;61%) and profit factors (1.15&ndash;1.40) close to what the walk-forward validation folds already predicted &mdash; no collapse from training to test. <strong>Rule OR Model</strong> trades roughly twice as often as the pure rule methods (it fires on either signal) and posts the largest absolute dollar totals, but its per-trade quality (profit factor) is no better &mdash; and slightly worse in 2024&ndash;2025 &mdash; than the simpler V7/V7.1: more volume, not a sharper edge.</p>
+      <p style="margin-top:8px"><span class="tag bad">Same cost problem, now under much stricter testing discipline</span> at a 1&cent;/share round-trip cost, <strong>all three walk-forward-trained methods go net negative in 2024 and 2025</strong>, and are only marginally positive in 2026 (the one year that was already the cheapest in Stage 9's year-by-year cost table). This is the same conclusion Stage 9 reached with the original, untrained parameters &mdash; now confirmed with real train/test separation and walk-forward parameter selection instead of hand-picked values applied unchanged. Training-period (2020&ndash;2023, in-sample) Gross % was 0.0415% (V7), 0.0467% (V7.1) and 0.0423% (Rule OR Model) &mdash; the blind combined-test Gross % (0.0189%, 0.0204%, 0.0178%) is noticeably lower, as expected for any true held-out test, but not a collapse to zero or negative &mdash; consistent with genuine, moderate degradation rather than a badly overfit model falling apart out of sample.</p>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Code: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/src/stage10_walk_forward_training.py">stage10_walk_forward_training.py</a> (grid search + walk-forward folds + GBM retraining, all three methods); data: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/data/raw/CNQ_5min_20200727_to_20261118.csv">CNQ_5min_20200727_to_20261118.csv</a>. 2026-11-23 Stage 10 entry.</p>
     </div>
   </section>
 
