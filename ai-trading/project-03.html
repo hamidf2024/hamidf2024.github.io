@@ -31,7 +31,7 @@
     <p class="lede">Can a discretionary "buy the bounce off a zone" habit on CNQ's 5-minute chart be turned into a precise, mechanical rule set? Eight versions were built and backtested without look-ahead bias, each one walk-forward tested and regression-checked against the last. The final version, <strong>V7.1</strong>, rejects a specific flawed bounce pattern that was dragging down open-zone entries &mdash; a single, broad-based fix, not a curve-fit, that improved every headline metric at once.</p>
     <p style="margin-top:12px;max-width:680px"><strong>Owner's goal, in priority order:</strong> (1) maximum net profit, and it must hold on weeks the rules weren't tuned on; (2) a higher win rate; (3) a reasonable number of trades (about 1&ndash;3/day). By these priorities the current best is V7.1: +2.69 $/share gross, 72.9% win rate, 75 trades over Jul 1 &ndash; Aug 14, 2026. Against the stated numeric targets &mdash; win rate &gt; 60% and net &gt; 1.0 $/share per week &mdash; V7.1 clears the win-rate bar but falls short on weekly net profit (best legitimate pace: 0.42/week), and that gap widens once realistic trading costs are modeled in.</p>
     <p style="margin-top:14px"><span class="tag warn">Status: Phase 1 research &middot; net-of-cost goal not yet met</span> <span class="tag muted">Started Aug 19, 2026</span> <span class="tag muted">Last updated Nov 23, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#method">Method</a><a href="#versions">Versions V1&ndash;V7.1</a><a href="#rootcause">Root cause</a><a href="#mlexperiment">ML experiment</a><a href="#fullhistory">Full-history validation</a><a href="#cost">Trading costs</a><a href="#stage10">Walk-forward test</a><a href="#benchmark">Benchmark</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
+    <nav class="toc" aria-label="On this page"><a href="#method">Method</a><a href="#versions">Versions V1&ndash;V7.1</a><a href="#rootcause">Root cause</a><a href="#mlexperiment">ML experiment</a><a href="#fullhistory">Full-history validation</a><a href="#cost">Trading costs</a><a href="#stage10">Walk-forward test</a><a href="#benchmark">Benchmark</a><a href="#goals">Goals &amp; Targets</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
   </section>
 
   <section aria-label="At a glance">
@@ -291,6 +291,43 @@
     </div>
   </section>
 
+  <section id="goals">
+    <h2>Goals &amp; Targets</h2>
+    <p style="color:var(--muted);margin:-6px 0 14px">Formal performance target added 2026-11-23, alongside the project's existing charter and roadmap &mdash; the owner's priority order (net profit after costs &gt; win rate &gt; trade count) is unchanged; this target is additive to it, not a replacement.</p>
+    <div class="card">
+      <h3>Target 1 &mdash; average gross return of 1% per day</h3>
+      <p>Develop a model/method for CNQ 5-minute trading whose average <strong>gross</strong> return per trading day reaches <strong>1.00%</strong>, validated out-of-sample. &ldquo;Gross %/day&rdquo; uses the same $100-notional-per-trade convention as the tables above, summed per day and averaged across trading days &mdash; not compounded, not leveraged. (Working definition, flagged for owner confirmation &mdash; see the full doc linked below.)</p>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Method</th><th>Basis</th><th class="num">Trades</th><th class="num">Days</th><th class="num">Trades/day</th><th class="num">Avg gross %/trade</th><th class="num">Avg gross %/day</th><th>Gap to 1%/day</th></tr></thead>
+        <tbody>
+          <tr><td>V7.1 (hand-tuned)</td><td>7-yr, 2020&ndash;2026</td><td class="num">3,605</td><td class="num">1,584</td><td class="num">2.28</td><td class="num">0.0317%</td><td class="num"><strong>0.072%</strong></td><td>~14x short</td></tr>
+          <tr><td>V7 (walk-forward)</td><td>blind 2024&ndash;2026</td><td class="num">1,834</td><td class="num">723</td><td class="num">2.54</td><td class="num">0.0189%</td><td class="num"><strong>0.048%</strong></td><td>~21x short</td></tr>
+          <tr><td>V7.1 (walk-forward)</td><td>blind 2024&ndash;2026</td><td class="num">1,597</td><td class="num">723</td><td class="num">2.21</td><td class="num">0.0204%</td><td class="num"><strong>0.045%</strong></td><td>~22x short</td></tr>
+          <tr><td>Rule OR Model (walk-forward)</td><td>blind 2024&ndash;2026</td><td class="num">3,890</td><td class="num">723</td><td class="num">5.38</td><td class="num">0.0178%</td><td class="num"><strong>0.096%</strong></td><td>~10x short</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Reading this honestly: every out-of-sample method validated so far lands between 0.045% and 0.096% gross per trading day &mdash; roughly a tenth to a fifth of target. The closest, Rule OR Model, gets there mainly by trading <em>more often</em> (5.4 trades/day vs. ~2.2&ndash;2.5) rather than a better per-trade edge &mdash; its per-trade average is in fact the lowest of the four. Closing a gap this size needs trade frequency and per-trade edge to both move substantially, most likely via scope beyond a single symbol (see candidates below).</p>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <h3>Back-of-envelope: what closing the gap would take</h3>
+        <p>Holding per-trade edge where it is now (~0.02&ndash;0.03% gross/trade), reaching 1%/day on CNQ alone would need roughly <strong>35&ndash;55 trades/day</strong> &mdash; 10&ndash;20x today's rate. Holding trade count where it is now (~2&ndash;5/day), it would need a per-trade edge of roughly <strong>0.2&ndash;0.5%</strong> &mdash; 7&ndash;25x anything validated out of sample so far.</p>
+      </div>
+      <div class="card">
+        <h3>Candidate directions for Stage 11</h3>
+        <ul>
+          <li>Trade frequency as its own research target, not just a by-product of OR-ing methods.</li>
+          <li>Concurrency / multiple open positions.</li>
+          <li>Per-trade edge: tighter entries, better exits.</li>
+          <li>Additional setups beyond the current zone-bounce rule.</li>
+          <li>Basket / multi-symbol expansion (also the top queued Stage 7 item).</li>
+          <li>Short-side mirror, to add trades in downtrends the long-only design currently sits out.</li>
+        </ul>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin:16px 0 0">Full target definition, open questions for the owner, and citations: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/07_Goals_and_Targets.md">docs/07_Goals_and_Targets.md</a>. Generalizable lessons from Stages 8&ndash;10, organized by topic for future ML/method development: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/08_ML_and_Method_Development_Lessons.md">docs/08_ML_and_Method_Development_Lessons.md</a>.</p>
+  </section>
+
   <section id="roadmap">
     <h2>Status &amp; roadmap</h2>
     <div class="card">
@@ -327,6 +364,8 @@
     <h2>Sources</h2>
     <div class="card"><ul style="margin:0">
       <li><a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader">Project 3 repository</a> &mdash; full charter, test protocol, strategy rules, backtester code, raw data, screenshots and competitive analysis</li>
+      <li><a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/07_Goals_and_Targets.md">Goals &amp; Targets</a> &mdash; Target 1 (1% gross/day) definition, gap analysis, open questions</li>
+      <li><a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/08_ML_and_Method_Development_Lessons.md">ML &amp; Method Development Lessons</a> &mdash; topic-organized, reusable lessons for future models/methods</li>
       <li><a href="https://www.luxalgo.com/library/indicator/VDv1AnDA-supply-and-demand-zones/">LuxAlgo Supply and Demand Zones</a></li>
       <li><a href="https://daytradingtoolkit.com/reviews/trendspider-review">TrendSpider review (Day Trading Toolkit)</a></li>
       <li><a href="https://www.liberatedstocktrader.com/trade-ideas-review/">Trade Ideas review (Liberated Stock Trader)</a></li>
