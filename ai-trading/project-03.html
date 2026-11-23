@@ -31,7 +31,7 @@
     <p class="lede">Can a discretionary "buy the bounce off a zone" habit on CNQ's 5-minute chart be turned into a precise, mechanical rule set? Eight versions were built and backtested without look-ahead bias, each one walk-forward tested and regression-checked against the last. The final version, <strong>V7.1</strong>, rejects a specific flawed bounce pattern that was dragging down open-zone entries &mdash; a single, broad-based fix, not a curve-fit, that improved every headline metric at once.</p>
     <p style="margin-top:12px;max-width:680px"><strong>Owner's goal, in priority order:</strong> (1) maximum net profit, and it must hold on weeks the rules weren't tuned on; (2) a higher win rate; (3) a reasonable number of trades (about 1&ndash;3/day). By these priorities the current best is V7.1: +2.69 $/share gross, 72.9% win rate, 75 trades over Jul 1 &ndash; Aug 14, 2026. Against the stated numeric targets &mdash; win rate &gt; 60% and net &gt; 1.0 $/share per week &mdash; V7.1 clears the win-rate bar but falls short on weekly net profit (best legitimate pace: 0.42/week), and that gap widens once realistic trading costs are modeled in.</p>
     <p style="margin-top:14px"><span class="tag warn">Status: Phase 1 research &middot; net-of-cost goal not yet met</span> <span class="tag muted">Started Aug 19, 2026</span> <span class="tag muted">Last updated Nov 23, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#method">Method</a><a href="#versions">Versions V1&ndash;V7.1</a><a href="#rootcause">Root cause</a><a href="#mlexperiment">ML experiment</a><a href="#fullhistory">Full-history validation</a><a href="#cost">Trading costs</a><a href="#stage10">Walk-forward test</a><a href="#benchmark">Benchmark</a><a href="#goals">Goals &amp; Targets</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
+    <nav class="toc" aria-label="On this page"><a href="#method">Method</a><a href="#versions">Versions V1&ndash;V7.1</a><a href="#rootcause">Root cause</a><a href="#mlexperiment">ML experiment</a><a href="#fullhistory">Full-history validation</a><a href="#cost">Trading costs</a><a href="#stage10">Walk-forward test</a><a href="#benchmark">Benchmark</a><a href="#goals">Goals &amp; Targets</a><a href="#stage11">Stage 11</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
   </section>
 
   <section aria-label="At a glance">
@@ -328,6 +328,65 @@
     <p style="font-size:13px;color:var(--muted);margin:16px 0 0">Full target definition, open questions for the owner, and citations: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/07_Goals_and_Targets.md">docs/07_Goals_and_Targets.md</a>. Generalizable lessons from Stages 8&ndash;10, organized by topic for future ML/method development: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/08_ML_and_Method_Development_Lessons.md">docs/08_ML_and_Method_Development_Lessons.md</a>.</p>
   </section>
 
+  <section id="stage11">
+    <h2>Stage 11 &mdash; Target 1 sharpened to per-trade, new candidates tested</h2>
+    <p style="color:var(--muted);margin:-6px 0 14px">Added 2026-11-23. The owner sharpened Target 1 from 1% gross <strong>per day</strong> to a materially harder bar: more than <strong>1% gross per trade</strong>, averaged over 2024&ndash;2026, using the same walk-forward discipline (train 2020&ndash;2023, blind test 2024&ndash;2026).</p>
+    <div class="card">
+      <h3>Feasibility check, done before building anything</h3>
+      <p>CNQ's own daily high&ndash;low range in 2024&ndash;2026 averages only <strong>~2.0&ndash;2.4%</strong> of the day's open. A same-day, end-of-day-flattened trade &mdash; every method this project has tested so far, V1&ndash;V7.1 and Rule OR Model &mdash; cannot average more than roughly half the day's own range net of losers, even with perfect entries. An average, net-of-losers return of &gt;1% <em>per trade</em> from a same-day structure is close to mathematically ruled out by the instrument's own volatility at that holding period, not a matter of finding a better rule. CNQ's multi-day swing range is large enough to make &gt;1%/trade plausible instead: the rolling 5-day range averages ~5.5&ndash;7.0% of the window's starting price, 10-day ~8.2&ndash;10.6%, 20-day ~12.0&ndash;15.5%. This is why Stage 11 tested a genuinely different, multi-day holding period rather than another same-day rule variant.</p>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <h3>Candidate A &mdash; Donchian-channel breakout swing/trend system</h3>
+        <p>A classic, well-documented systematic trend-following design (the &ldquo;Turtle Trading&rdquo; / Donchian-channel breakout system): N-day high/low breakout entry, stop at 2&times;ATR(20), trailing exit on the opposite M-day channel cross, held across multiple days instead of flattened same-day. Walk-forward trained 2020&ndash;2023 (narrow 2&times;2 grid, N&isin;{20,55}, M&isin;{10,20}), blind-tested 2024&ndash;2026, long-only and long+short variants.</p>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Variant</th><th class="num">Blind trades</th><th class="num">Avg gross %/trade</th><th class="num">Win rate</th></tr></thead>
+          <tbody>
+            <tr><td>Long-only</td><td class="num">9</td><td class="num">&minus;0.05%</td><td class="num">22.2%</td></tr>
+            <tr><td>Long+short</td><td class="num">17</td><td class="num">&minus;1.59%</td><td class="num">18.8%</td></tr>
+          </tbody>
+        </table></div>
+        <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Does not validate a reliably positive edge on CNQ alone over 2024&ndash;2026 &mdash; but it is the first method tested that is even <em>structurally capable</em> of the magnitude the target requires: individual blind-test trades of +7.55% and +19.43% appear, impossible for any same-day method. With only 9&ndash;17 blind trades across 3 years on one symbol, this reads as too small a sample to let the trend-following &ldquo;big win funds many small losses&rdquo; mechanism play out reliably &mdash; not a disproof of the mechanism.</p>
+      </div>
+      <div class="card">
+        <h3>Candidate B &mdash; percent-of-price-scaled V7.1</h3>
+        <p>CNQ's own average price rose ~4.6x from 2020 (~$9.9) to 2026 (~$45.6) in this dataset, while V7.1's stop/target stayed fixed in cents &mdash; a concrete, data-grounded reason the existing &ldquo;Avg gross %/trade&rdquo; figures could be understating the strategy's real edge in later years. This candidate re-expresses V7.1's already-validated entry/exit rule with a percent-of-entry-price stop/target (each year's reference price = the prior calendar year's average close, no look-ahead) instead of fixed dollars, otherwise unchanged.</p>
+        <div class="table-scroll"><table>
+          <thead><tr><th>Method</th><th class="num">Blind trades</th><th class="num">Avg gross %/trade</th></tr></thead>
+          <tbody>
+            <tr><td>V7.1 original (fixed-dollar)</td><td class="num">1,597</td><td class="num">0.0204%</td></tr>
+            <tr><td>V7.1 percent-scaled (new)</td><td class="num">1,411</td><td class="num">0.0205%</td></tr>
+          </tbody>
+        </table></div>
+        <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Essentially a null result &mdash; percent-scaling the offsets does not meaningfully change the per-trade edge, since the actual captured win/loss sizes (driven by the weak-candle early-exit rule, not the nominal stop/target distance) already track price level reasonably well through other channels. A cheap, useful negative finding: closes off a specific, recurring question rather than being wasted effort.</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>Where this leaves Target 1 (per-trade framing)</h3>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Method</th><th>Basis</th><th class="num">Trades (2024&ndash;26)</th><th class="num">Avg gross %/trade</th><th>Gap to &gt;1%/trade</th></tr></thead>
+        <tbody>
+          <tr><td>V7.1 (Stage 10, walk-forward)</td><td>blind</td><td class="num">1,597</td><td class="num">0.0204%</td><td>~49x short</td></tr>
+          <tr><td>Rule OR Model (Stage 10, walk-forward)</td><td>blind</td><td class="num">3,890</td><td class="num">0.0178%</td><td>~56x short</td></tr>
+          <tr><td>Percent-scaled V7.1 (Stage 11, new)</td><td>blind</td><td class="num">1,411</td><td class="num">0.0205%</td><td>~49x short</td></tr>
+          <tr><td>Donchian swing, long-only (Stage 11, new)</td><td>blind</td><td class="num">9</td><td class="num"><strong>&minus;0.05%</strong></td><td>negative</td></tr>
+          <tr><td>Donchian swing, long+short (Stage 11, new)</td><td>blind</td><td class="num">17</td><td class="num"><strong>&minus;1.59%</strong></td><td>negative</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Read plainly: no method this project has built and honestly walk-forward validated &mdash; old or new &mdash; averages anywhere close to a reliably positive &gt;1%-per-trade return on blind 2024&ndash;2026 data. The best positive, high-volume result (percent-scaled V7.1) sits at roughly <strong>1/49th</strong> of target. The one method structurally <em>capable</em> of multi-percent single trades (the Donchian swing breakout) does not yet have enough trade volume on one symbol to validate that capability as a reliable, positive average.</p>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>Concrete next steps</h3>
+      <ul>
+        <li>Basket/multi-symbol expansion for the swing system specifically (SU, CVE, IMO, XOM, CVX) &mdash; multiplies trade count without changing the per-symbol mechanism, giving walk-forward selection and blind testing enough samples to actually distinguish &ldquo;this works&rdquo; from &ldquo;this got unlucky.&rdquo;</li>
+        <li>A hybrid: V7.1's proven high-win-rate zone-bounce entries paired with the swing system's multi-day trailing-stop exit, instead of V7.1's own same-day EOD flatten &mdash; a genuinely untested combination.</li>
+        <li>Wider ATR stop multiple or an explicit time-stop for the swing system, before concluding the mechanism itself is unviable on CNQ.</li>
+        <li>Re-confirm the exact Target 1 metric with the owner &mdash; open questions remain about compounding and multi-symbol account-level returns now that a materially harder bar is in play.</li>
+      </ul>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin:16px 0 0">Full research write-up, feasibility tables, and reproducible code: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/09_Stage11_Per_Trade_Target_Research.md">docs/09_Stage11_Per_Trade_Target_Research.md</a> &middot; <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/src/stage11_swing_breakout.py">stage11_swing_breakout.py</a> &middot; <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/src/stage11_pct_scaled.py">stage11_pct_scaled.py</a>.</p>
+  </section>
+
   <section id="roadmap">
     <h2>Status &amp; roadmap</h2>
     <div class="card">
@@ -366,6 +425,7 @@
       <li><a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader">Project 3 repository</a> &mdash; full charter, test protocol, strategy rules, backtester code, raw data, screenshots and competitive analysis</li>
       <li><a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/07_Goals_and_Targets.md">Goals &amp; Targets</a> &mdash; Target 1 (1% gross/day) definition, gap analysis, open questions</li>
       <li><a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/08_ML_and_Method_Development_Lessons.md">ML &amp; Method Development Lessons</a> &mdash; topic-organized, reusable lessons for future models/methods</li>
+      <li><a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/09_Stage11_Per_Trade_Target_Research.md">Stage 11: Per-Trade Target Research</a> &mdash; feasibility check, Donchian swing breakout and percent-scaled V7.1 candidates, gap analysis</li>
       <li><a href="https://www.luxalgo.com/library/indicator/VDv1AnDA-supply-and-demand-zones/">LuxAlgo Supply and Demand Zones</a></li>
       <li><a href="https://daytradingtoolkit.com/reviews/trendspider-review">TrendSpider review (Day Trading Toolkit)</a></li>
       <li><a href="https://www.liberatedstocktrader.com/trade-ideas-review/">Trade Ideas review (Liberated Stock Trader)</a></li>
