@@ -593,7 +593,7 @@ table.score{min-width:980px}
   <section id="measure">
     <h2>How it is measured</h2>
     <div class="grid g3">
-      <div class="card"><h3>Fair test</h3><p>Models were trained and tuned on 2020 to 2023, then frozen and run once on 2024 to 2026. Nothing was adjusted after seeing those results.</p></div>
+      <div class="card"><h3>Fair test</h3><p>Models were trained and tuned on 2020 to 2023, then frozen and run once on 2024 to 2026. No model was adjusted after its run. A check on November 23, 2026 rebuilt every model input with 2024 to 2026 removed from the data and got identical values, so no input can see the test years. Models I to M were designed after earlier test results were known; that is why the number of looks is stated.</p></div>
       <div class="card"><h3>Gross and after costs</h3><p>The goals are gross, before costs. Robinhood and Schwab charge no commission on CNQ, but each trade still loses a little to the bid-ask spread. The page uses 1&cent; per share for that.</p></div>
       <div class="card"><h3>Ranking rule</h3><p>Overall progress is the average of three fractions: profit per trade out of 3%, win rate out of 75%, and the share of months whose average trade is above 1%. The rule was fixed before the scores were computed.</p></div>
     </div>
@@ -604,6 +604,7 @@ table.score{min-width:980px}
         <li>Few trades for the multi-day models. J. One-a-month campaign has 35 trades in almost three years. Its average of 2.24% per trade has a likely range of +0.3% to +3.9%.</li>
         <li>The test years have now been looked at 19 times by different models. Each extra look makes a lucky result more likely, so the newest results need confirming on data after November 2026.</li>
         <li>A rising stock helps long trades. CNQ rose about 39% over the test period, and a randomly timed 5-day purchase made +0.35% on average.</li>
+        <li>Higher levels. A search of 135 settings on the 2021 to 2023 training years, with the test years removed from the data, found none that reaches level 2 on all three goals in every year, and none that reaches level 3. No new model was run on the test years for those levels.</li>
         <li>2026 has 11 months of data. Its months are judged on the same fractions (8/12, 10/12, 12/12).</li>
       </ul>
     </div>
