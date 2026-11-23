@@ -4,17 +4,156 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CNQ 5-Minute Zone Day Trading — Hamid Faghidi</title>
-<meta name="description" content="Project 3: a discretionary CNQ 5-minute zone-bounce habit turned into 8 precise, backtested rule versions with no look-ahead bias. V7.1: 75 trades, 72.9% win rate, +2.69/share gross (+1.19 after realistic trading costs).">
+<meta name="description" content="Project 3: 16 models and methods for trading CNQ, scored against three goals (profit per trade, win rate, steady months) on 2024-2026, with $1,000 invested per trade.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../style.css">
 <style>
-.phase{display:grid;grid-template-columns:minmax(0,1fr) 120px 60px;gap:12px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}
-.phase:last-child{border-bottom:0}
-.phase .n{color:var(--muted);text-align:right}
-.sbar{display:flex;height:10px;border-radius:99px;background:var(--line);overflow:hidden}
-.sbar i{display:block;height:100%}.sbar .d{background:var(--accent)}.sbar .p{background:var(--warn)}
-@media (max-width:600px){.phase{grid-template-columns:minmax(0,1fr) 70px 54px}}
+/* Layout: the three goals first, then a ranked top five, one scoreboard table,
+   one month grid and one money chart. Colours come from ../style.css tokens. */
+:root{--pale:#b5d3cf;--track:#e9e6df}
+@media (prefers-color-scheme:dark){:root{--pale:#2c504d;--track:#2a2e33}}
+main :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h2{text-wrap:balance}
+.sub{color:var(--muted);margin:-6px 0 16px;max-width:720px}
+.fine{font-size:13px;color:var(--muted);margin:0;max-width:820px}
+td.pos,strong.pos{color:var(--good);font-weight:700}
+td.neg,strong.neg{color:var(--bad);font-weight:700}
+
+/* goals */
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.goal{display:flex;flex-direction:column;gap:14px}
+.goal header{display:flex;gap:14px;align-items:flex-start;min-height:76px}
+.goal .code{flex:none;width:52px;height:52px;border-radius:12px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-family:var(--serif);font-size:21px;font-weight:600}
+.goal h3{margin:3px 0 2px;font-size:18px}
+.goal header p{margin:0;color:var(--muted);font-size:14px;line-height:1.4}
+.ladder{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.ladder li{border:1px solid var(--line);border-radius:10px;padding:10px 6px;text-align:center;display:flex;flex-direction:column;gap:2px;margin:0}
+.ladder b{font-size:11.5px;letter-spacing:.06em;color:var(--muted)}
+.ladder span{font-family:var(--serif);font-size:19px;font-weight:600;line-height:1.2}
+.ladder small{font-size:11.5px;color:var(--muted)}
+.ladder li.on{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.ladder li.on b,.ladder li.on small{color:var(--surface);opacity:.9}
+.ladder li.on b::before{content:"\2713\00a0"}
+.best{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;border-top:1px solid var(--line);padding-top:12px}
+.best .k{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.best .v{font-family:var(--serif);font-size:32px;font-weight:600;line-height:1.1}
+.best .who{font-size:13px;color:var(--muted);text-align:right;line-height:1.4}
+.goal .state{margin-top:-4px}
+.goal .fine{margin-top:auto}
+
+/* meters */
+.m-top{display:flex;align-items:baseline;gap:8px;font-size:13px;margin-bottom:6px}
+.m-name{color:var(--muted);flex:1;min-width:0}
+.m-val{font-weight:700;font-variant-numeric:tabular-nums}
+.lv{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:999px;background:var(--line);color:var(--muted);white-space:nowrap}
+.lv.on{background:var(--good-soft);color:var(--good)}
+.m-track{position:relative;height:8px;border-radius:99px;background:var(--track)}
+.m-track i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:var(--muted)}
+.m-track.hit i{background:var(--accent)}
+.m-track b{position:absolute;top:-3px;bottom:-3px;width:2px;margin-left:-1px;background:var(--ink);opacity:.4;border-radius:1px}
+.m-ticks{position:relative;height:14px;margin-top:4px}
+.m-ticks span{position:absolute;transform:translateX(-50%);font-size:10px;color:var(--muted);font-weight:600}
+.m-ticks span.end{transform:translateX(-100%)}
+
+/* top five */
+.top5{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.toprow{display:grid;grid-template-columns:40px minmax(0,1.05fr) minmax(0,1.5fr) minmax(170px,.75fr);gap:22px;align-items:center;margin:0}
+.rank{font-family:var(--serif);font-size:36px;font-weight:600;color:var(--accent);line-height:1;text-align:center}
+.toprow h3{margin:0 0 5px;font-size:18px}
+.toprow .meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-bottom:6px}
+.kind{border:1px solid var(--line);border-radius:999px;padding:1px 8px;font-weight:600}
+.toprow .tw p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.45}
+.meters{display:grid;gap:10px}
+.money{display:flex;flex-direction:column;gap:2px;align-items:flex-start;border-left:1px solid var(--line);padding-left:22px}
+.money .k{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.money .v{font-family:var(--serif);font-size:26px;font-weight:600;line-height:1.2}
+.money .s{font-size:12.5px;color:var(--muted)}
+.money .after{color:var(--ink);font-weight:600;margin-top:4px}
+.money .tag{margin-top:6px}
+@media (max-width:900px){
+  .toprow{grid-template-columns:40px minmax(0,1fr);gap:14px 16px;align-items:start}
+  .toprow .meters,.toprow .money{grid-column:1 / -1}
+  .money{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:12px;width:100%}
+}
+.note2{margin-top:16px;border-radius:var(--radius);padding:18px 20px;background:var(--warn-soft)}
+.note2 h3{margin:0 0 8px}
+.note2 ul{margin:0;padding-left:18px;font-size:14.5px}
+.note2 li{margin:6px 0}
+
+/* scoreboard table */
+.tabs button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+table.score td{vertical-align:middle;padding-top:12px;padding-bottom:12px}
+table.score{table-layout:fixed;min-width:900px}
+table.score th{white-space:normal;vertical-align:bottom}
+table.score th:nth-child(1){width:58px}table.score th:nth-child(2){width:21%}table.score th:nth-child(6){width:132px}table.score th:nth-child(7){width:112px}
+.score .rk{font-family:var(--serif);font-size:18px;color:var(--accent)}
+.score .nm{min-width:0}
+.score .nm strong{display:block}
+.score .nm span{font-size:12.5px;color:var(--muted)}
+.score .mc{min-width:0}
+.score .mv{font-weight:600;font-variant-numeric:tabular-nums;margin-bottom:6px;display:flex;justify-content:space-between;gap:6px;align-items:baseline;flex-wrap:wrap}
+.score .mv small{font-weight:400;color:var(--muted);font-size:11.5px}
+.score .lvs{white-space:nowrap}
+.score .lvs .lv{margin-right:4px}
+.score tbody tr:last-child td{border-bottom:0}
+
+/* month grid */
+.hm-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.hm{min-width:860px;display:grid;gap:3px}
+.hm-row{display:grid;grid-template-columns:172px repeat(12,minmax(0,1fr)) 6px repeat(12,minmax(0,1fr)) 6px repeat(11,minmax(0,1fr)) 76px;gap:3px;align-items:center}
+.hm-name{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:8px;position:sticky;left:0;z-index:1;background:var(--surface);align-self:stretch;display:flex;align-items:center}
+.hm-c{display:grid;place-items:center;aspect-ratio:1;border-radius:4px;font-size:11px;line-height:1;font-style:normal;font-weight:700;color:var(--bad)}
+.hm-c.hit{background:var(--accent)}
+.hm-c.pos{background:var(--pale)}
+.hm-c.neg{background:var(--bad-soft)}
+.hm-c.nt{box-shadow:inset 0 0 0 1px var(--line)}
+.hm .hm-c[data-tip]:hover{outline:2px solid var(--ink);outline-offset:1px}
+.hm-tot{font-size:12.5px;color:var(--muted);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.hm-tot b{color:var(--ink)}
+.hm-head .hm-tot{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.hm-m{font-size:10.5px;color:var(--muted);text-align:center}
+.hm-y{font-size:12px;font-weight:600;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:3px}
+.hm-legend{display:flex;gap:8px 18px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-bottom:14px}
+.hm-legend span{display:inline-flex;gap:6px;align-items:center}
+.hm-legend .hm-c{width:15px}
+.tipbox{margin-top:14px;font-size:13.5px;color:var(--muted);min-height:22px;border-top:1px solid var(--line);padding-top:10px}
+
+/* money chart */
+.mchart{display:grid;gap:9px;margin-top:6px}
+.mr{display:grid;grid-template-columns:172px minmax(0,1fr) 124px;gap:14px;align-items:center}
+.mr-name{font-size:13.5px}
+.mr-plot{position:relative;height:18px}
+.mr-plot .z{position:absolute;top:-5px;bottom:-5px;width:1px;background:var(--muted);opacity:.7}
+.mr-plot i{position:absolute;height:7px;border-radius:2px}
+.mr-plot i.gross{top:1px;background:var(--pale)}
+.mr-plot i.net{top:10px}
+.mr-plot i.net.p{background:var(--accent)}
+.mr-plot i.net.n{background:var(--loss)}
+.mr-val{display:flex;justify-content:flex-end;gap:8px;font-size:13px;font-variant-numeric:tabular-nums}
+.mr-val span,.mr-val strong{min-width:54px;text-align:right}
+.mr-val span{color:var(--muted)}
+.mr-axis .mr-plot{height:14px}
+.mr-axis .mr-plot span{position:absolute;transform:translateX(-50%);font-size:11px;color:var(--muted);white-space:nowrap}
+.mr-axis .mr-val span,.mr-axis .mr-val strong{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+@media (max-width:640px){
+  .mr{grid-template-columns:minmax(0,1fr) 116px;gap:4px 10px}
+  .mr-name{grid-column:1 / -1}
+  .mr-axis .mr-name{display:none}
+  .mr-axis .mr-plot span:nth-child(even){display:none}
+}
+.swipe{display:none;font-size:12.5px;color:var(--muted);margin:0 0 10px}
+@media (max-width:900px){.swipe{display:block}.hm-row{grid-template-columns:150px repeat(12,minmax(0,1fr)) 6px repeat(12,minmax(0,1fr)) 6px repeat(11,minmax(0,1fr)) 76px}}
+.tv{margin-top:16px}
+.tv summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.tv[open] summary{margin-bottom:12px}
+.research-link{display:block;margin-top:16px;text-decoration:none;color:inherit;transition:border-color .15s}
+.research-link:hover{border-color:var(--accent)}
+.research-link h3{margin:6px 0}
+.research-link p{color:var(--muted)}
+.research-cta{font-weight:600;color:var(--accent)}
+.hero .lede{max-width:720px}
+
 </style>
 </head>
 <body>
@@ -26,479 +165,339 @@
 <main class="wrap">
   <div class="crumbs" style="padding-top:20px"><a href="../">Home</a><span class="sep">/</span><a href="./">AI Trading</a><span class="sep">/</span><span>Project 3</span></div>
   <section class="hero" style="padding-top:28px">
-    <div class="eyebrow">Project 3 &middot; Intraday mean-reversion &middot; CNQ (single stock) &middot; Rule-based zones</div>
-    <h1>Project 3: CNQ 5-Minute Zone Day Trading</h1>
-    <p class="lede">Can a discretionary "buy the bounce off a zone" habit on CNQ's 5-minute chart be turned into a precise, mechanical rule set? Eight versions were built and backtested without look-ahead bias, each one walk-forward tested and regression-checked against the last. The final version, <strong>V7.1</strong>, rejects a specific flawed bounce pattern that was dragging down open-zone entries &mdash; a single, broad-based fix, not a curve-fit, that improved every headline metric at once.</p>
-    <p style="margin-top:12px;max-width:680px"><strong>Owner's goal, in priority order:</strong> (1) maximum net profit, and it must hold on weeks the rules weren't tuned on; (2) a higher win rate; (3) a reasonable number of trades (about 1&ndash;3/day). By these priorities the current best is V7.1: +2.69 $/share gross, 72.9% win rate, 75 trades over Jul 1 &ndash; Aug 14, 2026. Against the stated numeric targets &mdash; win rate &gt; 60% and net &gt; 1.0 $/share per week &mdash; V7.1 clears the win-rate bar but falls short on weekly net profit (best legitimate pace: 0.42/week), and that gap widens once realistic trading costs are modeled in.</p>
-    <p style="margin-top:14px"><span class="tag warn">Status: Phase 1 research &middot; net-of-cost goal not yet met</span> <span class="tag muted">Started Aug 19, 2026</span> <span class="tag muted">Last updated Nov 23, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#method">Method</a><a href="#versions">Versions V1&ndash;V7.1</a><a href="#rootcause">Root cause</a><a href="#mlexperiment">ML experiment</a><a href="#fullhistory">Full-history validation</a><a href="#cost">Trading costs</a><a href="#stage10">Walk-forward test</a><a href="#benchmark">Benchmark</a><a href="#goals">Goals &amp; Targets</a><a href="#stage11">Stage 11</a><a href="#stage12">Stage 12</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
-  </section>
-
-  <section aria-label="At a glance">
-    <div class="statstrip">
-      <div class="primary"><div class="k">Best result</div><div class="v">+2.69/share</div><div class="s">V7.1, gross &middot; Jul 1 &ndash; Aug 14, 2026</div></div>
-      <div><div class="k">Versions tested</div><div class="v">8</div><div class="s">V1 &rarr; V7.1</div></div>
-      <div><div class="k">Win rate</div><div class="v">72.9%</div><div class="s">V7.1, 75 trades</div></div>
-      <div><div class="k">Profit factor</div><div class="v">3.81</div><div class="s">V7.1</div></div>
-      <div><div class="k">Net at 2&cent; cost</div><div class="v sm">+1.19</div><div class="s">down from 2.69 gross</div></div>
-      <div><div class="k">Data history</div><div class="v sm">6.4 weeks</div><div class="s">CNQ 5-min, May 20&ndash;Aug 14, 2026</div></div>
-    </div>
-  </section>
-
-  <section id="findings">
-    <h2>What the research found</h2>
-    <div class="card" style="border-left:4px solid var(--warn)">
-      <div class="eyebrow" style="margin-bottom:8px">Main conclusion</div>
-      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0">Seven rounds of disciplined, anti-overfitting iteration turned a discretionary habit into a real, repeatable edge &mdash; V7.1 earns over 10&times; the baseline's net profit, with a causal, broad-based fix rather than a curve-fit. But the backtester has never modeled trading costs, and at a realistic 2&cent;/share round-trip cost, net drops from +2.69 to +1.19 and only two of the eight versions (V7, V7.1) stay profitable at all. The strategy is also structurally weaker in multi-week downtrends &mdash; a long-only design fighting the trend &mdash; and that weakness is root-caused but not yet fixed.</p>
-    </div>
-  </section>
-
-  <section id="method">
-    <h2>Method</h2>
-    <div class="grid g2">
-      <div class="card">
-        <h3>The entry rule (V7.1)</h3>
-        <ol class="steps">
-          <li><strong>Zones</strong>: the day's open (Zone 1), prior-day high/low/close, and intraday highs/lows &mdash; but only once confirmed by a second pullback, never the first print of a new low or high.</li>
-          <li><strong>Confirmation</strong>: price touches an established zone and the same candle confirms &mdash; a strong green candle beating the prior red candle, or a long lower wick (at OPEN zones, the wick must also close back above the day's open &mdash; the V7.1 fix).</li>
-          <li><strong>Risk</strong>: stop &minus;0.10 / floor +0.20 ($/share; &minus;0.15 / +0.30 on wide days), stop moved to breakeven after a green close.</li>
-          <li><strong>Exit</strong>: next zone reached with no further strong signal; one trade at a time, long only, 09:30&ndash;16:00 ET.</li>
-        </ol>
-      </div>
-      <div class="card">
-        <h3>How it was tested</h3>
-        <ol class="steps">
-          <li><strong>Walk-forward, no look-ahead</strong>: every decision uses only information available at that candle; trend and zone-strength helpers are computed strictly from prior days' closes.</li>
-          <li><strong>Regression discipline</strong>: every code change was re-checked against V6's known-good output (n=12, 60.0% win rate, PF 3.31) before trusting new results.</li>
-          <li><strong>Anti-overfitting gate</strong>: candidate fixes were tested and rejected when they turned out to be single-trade curve-fitting artifacts (e.g. widening the stop, tuning the entry cutoff), or when they improved one metric while reducing net profit overall.</li>
-          <li><strong>Reproducibility</strong>: one unified backtester (<code>src/bt7_unified_backtester_v1_to_v71.py</code>) reproduces every version, V1 through V7.1, from the same raw CSV.</li>
-        </ol>
-      </div>
-    </div>
-  </section>
-
-  <section id="versions">
-    <h2>Versions V1 &rarr; V7.1</h2>
-    <div class="card">
-      <div class="chart-title"><h3>Net profit by version, in development order</h3></div>
-      <p class="chart-note">Full range Jul 1 &ndash; Aug 14, 2026. Net is $ per share, before any trading costs.</p>
-      <div id="verchart"></div>
-      <div class="table-scroll" style="margin-top:14px"><table>
-        <thead><tr><th>Rank</th><th>Version</th><th>Key change</th><th>Net $/share</th><th>Net ($100/trade)</th><th>Gross %</th><th>Win rate</th><th>Trades</th><th>Profit factor</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td><strong>V7.1</strong></td><td>Reject open-zone wick bounces that don't reclaim the open</td><td class="num"><strong>2.690</strong></td><td class="num"><strong>$0.079</strong></td><td class="num"><strong>0.079%</strong></td><td class="num"><strong>72.9%</strong></td><td class="num"><strong>75</strong></td><td class="num"><strong>3.81</strong></td></tr>
-          <tr><td>2</td><td>V7</td><td>Tuned parameters (Jul 27 &ndash; Aug 14)</td><td class="num">2.495</td><td class="num">$0.063</td><td class="num">0.063%</td><td class="num">68.4%</td><td class="num">85</td><td class="num">2.72</td></tr>
-          <tr><td>3</td><td>V4</td><td>Max 2 entries per zone per day</td><td class="num">1.595</td><td class="num">$0.041</td><td class="num">0.041%</td><td class="num">48.8%</td><td class="num">87</td><td class="num">1.71</td></tr>
-          <tr><td>4</td><td>V3</td><td>Opening-range zone added</td><td class="num">1.279</td><td class="num">$0.026</td><td class="num">0.026%</td><td class="num">45.0%</td><td class="num">107</td><td class="num">1.42</td></tr>
-          <tr><td>5</td><td>V5</td><td>Exit when no more <em>strong</em> signal</td><td class="num">1.274</td><td class="num">$0.030</td><td class="num">0.030%</td><td class="num">59.0%</td><td class="num">88</td><td class="num">1.55</td></tr>
-          <tr><td>6</td><td>V6</td><td>Opening-range zone, exit-only</td><td class="num">1.194</td><td class="num">$0.034</td><td class="num">0.034%</td><td class="num">58.5%</td><td class="num">72</td><td class="num">1.59</td></tr>
-          <tr><td>7</td><td>V1</td><td>Baseline</td><td class="num">0.250</td><td class="num">$0.005</td><td class="num">0.005%</td><td class="num">33.3%</td><td class="num">72</td><td class="num">1.10</td></tr>
-          <tr><td>8</td><td>V2</td><td>"Next zone + weak action" becomes default exit</td><td class="num">0.199</td><td class="num">$0.003</td><td class="num">0.003%</td><td class="num">40.9%</td><td class="num">81</td><td class="num">1.09</td></tr>
-        </tbody>
-      </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Win rate excludes scratch (breakeven) trades. <strong>$100/trade</strong> assumes a fresh $100 position sized at each trade's own entry price (100 &divide; entry price shares), so it's not simply Net $/share &times; 100 &mdash; the two are related through CNQ's price at entry, which ranged roughly $38&ndash;$50 over this window. Reproducibility check (2026-10-28): running the unified backtester on the raw CSV reproduces V1, V4, V7 and V7.1 exactly as reported here. <strong>Gross %</strong> is the same $100/trade figure re-expressed as a percentage return on that $100 (a $100 position returning $0.079 is a 0.079% gain) &mdash; before any trading costs.</p>
-    </div>
-  </section>
-
-  <section id="rootcause">
-    <h2>Root cause, not just tuning</h2>
-    <div class="grid g2">
-      <div class="card">
-        <h3>Why V7.1 beats V7</h3>
-        <p>V7's win rate dropped sharply in some weeks. Breaking trades down by entry-confirmation type, zone kind and entry price vs. the day's open isolated the cause: wick-confirmed bounces at the day's-open zone that <em>didn't reclaim the open</em> were systematically weak. Requiring the close to beat the open for that specific case (OPEN-zone wick entries only) fixed it.</p>
-        <p style="margin-top:8px"><span class="tag good">Adopted</span> Broad-based (not one trade), causally explicable, improved every headline metric at once &mdash; the bar for a real fix here.</p>
-        <p style="margin-top:8px;font-size:13px;color:var(--muted)">Rejected along the way: widening the stop and fine-tuning the entry cutoff &mdash; both traced back to a single trade each, not a general effect.</p>
-      </div>
-      <div class="card">
-        <h3>Why June&ndash;July lagged</h3>
-        <p>V7 and V7.1 both showed weaker net P&amp;L in June/July. Root cause: a real, multi-week downtrend in CNQ during that window. The strategy is long-only, so during downtrends the average win shrinks and the average loss grows <em>at the same time</em>, even though the win rate itself holds up reasonably well.</p>
-        <p style="margin-top:8px">Three mechanical fixes were tried and tested honestly:</p>
-        <ul style="margin:6px 0 0">
-          <li><span class="tag bad">Rejected</span> a trailing trend filter &mdash; made results worse</li>
-          <li><span class="tag bad">Rejected</span> a downtrend stop multiplier &mdash; made results worse</li>
-          <li><span class="tag warn">Shelved</span> a downtrend zone filter &mdash; small improvement, but on only 7 trades &mdash; too fragile to adopt</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section id="mlexperiment">
-    <h2>Stage 8: could ML beat the hand rules?</h2>
-    <div class="card">
-      <p style="margin-top:0"><strong>Question asked:</strong> could a transformer learn this strategy directly from the 11 annotated chart screenshots? <strong>Answer: no</strong> &mdash; 11 images can't train any neural network, vision or otherwise, and the screenshots are a lossy picture of data already held exactly as numbers. Built the viable alternative instead: a gradient-boosted model over the real OHLCV bars plus V7.1's own zone/candle features, trained on May&ndash;Jun 2026, tested out of sample on the same Jul 1 &ndash; Aug 14 window V7.1's numbers are reported on.</p>
-      <div class="table-scroll"><table>
-        <thead><tr><th>Approach</th><th>Trades</th><th>Win rate</th><th>Profit factor</th><th>Net $/share (total)</th><th>Net $/share (per trade)</th><th>$100/trade (total)</th><th>$100/trade (avg)</th><th>Gross %</th></tr></thead>
-        <tbody>
-          <tr><td><strong>V7.1 (hand rules)</strong></td><td class="num">75</td><td class="num">72.9%</td><td class="num">3.81</td><td class="num"><strong>2.690</strong></td><td class="num">0.036</td><td class="num"><strong>$5.89</strong></td><td class="num">$0.079</td><td class="num">0.079%</td></tr>
-          <tr><td>ML model alone</td><td class="num">31</td><td class="num">73.1%</td><td class="num">1.42</td><td class="num">0.294</td><td class="num">0.009</td><td class="num">$0.51</td><td class="num">$0.017</td><td class="num">0.017%</td></tr>
-          <tr><td>Rule OR model</td><td class="num">83</td><td class="num">71.9%</td><td class="num">2.60</td><td class="num">2.230</td><td class="num">0.027</td><td class="num">$4.76</td><td class="num">$0.057</td><td class="num">0.057%</td></tr>
-          <tr><td>Rule AND model agrees</td><td class="num">17</td><td class="num">83.3%</td><td class="num">17.6</td><td class="num">1.031</td><td class="num"><strong>0.061</strong></td><td class="num">$2.28</td><td class="num"><strong>$0.134</strong></td><td class="num"><strong>0.134%</strong></td></tr>
-        </tbody>
-      </table></div>
-      <p style="margin-top:8px"><span class="tag bad">Rejected</span> none of the three ML variants beat V7.1's net profit, the stated #1 priority &mdash; so V7.1 stays the live configuration. The ML model matches V7.1's win rate almost exactly but is not a refinement of it: only 5 of its 36 highest-confidence picks overlap with the 95 rule-confirmed candidates in the test window, meaning it learned a different, weaker signal, not a better version of the same one.</p>
-      <p style="font-size:13px;color:var(--muted);margin:4px 0 0">“Net $/share” is a cumulative total, not a per-trade or per-day figure: it’s the sum of every trade’s $/share P&amp;L across the whole Jul 1&ndash;Aug 14 test window (≈32 trading days) shown in the row’s trade count. Rows with more trades (e.g. 83) aren’t directly comparable to rows with fewer (e.g. 17) on this column alone &mdash; profit factor and win rate are the per-trade quality measures; net is the period total. The added “per trade” column divides the total by the trade count so rows are comparable at a glance &mdash; by that measure the AND filter is well ahead of V7.1 (0.061 vs. 0.036 $/share per trade), it just hasn’t had enough trades yet to catch up on the total. <strong>$100/trade</strong> converts this to a dollar amount assuming a fresh $100 position sized at each trade’s own entry price (100 &divide; entry price shares) &mdash; same ranking, same conclusion, just in dollars: the AND filter averages $0.134 per $100 trade vs. V7.1’s $0.079.</p>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Kept on file: the "rule AND model agrees" variant's 83.3% win rate and 17.6 profit factor are the best of any version tried in this project, just on too few trades (17) to win on net profit yet. Worth revisiting once more CNQ history (Stage 7.2) gives it room to generate more trades. Validated before trusting any of this: restricting the ML candidate pool to V7.1's own confirmed signals and replaying them reproduced V7.1's official numbers exactly, bar-for-bar, with 0 mismatches. Full write-up: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/06_Lessons_Learned.docx">06_Lessons_Learned.docx</a>, 2026-11-18 entry; code: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/src/ml_v8_gbm_experiment.py">src/ml_v8_gbm_experiment.py</a>.</p>
-    </div>
-  </section>
-
-  <section id="fullhistory">
-    <h2>Stage 9: does it hold up on 6.3 years of data, not 6.5 weeks?</h2>
-    <div class="card">
-      <p style="margin-top:0">Every version above (V1&ndash;V7.1) was tuned and reported on a single 32-day window (Jul 1&ndash;Aug 14, 2026). Acquired 2020-07-27 to 2026-11-18 5-minute CNQ bars (Alpaca Markets, IEX feed, split-adjusted for CNQ's 2024-06-11 2-for-1 split, spliced with the original file so the published Jul1&ndash;Aug14 window still reproduces exactly) and reran every version's unchanged logic across the full 1,584-day history &mdash; 47&times; more trading days than any result above was tested on.</p>
-      <div class="table-scroll"><table>
-        <thead><tr><th>Version</th><th>Trades</th><th>Win rate</th><th>Profit factor</th><th>Net $/share (total)</th><th>Net $/share (per trade)</th><th>$100/trade (total)</th><th>$100/trade (avg)</th><th>Gross %</th></tr></thead>
-        <tbody>
-          <tr><td>V1</td><td class="num">3,470</td><td class="num">41.4%</td><td class="num">1.33</td><td class="num">33.902</td><td class="num"><strong>0.0098</strong></td><td class="num">$141.22</td><td class="num"><strong>$0.0407</strong></td><td class="num"><strong>0.0407%</strong></td></tr>
-          <tr><td>V2</td><td class="num">4,725</td><td class="num">51.4%</td><td class="num">1.28</td><td class="num">31.762</td><td class="num">0.0067</td><td class="num">$128.37</td><td class="num">$0.0272</td><td class="num">0.0272%</td></tr>
-          <tr><td>V3</td><td class="num">6,185</td><td class="num">51.2%</td><td class="num">1.25</td><td class="num"><strong>36.697</strong></td><td class="num">0.0059</td><td class="num"><strong>$146.64</strong></td><td class="num">$0.0237</td><td class="num">0.0237%</td></tr>
-          <tr><td>V4</td><td class="num">4,856</td><td class="num">50.7%</td><td class="num">1.24</td><td class="num">29.927</td><td class="num">0.0062</td><td class="num">$115.98</td><td class="num">$0.0239</td><td class="num">0.0239%</td></tr>
-          <tr><td>V5</td><td class="num">5,102</td><td class="num">55.0%</td><td class="num">1.18</td><td class="num">23.514</td><td class="num">0.0046</td><td class="num">$94.83</td><td class="num">$0.0186</td><td class="num">0.0186%</td></tr>
-          <tr><td>V6</td><td class="num">4,024</td><td class="num">55.3%</td><td class="num">1.21</td><td class="num">21.266</td><td class="num">0.0053</td><td class="num">$81.15</td><td class="num">$0.0202</td><td class="num">0.0202%</td></tr>
-          <tr><td>V7</td><td class="num">4,074</td><td class="num">61.4%</td><td class="num">1.31</td><td class="num">30.542</td><td class="num">0.0075</td><td class="num">$121.58</td><td class="num">$0.0298</td><td class="num">0.0298%</td></tr>
-          <tr><td><strong>V7.1 (live config)</strong></td><td class="num">3,605</td><td class="num"><strong>61.3%</strong></td><td class="num"><strong>1.31</strong></td><td class="num">27.947</td><td class="num">0.0078</td><td class="num">$114.12</td><td class="num">$0.0317</td><td class="num">0.0317%</td></tr>
-        </tbody>
-      </table></div>
-      <p style="margin-top:8px"><span class="tag bad">Headline numbers revised down</span> V7.1's narrow tuning window reported 72.9% win rate and a 3.81 profit factor. Across the full 6.3-year, 3,605-trade history, it's 61.3% and 1.31 &mdash; still a real, positive edge in <strong>every one of the 7 calendar years</strong> in the data (win rate never drops below 57.3%, profit factor never below 1.17), but well short of what the 32-day sample suggested. The specific 72.9%/3.81 figures were measured on a sample about 1/20th this size and shouldn't be quoted without this context going forward. <strong>$100/trade</strong> columns show the same results as a dollar P&amp;L assuming a fresh $100 position each trade, sized at that trade's own entry price (100 &divide; entry price shares) &mdash; CNQ ranged roughly $9&ndash;$49/share over this history, so this is not simply the $/share figure &times;100.</p>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">V7.1 by year (trades / win rate / profit factor / net per trade): 2020: 304&nbsp;/&nbsp;67.8%&nbsp;/&nbsp;1.54&nbsp;/&nbsp;0.0071. 2021: 584&nbsp;/&nbsp;63.7%&nbsp;/&nbsp;1.26&nbsp;/&nbsp;0.0048. 2022: 518&nbsp;/&nbsp;61.4%&nbsp;/&nbsp;1.55&nbsp;/&nbsp;0.0162. 2023: 519&nbsp;/&nbsp;60.4%&nbsp;/&nbsp;1.32&nbsp;/&nbsp;0.0083. 2024: 571&nbsp;/&nbsp;60.8%&nbsp;/&nbsp;1.18&nbsp;/&nbsp;0.0047. 2025: 618&nbsp;/&nbsp;60.0%&nbsp;/&nbsp;1.17&nbsp;/&nbsp;0.0043. 2026 (full year to date): 491&nbsp;/&nbsp;57.3%&nbsp;/&nbsp;1.32&nbsp;/&nbsp;0.0099. V7.1 keeps the best or co-best win rate of any version in every single year, which is why it stays the live configuration despite V1's higher raw per-trade edge (0.0098, but on a much less consistent 41.4% win rate).</p>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Known limitation found during this stage: this project's zone logic uses sub-cent thresholds (V7.1's entry band is 1.2&cent;), and cross-checking the two data vendors involved (IEX feed vs. the original consolidated-tape file) showed prices matching closely (median diff ~0.01%, max ~0.46%) but not tick-for-tick &mdash; close enough for the rule-based backtest above (which reproduces the official Jul1&ndash;Aug14 numbers exactly once spliced), but not close enough for the Stage 8 ML candidate pipeline to reproduce the same window's numbers when rebuilt on the full IEX-sourced history. That re-test is deferred until the candidate pipeline is re-validated against the larger dataset the same way Stage 8 was &mdash; not shipped with unverified numbers. Data: CNQ_5min_20200727_to_20261118.csv (kept in the owner's local project folder; price data is not published); code: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/src/stage9_full_history_validation.py">stage9_full_history_validation.py</a>; full write-up: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/06_Lessons_Learned.docx">06_Lessons_Learned.docx</a>, 2026-11-18 Stage 9 entry.</p>
-    </div>
-  </section>
-
-  <section id="cost">
-    <h2>Trading costs: the biggest open gap</h2>
-    <div class="card">
-      <p style="margin-top:0">The backtester has never modeled commissions, spread or slippage. <strong>&ldquo;Gross&rdquo;</strong> means before those costs are subtracted &mdash; the raw cumulative $/share P&amp;L total, same basis as every other table on this page, just not yet charged for trading costs. At a realistic round-trip cost per share, only the two best versions stay profitable at all &mdash; <strong>this table covers the original Jul 1&ndash;Aug 14, 2026 tuning/test window only</strong> (same period every version above was scored on):</p>
-      <div class="table-scroll"><table>
-        <thead><tr><th>Version</th><th>Trades</th><th>Gross (total)</th><th>Gross (per trade)</th><th>1&cent; cost</th><th>Win rate</th><th>$100 gross (total)</th><th>$100 gross (avg)</th><th>Gross %</th><th>$100 @1&cent;</th></tr></thead>
-        <tbody>
-          <tr><td><strong>V7.1</strong></td><td class="num">75</td><td class="num">2.690</td><td class="num"><strong>0.0359</strong></td><td class="num">1.940</td><td class="num">72.9%</td><td class="num">$5.89</td><td class="num"><strong>$0.0785</strong></td><td class="num"><strong>0.0785%</strong></td><td class="num">$4.19</td></tr>
-          <tr><td>V7</td><td class="num">85</td><td class="num">2.495</td><td class="num">0.0294</td><td class="num">1.645</td><td class="num">68.4%</td><td class="num">$5.34</td><td class="num">$0.0629</td><td class="num">0.0629%</td><td class="num">$3.42</td></tr>
-          <tr><td>V4</td><td class="num">87</td><td class="num">1.595</td><td class="num">0.0183</td><td class="num">0.725</td><td class="num">48.8%</td><td class="num">$3.57</td><td class="num">$0.0411</td><td class="num">0.0411%</td><td class="num">$1.60</td></tr>
-          <tr><td>V6</td><td class="num">72</td><td class="num">1.194</td><td class="num">0.0166</td><td class="num">0.474</td><td class="num">58.5%</td><td class="num">$2.48</td><td class="num">$0.0344</td><td class="num">0.0344%</td><td class="num">$0.84</td></tr>
-          <tr><td>V5</td><td class="num">88</td><td class="num">1.274</td><td class="num">0.0145</td><td class="num">0.394</td><td class="num">59.0%</td><td class="num">$2.68</td><td class="num">$0.0304</td><td class="num">0.0304%</td><td class="num">$0.68</td></tr>
-          <tr><td>V3</td><td class="num">107</td><td class="num">1.279</td><td class="num">0.0120</td><td class="num">0.209</td><td class="num">45.0%</td><td class="num">$2.82</td><td class="num">$0.0264</td><td class="num">0.0264%</td><td class="num">$0.39</td></tr>
-          <tr><td>V1</td><td class="num">72</td><td class="num">0.250</td><td class="num">0.0035</td><td class="num">&minus;0.470</td><td class="num">33.3%</td><td class="num">$0.36</td><td class="num">$0.0049</td><td class="num">0.0049%</td><td class="num">&minus;$1.29</td></tr>
-          <tr><td>V2</td><td class="num">81</td><td class="num">0.199</td><td class="num">0.0025</td><td class="num">&minus;0.611</td><td class="num">40.9%</td><td class="num">$0.23</td><td class="num">$0.0028</td><td class="num">0.0028%</td><td class="num">&minus;$1.63</td></tr>
-        </tbody>
-      </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">V7.1 break-even cost (this window only): &asymp;3.6&cent;/share round-trip. Maximum drawdown (gross, trade sequence): &minus;0.34 $/share. <strong>$100 columns</strong> apply the same $100-per-trade, entry-price-based normalization used throughout this page (not a flat &times;100 of the $/share figures). <strong>Gross %</strong> is that same $100-avg figure shown as a percentage return, before costs &mdash; the 1&cent; cost column isn't re-expressed as a percentage since the cost is per share, not per dollar invested.</p>
-
-      <h3 style="margin-top:28px">Same question, full 6.3-year history (V7.1, year by year)</h3>
-      <p style="color:var(--muted);margin:-4px 0 14px">The table above uses the same 32-day window every version was tuned on. Applying the same 1&cent; round-trip cost to V7.1's full Stage 9 history (2020-07-27 to 2026-11-18, see <a href="#fullhistory">Full-history validation</a>) tells a much less forgiving story:</p>
-      <div class="table-scroll"><table>
-        <thead><tr><th>Year</th><th>Trades</th><th>Win rate</th><th>Gross (total)</th><th>Gross (per trade)</th><th>1&cent; cost</th><th>$100 gross (total)</th><th>$100 gross (avg)</th><th>Gross %</th><th>$100 @1&cent;</th></tr></thead>
-        <tbody>
-          <tr><td>2020</td><td class="num">304</td><td class="num">67.8%</td><td class="num">2.173</td><td class="num">0.0071</td><td class="num">&minus;0.867</td><td class="num">$22.72</td><td class="num">$0.0747</td><td class="num">0.0747%</td><td class="num">&minus;$8.80</td></tr>
-          <tr><td>2021</td><td class="num">584</td><td class="num">63.7%</td><td class="num">2.812</td><td class="num">0.0048</td><td class="num">&minus;3.028</td><td class="num">$16.16</td><td class="num">$0.0277</td><td class="num">0.0277%</td><td class="num">&minus;$19.60</td></tr>
-          <tr><td>2022</td><td class="num">518</td><td class="num">61.4%</td><td class="num">8.403</td><td class="num">0.0162</td><td class="num"><strong>3.223</strong></td><td class="num"><strong>$30.96</strong></td><td class="num"><strong>$0.0598</strong></td><td class="num"><strong>0.0598%</strong></td><td class="num"><strong>$12.30</strong></td></tr>
-          <tr><td>2023</td><td class="num">519</td><td class="num">60.4%</td><td class="num">4.302</td><td class="num">0.0083</td><td class="num">&minus;0.888</td><td class="num">$14.91</td><td class="num">$0.0287</td><td class="num">0.0287%</td><td class="num">&minus;$2.59</td></tr>
-          <tr><td>2024</td><td class="num">571</td><td class="num">60.8%</td><td class="num">2.697</td><td class="num">0.0047</td><td class="num">&minus;3.013</td><td class="num">$8.21</td><td class="num">$0.0144</td><td class="num">0.0144%</td><td class="num">&minus;$8.36</td></tr>
-          <tr><td>2025</td><td class="num">618</td><td class="num">60.0%</td><td class="num">2.675</td><td class="num">0.0043</td><td class="num">&minus;3.505</td><td class="num">$9.35</td><td class="num">$0.0151</td><td class="num">0.0151%</td><td class="num">&minus;$10.74</td></tr>
-          <tr><td>2026 (to date)</td><td class="num">491</td><td class="num">57.3%</td><td class="num">4.884</td><td class="num">0.0099</td><td class="num">&minus;0.026</td><td class="num">$11.81</td><td class="num">$0.0241</td><td class="num">0.0241%</td><td class="num">$0.87</td></tr>
-          <tr><td><strong>All 7 years</strong></td><td class="num">3,605</td><td class="num">61.3%</td><td class="num">27.947</td><td class="num">0.0078</td><td class="num"><strong>&minus;8.103</strong></td><td class="num">$114.12</td><td class="num">$0.0317</td><td class="num">0.0317%</td><td class="num">&minus;$36.91</td></tr>
-        </tbody>
-      </table></div>
-      <p style="margin-top:8px"><span class="tag bad">Does not hold up after costs</span> at a 1&cent;/share round-trip cost &mdash; half of what the narrow-window table above used as its "high cost" scenario &mdash; V7.1 is net <strong>negative in 6 of the last 7 years</strong>, and negative overall (&minus;8.103 across all 3,605 trades). 2022 is the only year that stays profitable after costs. At 2&cent;/share it's negative in every single year. The narrow Jul1&ndash;Aug14 2026 window happened to fall in a period cheap enough (break-even &asymp;3.6&cent;) to look viable; that was not representative of the other 6.5 years in the data. This is the single most important number on this page for deciding whether V7.1 is tradeable with real money: at realistic retail costs, the honest answer across 6.3 years is mostly no.</p>
-    </div>
-  </section>
-
-  <section id="stage10">
-    <h2>Stage 10: walk-forward training (2020&ndash;2023) vs blind test (2024&ndash;2026)</h2>
-    <div class="card">
-      <p style="margin-top:0">Every result above used the hand-picked V1&ndash;V7.1 parameters as-is, unchanged, across whatever date range was being tested &mdash; including Stage 9's 6.3-year run. That is not the same thing as training on one period and testing on another: nothing above was ever genuinely re-fit on past data alone and then evaluated on data it had never seen. This stage does that properly, for the project's top 3 methods by net profit: <strong>V7.1</strong>, <strong>V7</strong>, and Stage 8's best ML variant, <strong>Rule OR Model</strong> (the hand rule confirms OR the ML model's probability clears a threshold). Train: 2020&ndash;2023 (861 trading days). Test: 2024, 2025 and 2026, each touched exactly once, after training was frozen &mdash; never used to pick or re-pick anything.</p>
-
-      <h3 style="margin-top:20px">Method &mdash; and how overfitting was kept in check</h3>
-      <ol class="steps">
-        <li><strong>Walk-forward folds inside the training window only</strong>: train on 2020 &rarr; validate (blind) on 2021; train on 2020&ndash;2021 &rarr; validate on 2022; train on 2020&ndash;2022 &rarr; validate on 2023. 2024&ndash;2026 are never touched during this step.</li>
-        <li><strong>Selection by out-of-sample fold performance, not in-sample fit</strong>: for V7/V7.1, each fold picks whichever (zone-touch band, entry-cutoff time) combination had the best net-per-trade on that fold's training years &mdash; a deliberately narrow 3&times;3 grid, not a search over per-trade special-case rules (the kind of curve-fitting this project's own lessons-learned doc already flags and rejects). A floor of 30 trades per candidate stops any combination from winning on a lucky handful of trades.</li>
-        <li><strong>Rule OR Model</strong> reuses V7.1's exact, already-validated zone/entry logic (unchanged) to label every zone touch with its would-be P&amp;L, then retrains a small gradient-boosted classifier (identical architecture to Stage 8) on only the fold's training years, with its probability threshold picked on an internal time-split within that training window &mdash; the validation/test year is never used to pick the threshold.</li>
-        <li><strong>Final frozen configuration</strong> for each method is selected the same way, using all of 2020&ndash;2023 as training, then run <em>once</em>, blind, on each of 2024, 2025 and 2026 &mdash; no retuning between years, no peeking.</li>
-      </ol>
-
-      <h3 style="margin-top:28px">Walk-forward folds (within training, 2020&ndash;2023) &mdash; out-of-sample validation every time</h3>
-      <div class="table-scroll"><table>
-        <thead><tr><th>Method</th><th>Fold</th><th>Trained on</th><th>Chosen setting</th><th>Validated on</th><th>Trades</th><th>Win rate</th><th>Profit factor</th><th>Net $/share</th></tr></thead>
-        <tbody>
-          <tr><td>V7</td><td>1</td><td>2020</td><td>band=0.012, cutoff=12:55</td><td>2021</td><td class="num">561</td><td class="num">62.0%</td><td class="num">1.23</td><td class="num">2.408</td></tr>
-          <tr><td>V7</td><td>2</td><td>2020&ndash;2021</td><td>band=0.02, cutoff=12:55</td><td>2022</td><td class="num">532</td><td class="num">58.2%</td><td class="num">1.39</td><td class="num">6.833</td></tr>
-          <tr><td>V7</td><td>3</td><td>2020&ndash;2022</td><td>band=0.012, cutoff=13:55</td><td>2023</td><td class="num">576</td><td class="num">62.1%</td><td class="num">1.37</td><td class="num">5.208</td></tr>
-          <tr><td>V7.1</td><td>1</td><td>2020</td><td>band=0.012, cutoff=12:55</td><td>2021</td><td class="num">474</td><td class="num">63.5%</td><td class="num">1.27</td><td class="num">2.478</td></tr>
-          <tr><td>V7.1</td><td>2</td><td>2020&ndash;2021</td><td>band=0.02, cutoff=12:55</td><td>2022</td><td class="num">462</td><td class="num">58.7%</td><td class="num">1.48</td><td class="num">7.190</td></tr>
-          <tr><td>V7.1</td><td>3</td><td>2020&ndash;2022</td><td>band=0.02, cutoff=12:55</td><td>2023</td><td class="num">523</td><td class="num">60.0%</td><td class="num">1.38</td><td class="num">5.295</td></tr>
-          <tr><td>Rule OR Model</td><td>1</td><td>2020</td><td>threshold=0.350</td><td>2021</td><td class="num">1,142</td><td class="num">65.7%</td><td class="num">1.33</td><td class="num">7.200</td></tr>
-          <tr><td>Rule OR Model</td><td>2</td><td>2020&ndash;2021</td><td>threshold=0.375</td><td>2022</td><td class="num">1,253</td><td class="num">60.5%</td><td class="num">1.32</td><td class="num">13.583</td></tr>
-          <tr><td>Rule OR Model</td><td>3</td><td>2020&ndash;2022</td><td>threshold=0.350</td><td>2023</td><td class="num">1,073</td><td class="num">60.3%</td><td class="num">1.24</td><td class="num">7.245</td></tr>
-        </tbody>
-      </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Every validation number above is out-of-sample &mdash; the year being scored was never part of that row's training window. All nine validation folds stay win-rate &gt; 58% and profit-factor &gt; 1.2, with no sign of collapsing from one fold to the next &mdash; the basic signature of overfitting (great on training years, falls apart the moment it sees a new one) doesn't show up here.</p>
-
-      <h3 style="margin-top:28px">Final frozen configuration (trained on all of 2020&ndash;2023)</h3>
-      <div class="table-scroll"><table>
-        <thead><tr><th>Method</th><th>Frozen setting</th><th>Training trades</th><th>Training win rate</th><th>Training PF</th><th>Training Net $/share</th><th>Training Gross %</th></tr></thead>
-        <tbody>
-          <tr><td>V7</td><td>band=0.02, cutoff=12:55</td><td class="num">2,217</td><td class="num">61.3%</td><td class="num">1.39</td><td class="num">19.500</td><td class="num">0.0415%</td></tr>
-          <tr><td>V7.1</td><td>band=0.02, cutoff=12:55</td><td class="num">1,922</td><td class="num">61.4%</td><td class="num">1.43</td><td class="num">19.040</td><td class="num">0.0467%</td></tr>
-          <tr><td>Rule OR Model</td><td>threshold=0.350</td><td class="num">4,037</td><td class="num">63.1%</td><td class="num">1.35</td><td class="num">35.968</td><td class="num">0.0423%</td></tr>
-        </tbody>
-      </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Worth noting on its own: walk-forward selection landed on <strong>band=0.02</strong> in the final config and 2 of 3 folds for both V7 and V7.1 &mdash; wider than the <strong>0.012</strong> hand-picked on the original 32-day window &mdash; and <strong>cutoff=12:55</strong> rather than the hand-picked <strong>13:55</strong>. The narrow parameters that looked best on 6.4 weeks of data were not the ones that generalized best across 4 years of walk-forward selection.</p>
-
-      <h3 style="margin-top:28px">Blind test: 2024, 2025, 2026 (each year touched exactly once)</h3>
-      <p style="color:var(--muted);margin:-4px 0 14px">The frozen configuration above, unchanged, run once per year. No retuning between years.</p>
-      <div class="table-scroll"><table>
-        <thead><tr><th>Method</th><th>Year</th><th>Trades</th><th>Win rate</th><th>Profit factor</th><th>Net $/share</th><th>$100/trade avg</th><th>Gross %</th><th>$100 @1&cent; avg</th></tr></thead>
-        <tbody>
-          <tr><td>V7</td><td>2024</td><td class="num">664</td><td class="num"><strong>60.9%</strong></td><td class="num">1.26</td><td class="num">4.005</td><td class="num">$0.0183</td><td class="num">0.0183%</td><td class="num">&minus;$0.0108</td></tr>
-          <tr><td>V7</td><td>2025</td><td class="num">715</td><td class="num">60.4%</td><td class="num">1.21</td><td class="num">3.425</td><td class="num">$0.0153</td><td class="num">0.0153%</td><td class="num">&minus;$0.0171</td></tr>
-          <tr><td>V7</td><td>2026</td><td class="num">455</td><td class="num">57.6%</td><td class="num">1.36</td><td class="num">5.053</td><td class="num">$0.0253</td><td class="num">0.0253%</td><td class="num">$0.0030</td></tr>
-          <tr><td>V7</td><td><strong>Combined</strong></td><td class="num">1,834</td><td class="num">59.9%</td><td class="num">1.27</td><td class="num">12.483</td><td class="num">$0.0189</td><td class="num">0.0189%</td><td class="num">&minus;$0.0098</td></tr>
-          <tr><td>V7.1</td><td>2024</td><td class="num">589</td><td class="num">59.5%</td><td class="num">1.21</td><td class="num">3.110</td><td class="num">$0.0161</td><td class="num">0.0161%</td><td class="num">&minus;$0.0129</td></tr>
-          <tr><td>V7.1</td><td>2025</td><td class="num">599</td><td class="num">60.6%</td><td class="num">1.26</td><td class="num">3.635</td><td class="num">$0.0193</td><td class="num">0.0193%</td><td class="num">&minus;$0.0131</td></tr>
-          <tr><td>V7.1</td><td>2026</td><td class="num">409</td><td class="num">57.4%</td><td class="num"><strong>1.40</strong></td><td class="num">4.923</td><td class="num"><strong>$0.0281</strong></td><td class="num"><strong>0.0281%</strong></td><td class="num"><strong>$0.0058</strong></td></tr>
-          <tr><td>V7.1</td><td><strong>Combined</strong></td><td class="num">1,597</td><td class="num">59.4%</td><td class="num">1.28</td><td class="num">11.668</td><td class="num">$0.0204</td><td class="num">0.0204%</td><td class="num">&minus;$0.0082</td></tr>
-          <tr><td>Rule OR Model</td><td>2024</td><td class="num">1,194</td><td class="num">60.7%</td><td class="num">1.18</td><td class="num">5.883</td><td class="num">$0.0143</td><td class="num">0.0143%</td><td class="num">&minus;$0.0146</td></tr>
-          <tr><td>Rule OR Model</td><td>2025</td><td class="num">1,343</td><td class="num">60.3%</td><td class="num">1.15</td><td class="num">5.715</td><td class="num">$0.0145</td><td class="num">0.0145%</td><td class="num">&minus;$0.0179</td></tr>
-          <tr><td>Rule OR Model</td><td>2026</td><td class="num">1,353</td><td class="num">58.8%</td><td class="num">1.31</td><td class="num">14.244</td><td class="num">$0.0241</td><td class="num">0.0241%</td><td class="num">$0.0019</td></tr>
-          <tr><td>Rule OR Model</td><td><strong>Combined</strong></td><td class="num"><strong>3,890</strong></td><td class="num">59.9%</td><td class="num">1.22</td><td class="num"><strong>25.841</strong></td><td class="num">$0.0178</td><td class="num">0.0178%</td><td class="num">&minus;$0.0100</td></tr>
-        </tbody>
-      </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Gross edge survives blind testing: all three methods stay net-positive, before costs, in all three unseen years, with win rates (57&ndash;61%) and profit factors (1.15&ndash;1.40) close to what the walk-forward validation folds already predicted &mdash; no collapse from training to test. <strong>Rule OR Model</strong> trades roughly twice as often as the pure rule methods (it fires on either signal) and posts the largest absolute dollar totals, but its per-trade quality (profit factor) is no better &mdash; and slightly worse in 2024&ndash;2025 &mdash; than the simpler V7/V7.1: more volume, not a sharper edge.</p>
-      <p style="margin-top:8px"><span class="tag bad">Same cost problem, now under much stricter testing discipline</span> at a 1&cent;/share round-trip cost, <strong>all three walk-forward-trained methods go net negative in 2024 and 2025</strong>, and are only marginally positive in 2026 (the one year that was already the cheapest in Stage 9's year-by-year cost table). This is the same conclusion Stage 9 reached with the original, untrained parameters &mdash; now confirmed with real train/test separation and walk-forward parameter selection instead of hand-picked values applied unchanged. Training-period (2020&ndash;2023, in-sample) Gross % was 0.0415% (V7), 0.0467% (V7.1) and 0.0423% (Rule OR Model) &mdash; the blind combined-test Gross % (0.0189%, 0.0204%, 0.0178%) is noticeably lower, as expected for any true held-out test, but not a collapse to zero or negative &mdash; consistent with genuine, moderate degradation rather than a badly overfit model falling apart out of sample.</p>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Code: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/src/stage10_walk_forward_training.py">stage10_walk_forward_training.py</a> (grid search + walk-forward folds + GBM retraining, all three methods); data: CNQ_5min_20200727_to_20261118.csv (kept in the owner's local project folder; price data is not published). 2026-11-23 Stage 10 entry.</p>
-    </div>
-  </section>
-
-  <section id="benchmark">
-    <h2>Benchmark</h2>
-    <p style="color:var(--muted);margin:-6px 0 14px">Commercial zone/backtesting tools and published research on the same kind of setup.</p>
-    <div class="card">
-      <div class="table-scroll"><table>
-        <thead><tr><th>Capability</th><th>This project</th><th>LuxAlgo</th><th>TrendSpider</th><th>5-min ORB research</th></tr></thead>
-        <tbody>
-          <tr><td>Approach</td><td>Hand-built zone rules, long only, one symbol</td><td>Supply/demand zone indicators + AI backtester</td><td>Auto S/R + no-code strategy tester</td><td>5-min opening-range breakout, long/short</td></tr>
-          <tr><td>Trading costs</td><td><span class="no">✗</span> gross only</td><td><span class="yes">✓</span> commissions/slippage inputs</td><td><span class="yes">✓</span> commissions/slippage inputs</td><td><span class="part">◐</span> commission only, no slippage</td></tr>
-          <tr><td>History tested</td><td>6.4 weeks, one stock</td><td>User-defined</td><td>Variance testing across timeframes/dates</td><td>8 years (2016&ndash;2023)</td></tr>
-          <tr><td>Robustness stats</td><td>Week-by-week table, manual curve-fit audit</td><td><span class="yes">✓</span> Monte Carlo, prop-firm stress tests</td><td><span class="yes">✓</span> variance &amp; group testing</td><td>Sharpe ratio reported</td></tr>
-          <tr><td>Cost</td><td>Claude + free data</td><td>Subscription</td><td>$82&ndash;321/mo</td><td>Research</td></tr>
-        </tbody>
-      </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">✓ yes &middot; ◐ partial &middot; ✗ no. Competitor figures are their own claims or published research. Full landscape (incl. Trade Ideas Holly AI, Chung &amp; Bellotti, Osler, TradeZella/Edgewonk) in the project's competitive analysis.</p>
-    </div>
-    <div class="grid g3" style="margin-top:16px">
-      <div class="card"><h3>Where we're ahead</h3><p>Fully transparent, hand-auditable rules with an explicit no-look-ahead discipline and a documented, honest root-cause process &mdash; including rejected ideas, not just wins.</p></div>
-      <div class="card"><h3>Where we're behind</h3><p>No trading costs modeled until now, one stock, 6.4 weeks of data, long only, and no Monte Carlo or deflated-Sharpe correction for the number of versions tried.</p></div>
-      <div class="card"><h3>What to add</h3><p>Costs baked into version ranking, a multi-year basket test across similar liquid energy stocks, a relative-volume filter, and a short-side mirror.</p></div>
-    </div>
+    <div class="eyebrow">Project 3 &middot; CNQ 5-Minute Zone Day Trading</div>
+    <h1>16 trading models, scored against three goals</h1>
+    <p class="lede">Every model and method built in this project for trading Canadian Natural Resources (CNQ) is scored here on the same three goals. Scores use January 2024 to November 2026, years the models were not trained on. Dollar figures assume $1,000 invested in each trade.</p>
+    <p style="margin-top:14px"><span class="tag warn">No model reaches level 1 on all three goals yet</span> <span class="tag muted">Research only, hypothetical backtests</span> <span class="tag muted">Updated Nov 23, 2026</span></p>
+    <nav class="toc" aria-label="On this page"><a href="#goals">The goals</a><a href="#top5">Top 5</a><a href="#all">All 16 models</a><a href="#months">Month by month</a><a href="#money">$1,000 per trade</a><a href="#measure">How it is measured</a><a href="project-03-research.html">Research record</a></nav>
   </section>
 
   <section id="goals">
-    <h2>Goals &amp; Targets</h2>
-    <p style="color:var(--muted);margin:-6px 0 14px">Formal performance target added 2026-11-23, alongside the project's existing charter and roadmap &mdash; the owner's priority order (net profit after costs &gt; win rate &gt; trade count) is unchanged; this target is additive to it, not a replacement.</p>
+    <h2>The goals</h2>
+    <p class="sub">Three goals, each with three levels. A filled step means at least one model has reached that level.</p>
+    <div class="goals"><article class="card goal">
+      <header><span class="code">G</span><div><h3>Profit per trade</h3><p>How much does an average trade make, before costs?</p></div></header>
+      <ol class="ladder" aria-label="Profit per trade levels"><li class=""><b>G1</b><span>1%</span><small>$10 a trade</small></li><li class=""><b>G2</b><span>2%</span><small>$20 a trade</small></li><li class=""><b>G3</b><span>over 3%</span><small>over $30</small></li></ol>
+      <div class="best"><div><span class="k">Best so far</span><span class="v">0.99%</span></div><div class="who">B. Field-Fusion GBM<br>25 trades</div></div>
+      <div class="state"><span class="tag warn">No level reached yet</span></div>
+      <p class="fine">Average gross profit per trade as a percent of the money put into the trade.</p>
+    </article><article class="card goal">
+      <header><span class="code">WR</span><div><h3>Win rate</h3><p>How many trades win?</p></div></header>
+      <ol class="ladder" aria-label="Win rate levels"><li class="on"><b>WR1</b><span>50%</span><small>1 in 2</small></li><li class="on"><b>WR2</b><span>65%</span><small>about 2 in 3</small></li><li class=""><b>WR3</b><span>over 75%</span><small>3 in 4</small></li></ol>
+      <div class="best"><div><span class="k">Best so far</span><span class="v">70.2%</span></div><div class="who">V7.1 percent-scaled<br>1,411 trades</div></div>
+      <div class="state"><span class="tag good">Level 2 of 3 reached</span></div>
+      <p class="fine">Winning trades as a share of winning and losing trades. Break-even trades are left out.</p>
+    </article><article class="card goal">
+      <header><span class="code">S</span><div><h3>Steady months</h3><p>In how many months of the year does it make more than 1%?</p></div></header>
+      <ol class="ladder" aria-label="Steady months levels"><li class="on"><b>S1</b><span>8 of 12</span><small>months</small></li><li class=""><b>S2</b><span>10 of 12</span><small>months</small></li><li class=""><b>S3</b><span>12 of 12</span><small>every month</small></li></ol>
+      <div class="best"><div><span class="k">Best so far</span><span class="v">8 of 12</span></div><div class="who">Rule OR Model<br>3,890 trades</div></div>
+      <div class="state"><span class="tag good">Level 1 of 3 reached</span></div>
+      <p class="fine">Months whose trades add up to more than 1% of the $1,000 stake. A level must hold in every year tested.</p>
+    </article></div>
+    <div class="statstrip" style="margin-top:16px">
+      <div class="primary"><div class="k">Models scored</div><div class="v">16</div><div class="s">10 same-day, 6 multi-day</div></div>
+      <div><div class="k">Test period</div><div class="v">35 months</div><div class="s">Jan 2024 to Nov 18, 2026</div></div>
+      <div><div class="k">Money per trade</div><div class="v">$1,000</div><div class="s">about 28 CNQ shares</div></div>
+      <div><div class="k">Profitable after costs</div><div class="v">3 of 16</div><div class="s">at 1&cent; per share</div></div>
+    </div>
+  </section>
+
+  <section id="top5">
+    <h2>Top 5 models</h2>
+    <p class="sub">Ranked by overall progress: how far a model is toward the top level of each goal (3% per trade, 75% win rate, 12 of 12 months), averaged over the three. The marks on each bar are levels 1, 2 and 3.</p>
+    <ol class="top5"><li class="card toprow">
+      <div class="rank" aria-label="Rank 1">1</div>
+      <div class="tw"><h3>Rule OR Model</h3><div class="meta"><span class="kind">Same-day</span><span>3,890 trades</span></div><p>Trades when either the zone rule or a machine-learning model says yes. About 5 trades a day.</p></div>
+      <div class="meters">
+        <div class="m"><div class="m-top"><span class="m-name">Profit per trade</span><span class="m-val">0.02%</span><span class="lv">below G1</span></div><div class="m-track" role="img" aria-label="G meter"><i style="width:0.51%"></i><b style="left:28.57%"></b><b style="left:57.14%"></b><b style="left:85.71%"></b></div><div class="m-ticks"><span style="left:28.57%">G1</span><span style="left:57.14%">G2</span><span style="left:85.71%">G3</span></div></div>
+        <div class="m"><div class="m-top"><span class="m-name">Win rate</span><span class="m-val">59.9%</span><span class="lv on">WR1</span></div><div class="m-track hit" role="img" aria-label="WR meter"><i style="width:59.90%"></i><b style="left:50.00%"></b><b style="left:65.00%"></b><b style="left:75.00%"></b></div><div class="m-ticks"><span style="left:50.00%">WR1</span><span style="left:65.00%">WR2</span><span style="left:75.00%">WR3</span></div></div>
+        <div class="m"><div class="m-top"><span class="m-name">Steady months, worst year</span><span class="m-val">8 of 12</span><span class="lv on">S1</span></div><div class="m-track hit" role="img" aria-label="S meter"><i style="width:66.67%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="m-ticks"><span style="left:66.67%">S1</span><span style="left:83.33%">S2</span><span class="end" style="left:100.00%">S3</span></div></div>
+      </div>
+      <div class="money"><span class="k">On $1,000 per trade</span><span class="v">+$0.18</span><span class="s">per trade, before costs</span><span class="s after">−$0.10 after costs</span><span class="tag bad">Loses money after costs</span></div>
+    </li><li class="card toprow">
+      <div class="rank" aria-label="Rank 2">2</div>
+      <div class="tw"><h3>V7.1 percent-scaled</h3><div class="meta"><span class="kind">Same-day</span><span>1,411 trades</span></div><p>V7.1 with its stop and target set as a percent of the share price instead of fixed cents.</p></div>
+      <div class="meters">
+        <div class="m"><div class="m-top"><span class="m-name">Profit per trade</span><span class="m-val">0.02%</span><span class="lv">below G1</span></div><div class="m-track" role="img" aria-label="G meter"><i style="width:0.59%"></i><b style="left:28.57%"></b><b style="left:57.14%"></b><b style="left:85.71%"></b></div><div class="m-ticks"><span style="left:28.57%">G1</span><span style="left:57.14%">G2</span><span style="left:85.71%">G3</span></div></div>
+        <div class="m"><div class="m-top"><span class="m-name">Win rate</span><span class="m-val">70.2%</span><span class="lv on">WR2</span></div><div class="m-track hit" role="img" aria-label="WR meter"><i style="width:70.20%"></i><b style="left:50.00%"></b><b style="left:65.00%"></b><b style="left:75.00%"></b></div><div class="m-ticks"><span style="left:50.00%">WR1</span><span style="left:65.00%">WR2</span><span style="left:75.00%">WR3</span></div></div>
+        <div class="m"><div class="m-top"><span class="m-name">Steady months, worst year</span><span class="m-val">6 of 12</span><span class="lv">below S1</span></div><div class="m-track" role="img" aria-label="S meter"><i style="width:50.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="m-ticks"><span style="left:66.67%">S1</span><span style="left:83.33%">S2</span><span class="end" style="left:100.00%">S3</span></div></div>
+      </div>
+      <div class="money"><span class="k">On $1,000 per trade</span><span class="v">+$0.20</span><span class="s">per trade, before costs</span><span class="s after">−$0.08 after costs</span><span class="tag bad">Loses money after costs</span></div>
+    </li><li class="card toprow">
+      <div class="rank" aria-label="Rank 3">3</div>
+      <div class="tw"><h3>V7</h3><div class="meta"><span class="kind">Same-day</span><span>1,834 trades</span></div><p>Zone-bounce rule with a trailing stop and exit at the next zone.</p></div>
+      <div class="meters">
+        <div class="m"><div class="m-top"><span class="m-name">Profit per trade</span><span class="m-val">0.02%</span><span class="lv">below G1</span></div><div class="m-track" role="img" aria-label="G meter"><i style="width:0.54%"></i><b style="left:28.57%"></b><b style="left:57.14%"></b><b style="left:85.71%"></b></div><div class="m-ticks"><span style="left:28.57%">G1</span><span style="left:57.14%">G2</span><span style="left:85.71%">G3</span></div></div>
+        <div class="m"><div class="m-top"><span class="m-name">Win rate</span><span class="m-val">59.9%</span><span class="lv on">WR1</span></div><div class="m-track hit" role="img" aria-label="WR meter"><i style="width:59.90%"></i><b style="left:50.00%"></b><b style="left:65.00%"></b><b style="left:75.00%"></b></div><div class="m-ticks"><span style="left:50.00%">WR1</span><span style="left:65.00%">WR2</span><span style="left:75.00%">WR3</span></div></div>
+        <div class="m"><div class="m-top"><span class="m-name">Steady months, worst year</span><span class="m-val">5 of 12</span><span class="lv">below S1</span></div><div class="m-track" role="img" aria-label="S meter"><i style="width:41.67%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="m-ticks"><span style="left:66.67%">S1</span><span style="left:83.33%">S2</span><span class="end" style="left:100.00%">S3</span></div></div>
+      </div>
+      <div class="money"><span class="k">On $1,000 per trade</span><span class="v">+$0.19</span><span class="s">per trade, before costs</span><span class="s after">−$0.10 after costs</span><span class="tag bad">Loses money after costs</span></div>
+    </li><li class="card toprow">
+      <div class="rank" aria-label="Rank 4">4</div>
+      <div class="tw"><h3>V7.1</h3><div class="meta"><span class="kind">Same-day</span><span>1,597 trades</span></div><p>V7 plus a filter that rejects weak bounces at the open.</p></div>
+      <div class="meters">
+        <div class="m"><div class="m-top"><span class="m-name">Profit per trade</span><span class="m-val">0.02%</span><span class="lv">below G1</span></div><div class="m-track" role="img" aria-label="G meter"><i style="width:0.58%"></i><b style="left:28.57%"></b><b style="left:57.14%"></b><b style="left:85.71%"></b></div><div class="m-ticks"><span style="left:28.57%">G1</span><span style="left:57.14%">G2</span><span style="left:85.71%">G3</span></div></div>
+        <div class="m"><div class="m-top"><span class="m-name">Win rate</span><span class="m-val">59.4%</span><span class="lv on">WR1</span></div><div class="m-track hit" role="img" aria-label="WR meter"><i style="width:59.40%"></i><b style="left:50.00%"></b><b style="left:65.00%"></b><b style="left:75.00%"></b></div><div class="m-ticks"><span style="left:50.00%">WR1</span><span style="left:65.00%">WR2</span><span style="left:75.00%">WR3</span></div></div>
+        <div class="m"><div class="m-top"><span class="m-name">Steady months, worst year</span><span class="m-val">5 of 12</span><span class="lv">below S1</span></div><div class="m-track" role="img" aria-label="S meter"><i style="width:41.67%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="m-ticks"><span style="left:66.67%">S1</span><span style="left:83.33%">S2</span><span class="end" style="left:100.00%">S3</span></div></div>
+      </div>
+      <div class="money"><span class="k">On $1,000 per trade</span><span class="v">+$0.20</span><span class="s">per trade, before costs</span><span class="s after">−$0.08 after costs</span><span class="tag bad">Loses money after costs</span></div>
+    </li><li class="card toprow">
+      <div class="rank" aria-label="Rank 5">5</div>
+      <div class="tw"><h3>C. Transformer probe</h3><div class="meta"><span class="kind">Multi-day</span><span>51 trades</span></div><p>A small transformer reads the 5-minute bars and picks days to buy. Holds 5 days.</p></div>
+      <div class="meters">
+        <div class="m"><div class="m-top"><span class="m-name">Profit per trade</span><span class="m-val">0.64%</span><span class="lv">below G1</span></div><div class="m-track" role="img" aria-label="G meter"><i style="width:18.19%"></i><b style="left:28.57%"></b><b style="left:57.14%"></b><b style="left:85.71%"></b></div><div class="m-ticks"><span style="left:28.57%">G1</span><span style="left:57.14%">G2</span><span style="left:85.71%">G3</span></div></div>
+        <div class="m"><div class="m-top"><span class="m-name">Win rate</span><span class="m-val">51.0%</span><span class="lv on">WR1</span></div><div class="m-track hit" role="img" aria-label="WR meter"><i style="width:51.00%"></i><b style="left:50.00%"></b><b style="left:65.00%"></b><b style="left:75.00%"></b></div><div class="m-ticks"><span style="left:50.00%">WR1</span><span style="left:65.00%">WR2</span><span style="left:75.00%">WR3</span></div></div>
+        <div class="m"><div class="m-top"><span class="m-name">Steady months, worst year</span><span class="m-val">3 of 12</span><span class="lv">below S1</span></div><div class="m-track" role="img" aria-label="S meter"><i style="width:25.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div><div class="m-ticks"><span style="left:66.67%">S1</span><span style="left:83.33%">S2</span><span class="end" style="left:100.00%">S3</span></div></div>
+      </div>
+      <div class="money"><span class="k">On $1,000 per trade</span><span class="v">+$6.37</span><span class="s">per trade, before costs</span><span class="s after">+$6.09 after costs</span><span class="tag good">Still profitable after costs</span></div>
+    </li></ol>
+    <div class="note2">
+      <h3>Two things to know before relying on this ranking</h3>
+      <ul>
+        <li><strong>Costs.</strong> Four of the five are same-day models that make about $0.20 per $1,000 trade. A cost of 1&cent; per share is about $0.28 per trade, so they lose money once it is charged. C. Transformer probe, B. Field-Fusion GBM and D. Fusion gate are the only models that keep a profit after costs.</li>
+        <li><strong>Break-even trades.</strong> The win rate leaves out trades that end within half a cent of the entry price. The same-day models have many of these: V7.1 percent-scaled wins 70% of decided trades but 46% of all trades. If a break-even trade is not counted as a win, the top five becomes Rule OR Model, C. Transformer probe, B. Field-Fusion GBM, V7.1 percent-scaled, V7.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="all">
+    <h2>All 16 models against the goals</h2>
+    <p class="sub">One row per model. Each bar runs toward the top level; the three marks are levels 1, 2 and 3.</p>
+    <div class="tabs" role="group" aria-label="Filter models"><button type="button" id="f-all" aria-pressed="true" data-f="">All</button><button type="button" id="f-same" aria-pressed="false" data-f="Same-day">Same-day</button><button type="button" id="f-multi" aria-pressed="false" data-f="Multi-day">Multi-day</button></div>
+    <div class="card" style="padding:6px 0 0">
+      <p class="swipe" style="padding:10px 16px 0">Swipe sideways to see every column.</p><div class="table-scroll"><table class="score" id="score">
+        <thead><tr><th class="num">Rank</th><th>Model</th><th>G &middot; profit per trade</th><th>WR &middot; win rate</th><th>S &middot; steady months</th><th>Levels</th><th class="num">After costs, per $1,000 trade</th></tr></thead>
+        <tbody><tr data-kind="Same-day">
+      <td class="num rk">1</td>
+      <td class="nm"><strong>Rule OR Model</strong><span>Same-day · 3,890 trades</span></td>
+      <td class="mc"><div class="mv">0.02%</div><div class="m-track" role="img" aria-label="G meter"><i style="width:0.51%"></i><b style="left:28.57%"></b><b style="left:57.14%"></b><b style="left:85.71%"></b></div></td>
+      <td class="mc"><div class="mv">59.9%<small>46% of all trades</small></div><div class="m-track hit" role="img" aria-label="WR meter"><i style="width:59.90%"></i><b style="left:50.00%"></b><b style="left:65.00%"></b><b style="left:75.00%"></b></div></td>
+      <td class="mc"><div class="mv">8 of 12</div><div class="m-track hit" role="img" aria-label="S meter"><i style="width:66.67%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div></td>
+      <td class="lvs"><span class="lv ">G0</span><span class="lv on">WR1</span><span class="lv on">S1</span></td>
+      <td class="num neg">−$0.10</td>
+    </tr><tr data-kind="Same-day">
+      <td class="num rk">2</td>
+      <td class="nm"><strong>V7.1 percent-scaled</strong><span>Same-day · 1,411 trades</span></td>
+      <td class="mc"><div class="mv">0.02%</div><div class="m-track" role="img" aria-label="G meter"><i style="width:0.59%"></i><b style="left:28.57%"></b><b style="left:57.14%"></b><b style="left:85.71%"></b></div></td>
+      <td class="mc"><div class="mv">70.2%<small>46% of all trades</small></div><div class="m-track hit" role="img" aria-label="WR meter"><i style="width:70.20%"></i><b style="left:50.00%"></b><b style="left:65.00%"></b><b style="left:75.00%"></b></div></td>
+      <td class="mc"><div class="mv">6 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:50.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div></td>
+      <td class="lvs"><span class="lv ">G0</span><span class="lv on">WR2</span><span class="lv ">S0</span></td>
+      <td class="num neg">−$0.08</td>
+    </tr><tr data-kind="Same-day">
+      <td class="num rk">3</td>
+      <td class="nm"><strong>V7</strong><span>Same-day · 1,834 trades</span></td>
+      <td class="mc"><div class="mv">0.02%</div><div class="m-track" role="img" aria-label="G meter"><i style="width:0.54%"></i><b style="left:28.57%"></b><b style="left:57.14%"></b><b style="left:85.71%"></b></div></td>
+      <td class="mc"><div class="mv">59.9%<small>44% of all trades</small></div><div class="m-track hit" role="img" aria-label="WR meter"><i style="width:59.90%"></i><b style="left:50.00%"></b><b style="left:65.00%"></b><b style="left:75.00%"></b></div></td>
+      <td class="mc"><div class="mv">5 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:41.67%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div></td>
+      <td class="lvs"><span class="lv ">G0</span><span class="lv on">WR1</span><span class="lv ">S0</span></td>
+      <td class="num neg">−$0.10</td>
+    </tr><tr data-kind="Same-day">
+      <td class="num rk">4</td>
+      <td class="nm"><strong>V7.1</strong><span>Same-day · 1,597 trades</span></td>
+      <td class="mc"><div class="mv">0.02%</div><div class="m-track" role="img" aria-label="G meter"><i style="width:0.58%"></i><b style="left:28.57%"></b><b style="left:57.14%"></b><b style="left:85.71%"></b></div></td>
+      <td class="mc"><div class="mv">59.4%<small>42% of all trades</small></div><div class="m-track hit" role="img" aria-label="WR meter"><i style="width:59.40%"></i><b style="left:50.00%"></b><b style="left:65.00%"></b><b style="left:75.00%"></b></div></td>
+      <td class="mc"><div class="mv">5 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:41.67%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div></td>
+      <td class="lvs"><span class="lv ">G0</span><span class="lv on">WR1</span><span class="lv ">S0</span></td>
+      <td class="num neg">−$0.08</td>
+    </tr><tr data-kind="Multi-day">
+      <td class="num rk">5</td>
+      <td class="nm"><strong>C. Transformer probe</strong><span>Multi-day · 51 trades</span></td>
+      <td class="mc"><div class="mv">0.64%</div><div class="m-track" role="img" aria-label="G meter"><i style="width:18.19%"></i><b style="left:28.57%"></b><b style="left:57.14%"></b><b style="left:85.71%"></b></div></td>
+      <td class="mc"><div class="mv">51.0%<small>51% of all trades</small></div><div class="m-track hit" role="img" aria-label="WR meter"><i style="width:51.00%"></i><b style="left:50.00%"></b><b style="left:65.00%"></b><b style="left:75.00%"></b></div></td>
+      <td class="mc"><div class="mv">3 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:25.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div></td>
+      <td class="lvs"><span class="lv ">G0</span><span class="lv on">WR1</span><span class="lv ">S0</span></td>
+      <td class="num pos">+$6.09</td>
+    </tr><tr data-kind="Multi-day">
+      <td class="num rk">6</td>
+      <td class="nm"><strong>B. Field-Fusion GBM</strong><span>Multi-day · 25 trades</span></td>
+      <td class="mc"><div class="mv">0.99%</div><div class="m-track" role="img" aria-label="G meter"><i style="width:28.42%"></i><b style="left:28.57%"></b><b style="left:57.14%"></b><b style="left:85.71%"></b></div></td>
+      <td class="mc"><div class="mv">48.0%<small>48% of all trades</small></div><div class="m-track" role="img" aria-label="WR meter"><i style="width:48.00%"></i><b style="left:50.00%"></b><b style="left:65.00%"></b><b style="left:75.00%"></b></div></td>
+      <td class="mc"><div class="mv">2 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:16.67%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div></td>
+      <td class="lvs"><span class="lv ">G0</span><span class="lv ">WR0</span><span class="lv ">S0</span></td>
+      <td class="num pos">+$9.65</td>
+    </tr><tr data-kind="Same-day">
+      <td class="num rk">7</td>
+      <td class="nm"><strong>V3</strong><span>Same-day · 2,741 trades</span></td>
+      <td class="mc"><div class="mv">0.01%</div><div class="m-track" role="img" aria-label="G meter"><i style="width:0.35%"></i><b style="left:28.57%"></b><b style="left:57.14%"></b><b style="left:85.71%"></b></div></td>
+      <td class="mc"><div class="mv">49.3%<small>32% of all trades</small></div><div class="m-track" role="img" aria-label="WR meter"><i style="width:49.30%"></i><b style="left:50.00%"></b><b style="left:65.00%"></b><b style="left:75.00%"></b></div></td>
+      <td class="mc"><div class="mv">6 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:45.83%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div></td>
+      <td class="lvs"><span class="lv ">G0</span><span class="lv ">WR0</span><span class="lv ">S0</span></td>
+      <td class="num neg">−$0.16</td>
+    </tr><tr data-kind="Same-day">
+      <td class="num rk">8</td>
+      <td class="nm"><strong>V6</strong><span>Same-day · 1,794 trades</span></td>
+      <td class="mc"><div class="mv">0.02%</div><div class="m-track" role="img" aria-label="G meter"><i style="width:0.45%"></i><b style="left:28.57%"></b><b style="left:57.14%"></b><b style="left:85.71%"></b></div></td>
+      <td class="mc"><div class="mv">56.2%<small>42% of all trades</small></div><div class="m-track hit" role="img" aria-label="WR meter"><i style="width:56.20%"></i><b style="left:50.00%"></b><b style="left:65.00%"></b><b style="left:75.00%"></b></div></td>
+      <td class="mc"><div class="mv">4 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:33.33%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div></td>
+      <td class="lvs"><span class="lv ">G0</span><span class="lv on">WR1</span><span class="lv ">S0</span></td>
+      <td class="num neg">−$0.13</td>
+    </tr><tr data-kind="Same-day">
+      <td class="num rk">9</td>
+      <td class="nm"><strong>V5</strong><span>Same-day · 2,284 trades</span></td>
+      <td class="mc"><div class="mv">0.01%</div><div class="m-track" role="img" aria-label="G meter"><i style="width:0.29%"></i><b style="left:28.57%"></b><b style="left:57.14%"></b><b style="left:85.71%"></b></div></td>
+      <td class="mc"><div class="mv">55.0%<small>41% of all trades</small></div><div class="m-track hit" role="img" aria-label="WR meter"><i style="width:55.00%"></i><b style="left:50.00%"></b><b style="left:65.00%"></b><b style="left:75.00%"></b></div></td>
+      <td class="mc"><div class="mv">4 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:33.33%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div></td>
+      <td class="lvs"><span class="lv ">G0</span><span class="lv on">WR1</span><span class="lv ">S0</span></td>
+      <td class="num neg">−$0.18</td>
+    </tr><tr data-kind="Multi-day">
+      <td class="num rk">10</td>
+      <td class="nm"><strong>D. Fusion gate</strong><span>Multi-day · 19 trades</span></td>
+      <td class="mc"><div class="mv">0.52%</div><div class="m-track" role="img" aria-label="G meter"><i style="width:14.73%"></i><b style="left:28.57%"></b><b style="left:57.14%"></b><b style="left:85.71%"></b></div></td>
+      <td class="mc"><div class="mv">55.6%<small>53% of all trades</small></div><div class="m-track hit" role="img" aria-label="WR meter"><i style="width:55.60%"></i><b style="left:50.00%"></b><b style="left:65.00%"></b><b style="left:75.00%"></b></div></td>
+      <td class="mc"><div class="mv">2 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:16.67%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div></td>
+      <td class="lvs"><span class="lv ">G0</span><span class="lv on">WR1</span><span class="lv ">S0</span></td>
+      <td class="num pos">+$4.88</td>
+    </tr><tr data-kind="Same-day">
+      <td class="num rk">11</td>
+      <td class="nm"><strong>V4</strong><span>Same-day · 2,188 trades</span></td>
+      <td class="mc"><div class="mv">0.01%</div><div class="m-track" role="img" aria-label="G meter"><i style="width:0.37%"></i><b style="left:28.57%"></b><b style="left:57.14%"></b><b style="left:85.71%"></b></div></td>
+      <td class="mc"><div class="mv">49.3%<small>32% of all trades</small></div><div class="m-track" role="img" aria-label="WR meter"><i style="width:49.30%"></i><b style="left:50.00%"></b><b style="left:65.00%"></b><b style="left:75.00%"></b></div></td>
+      <td class="mc"><div class="mv">4 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:36.67%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div></td>
+      <td class="lvs"><span class="lv ">G0</span><span class="lv ">WR0</span><span class="lv ">S0</span></td>
+      <td class="num neg">−$0.16</td>
+    </tr><tr data-kind="Same-day">
+      <td class="num rk">12</td>
+      <td class="nm"><strong>V2</strong><span>Same-day · 2,124 trades</span></td>
+      <td class="mc"><div class="mv">0.01%</div><div class="m-track" role="img" aria-label="G meter"><i style="width:0.31%"></i><b style="left:28.57%"></b><b style="left:57.14%"></b><b style="left:85.71%"></b></div></td>
+      <td class="mc"><div class="mv">49.1%<small>31% of all trades</small></div><div class="m-track" role="img" aria-label="WR meter"><i style="width:49.10%"></i><b style="left:50.00%"></b><b style="left:65.00%"></b><b style="left:75.00%"></b></div></td>
+      <td class="mc"><div class="mv">4 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:36.67%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div></td>
+      <td class="lvs"><span class="lv ">G0</span><span class="lv ">WR0</span><span class="lv ">S0</span></td>
+      <td class="num neg">−$0.18</td>
+    </tr><tr data-kind="Same-day">
+      <td class="num rk">13</td>
+      <td class="nm"><strong>V1</strong><span>Same-day · 1,654 trades</span></td>
+      <td class="mc"><div class="mv">0.02%</div><div class="m-track" role="img" aria-label="G meter"><i style="width:0.45%"></i><b style="left:28.57%"></b><b style="left:57.14%"></b><b style="left:85.71%"></b></div></td>
+      <td class="mc"><div class="mv">38.0%<small>16% of all trades</small></div><div class="m-track" role="img" aria-label="WR meter"><i style="width:38.00%"></i><b style="left:50.00%"></b><b style="left:65.00%"></b><b style="left:75.00%"></b></div></td>
+      <td class="mc"><div class="mv">4 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:33.33%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div></td>
+      <td class="lvs"><span class="lv ">G0</span><span class="lv ">WR0</span><span class="lv ">S0</span></td>
+      <td class="num neg">−$0.13</td>
+    </tr><tr data-kind="Multi-day">
+      <td class="num rk">14</td>
+      <td class="nm"><strong>A. Spring-release</strong><span>Multi-day · 21 trades</span></td>
+      <td class="mc"><div class="mv">−0.70%</div><div class="m-track" role="img" aria-label="G meter"><i style="width:0.00%"></i><b style="left:28.57%"></b><b style="left:57.14%"></b><b style="left:85.71%"></b></div></td>
+      <td class="mc"><div class="mv">40.0%<small>38% of all trades</small></div><div class="m-track" role="img" aria-label="WR meter"><i style="width:40.00%"></i><b style="left:50.00%"></b><b style="left:65.00%"></b><b style="left:75.00%"></b></div></td>
+      <td class="mc"><div class="mv">1 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:8.33%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div></td>
+      <td class="lvs"><span class="lv ">G0</span><span class="lv ">WR0</span><span class="lv ">S0</span></td>
+      <td class="num neg">−$7.32</td>
+    </tr><tr data-kind="Multi-day">
+      <td class="num rk">15</td>
+      <td class="nm"><strong>Donchian swing, long+short</strong><span>Multi-day · 17 trades</span></td>
+      <td class="mc"><div class="mv">−1.59%</div><div class="m-track" role="img" aria-label="G meter"><i style="width:0.00%"></i><b style="left:28.57%"></b><b style="left:57.14%"></b><b style="left:85.71%"></b></div></td>
+      <td class="mc"><div class="mv">18.8%<small>18% of all trades</small></div><div class="m-track" role="img" aria-label="WR meter"><i style="width:18.80%"></i><b style="left:50.00%"></b><b style="left:65.00%"></b><b style="left:75.00%"></b></div></td>
+      <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div></td>
+      <td class="lvs"><span class="lv ">G0</span><span class="lv ">WR0</span><span class="lv ">S0</span></td>
+      <td class="num neg">−$16.16</td>
+    </tr><tr data-kind="Multi-day">
+      <td class="num rk">–</td>
+      <td class="nm"><strong>Donchian swing, long-only</strong><span>Multi-day · 9 trades</span></td>
+      <td class="mc"><div class="mv">−0.05%</div><div class="m-track" role="img" aria-label="G meter"><i style="width:0.00%"></i><b style="left:28.57%"></b><b style="left:57.14%"></b><b style="left:85.71%"></b></div></td>
+      <td class="mc"><div class="mv">22.2%<small>22% of all trades</small></div><div class="m-track" role="img" aria-label="WR meter"><i style="width:22.20%"></i><b style="left:50.00%"></b><b style="left:65.00%"></b><b style="left:75.00%"></b></div></td>
+      <td class="mc"><div class="mv">0 of 12</div><div class="m-track" role="img" aria-label="S meter"><i style="width:0.00%"></i><b style="left:66.67%"></b><b style="left:83.33%"></b><b style="left:100.00%"></b></div></td>
+      <td class="lvs"><span class="lv ">G0</span><span class="lv ">WR0</span><span class="lv ">S0</span></td>
+      <td class="num neg">−$0.75</td>
+    </tr></tbody>
+      </table></div>
+    </div>
+    <p class="fine" style="margin-top:10px">Same-day models buy and sell within one trading day on 5-minute bars. Multi-day models hold for about 5 days or longer. The steady-months figure is the worst of the three years. The small figure beside each win rate counts wins as a share of all trades, break-even ones included. Models with fewer than 15 trades are scored but not ranked. V1 to V6 use rules set by hand on six weeks of mid-2026, which fall inside the test period, so their scores are flattering.</p>
+  </section>
+
+  <section id="months">
+    <h2>Steadiness, month by month</h2>
+    <p class="sub">Each square is one month. A month counts toward the S goal when its trades add up to more than 1% of the $1,000 stake.</p>
     <div class="card">
-      <h3>Target 1 &mdash; average gross return of 1% per day</h3>
-      <p>Develop a model/method for CNQ 5-minute trading whose average <strong>gross</strong> return per trading day reaches <strong>1.00%</strong>, validated out-of-sample. &ldquo;Gross %/day&rdquo; uses the same $100-notional-per-trade convention as the tables above, summed per day and averaged across trading days &mdash; not compounded, not leveraged. (Working definition, flagged for owner confirmation &mdash; see the full doc linked below.)</p>
+      <div class="hm-legend"><span><i class="hm-c hit"></i>Above 1% (counts)</span><span><i class="hm-c pos"></i>Profit, 1% or less</span><span><i class="hm-c neg">−</i>Loss</span><span><i class="hm-c nt"></i>No trades</span></div>
+      <p class="swipe">Swipe sideways to see all 35 months.</p><div class="hm-scroll"><div class="hm" id="hm"><div class="hm-row hm-years"><div class="hm-name"></div><span class="hm-y" style="grid-column:span 12">2024</span><span></span><span class="hm-y" style="grid-column:span 12">2025</span><span></span><span class="hm-y" style="grid-column:span 11">2026</span><div class="hm-tot"></div></div><div class="hm-row hm-head"><div class="hm-name"></div><span class="hm-m">J</span><span class="hm-m">F</span><span class="hm-m">M</span><span class="hm-m">A</span><span class="hm-m">M</span><span class="hm-m">J</span><span class="hm-m">J</span><span class="hm-m">A</span><span class="hm-m">S</span><span class="hm-m">O</span><span class="hm-m">N</span><span class="hm-m">D</span><span></span><span class="hm-m">J</span><span class="hm-m">F</span><span class="hm-m">M</span><span class="hm-m">A</span><span class="hm-m">M</span><span class="hm-m">J</span><span class="hm-m">J</span><span class="hm-m">A</span><span class="hm-m">S</span><span class="hm-m">O</span><span class="hm-m">N</span><span class="hm-m">D</span><span></span><span class="hm-m">J</span><span class="hm-m">F</span><span class="hm-m">M</span><span class="hm-m">A</span><span class="hm-m">M</span><span class="hm-m">J</span><span class="hm-m">J</span><span class="hm-m">A</span><span class="hm-m">S</span><span class="hm-m">O</span><span class="hm-m">N</span><div class="hm-tot">Above 1%</div></div><div class="hm-row"><div class="hm-name">Rule OR Model</div><span class="hm-c hit" data-tip="Jan 2024: +1.39% (+$14 on $1,000), 86 trades"></span><span class="hm-c hit" data-tip="Feb 2024: +3.39% (+$34 on $1,000), 130 trades"></span><span class="hm-c hit" data-tip="Mar 2024: +4.44% (+$44 on $1,000), 80 trades"></span><span class="hm-c hit" data-tip="Apr 2024: +2.51% (+$25 on $1,000), 123 trades"></span><span class="hm-c pos" data-tip="May 2024: +0.37% (+$4 on $1,000), 66 trades"></span><span class="hm-c neg" data-tip="Jun 2024: −4.27% (−$43 on $1,000), 69 trades">−</span><span class="hm-c hit" data-tip="Jul 2024: +1.86% (+$19 on $1,000), 128 trades"></span><span class="hm-c hit" data-tip="Aug 2024: +2.84% (+$28 on $1,000), 109 trades"></span><span class="hm-c hit" data-tip="Sep 2024: +4.25% (+$42 on $1,000), 109 trades"></span><span class="hm-c pos" data-tip="Oct 2024: +0.47% (+$5 on $1,000), 116 trades"></span><span class="hm-c hit" data-tip="Nov 2024: +2.40% (+$24 on $1,000), 77 trades"></span><span class="hm-c neg" data-tip="Dec 2024: −2.58% (−$26 on $1,000), 101 trades">−</span><span></span><span class="hm-c pos" data-tip="Jan 2025: +0.81% (+$8 on $1,000), 129 trades"></span><span class="hm-c neg" data-tip="Feb 2025: −0.48% (−$5 on $1,000), 119 trades">−</span><span class="hm-c hit" data-tip="Mar 2025: +4.31% (+$43 on $1,000), 123 trades"></span><span class="hm-c hit" data-tip="Apr 2025: +7.48% (+$75 on $1,000), 122 trades"></span><span class="hm-c hit" data-tip="May 2025: +1.70% (+$17 on $1,000), 119 trades"></span><span class="hm-c hit" data-tip="Jun 2025: +2.67% (+$27 on $1,000), 92 trades"></span><span class="hm-c hit" data-tip="Jul 2025: +1.79% (+$18 on $1,000), 103 trades"></span><span class="hm-c hit" data-tip="Aug 2025: +2.15% (+$21 on $1,000), 106 trades"></span><span class="hm-c hit" data-tip="Sep 2025: +1.95% (+$19 on $1,000), 101 trades"></span><span class="hm-c neg" data-tip="Oct 2025: −5.43% (−$54 on $1,000), 139 trades">−</span><span class="hm-c hit" data-tip="Nov 2025: +2.11% (+$21 on $1,000), 85 trades"></span><span class="hm-c pos" data-tip="Dec 2025: +0.36% (+$4 on $1,000), 105 trades"></span><span></span><span class="hm-c hit" data-tip="Jan 2026: +8.53% (+$85 on $1,000), 102 trades"></span><span class="hm-c pos" data-tip="Feb 2026: +0.46% (+$5 on $1,000), 129 trades"></span><span class="hm-c hit" data-tip="Mar 2026: +4.72% (+$47 on $1,000), 136 trades"></span><span class="hm-c hit" data-tip="Apr 2026: +1.08% (+$11 on $1,000), 103 trades"></span><span class="hm-c hit" data-tip="May 2026: +5.36% (+$54 on $1,000), 128 trades"></span><span class="hm-c hit" data-tip="Jun 2026: +1.15% (+$12 on $1,000), 130 trades"></span><span class="hm-c hit" data-tip="Jul 2026: +1.15% (+$12 on $1,000), 142 trades"></span><span class="hm-c hit" data-tip="Aug 2026: +5.28% (+$53 on $1,000), 140 trades"></span><span class="hm-c pos" data-tip="Sep 2026: +0.98% (+$10 on $1,000), 133 trades"></span><span class="hm-c hit" data-tip="Oct 2026: +6.09% (+$61 on $1,000), 134 trades"></span><span class="hm-c neg" data-tip="Nov 2026: −2.20% (−$22 on $1,000), 76 trades">−</span><div class="hm-tot"><b>24</b> of 35</div></div><div class="hm-row"><div class="hm-name">V7.1 percent-scaled</div><span class="hm-c hit" data-tip="Jan 2024: +1.82% (+$18 on $1,000), 43 trades"></span><span class="hm-c hit" data-tip="Feb 2024: +1.26% (+$13 on $1,000), 38 trades"></span><span class="hm-c hit" data-tip="Mar 2024: +1.63% (+$16 on $1,000), 30 trades"></span><span class="hm-c neg" data-tip="Apr 2024: −1.18% (−$12 on $1,000), 60 trades">−</span><span class="hm-c neg" data-tip="May 2024: −1.46% (−$15 on $1,000), 26 trades">−</span><span class="hm-c neg" data-tip="Jun 2024: −1.24% (−$12 on $1,000), 23 trades">−</span><span class="hm-c neg" data-tip="Jul 2024: −1.23% (−$12 on $1,000), 50 trades">−</span><span class="hm-c hit" data-tip="Aug 2024: +3.25% (+$33 on $1,000), 49 trades"></span><span class="hm-c hit" data-tip="Sep 2024: +3.55% (+$36 on $1,000), 59 trades"></span><span class="hm-c hit" data-tip="Oct 2024: +1.68% (+$17 on $1,000), 44 trades"></span><span class="hm-c neg" data-tip="Nov 2024: −5.11% (−$51 on $1,000), 43 trades">−</span><span class="hm-c pos" data-tip="Dec 2024: +0.99% (+$10 on $1,000), 38 trades"></span><span></span><span class="hm-c hit" data-tip="Jan 2025: +4.39% (+$44 on $1,000), 43 trades"></span><span class="hm-c hit" data-tip="Feb 2025: +2.30% (+$23 on $1,000), 42 trades"></span><span class="hm-c hit" data-tip="Mar 2025: +4.51% (+$45 on $1,000), 54 trades"></span><span class="hm-c pos" data-tip="Apr 2025: +0.33% (+$3 on $1,000), 31 trades"></span><span class="hm-c hit" data-tip="May 2025: +6.40% (+$64 on $1,000), 67 trades"></span><span class="hm-c neg" data-tip="Jun 2025: −2.00% (−$20 on $1,000), 32 trades">−</span><span class="hm-c hit" data-tip="Jul 2025: +1.62% (+$16 on $1,000), 42 trades"></span><span class="hm-c neg" data-tip="Aug 2025: −3.65% (−$37 on $1,000), 54 trades">−</span><span class="hm-c neg" data-tip="Sep 2025: −0.38% (−$4 on $1,000), 33 trades">−</span><span class="hm-c pos" data-tip="Oct 2025: +0.34% (+$3 on $1,000), 67 trades"></span><span class="hm-c hit" data-tip="Nov 2025: +1.72% (+$17 on $1,000), 25 trades"></span><span class="hm-c neg" data-tip="Dec 2025: −1.19% (−$12 on $1,000), 46 trades">−</span><span></span><span class="hm-c hit" data-tip="Jan 2026: +2.99% (+$30 on $1,000), 28 trades"></span><span class="hm-c hit" data-tip="Feb 2026: +2.71% (+$27 on $1,000), 29 trades"></span><span class="hm-c neg" data-tip="Mar 2026: −0.68% (−$7 on $1,000), 32 trades">−</span><span class="hm-c neg" data-tip="Apr 2026: −2.51% (−$25 on $1,000), 38 trades">−</span><span class="hm-c hit" data-tip="May 2026: +2.19% (+$22 on $1,000), 37 trades"></span><span class="hm-c pos" data-tip="Jun 2026: +0.98% (+$10 on $1,000), 45 trades"></span><span class="hm-c hit" data-tip="Jul 2026: +1.71% (+$17 on $1,000), 39 trades"></span><span class="hm-c hit" data-tip="Aug 2026: +3.68% (+$37 on $1,000), 35 trades"></span><span class="hm-c neg" data-tip="Sep 2026: −3.28% (−$33 on $1,000), 35 trades">−</span><span class="hm-c hit" data-tip="Oct 2026: +4.44% (+$44 on $1,000), 35 trades"></span><span class="hm-c neg" data-tip="Nov 2026: −1.67% (−$17 on $1,000), 19 trades">−</span><div class="hm-tot"><b>18</b> of 35</div></div><div class="hm-row"><div class="hm-name">V7</div><span class="hm-c hit" data-tip="Jan 2024: +2.23% (+$22 on $1,000), 54 trades"></span><span class="hm-c hit" data-tip="Feb 2024: +2.49% (+$25 on $1,000), 67 trades"></span><span class="hm-c hit" data-tip="Mar 2024: +1.67% (+$17 on $1,000), 40 trades"></span><span class="hm-c pos" data-tip="Apr 2024: +0.09% (+$1 on $1,000), 69 trades"></span><span class="hm-c neg" data-tip="May 2024: −0.11% (−$1 on $1,000), 41 trades">−</span><span class="hm-c pos" data-tip="Jun 2024: +0.30% (+$3 on $1,000), 36 trades"></span><span class="hm-c pos" data-tip="Jul 2024: +0.48% (+$5 on $1,000), 61 trades"></span><span class="hm-c hit" data-tip="Aug 2024: +3.00% (+$30 on $1,000), 55 trades"></span><span class="hm-c hit" data-tip="Sep 2024: +3.12% (+$31 on $1,000), 77 trades"></span><span class="hm-c pos" data-tip="Oct 2024: +0.30% (+$3 on $1,000), 53 trades"></span><span class="hm-c neg" data-tip="Nov 2024: −1.09% (−$11 on $1,000), 55 trades">−</span><span class="hm-c neg" data-tip="Dec 2024: −0.34% (−$3 on $1,000), 56 trades">−</span><span></span><span class="hm-c hit" data-tip="Jan 2025: +2.90% (+$29 on $1,000), 56 trades"></span><span class="hm-c neg" data-tip="Feb 2025: −1.67% (−$17 on $1,000), 55 trades">−</span><span class="hm-c hit" data-tip="Mar 2025: +1.82% (+$18 on $1,000), 60 trades"></span><span class="hm-c pos" data-tip="Apr 2025: +0.25% (+$2 on $1,000), 43 trades"></span><span class="hm-c hit" data-tip="May 2025: +4.62% (+$46 on $1,000), 86 trades"></span><span class="hm-c hit" data-tip="Jun 2025: +1.39% (+$14 on $1,000), 52 trades"></span><span class="hm-c hit" data-tip="Jul 2025: +2.49% (+$25 on $1,000), 55 trades"></span><span class="hm-c neg" data-tip="Aug 2025: −2.25% (−$22 on $1,000), 78 trades">−</span><span class="hm-c neg" data-tip="Sep 2025: −0.59% (−$6 on $1,000), 39 trades">−</span><span class="hm-c neg" data-tip="Oct 2025: −0.81% (−$8 on $1,000), 83 trades">−</span><span class="hm-c hit" data-tip="Nov 2025: +1.58% (+$16 on $1,000), 40 trades"></span><span class="hm-c hit" data-tip="Dec 2025: +1.19% (+$12 on $1,000), 68 trades"></span><span></span><span class="hm-c hit" data-tip="Jan 2026: +2.22% (+$22 on $1,000), 33 trades"></span><span class="hm-c hit" data-tip="Feb 2026: +2.38% (+$24 on $1,000), 37 trades"></span><span class="hm-c pos" data-tip="Mar 2026: +0.22% (+$2 on $1,000), 37 trades"></span><span class="hm-c neg" data-tip="Apr 2026: −0.75% (−$7 on $1,000), 45 trades">−</span><span class="hm-c hit" data-tip="May 2026: +1.37% (+$14 on $1,000), 47 trades"></span><span class="hm-c pos" data-tip="Jun 2026: +0.40% (+$4 on $1,000), 53 trades"></span><span class="hm-c hit" data-tip="Jul 2026: +1.13% (+$11 on $1,000), 49 trades"></span><span class="hm-c hit" data-tip="Aug 2026: +3.45% (+$35 on $1,000), 44 trades"></span><span class="hm-c neg" data-tip="Sep 2026: −0.89% (−$9 on $1,000), 41 trades">−</span><span class="hm-c hit" data-tip="Oct 2026: +4.17% (+$42 on $1,000), 39 trades"></span><span class="hm-c neg" data-tip="Nov 2026: −2.22% (−$22 on $1,000), 30 trades">−</span><div class="hm-tot"><b>18</b> of 35</div></div><div class="hm-row"><div class="hm-name">V7.1</div><span class="hm-c hit" data-tip="Jan 2024: +2.46% (+$25 on $1,000), 45 trades"></span><span class="hm-c hit" data-tip="Feb 2024: +1.81% (+$18 on $1,000), 57 trades"></span><span class="hm-c hit" data-tip="Mar 2024: +1.14% (+$11 on $1,000), 33 trades"></span><span class="hm-c pos" data-tip="Apr 2024: +0.08% (+$1 on $1,000), 64 trades"></span><span class="hm-c neg" data-tip="May 2024: −0.47% (−$5 on $1,000), 34 trades">−</span><span class="hm-c neg" data-tip="Jun 2024: −0.25% (−$3 on $1,000), 31 trades">−</span><span class="hm-c pos" data-tip="Jul 2024: +0.44% (+$4 on $1,000), 58 trades"></span><span class="hm-c hit" data-tip="Aug 2024: +3.15% (+$31 on $1,000), 51 trades"></span><span class="hm-c hit" data-tip="Sep 2024: +2.59% (+$26 on $1,000), 69 trades"></span><span class="hm-c pos" data-tip="Oct 2024: +0.33% (+$3 on $1,000), 50 trades"></span><span class="hm-c neg" data-tip="Nov 2024: −1.58% (−$16 on $1,000), 50 trades">−</span><span class="hm-c neg" data-tip="Dec 2024: −0.20% (−$2 on $1,000), 47 trades">−</span><span></span><span class="hm-c hit" data-tip="Jan 2025: +2.85% (+$29 on $1,000), 46 trades"></span><span class="hm-c neg" data-tip="Feb 2025: −1.27% (−$13 on $1,000), 47 trades">−</span><span class="hm-c hit" data-tip="Mar 2025: +3.47% (+$35 on $1,000), 55 trades"></span><span class="hm-c neg" data-tip="Apr 2025: −0.32% (−$3 on $1,000), 40 trades">−</span><span class="hm-c hit" data-tip="May 2025: +4.90% (+$49 on $1,000), 74 trades"></span><span class="hm-c pos" data-tip="Jun 2025: +0.41% (+$4 on $1,000), 39 trades"></span><span class="hm-c hit" data-tip="Jul 2025: +2.33% (+$23 on $1,000), 44 trades"></span><span class="hm-c neg" data-tip="Aug 2025: −3.64% (−$36 on $1,000), 59 trades">−</span><span class="hm-c pos" data-tip="Sep 2025: +0.68% (+$7 on $1,000), 34 trades"></span><span class="hm-c neg" data-tip="Oct 2025: −0.76% (−$8 on $1,000), 75 trades">−</span><span class="hm-c hit" data-tip="Nov 2025: +2.05% (+$20 on $1,000), 34 trades"></span><span class="hm-c pos" data-tip="Dec 2025: +0.89% (+$9 on $1,000), 52 trades"></span><span></span><span class="hm-c hit" data-tip="Jan 2026: +2.68% (+$27 on $1,000), 30 trades"></span><span class="hm-c hit" data-tip="Feb 2026: +2.39% (+$24 on $1,000), 29 trades"></span><span class="hm-c neg" data-tip="Mar 2026: −0.42% (−$4 on $1,000), 33 trades">−</span><span class="hm-c neg" data-tip="Apr 2026: −0.25% (−$3 on $1,000), 39 trades">−</span><span class="hm-c hit" data-tip="May 2026: +1.12% (+$11 on $1,000), 45 trades"></span><span class="hm-c pos" data-tip="Jun 2026: +0.37% (+$4 on $1,000), 51 trades"></span><span class="hm-c hit" data-tip="Jul 2026: +2.00% (+$20 on $1,000), 43 trades"></span><span class="hm-c hit" data-tip="Aug 2026: +3.32% (+$33 on $1,000), 38 trades"></span><span class="hm-c neg" data-tip="Sep 2026: −1.65% (−$16 on $1,000), 36 trades">−</span><span class="hm-c hit" data-tip="Oct 2026: +4.17% (+$42 on $1,000), 39 trades"></span><span class="hm-c neg" data-tip="Nov 2026: −2.25% (−$23 on $1,000), 26 trades">−</span><div class="hm-tot"><b>16</b> of 35</div></div><div class="hm-row"><div class="hm-name">C. Transformer probe</div><span class="hm-c neg" data-tip="Jan 2024: −0.01% ($0 on $1,000), 2 trades">−</span><span class="hm-c nt" data-tip="Feb 2024: no trades"></span><span class="hm-c nt" data-tip="Mar 2024: no trades"></span><span class="hm-c neg" data-tip="Apr 2024: −1.03% (−$10 on $1,000), 1 trade">−</span><span class="hm-c pos" data-tip="May 2024: +0.50% (+$5 on $1,000), 1 trade"></span><span class="hm-c neg" data-tip="Jun 2024: −0.90% (−$9 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Jul 2024: no trades"></span><span class="hm-c hit" data-tip="Aug 2024: +3.35% (+$33 on $1,000), 2 trades"></span><span class="hm-c hit" data-tip="Sep 2024: +1.99% (+$20 on $1,000), 1 trade"></span><span class="hm-c neg" data-tip="Oct 2024: −5.43% (−$54 on $1,000), 1 trade">−</span><span class="hm-c neg" data-tip="Nov 2024: −3.11% (−$31 on $1,000), 2 trades">−</span><span class="hm-c hit" data-tip="Dec 2024: +8.21% (+$82 on $1,000), 1 trade"></span><span></span><span class="hm-c neg" data-tip="Jan 2025: −1.55% (−$15 on $1,000), 3 trades">−</span><span class="hm-c neg" data-tip="Feb 2025: −4.10% (−$41 on $1,000), 1 trade">−</span><span class="hm-c hit" data-tip="Mar 2025: +8.49% (+$85 on $1,000), 2 trades"></span><span class="hm-c hit" data-tip="Apr 2025: +4.47% (+$45 on $1,000), 3 trades"></span><span class="hm-c hit" data-tip="May 2025: +5.24% (+$52 on $1,000), 1 trade"></span><span class="hm-c hit" data-tip="Jun 2025: +2.49% (+$25 on $1,000), 3 trades"></span><span class="hm-c nt" data-tip="Jul 2025: no trades"></span><span class="hm-c neg" data-tip="Aug 2025: −1.04% (−$10 on $1,000), 1 trade">−</span><span class="hm-c pos" data-tip="Sep 2025: +0.40% (+$4 on $1,000), 1 trade"></span><span class="hm-c neg" data-tip="Oct 2025: −5.46% (−$55 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Nov 2025: no trades"></span><span class="hm-c pos" data-tip="Dec 2025: +0.21% (+$2 on $1,000), 2 trades"></span><span></span><span class="hm-c pos" data-tip="Jan 2026: +0.04% (+$0 on $1,000), 2 trades"></span><span class="hm-c hit" data-tip="Feb 2026: +4.65% (+$47 on $1,000), 1 trade"></span><span class="hm-c hit" data-tip="Mar 2026: +9.19% (+$92 on $1,000), 4 trades"></span><span class="hm-c neg" data-tip="Apr 2026: −1.42% (−$14 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="May 2026: no trades"></span><span class="hm-c neg" data-tip="Jun 2026: −10.23% (−$102 on $1,000), 3 trades">−</span><span class="hm-c hit" data-tip="Jul 2026: +15.47% (+$155 on $1,000), 3 trades"></span><span class="hm-c hit" data-tip="Aug 2026: +5.27% (+$53 on $1,000), 1 trade"></span><span class="hm-c pos" data-tip="Sep 2026: +0.48% (+$5 on $1,000), 2 trades"></span><span class="hm-c hit" data-tip="Oct 2026: +5.01% (+$50 on $1,000), 2 trades"></span><span class="hm-c neg" data-tip="Nov 2026: −8.73% (−$87 on $1,000), 2 trades">−</span><div class="hm-tot"><b>12</b> of 35</div></div><div class="hm-row"><div class="hm-name">B. Field-Fusion GBM</div><span class="hm-c nt" data-tip="Jan 2024: no trades"></span><span class="hm-c hit" data-tip="Feb 2024: +12.09% (+$121 on $1,000), 2 trades"></span><span class="hm-c nt" data-tip="Mar 2024: no trades"></span><span class="hm-c nt" data-tip="Apr 2024: no trades"></span><span class="hm-c nt" data-tip="May 2024: no trades"></span><span class="hm-c hit" data-tip="Jun 2024: +1.27% (+$13 on $1,000), 3 trades"></span><span class="hm-c hit" data-tip="Jul 2024: +3.06% (+$31 on $1,000), 1 trade"></span><span class="hm-c hit" data-tip="Aug 2024: +4.36% (+$44 on $1,000), 1 trade"></span><span class="hm-c pos" data-tip="Sep 2024: +0.72% (+$7 on $1,000), 2 trades"></span><span class="hm-c nt" data-tip="Oct 2024: no trades"></span><span class="hm-c nt" data-tip="Nov 2024: no trades"></span><span class="hm-c neg" data-tip="Dec 2024: −6.76% (−$68 on $1,000), 2 trades">−</span><span></span><span class="hm-c neg" data-tip="Jan 2025: −0.74% (−$7 on $1,000), 1 trade">−</span><span class="hm-c neg" data-tip="Feb 2025: −6.57% (−$66 on $1,000), 1 trade">−</span><span class="hm-c hit" data-tip="Mar 2025: +4.44% (+$44 on $1,000), 1 trade"></span><span class="hm-c neg" data-tip="Apr 2025: −1.59% (−$16 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="May 2025: no trades"></span><span class="hm-c nt" data-tip="Jun 2025: no trades"></span><span class="hm-c nt" data-tip="Jul 2025: no trades"></span><span class="hm-c hit" data-tip="Aug 2025: +3.59% (+$36 on $1,000), 2 trades"></span><span class="hm-c nt" data-tip="Sep 2025: no trades"></span><span class="hm-c nt" data-tip="Oct 2025: no trades"></span><span class="hm-c nt" data-tip="Nov 2025: no trades"></span><span class="hm-c nt" data-tip="Dec 2025: no trades"></span><span></span><span class="hm-c hit" data-tip="Jan 2026: +13.14% (+$131 on $1,000), 1 trade"></span><span class="hm-c nt" data-tip="Feb 2026: no trades"></span><span class="hm-c nt" data-tip="Mar 2026: no trades"></span><span class="hm-c neg" data-tip="Apr 2026: −3.23% (−$32 on $1,000), 2 trades">−</span><span class="hm-c nt" data-tip="May 2026: no trades"></span><span class="hm-c hit" data-tip="Jun 2026: +1.52% (+$15 on $1,000), 2 trades"></span><span class="hm-c hit" data-tip="Jul 2026: +2.34% (+$23 on $1,000), 1 trade"></span><span class="hm-c nt" data-tip="Aug 2026: no trades"></span><span class="hm-c neg" data-tip="Sep 2026: −1.33% (−$13 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Oct 2026: no trades"></span><span class="hm-c neg" data-tip="Nov 2026: −1.43% (−$14 on $1,000), 1 trade">−</span><div class="hm-tot"><b>9</b> of 35</div></div><div class="hm-row"><div class="hm-name">V3</div><span class="hm-c pos" data-tip="Jan 2024: +0.05% (+$0 on $1,000), 83 trades"></span><span class="hm-c hit" data-tip="Feb 2024: +1.64% (+$16 on $1,000), 94 trades"></span><span class="hm-c hit" data-tip="Mar 2024: +2.68% (+$27 on $1,000), 58 trades"></span><span class="hm-c hit" data-tip="Apr 2024: +1.47% (+$15 on $1,000), 77 trades"></span><span class="hm-c neg" data-tip="May 2024: −1.07% (−$11 on $1,000), 62 trades">−</span><span class="hm-c hit" data-tip="Jun 2024: +2.37% (+$24 on $1,000), 57 trades"></span><span class="hm-c pos" data-tip="Jul 2024: +0.68% (+$7 on $1,000), 85 trades"></span><span class="hm-c hit" data-tip="Aug 2024: +1.11% (+$11 on $1,000), 75 trades"></span><span class="hm-c hit" data-tip="Sep 2024: +2.64% (+$26 on $1,000), 123 trades"></span><span class="hm-c hit" data-tip="Oct 2024: +4.71% (+$47 on $1,000), 79 trades"></span><span class="hm-c neg" data-tip="Nov 2024: −3.75% (−$37 on $1,000), 77 trades">−</span><span class="hm-c neg" data-tip="Dec 2024: −0.23% (−$2 on $1,000), 96 trades">−</span><span></span><span class="hm-c hit" data-tip="Jan 2025: +2.77% (+$28 on $1,000), 85 trades"></span><span class="hm-c neg" data-tip="Feb 2025: −0.26% (−$3 on $1,000), 76 trades">−</span><span class="hm-c neg" data-tip="Mar 2025: −1.01% (−$10 on $1,000), 92 trades">−</span><span class="hm-c neg" data-tip="Apr 2025: −1.62% (−$16 on $1,000), 58 trades">−</span><span class="hm-c hit" data-tip="May 2025: +1.88% (+$19 on $1,000), 131 trades"></span><span class="hm-c pos" data-tip="Jun 2025: +0.41% (+$4 on $1,000), 80 trades"></span><span class="hm-c hit" data-tip="Jul 2025: +3.07% (+$31 on $1,000), 98 trades"></span><span class="hm-c neg" data-tip="Aug 2025: −3.55% (−$36 on $1,000), 110 trades">−</span><span class="hm-c hit" data-tip="Sep 2025: +2.23% (+$22 on $1,000), 74 trades"></span><span class="hm-c hit" data-tip="Oct 2025: +1.72% (+$17 on $1,000), 136 trades"></span><span class="hm-c hit" data-tip="Nov 2025: +5.52% (+$55 on $1,000), 70 trades"></span><span class="hm-c hit" data-tip="Dec 2025: +1.32% (+$13 on $1,000), 97 trades"></span><span></span><span class="hm-c hit" data-tip="Jan 2026: +2.88% (+$29 on $1,000), 58 trades"></span><span class="hm-c hit" data-tip="Feb 2026: +2.42% (+$24 on $1,000), 51 trades"></span><span class="hm-c pos" data-tip="Mar 2026: +0.08% (+$1 on $1,000), 59 trades"></span><span class="hm-c neg" data-tip="Apr 2026: −1.15% (−$12 on $1,000), 57 trades">−</span><span class="hm-c neg" data-tip="May 2026: −1.08% (−$11 on $1,000), 65 trades">−</span><span class="hm-c neg" data-tip="Jun 2026: −0.47% (−$5 on $1,000), 70 trades">−</span><span class="hm-c hit" data-tip="Jul 2026: +1.76% (+$18 on $1,000), 72 trades"></span><span class="hm-c hit" data-tip="Aug 2026: +1.79% (+$18 on $1,000), 67 trades"></span><span class="hm-c neg" data-tip="Sep 2026: −1.51% (−$15 on $1,000), 70 trades">−</span><span class="hm-c hit" data-tip="Oct 2026: +6.30% (+$63 on $1,000), 63 trades"></span><span class="hm-c neg" data-tip="Nov 2026: −1.87% (−$19 on $1,000), 36 trades">−</span><div class="hm-tot"><b>19</b> of 35</div></div><div class="hm-row"><div class="hm-name">V6</div><span class="hm-c neg" data-tip="Jan 2024: −0.14% (−$1 on $1,000), 58 trades">−</span><span class="hm-c hit" data-tip="Feb 2024: +1.98% (+$20 on $1,000), 63 trades"></span><span class="hm-c hit" data-tip="Mar 2024: +1.68% (+$17 on $1,000), 49 trades"></span><span class="hm-c hit" data-tip="Apr 2024: +1.43% (+$14 on $1,000), 63 trades"></span><span class="hm-c hit" data-tip="May 2024: +1.46% (+$15 on $1,000), 41 trades"></span><span class="hm-c neg" data-tip="Jun 2024: −0.27% (−$3 on $1,000), 45 trades">−</span><span class="hm-c neg" data-tip="Jul 2024: −0.15% (−$2 on $1,000), 63 trades">−</span><span class="hm-c hit" data-tip="Aug 2024: +2.82% (+$28 on $1,000), 48 trades"></span><span class="hm-c hit" data-tip="Sep 2024: +2.09% (+$21 on $1,000), 66 trades"></span><span class="hm-c pos" data-tip="Oct 2024: +0.50% (+$5 on $1,000), 64 trades"></span><span class="hm-c neg" data-tip="Nov 2024: −0.37% (−$4 on $1,000), 53 trades">−</span><span class="hm-c neg" data-tip="Dec 2024: −0.22% (−$2 on $1,000), 54 trades">−</span><span></span><span class="hm-c hit" data-tip="Jan 2025: +3.60% (+$36 on $1,000), 49 trades"></span><span class="hm-c pos" data-tip="Feb 2025: +0.98% (+$10 on $1,000), 50 trades"></span><span class="hm-c pos" data-tip="Mar 2025: +0.78% (+$8 on $1,000), 54 trades"></span><span class="hm-c neg" data-tip="Apr 2025: −2.63% (−$26 on $1,000), 49 trades">−</span><span class="hm-c hit" data-tip="May 2025: +2.08% (+$21 on $1,000), 72 trades"></span><span class="hm-c neg" data-tip="Jun 2025: −0.21% (−$2 on $1,000), 42 trades">−</span><span class="hm-c hit" data-tip="Jul 2025: +2.83% (+$28 on $1,000), 62 trades"></span><span class="hm-c neg" data-tip="Aug 2025: −1.37% (−$14 on $1,000), 64 trades">−</span><span class="hm-c pos" data-tip="Sep 2025: +0.41% (+$4 on $1,000), 49 trades"></span><span class="hm-c neg" data-tip="Oct 2025: −0.54% (−$5 on $1,000), 74 trades">−</span><span class="hm-c hit" data-tip="Nov 2025: +3.06% (+$31 on $1,000), 41 trades"></span><span class="hm-c pos" data-tip="Dec 2025: +0.20% (+$2 on $1,000), 45 trades"></span><span></span><span class="hm-c hit" data-tip="Jan 2026: +1.84% (+$18 on $1,000), 39 trades"></span><span class="hm-c hit" data-tip="Feb 2026: +1.46% (+$15 on $1,000), 43 trades"></span><span class="hm-c pos" data-tip="Mar 2026: +0.70% (+$7 on $1,000), 39 trades"></span><span class="hm-c neg" data-tip="Apr 2026: −0.68% (−$7 on $1,000), 37 trades">−</span><span class="hm-c pos" data-tip="May 2026: +0.30% (+$3 on $1,000), 48 trades"></span><span class="hm-c hit" data-tip="Jun 2026: +1.04% (+$10 on $1,000), 53 trades"></span><span class="hm-c pos" data-tip="Jul 2026: +0.34% (+$3 on $1,000), 53 trades"></span><span class="hm-c hit" data-tip="Aug 2026: +2.12% (+$21 on $1,000), 46 trades"></span><span class="hm-c neg" data-tip="Sep 2026: −0.60% (−$6 on $1,000), 45 trades">−</span><span class="hm-c hit" data-tip="Oct 2026: +3.81% (+$38 on $1,000), 46 trades"></span><span class="hm-c neg" data-tip="Nov 2026: −2.19% (−$22 on $1,000), 27 trades">−</span><div class="hm-tot"><b>15</b> of 35</div></div><div class="hm-row"><div class="hm-name">V5</div><span class="hm-c neg" data-tip="Jan 2024: −0.86% (−$9 on $1,000), 73 trades">−</span><span class="hm-c hit" data-tip="Feb 2024: +1.67% (+$17 on $1,000), 78 trades"></span><span class="hm-c hit" data-tip="Mar 2024: +1.88% (+$19 on $1,000), 52 trades"></span><span class="hm-c hit" data-tip="Apr 2024: +1.47% (+$15 on $1,000), 70 trades"></span><span class="hm-c pos" data-tip="May 2024: +0.77% (+$8 on $1,000), 50 trades"></span><span class="hm-c pos" data-tip="Jun 2024: +0.82% (+$8 on $1,000), 52 trades"></span><span class="hm-c neg" data-tip="Jul 2024: −0.05% ($0 on $1,000), 78 trades">−</span><span class="hm-c hit" data-tip="Aug 2024: +2.05% (+$20 on $1,000), 65 trades"></span><span class="hm-c hit" data-tip="Sep 2024: +2.13% (+$21 on $1,000), 88 trades"></span><span class="hm-c hit" data-tip="Oct 2024: +1.73% (+$17 on $1,000), 75 trades"></span><span class="hm-c neg" data-tip="Nov 2024: −1.67% (−$17 on $1,000), 66 trades">−</span><span class="hm-c neg" data-tip="Dec 2024: −1.05% (−$10 on $1,000), 69 trades">−</span><span></span><span class="hm-c hit" data-tip="Jan 2025: +2.50% (+$25 on $1,000), 67 trades"></span><span class="hm-c hit" data-tip="Feb 2025: +1.37% (+$14 on $1,000), 62 trades"></span><span class="hm-c pos" data-tip="Mar 2025: +0.15% (+$1 on $1,000), 69 trades"></span><span class="hm-c neg" data-tip="Apr 2025: −3.37% (−$34 on $1,000), 58 trades">−</span><span class="hm-c pos" data-tip="May 2025: +0.67% (+$7 on $1,000), 94 trades"></span><span class="hm-c pos" data-tip="Jun 2025: +0.14% (+$1 on $1,000), 64 trades"></span><span class="hm-c hit" data-tip="Jul 2025: +2.18% (+$22 on $1,000), 81 trades"></span><span class="hm-c neg" data-tip="Aug 2025: −2.51% (−$25 on $1,000), 88 trades">−</span><span class="hm-c neg" data-tip="Sep 2025: −0.05% ($0 on $1,000), 63 trades">−</span><span class="hm-c neg" data-tip="Oct 2025: −0.10% (−$1 on $1,000), 101 trades">−</span><span class="hm-c hit" data-tip="Nov 2025: +4.26% (+$43 on $1,000), 53 trades"></span><span class="hm-c pos" data-tip="Dec 2025: +0.97% (+$10 on $1,000), 63 trades"></span><span></span><span class="hm-c hit" data-tip="Jan 2026: +1.35% (+$13 on $1,000), 53 trades"></span><span class="hm-c hit" data-tip="Feb 2026: +1.07% (+$11 on $1,000), 48 trades"></span><span class="hm-c hit" data-tip="Mar 2026: +1.44% (+$14 on $1,000), 54 trades"></span><span class="hm-c neg" data-tip="Apr 2026: −0.60% (−$6 on $1,000), 51 trades">−</span><span class="hm-c neg" data-tip="May 2026: −0.42% (−$4 on $1,000), 59 trades">−</span><span class="hm-c pos" data-tip="Jun 2026: +0.32% (+$3 on $1,000), 66 trades"></span><span class="hm-c pos" data-tip="Jul 2026: +0.59% (+$6 on $1,000), 61 trades"></span><span class="hm-c hit" data-tip="Aug 2026: +1.69% (+$17 on $1,000), 60 trades"></span><span class="hm-c neg" data-tip="Sep 2026: −1.09% (−$11 on $1,000), 62 trades">−</span><span class="hm-c hit" data-tip="Oct 2026: +6.23% (+$62 on $1,000), 60 trades"></span><span class="hm-c neg" data-tip="Nov 2026: −2.40% (−$24 on $1,000), 31 trades">−</span><div class="hm-tot"><b>15</b> of 35</div></div><div class="hm-row"><div class="hm-name">D. Fusion gate</div><span class="hm-c nt" data-tip="Jan 2024: no trades"></span><span class="hm-c hit" data-tip="Feb 2024: +1.77% (+$18 on $1,000), 1 trade"></span><span class="hm-c nt" data-tip="Mar 2024: no trades"></span><span class="hm-c neg" data-tip="Apr 2024: +0.00% ($0 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="May 2024: no trades"></span><span class="hm-c hit" data-tip="Jun 2024: +3.86% (+$39 on $1,000), 2 trades"></span><span class="hm-c nt" data-tip="Jul 2024: no trades"></span><span class="hm-c hit" data-tip="Aug 2024: +7.65% (+$77 on $1,000), 1 trade"></span><span class="hm-c neg" data-tip="Sep 2024: −3.40% (−$34 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Oct 2024: no trades"></span><span class="hm-c nt" data-tip="Nov 2024: no trades"></span><span class="hm-c hit" data-tip="Dec 2024: +2.12% (+$21 on $1,000), 1 trade"></span><span></span><span class="hm-c nt" data-tip="Jan 2025: no trades"></span><span class="hm-c neg" data-tip="Feb 2025: −4.10% (−$41 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Mar 2025: no trades"></span><span class="hm-c hit" data-tip="Apr 2025: +3.09% (+$31 on $1,000), 1 trade"></span><span class="hm-c nt" data-tip="May 2025: no trades"></span><span class="hm-c nt" data-tip="Jun 2025: no trades"></span><span class="hm-c nt" data-tip="Jul 2025: no trades"></span><span class="hm-c nt" data-tip="Aug 2025: no trades"></span><span class="hm-c nt" data-tip="Sep 2025: no trades"></span><span class="hm-c neg" data-tip="Oct 2025: −4.75% (−$47 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Nov 2025: no trades"></span><span class="hm-c hit" data-tip="Dec 2025: +3.45% (+$34 on $1,000), 1 trade"></span><span></span><span class="hm-c hit" data-tip="Jan 2026: +8.31% (+$83 on $1,000), 1 trade"></span><span class="hm-c nt" data-tip="Feb 2026: no trades"></span><span class="hm-c nt" data-tip="Mar 2026: no trades"></span><span class="hm-c neg" data-tip="Apr 2026: −5.37% (−$54 on $1,000), 3 trades">−</span><span class="hm-c hit" data-tip="May 2026: +3.95% (+$39 on $1,000), 1 trade"></span><span class="hm-c neg" data-tip="Jun 2026: −5.91% (−$59 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Jul 2026: no trades"></span><span class="hm-c nt" data-tip="Aug 2026: no trades"></span><span class="hm-c neg" data-tip="Sep 2026: −1.33% (−$13 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Oct 2026: no trades"></span><span class="hm-c pos" data-tip="Nov 2026: +0.46% (+$5 on $1,000), 1 trade"></span><div class="hm-tot"><b>8</b> of 35</div></div><div class="hm-row"><div class="hm-name">V4</div><span class="hm-c neg" data-tip="Jan 2024: −0.60% (−$6 on $1,000), 70 trades">−</span><span class="hm-c hit" data-tip="Feb 2024: +1.57% (+$16 on $1,000), 74 trades"></span><span class="hm-c hit" data-tip="Mar 2024: +2.23% (+$22 on $1,000), 51 trades"></span><span class="hm-c hit" data-tip="Apr 2024: +1.91% (+$19 on $1,000), 70 trades"></span><span class="hm-c neg" data-tip="May 2024: −0.35% (−$4 on $1,000), 49 trades">−</span><span class="hm-c pos" data-tip="Jun 2024: +0.37% (+$4 on $1,000), 48 trades"></span><span class="hm-c pos" data-tip="Jul 2024: +0.25% (+$2 on $1,000), 75 trades"></span><span class="hm-c hit" data-tip="Aug 2024: +1.25% (+$13 on $1,000), 63 trades"></span><span class="hm-c hit" data-tip="Sep 2024: +2.22% (+$22 on $1,000), 85 trades"></span><span class="hm-c hit" data-tip="Oct 2024: +4.15% (+$42 on $1,000), 70 trades"></span><span class="hm-c neg" data-tip="Nov 2024: −2.69% (−$27 on $1,000), 65 trades">−</span><span class="hm-c neg" data-tip="Dec 2024: −0.53% (−$5 on $1,000), 69 trades">−</span><span></span><span class="hm-c hit" data-tip="Jan 2025: +3.40% (+$34 on $1,000), 64 trades"></span><span class="hm-c pos" data-tip="Feb 2025: +0.05% (+$0 on $1,000), 58 trades"></span><span class="hm-c neg" data-tip="Mar 2025: −0.96% (−$10 on $1,000), 65 trades">−</span><span class="hm-c neg" data-tip="Apr 2025: −1.11% (−$11 on $1,000), 53 trades">−</span><span class="hm-c hit" data-tip="May 2025: +1.12% (+$11 on $1,000), 91 trades"></span><span class="hm-c neg" data-tip="Jun 2025: −0.12% (−$1 on $1,000), 61 trades">−</span><span class="hm-c hit" data-tip="Jul 2025: +2.44% (+$24 on $1,000), 78 trades"></span><span class="hm-c neg" data-tip="Aug 2025: −2.19% (−$22 on $1,000), 80 trades">−</span><span class="hm-c hit" data-tip="Sep 2025: +2.90% (+$29 on $1,000), 62 trades"></span><span class="hm-c pos" data-tip="Oct 2025: +0.97% (+$10 on $1,000), 95 trades"></span><span class="hm-c hit" data-tip="Nov 2025: +5.85% (+$58 on $1,000), 53 trades"></span><span class="hm-c pos" data-tip="Dec 2025: +0.50% (+$5 on $1,000), 61 trades"></span><span></span><span class="hm-c hit" data-tip="Jan 2026: +1.73% (+$17 on $1,000), 46 trades"></span><span class="hm-c pos" data-tip="Feb 2026: +0.91% (+$9 on $1,000), 47 trades"></span><span class="hm-c neg" data-tip="Mar 2026: −0.01% ($0 on $1,000), 54 trades">−</span><span class="hm-c neg" data-tip="Apr 2026: −1.14% (−$11 on $1,000), 47 trades">−</span><span class="hm-c neg" data-tip="May 2026: −1.54% (−$15 on $1,000), 57 trades">−</span><span class="hm-c neg" data-tip="Jun 2026: −0.54% (−$5 on $1,000), 61 trades">−</span><span class="hm-c hit" data-tip="Jul 2026: +2.26% (+$23 on $1,000), 61 trades"></span><span class="hm-c hit" data-tip="Aug 2026: +1.87% (+$19 on $1,000), 57 trades"></span><span class="hm-c neg" data-tip="Sep 2026: −1.81% (−$18 on $1,000), 60 trades">−</span><span class="hm-c hit" data-tip="Oct 2026: +6.15% (+$62 on $1,000), 59 trades"></span><span class="hm-c neg" data-tip="Nov 2026: −2.56% (−$26 on $1,000), 29 trades">−</span><div class="hm-tot"><b>15</b> of 35</div></div><div class="hm-row"><div class="hm-name">V2</div><span class="hm-c pos" data-tip="Jan 2024: +0.43% (+$4 on $1,000), 69 trades"></span><span class="hm-c hit" data-tip="Feb 2024: +1.26% (+$13 on $1,000), 80 trades"></span><span class="hm-c hit" data-tip="Mar 2024: +2.22% (+$22 on $1,000), 50 trades"></span><span class="hm-c hit" data-tip="Apr 2024: +2.26% (+$23 on $1,000), 72 trades"></span><span class="hm-c pos" data-tip="May 2024: +0.02% (+$0 on $1,000), 48 trades"></span><span class="hm-c neg" data-tip="Jun 2024: −0.13% (−$1 on $1,000), 51 trades">−</span><span class="hm-c neg" data-tip="Jul 2024: −0.95% (−$9 on $1,000), 74 trades">−</span><span class="hm-c pos" data-tip="Aug 2024: +0.42% (+$4 on $1,000), 62 trades"></span><span class="hm-c hit" data-tip="Sep 2024: +2.00% (+$20 on $1,000), 95 trades"></span><span class="hm-c hit" data-tip="Oct 2024: +4.57% (+$46 on $1,000), 67 trades"></span><span class="hm-c neg" data-tip="Nov 2024: −1.43% (−$14 on $1,000), 55 trades">−</span><span class="hm-c pos" data-tip="Dec 2024: +0.18% (+$2 on $1,000), 81 trades"></span><span></span><span class="hm-c hit" data-tip="Jan 2025: +3.35% (+$33 on $1,000), 69 trades"></span><span class="hm-c pos" data-tip="Feb 2025: +0.25% (+$2 on $1,000), 62 trades"></span><span class="hm-c neg" data-tip="Mar 2025: −0.49% (−$5 on $1,000), 70 trades">−</span><span class="hm-c neg" data-tip="Apr 2025: −1.77% (−$18 on $1,000), 51 trades">−</span><span class="hm-c hit" data-tip="May 2025: +3.71% (+$37 on $1,000), 87 trades"></span><span class="hm-c hit" data-tip="Jun 2025: +1.23% (+$12 on $1,000), 59 trades"></span><span class="hm-c hit" data-tip="Jul 2025: +3.56% (+$36 on $1,000), 67 trades"></span><span class="hm-c neg" data-tip="Aug 2025: −2.75% (−$27 on $1,000), 84 trades">−</span><span class="hm-c neg" data-tip="Sep 2025: −0.94% (−$9 on $1,000), 60 trades">−</span><span class="hm-c pos" data-tip="Oct 2025: +0.65% (+$7 on $1,000), 103 trades"></span><span class="hm-c hit" data-tip="Nov 2025: +4.01% (+$40 on $1,000), 52 trades"></span><span class="hm-c neg" data-tip="Dec 2025: −1.63% (−$16 on $1,000), 58 trades">−</span><span></span><span class="hm-c hit" data-tip="Jan 2026: +1.25% (+$12 on $1,000), 35 trades"></span><span class="hm-c hit" data-tip="Feb 2026: +3.46% (+$35 on $1,000), 40 trades"></span><span class="hm-c neg" data-tip="Mar 2026: −0.33% (−$3 on $1,000), 40 trades">−</span><span class="hm-c neg" data-tip="Apr 2026: −1.59% (−$16 on $1,000), 42 trades">−</span><span class="hm-c pos" data-tip="May 2026: +0.47% (+$5 on $1,000), 52 trades"></span><span class="hm-c neg" data-tip="Jun 2026: −1.66% (−$17 on $1,000), 59 trades">−</span><span class="hm-c neg" data-tip="Jul 2026: −0.98% (−$10 on $1,000), 57 trades">−</span><span class="hm-c hit" data-tip="Aug 2026: +1.91% (+$19 on $1,000), 49 trades"></span><span class="hm-c neg" data-tip="Sep 2026: −2.36% (−$24 on $1,000), 49 trades">−</span><span class="hm-c hit" data-tip="Oct 2026: +4.04% (+$40 on $1,000), 46 trades"></span><span class="hm-c neg" data-tip="Nov 2026: −1.16% (−$12 on $1,000), 29 trades">−</span><div class="hm-tot"><b>14</b> of 35</div></div><div class="hm-row"><div class="hm-name">V1</div><span class="hm-c hit" data-tip="Jan 2024: +2.57% (+$26 on $1,000), 55 trades"></span><span class="hm-c pos" data-tip="Feb 2024: +0.29% (+$3 on $1,000), 54 trades"></span><span class="hm-c hit" data-tip="Mar 2024: +2.90% (+$29 on $1,000), 35 trades"></span><span class="hm-c hit" data-tip="Apr 2024: +1.04% (+$10 on $1,000), 53 trades"></span><span class="hm-c pos" data-tip="May 2024: +0.86% (+$9 on $1,000), 33 trades"></span><span class="hm-c neg" data-tip="Jun 2024: −0.30% (−$3 on $1,000), 30 trades">−</span><span class="hm-c neg" data-tip="Jul 2024: −2.41% (−$24 on $1,000), 58 trades">−</span><span class="hm-c pos" data-tip="Aug 2024: +0.04% (+$0 on $1,000), 45 trades"></span><span class="hm-c hit" data-tip="Sep 2024: +4.31% (+$43 on $1,000), 61 trades"></span><span class="hm-c pos" data-tip="Oct 2024: +0.51% (+$5 on $1,000), 59 trades"></span><span class="hm-c neg" data-tip="Nov 2024: −0.97% (−$10 on $1,000), 47 trades">−</span><span class="hm-c hit" data-tip="Dec 2024: +1.41% (+$14 on $1,000), 58 trades"></span><span></span><span class="hm-c hit" data-tip="Jan 2025: +5.59% (+$56 on $1,000), 52 trades"></span><span class="hm-c pos" data-tip="Feb 2025: +0.49% (+$5 on $1,000), 49 trades"></span><span class="hm-c neg" data-tip="Mar 2025: −0.86% (−$9 on $1,000), 48 trades">−</span><span class="hm-c neg" data-tip="Apr 2025: −2.02% (−$20 on $1,000), 49 trades">−</span><span class="hm-c hit" data-tip="May 2025: +3.35% (+$33 on $1,000), 56 trades"></span><span class="hm-c pos" data-tip="Jun 2025: +0.84% (+$8 on $1,000), 41 trades"></span><span class="hm-c hit" data-tip="Jul 2025: +2.68% (+$27 on $1,000), 53 trades"></span><span class="hm-c neg" data-tip="Aug 2025: −2.12% (−$21 on $1,000), 62 trades">−</span><span class="hm-c neg" data-tip="Sep 2025: −1.38% (−$14 on $1,000), 44 trades">−</span><span class="hm-c neg" data-tip="Oct 2025: −2.14% (−$21 on $1,000), 71 trades">−</span><span class="hm-c hit" data-tip="Nov 2025: +3.62% (+$36 on $1,000), 45 trades"></span><span class="hm-c neg" data-tip="Dec 2025: −1.28% (−$13 on $1,000), 47 trades">−</span><span></span><span class="hm-c hit" data-tip="Jan 2026: +1.63% (+$16 on $1,000), 27 trades"></span><span class="hm-c hit" data-tip="Feb 2026: +3.32% (+$33 on $1,000), 35 trades"></span><span class="hm-c neg" data-tip="Mar 2026: −0.16% (−$2 on $1,000), 38 trades">−</span><span class="hm-c neg" data-tip="Apr 2026: −0.39% (−$4 on $1,000), 37 trades">−</span><span class="hm-c hit" data-tip="May 2026: +1.14% (+$11 on $1,000), 43 trades"></span><span class="hm-c pos" data-tip="Jun 2026: +0.83% (+$8 on $1,000), 58 trades"></span><span class="hm-c neg" data-tip="Jul 2026: −0.74% (−$7 on $1,000), 49 trades">−</span><span class="hm-c hit" data-tip="Aug 2026: +2.33% (+$23 on $1,000), 47 trades"></span><span class="hm-c neg" data-tip="Sep 2026: −2.04% (−$20 on $1,000), 45 trades">−</span><span class="hm-c hit" data-tip="Oct 2026: +3.41% (+$34 on $1,000), 43 trades"></span><span class="hm-c neg" data-tip="Nov 2026: −0.24% (−$2 on $1,000), 27 trades">−</span><div class="hm-tot"><b>14</b> of 35</div></div><div class="hm-row"><div class="hm-name">A. Spring-release</div><span class="hm-c nt" data-tip="Jan 2024: no trades"></span><span class="hm-c hit" data-tip="Feb 2024: +1.77% (+$18 on $1,000), 1 trade"></span><span class="hm-c nt" data-tip="Mar 2024: no trades"></span><span class="hm-c neg" data-tip="Apr 2024: +0.00% ($0 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="May 2024: no trades"></span><span class="hm-c hit" data-tip="Jun 2024: +3.86% (+$39 on $1,000), 2 trades"></span><span class="hm-c nt" data-tip="Jul 2024: no trades"></span><span class="hm-c hit" data-tip="Aug 2024: +7.65% (+$77 on $1,000), 1 trade"></span><span class="hm-c neg" data-tip="Sep 2024: −3.40% (−$34 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Oct 2024: no trades"></span><span class="hm-c nt" data-tip="Nov 2024: no trades"></span><span class="hm-c hit" data-tip="Dec 2024: +2.12% (+$21 on $1,000), 1 trade"></span><span></span><span class="hm-c nt" data-tip="Jan 2025: no trades"></span><span class="hm-c neg" data-tip="Feb 2025: −4.10% (−$41 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Mar 2025: no trades"></span><span class="hm-c hit" data-tip="Apr 2025: +3.09% (+$31 on $1,000), 1 trade"></span><span class="hm-c nt" data-tip="May 2025: no trades"></span><span class="hm-c nt" data-tip="Jun 2025: no trades"></span><span class="hm-c nt" data-tip="Jul 2025: no trades"></span><span class="hm-c nt" data-tip="Aug 2025: no trades"></span><span class="hm-c nt" data-tip="Sep 2025: no trades"></span><span class="hm-c neg" data-tip="Oct 2025: −4.75% (−$47 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Nov 2025: no trades"></span><span class="hm-c neg" data-tip="Dec 2025: −3.30% (−$33 on $1,000), 1 trade">−</span><span></span><span class="hm-c hit" data-tip="Jan 2026: +8.31% (+$83 on $1,000), 1 trade"></span><span class="hm-c nt" data-tip="Feb 2026: no trades"></span><span class="hm-c neg" data-tip="Mar 2026: −0.58% (−$6 on $1,000), 1 trade">−</span><span class="hm-c neg" data-tip="Apr 2026: −5.37% (−$54 on $1,000), 3 trades">−</span><span class="hm-c hit" data-tip="May 2026: +3.95% (+$39 on $1,000), 1 trade"></span><span class="hm-c neg" data-tip="Jun 2026: −5.91% (−$59 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Jul 2026: no trades"></span><span class="hm-c nt" data-tip="Aug 2026: no trades"></span><span class="hm-c neg" data-tip="Sep 2026: −1.33% (−$13 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Oct 2026: no trades"></span><span class="hm-c neg" data-tip="Nov 2026: −16.79% (−$168 on $1,000), 2 trades">−</span><div class="hm-tot"><b>7</b> of 35</div></div><div class="hm-row"><div class="hm-name">Donchian long+short</div><span class="hm-c nt" data-tip="Jan 2024: no trades"></span><span class="hm-c hit" data-tip="Feb 2024: +3.00% (+$30 on $1,000), 2 trades"></span><span class="hm-c nt" data-tip="Mar 2024: no trades"></span><span class="hm-c nt" data-tip="Apr 2024: no trades"></span><span class="hm-c nt" data-tip="May 2024: no trades"></span><span class="hm-c neg" data-tip="Jun 2024: −2.39% (−$24 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Jul 2024: no trades"></span><span class="hm-c neg" data-tip="Aug 2024: −4.79% (−$48 on $1,000), 1 trade">−</span><span class="hm-c neg" data-tip="Sep 2024: −5.05% (−$50 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Oct 2024: no trades"></span><span class="hm-c nt" data-tip="Nov 2024: no trades"></span><span class="hm-c hit" data-tip="Dec 2024: +3.52% (+$35 on $1,000), 1 trade"></span><span></span><span class="hm-c nt" data-tip="Jan 2025: no trades"></span><span class="hm-c nt" data-tip="Feb 2025: no trades"></span><span class="hm-c nt" data-tip="Mar 2025: no trades"></span><span class="hm-c neg" data-tip="Apr 2025: −7.24% (−$72 on $1,000), 1 trade">−</span><span class="hm-c neg" data-tip="May 2025: −4.97% (−$50 on $1,000), 1 trade">−</span><span class="hm-c neg" data-tip="Jun 2025: −4.05% (−$40 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Jul 2025: no trades"></span><span class="hm-c neg" data-tip="Aug 2025: −4.14% (−$41 on $1,000), 1 trade">−</span><span class="hm-c neg" data-tip="Sep 2025: −3.82% (−$38 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Oct 2025: no trades"></span><span class="hm-c neg" data-tip="Nov 2025: −3.59% (−$36 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Dec 2025: no trades"></span><span></span><span class="hm-c hit" data-tip="Jan 2026: +19.43% (+$194 on $1,000), 1 trade"></span><span class="hm-c nt" data-tip="Feb 2026: no trades"></span><span class="hm-c nt" data-tip="Mar 2026: no trades"></span><span class="hm-c nt" data-tip="Apr 2026: no trades"></span><span class="hm-c nt" data-tip="May 2026: no trades"></span><span class="hm-c neg" data-tip="Jun 2026: −6.70% (−$67 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Jul 2026: no trades"></span><span class="hm-c neg" data-tip="Aug 2026: −1.94% (−$19 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Sep 2026: no trades"></span><span class="hm-c neg" data-tip="Oct 2026: −4.25% (−$42 on $1,000), 1 trade">−</span><span class="hm-c neg" data-tip="Nov 2026: +0.00% ($0 on $1,000), 1 trade">−</span><div class="hm-tot"><b>3</b> of 35</div></div><div class="hm-row"><div class="hm-name">Donchian long-only</div><span class="hm-c nt" data-tip="Jan 2024: no trades"></span><span class="hm-c hit" data-tip="Feb 2024: +7.55% (+$76 on $1,000), 1 trade"></span><span class="hm-c nt" data-tip="Mar 2024: no trades"></span><span class="hm-c nt" data-tip="Apr 2024: no trades"></span><span class="hm-c nt" data-tip="May 2024: no trades"></span><span class="hm-c nt" data-tip="Jun 2024: no trades"></span><span class="hm-c nt" data-tip="Jul 2024: no trades"></span><span class="hm-c neg" data-tip="Aug 2024: −4.79% (−$48 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Sep 2024: no trades"></span><span class="hm-c nt" data-tip="Oct 2024: no trades"></span><span class="hm-c nt" data-tip="Nov 2024: no trades"></span><span class="hm-c nt" data-tip="Dec 2024: no trades"></span><span></span><span class="hm-c nt" data-tip="Jan 2025: no trades"></span><span class="hm-c nt" data-tip="Feb 2025: no trades"></span><span class="hm-c nt" data-tip="Mar 2025: no trades"></span><span class="hm-c nt" data-tip="Apr 2025: no trades"></span><span class="hm-c neg" data-tip="May 2025: −4.97% (−$50 on $1,000), 1 trade">−</span><span class="hm-c neg" data-tip="Jun 2025: −4.05% (−$40 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Jul 2025: no trades"></span><span class="hm-c nt" data-tip="Aug 2025: no trades"></span><span class="hm-c neg" data-tip="Sep 2025: −3.82% (−$38 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Oct 2025: no trades"></span><span class="hm-c neg" data-tip="Nov 2025: −3.59% (−$36 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Dec 2025: no trades"></span><span></span><span class="hm-c hit" data-tip="Jan 2026: +19.43% (+$194 on $1,000), 1 trade"></span><span class="hm-c nt" data-tip="Feb 2026: no trades"></span><span class="hm-c nt" data-tip="Mar 2026: no trades"></span><span class="hm-c nt" data-tip="Apr 2026: no trades"></span><span class="hm-c nt" data-tip="May 2026: no trades"></span><span class="hm-c nt" data-tip="Jun 2026: no trades"></span><span class="hm-c nt" data-tip="Jul 2026: no trades"></span><span class="hm-c neg" data-tip="Aug 2026: −1.94% (−$19 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Sep 2026: no trades"></span><span class="hm-c neg" data-tip="Oct 2026: −4.25% (−$42 on $1,000), 1 trade">−</span><span class="hm-c nt" data-tip="Nov 2026: no trades"></span><div class="hm-tot"><b>2</b> of 35</div></div></div></div>
+      <div class="tipbox" id="tip" role="status" aria-live="polite">Point at a square to see that month.</div>
+    </div>
+    <p class="fine" style="margin-top:10px">Only Rule OR Model reaches level S1, with 2024: 8 of 12 · 2025: 8 of 12 · 2026: 8 of 11 months above 1%. The multi-day models trade a few times a year, so most of their months are empty.</p>
+  </section>
+
+  <section id="money">
+    <h2>What $1,000 per trade would have made</h2>
+    <p class="sub">Each trade buys $1,000 of CNQ. When it is sold, the same $1,000 is used for the next trade; profits are not reinvested. Totals cover January 2024 to November 18, 2026.</p>
+    <div class="card">
+      <div class="chart-title"><h3>Total profit, before and after trading costs</h3><div class="legend-inline"><span style="--c:var(--pale)">Before costs</span><span style="--c:var(--accent)">After costs, profit</span><span style="--c:var(--loss)">After costs, loss</span></div></div>
+      <p class="chart-note">Costs are 1&cent; per share for buying and selling together. For reference, buying $1,000 of CNQ on the first day and holding it made about +$390 (price change only).</p>
+      <div class="mchart"><div class="mr mr-axis"><div class="mr-name"></div><div class="mr-plot"><span style="left:4.17%">−$400</span><span style="left:20.83%">−$200</span><span style="left:37.50%">$0</span><span style="left:54.17%">$200</span><span style="left:70.83%">$400</span><span style="left:87.50%">$600</span></div><div class="mr-val"><span>Before</span><strong>After</strong></div></div><div class="mr"><div class="mr-name">Rule OR Model</div>
+      <div class="mr-plot"><span class="z" style="left:37.50%"></span><i class="gross p" style="left:37.50%;width:57.59%"></i><i class="net n" style="left:4.96%;width:32.54%"></i></div>
+      <div class="mr-val"><span>+$691</span><strong class="neg">−$390</strong></div></div><div class="mr"><div class="mr-name">V7.1 percent-scaled</div>
+      <div class="mr-plot"><span class="z" style="left:37.50%"></span><i class="gross p" style="left:37.50%;width:24.09%"></i><i class="net n" style="left:28.09%;width:9.41%"></i></div>
+      <div class="mr-val"><span>+$289</span><strong class="neg">−$113</strong></div></div><div class="mr"><div class="mr-name">V7</div>
+      <div class="mr-plot"><span class="z" style="left:37.50%"></span><i class="gross p" style="left:37.50%;width:28.81%"></i><i class="net n" style="left:22.49%;width:15.01%"></i></div>
+      <div class="mr-val"><span>+$346</span><strong class="neg">−$180</strong></div></div><div class="mr"><div class="mr-name">V7.1</div>
+      <div class="mr-plot"><span class="z" style="left:37.50%"></span><i class="gross p" style="left:37.50%;width:27.13%"></i><i class="net n" style="left:26.61%;width:10.89%"></i></div>
+      <div class="mr-val"><span>+$326</span><strong class="neg">−$131</strong></div></div><div class="mr"><div class="mr-name">C. Transformer probe</div>
+      <div class="mr-plot"><span class="z" style="left:37.50%"></span><i class="gross p" style="left:37.50%;width:27.06%"></i><i class="net p" style="left:37.50%;width:25.88%"></i></div>
+      <div class="mr-val"><span>+$325</span><strong class="pos">+$311</strong></div></div><div class="mr"><div class="mr-name">B. Field-Fusion GBM</div>
+      <div class="mr-plot"><span class="z" style="left:37.50%"></span><i class="gross p" style="left:37.50%;width:20.72%"></i><i class="net p" style="left:37.50%;width:20.11%"></i></div>
+      <div class="mr-val"><span>+$249</span><strong class="pos">+$241</strong></div></div><div class="mr"><div class="mr-name">V3</div>
+      <div class="mr-plot"><span class="z" style="left:37.50%"></span><i class="gross p" style="left:37.50%;width:28.27%"></i><i class="net n" style="left:0.01%;width:37.49%"></i></div>
+      <div class="mr-val"><span>+$339</span><strong class="neg">−$450</strong></div></div><div class="mr"><div class="mr-name">V6</div>
+      <div class="mr-plot"><span class="z" style="left:37.50%"></span><i class="gross p" style="left:37.50%;width:23.44%"></i><i class="net n" style="left:18.36%;width:19.14%"></i></div>
+      <div class="mr-val"><span>+$281</span><strong class="neg">−$230</strong></div></div><div class="mr"><div class="mr-name">V5</div>
+      <div class="mr-plot"><span class="z" style="left:37.50%"></span><i class="gross p" style="left:37.50%;width:19.40%"></i><i class="net n" style="left:2.60%;width:34.90%"></i></div>
+      <div class="mr-val"><span>+$233</span><strong class="neg">−$419</strong></div></div><div class="mr"><div class="mr-name">D. Fusion gate</div>
+      <div class="mr-plot"><span class="z" style="left:37.50%"></span><i class="gross p" style="left:37.50%;width:8.16%"></i><i class="net p" style="left:37.50%;width:7.72%"></i></div>
+      <div class="mr-val"><span>+$98</span><strong class="pos">+$93</strong></div></div><div class="mr"><div class="mr-name">V4</div>
+      <div class="mr-plot"><span class="z" style="left:37.50%"></span><i class="gross p" style="left:37.50%;width:23.28%"></i><i class="net n" style="left:8.82%;width:28.68%"></i></div>
+      <div class="mr-val"><span>+$279</span><strong class="neg">−$344</strong></div></div><div class="mr"><div class="mr-name">V2</div>
+      <div class="mr-plot"><span class="z" style="left:37.50%"></span><i class="gross p" style="left:37.50%;width:19.22%"></i><i class="net n" style="left:5.72%;width:31.78%"></i></div>
+      <div class="mr-val"><span>+$231</span><strong class="neg">−$381</strong></div></div><div class="mr"><div class="mr-name">V1</div>
+      <div class="mr-plot"><span class="z" style="left:37.50%"></span><i class="gross p" style="left:37.50%;width:21.75%"></i><i class="net n" style="left:19.99%;width:17.51%"></i></div>
+      <div class="mr-val"><span>+$261</span><strong class="neg">−$210</strong></div></div><div class="mr"><div class="mr-name">A. Spring-release</div>
+      <div class="mr-plot"><span class="z" style="left:37.50%"></span><i class="gross n" style="left:25.17%;width:12.33%"></i><i class="net n" style="left:24.70%;width:12.80%"></i></div>
+      <div class="mr-val"><span>−$148</span><strong class="neg">−$154</strong></div></div><div class="mr"><div class="mr-name">Donchian long+short</div>
+      <div class="mr-plot"><span class="z" style="left:37.50%"></span><i class="gross n" style="left:15.01%;width:22.49%"></i><i class="net n" style="left:14.61%;width:22.89%"></i></div>
+      <div class="mr-val"><span>−$270</span><strong class="neg">−$275</strong></div></div><div class="mr"><div class="mr-name">Donchian long-only</div>
+      <div class="mr-plot"><span class="z" style="left:37.50%"></span><i class="gross n" style="left:37.14%;width:0.36%"></i><i class="net n" style="left:36.94%;width:0.56%"></i></div>
+      <div class="mr-val"><span>−$4</span><strong class="neg">−$7</strong></div></div></div>
+    </div>
+    <details class="card tv">
+      <summary>Show the numbers as a table</summary>
       <div class="table-scroll"><table>
-        <thead><tr><th>Method</th><th>Basis</th><th class="num">Trades</th><th class="num">Days</th><th class="num">Trades/day</th><th class="num">Avg gross %/trade</th><th class="num">Avg gross %/day</th><th>Gap to 1%/day</th></tr></thead>
-        <tbody>
-          <tr><td>V7.1 (hand-tuned)</td><td>7-yr, 2020&ndash;2026</td><td class="num">3,605</td><td class="num">1,584</td><td class="num">2.28</td><td class="num">0.0317%</td><td class="num"><strong>0.072%</strong></td><td>~14x short</td></tr>
-          <tr><td>V7 (walk-forward)</td><td>blind 2024&ndash;2026</td><td class="num">1,834</td><td class="num">723</td><td class="num">2.54</td><td class="num">0.0189%</td><td class="num"><strong>0.048%</strong></td><td>~21x short</td></tr>
-          <tr><td>V7.1 (walk-forward)</td><td>blind 2024&ndash;2026</td><td class="num">1,597</td><td class="num">723</td><td class="num">2.21</td><td class="num">0.0204%</td><td class="num"><strong>0.045%</strong></td><td>~22x short</td></tr>
-          <tr><td>Rule OR Model (walk-forward)</td><td>blind 2024&ndash;2026</td><td class="num">3,890</td><td class="num">723</td><td class="num">5.38</td><td class="num">0.0178%</td><td class="num"><strong>0.096%</strong></td><td>~10x short</td></tr>
-        </tbody>
+        <thead><tr><th>Model</th><th class="num">Trades</th><th class="num">Avg per trade</th><th class="num">2024</th><th class="num">2025</th><th class="num">2026</th><th class="num">Total before costs</th><th class="num">Costs</th><th class="num">Total after costs</th></tr></thead>
+        <tbody><tr><td><strong>Rule OR Model</strong></td><td class="num">3,890</td><td class="num">+$0.18</td><td class="num">+$171</td><td class="num">+$194</td><td class="num">+$326</td><td class="num">+$691</td><td class="num">−$1,082</td><td class="num neg"><strong>−$390</strong></td></tr><tr><td><strong>V7.1 percent-scaled</strong></td><td class="num">1,411</td><td class="num">+$0.20</td><td class="num">+$40</td><td class="num">+$144</td><td class="num">+$106</td><td class="num">+$289</td><td class="num">−$402</td><td class="num neg"><strong>−$113</strong></td></tr><tr><td><strong>V7</strong></td><td class="num">1,834</td><td class="num">+$0.19</td><td class="num">+$121</td><td class="num">+$109</td><td class="num">+$115</td><td class="num">+$346</td><td class="num">−$526</td><td class="num neg"><strong>−$180</strong></td></tr><tr><td><strong>V7.1</strong></td><td class="num">1,597</td><td class="num">+$0.20</td><td class="num">+$95</td><td class="num">+$116</td><td class="num">+$115</td><td class="num">+$326</td><td class="num">−$456</td><td class="num neg"><strong>−$131</strong></td></tr><tr><td><strong>C. Transformer probe</strong></td><td class="num">51</td><td class="num">+$6.37</td><td class="num">+$36</td><td class="num">+$92</td><td class="num">+$197</td><td class="num">+$325</td><td class="num">−$14</td><td class="num pos"><strong>+$311</strong></td></tr><tr><td><strong>B. Field-Fusion GBM</strong></td><td class="num">25</td><td class="num">+$9.95</td><td class="num">+$147</td><td class="num">−$9</td><td class="num">+$110</td><td class="num">+$249</td><td class="num">−$7</td><td class="num pos"><strong>+$241</strong></td></tr><tr><td><strong>V3</strong></td><td class="num">2,741</td><td class="num">+$0.12</td><td class="num">+$123</td><td class="num">+$125</td><td class="num">+$92</td><td class="num">+$339</td><td class="num">−$789</td><td class="num neg"><strong>−$450</strong></td></tr><tr><td><strong>V6</strong></td><td class="num">1,794</td><td class="num">+$0.16</td><td class="num">+$108</td><td class="num">+$92</td><td class="num">+$81</td><td class="num">+$281</td><td class="num">−$511</td><td class="num neg"><strong>−$230</strong></td></tr><tr><td><strong>V5</strong></td><td class="num">2,284</td><td class="num">+$0.10</td><td class="num">+$89</td><td class="num">+$62</td><td class="num">+$82</td><td class="num">+$233</td><td class="num">−$652</td><td class="num neg"><strong>−$419</strong></td></tr><tr><td><strong>D. Fusion gate</strong></td><td class="num">19</td><td class="num">+$5.15</td><td class="num">+$120</td><td class="num">−$23</td><td class="num">+$1</td><td class="num">+$98</td><td class="num">−$5</td><td class="num pos"><strong>+$93</strong></td></tr><tr><td><strong>V4</strong></td><td class="num">2,188</td><td class="num">+$0.13</td><td class="num">+$98</td><td class="num">+$128</td><td class="num">+$53</td><td class="num">+$279</td><td class="num">−$624</td><td class="num neg"><strong>−$344</strong></td></tr><tr><td><strong>V2</strong></td><td class="num">2,124</td><td class="num">+$0.11</td><td class="num">+$108</td><td class="num">+$92</td><td class="num">+$30</td><td class="num">+$231</td><td class="num">−$612</td><td class="num neg"><strong>−$381</strong></td></tr><tr><td><strong>V1</strong></td><td class="num">1,654</td><td class="num">+$0.16</td><td class="num">+$103</td><td class="num">+$67</td><td class="num">+$91</td><td class="num">+$261</td><td class="num">−$471</td><td class="num neg"><strong>−$210</strong></td></tr><tr><td><strong>A. Spring-release</strong></td><td class="num">21</td><td class="num">−$7.05</td><td class="num">+$120</td><td class="num">−$91</td><td class="num">−$177</td><td class="num">−$148</td><td class="num">−$6</td><td class="num neg"><strong>−$154</strong></td></tr><tr><td><strong>Donchian swing, long+short</strong></td><td class="num">17</td><td class="num">−$15.87</td><td class="num">−$57</td><td class="num">−$278</td><td class="num">+$65</td><td class="num">−$270</td><td class="num">−$5</td><td class="num neg"><strong>−$275</strong></td></tr><tr><td><strong>Donchian swing, long-only</strong></td><td class="num">9</td><td class="num">−$0.48</td><td class="num">+$28</td><td class="num">−$164</td><td class="num">+$132</td><td class="num">−$4</td><td class="num">−$2</td><td class="num neg"><strong>−$7</strong></td></tr></tbody>
       </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Reading this honestly: every out-of-sample method validated so far lands between 0.045% and 0.096% gross per trading day &mdash; roughly a tenth to a fifth of target. The closest, Rule OR Model, gets there mainly by trading <em>more often</em> (5.4 trades/day vs. ~2.2&ndash;2.5) rather than a better per-trade edge &mdash; its per-trade average is in fact the lowest of the four. Closing a gap this size needs trade frequency and per-trade edge to both move substantially, most likely via scope beyond a single symbol (see candidates below).</p>
-    </div>
-    <div class="grid g2" style="margin-top:16px">
-      <div class="card">
-        <h3>Back-of-envelope: what closing the gap would take</h3>
-        <p>Holding per-trade edge where it is now (~0.02&ndash;0.03% gross/trade), reaching 1%/day on CNQ alone would need roughly <strong>35&ndash;55 trades/day</strong> &mdash; 10&ndash;20x today's rate. Holding trade count where it is now (~2&ndash;5/day), it would need a per-trade edge of roughly <strong>0.2&ndash;0.5%</strong> &mdash; 7&ndash;25x anything validated out of sample so far.</p>
-      </div>
-      <div class="card">
-        <h3>Candidate directions for Stage 11</h3>
-        <ul>
-          <li>Trade frequency as its own research target, not just a by-product of OR-ing methods.</li>
-          <li>Concurrency / multiple open positions.</li>
-          <li>Per-trade edge: tighter entries, better exits.</li>
-          <li>Additional setups beyond the current zone-bounce rule.</li>
-          <li>Basket / multi-symbol expansion (also the top queued Stage 7 item).</li>
-          <li>Short-side mirror, to add trades in downtrends the long-only design currently sits out.</li>
-        </ul>
-      </div>
-    </div>
-    <p style="font-size:13px;color:var(--muted);margin:16px 0 0">Full target definition, open questions for the owner, and citations: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/07_Goals_and_Targets.md">docs/07_Goals_and_Targets.md</a>. Generalizable lessons from Stages 8&ndash;10, organized by topic for future ML/method development: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/08_ML_and_Method_Development_Lessons.md">docs/08_ML_and_Method_Development_Lessons.md</a>.</p>
+    </details>
+    <p class="fine" style="margin-top:10px">Rule OR Model shows why costs matter: 3,890 trades made $691 before costs, and the cost of those trades comes to about $1,082. B. Field-Fusion GBM made $249 from 25 trades and paid about $7 in costs, but two of its trades supplied nearly all of the profit.</p>
   </section>
 
-  <section id="stage11">
-    <h2>Stage 11 &mdash; Target 1 sharpened to per-trade, new candidates tested</h2>
-    <p style="color:var(--muted);margin:-6px 0 14px">Added 2026-11-23. The owner sharpened Target 1 from 1% gross <strong>per day</strong> to a materially harder bar: more than <strong>1% gross per trade</strong>, averaged over 2024&ndash;2026, using the same walk-forward discipline (train 2020&ndash;2023, blind test 2024&ndash;2026).</p>
-    <div class="card">
-      <h3>Feasibility check, done before building anything</h3>
-      <p>CNQ's own daily high&ndash;low range in 2024&ndash;2026 averages only <strong>~2.0&ndash;2.4%</strong> of the day's open. A same-day, end-of-day-flattened trade &mdash; every method this project has tested so far, V1&ndash;V7.1 and Rule OR Model &mdash; cannot average more than roughly half the day's own range net of losers, even with perfect entries. An average, net-of-losers return of &gt;1% <em>per trade</em> from a same-day structure is close to mathematically ruled out by the instrument's own volatility at that holding period, not a matter of finding a better rule. CNQ's multi-day swing range is large enough to make &gt;1%/trade plausible instead: the rolling 5-day range averages ~5.5&ndash;7.0% of the window's starting price, 10-day ~8.2&ndash;10.6%, 20-day ~12.0&ndash;15.5%. This is why Stage 11 tested a genuinely different, multi-day holding period rather than another same-day rule variant.</p>
-    </div>
-    <div class="grid g2" style="margin-top:16px">
-      <div class="card">
-        <h3>Candidate A &mdash; Donchian-channel breakout swing/trend system</h3>
-        <p>A classic, well-documented systematic trend-following design (the &ldquo;Turtle Trading&rdquo; / Donchian-channel breakout system): N-day high/low breakout entry, stop at 2&times;ATR(20), trailing exit on the opposite M-day channel cross, held across multiple days instead of flattened same-day. Walk-forward trained 2020&ndash;2023 (narrow 2&times;2 grid, N&isin;{20,55}, M&isin;{10,20}), blind-tested 2024&ndash;2026, long-only and long+short variants.</p>
-        <div class="table-scroll"><table>
-          <thead><tr><th>Variant</th><th class="num">Blind trades</th><th class="num">Avg gross %/trade</th><th class="num">Win rate</th></tr></thead>
-          <tbody>
-            <tr><td>Long-only</td><td class="num">9</td><td class="num">&minus;0.05%</td><td class="num">22.2%</td></tr>
-            <tr><td>Long+short</td><td class="num">17</td><td class="num">&minus;1.59%</td><td class="num">18.8%</td></tr>
-          </tbody>
-        </table></div>
-        <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Does not validate a reliably positive edge on CNQ alone over 2024&ndash;2026 &mdash; but it is the first method tested that is even <em>structurally capable</em> of the magnitude the target requires: individual blind-test trades of +7.55% and +19.43% appear, impossible for any same-day method. With only 9&ndash;17 blind trades across 3 years on one symbol, this reads as too small a sample to let the trend-following &ldquo;big win funds many small losses&rdquo; mechanism play out reliably &mdash; not a disproof of the mechanism.</p>
-      </div>
-      <div class="card">
-        <h3>Candidate B &mdash; percent-of-price-scaled V7.1</h3>
-        <p>CNQ's own average price rose ~4.6x from 2020 (~$9.9) to 2026 (~$45.6) in this dataset, while V7.1's stop/target stayed fixed in cents &mdash; a concrete, data-grounded reason the existing &ldquo;Avg gross %/trade&rdquo; figures could be understating the strategy's real edge in later years. This candidate re-expresses V7.1's already-validated entry/exit rule with a percent-of-entry-price stop/target (each year's reference price = the prior calendar year's average close, no look-ahead) instead of fixed dollars, otherwise unchanged.</p>
-        <div class="table-scroll"><table>
-          <thead><tr><th>Method</th><th class="num">Blind trades</th><th class="num">Avg gross %/trade</th></tr></thead>
-          <tbody>
-            <tr><td>V7.1 original (fixed-dollar)</td><td class="num">1,597</td><td class="num">0.0204%</td></tr>
-            <tr><td>V7.1 percent-scaled (new)</td><td class="num">1,411</td><td class="num">0.0205%</td></tr>
-          </tbody>
-        </table></div>
-        <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Essentially a null result &mdash; percent-scaling the offsets does not meaningfully change the per-trade edge, since the actual captured win/loss sizes (driven by the weak-candle early-exit rule, not the nominal stop/target distance) already track price level reasonably well through other channels. A cheap, useful negative finding: closes off a specific, recurring question rather than being wasted effort.</p>
-      </div>
+  <section id="measure">
+    <h2>How it is measured</h2>
+    <div class="grid g3">
+      <div class="card"><h3>Fair test</h3><p>Models were trained and tuned on 2020 to 2023, then frozen and run once on 2024 to 2026. Nothing was adjusted after seeing those results.</p></div>
+      <div class="card"><h3>Gross and after costs</h3><p>The goals are gross, before costs. Robinhood and Schwab charge no commission on CNQ, but each trade still loses a little to the bid-ask spread. The page uses 1&cent; per share for that.</p></div>
+      <div class="card"><h3>Ranking rule</h3><p>Overall progress is the average of three fractions: profit per trade out of 3%, win rate out of 75%, and share of months above 1%. The rule was fixed before the scores were computed.</p></div>
     </div>
     <div class="card" style="margin-top:16px">
-      <h3>Where this leaves Target 1 (per-trade framing)</h3>
-      <div class="table-scroll"><table>
-        <thead><tr><th>Method</th><th>Basis</th><th class="num">Trades (2024&ndash;26)</th><th class="num">Avg gross %/trade</th><th>Gap to &gt;1%/trade</th></tr></thead>
-        <tbody>
-          <tr><td>V7.1 (Stage 10, walk-forward)</td><td>blind</td><td class="num">1,597</td><td class="num">0.0204%</td><td>~49x short</td></tr>
-          <tr><td>Rule OR Model (Stage 10, walk-forward)</td><td>blind</td><td class="num">3,890</td><td class="num">0.0178%</td><td>~56x short</td></tr>
-          <tr><td>Percent-scaled V7.1 (Stage 11, new)</td><td>blind</td><td class="num">1,411</td><td class="num">0.0205%</td><td>~49x short</td></tr>
-          <tr><td>Donchian swing, long-only (Stage 11, new)</td><td>blind</td><td class="num">9</td><td class="num"><strong>&minus;0.05%</strong></td><td>negative</td></tr>
-          <tr><td>Donchian swing, long+short (Stage 11, new)</td><td>blind</td><td class="num">17</td><td class="num"><strong>&minus;1.59%</strong></td><td>negative</td></tr>
-        </tbody>
-      </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Read plainly: no method this project has built and honestly walk-forward validated &mdash; old or new &mdash; averages anywhere close to a reliably positive &gt;1%-per-trade return on blind 2024&ndash;2026 data. The best positive, high-volume result (percent-scaled V7.1) sits at roughly <strong>1/49th</strong> of target. The one method structurally <em>capable</em> of multi-percent single trades (the Donchian swing breakout) does not yet have enough trade volume on one symbol to validate that capability as a reliable, positive average.</p>
-    </div>
-    <div class="card" style="margin-top:16px">
-      <h3>Concrete next steps</h3>
+      <h3>Limits of these results</h3>
       <ul>
-        <li>Basket/multi-symbol expansion for the swing system specifically (SU, CVE, IMO, XOM, CVX) &mdash; multiplies trade count without changing the per-symbol mechanism, giving walk-forward selection and blind testing enough samples to actually distinguish &ldquo;this works&rdquo; from &ldquo;this got unlucky.&rdquo;</li>
-        <li>A hybrid: V7.1's proven high-win-rate zone-bounce entries paired with the swing system's multi-day trailing-stop exit, instead of V7.1's own same-day EOD flatten &mdash; a genuinely untested combination.</li>
-        <li>Wider ATR stop multiple or an explicit time-stop for the swing system, before concluding the mechanism itself is unviable on CNQ.</li>
-        <li>Re-confirm the exact Target 1 metric with the owner &mdash; open questions remain about compounding and multi-symbol account-level returns now that a materially harder bar is in play.</li>
+        <li>One stock. All results are for CNQ only, on one data feed (IEX), and are backtests, not real trades.</li>
+        <li>Few trades for the multi-day models. B. Field-Fusion GBM has 25 trades in almost three years, so its 0.99% average could easily be luck. Its range of likely values runs from about −0.9% to +2.9%.</li>
+        <li>A rising stock helps long trades. CNQ rose about 39% over the test period, and a randomly timed 5-day purchase made +0.35% on average.</li>
+        <li>2026 has 11 months of data. Its months are judged on the same fractions (8/12, 10/12, 12/12).</li>
       </ul>
     </div>
-    <p style="font-size:13px;color:var(--muted);margin:16px 0 0">Full research write-up, feasibility tables, and reproducible code: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/09_Stage11_Per_Trade_Target_Research.md">docs/09_Stage11_Per_Trade_Target_Research.md</a> &middot; <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/src/stage11_swing_breakout.py">stage11_swing_breakout.py</a> &middot; <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/src/stage11_pct_scaled.py">stage11_pct_scaled.py</a>.</p>
-  </section>
-
-  <section id="stage12">
-    <h2>Stage 12 &mdash; physics, cross-field ML and a transformer, tested against the per-trade target</h2>
-    <p style="color:var(--muted);margin:-6px 0 14px">Added 2026-11-23. The owner asked for a new, innovative model for the &gt;1% gross-per-trade target, drawing on machine learning (including transformers) and on mathematics, physics and engineering, under the same discipline: walk-forward on 2020&ndash;2023, one blind run on 2024&ndash;2026.</p>
-    <div class="card" style="border-left:4px solid var(--warn)">
-      <div class="eyebrow" style="margin-bottom:8px">Result</div>
-      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0"><strong>Target not met.</strong> The model chosen by validation lost 0.70% per trade on blind data. The best of the four candidates averaged +0.99% per trade &mdash; about 49&times; V7.1 and the closest this project has come &mdash; but on 25 trades, with two trades supplying nearly all of it.</p>
-    </div>
-    <div class="card" style="margin-top:16px">
-      <div class="chart-title"><h3>Average gross % per trade, blind 2024&ndash;2026, every method tested so far</h3></div>
-      <p class="chart-note">Each bar is a frozen method run once on years it was not built on. The target is above +1%. Stages 10&ndash;11 on the left, Stage 12 (A&ndash;D) on the right.</p>
-      <div id="s12chart"></div>
-      <div class="table-scroll" style="margin-top:14px"><table>
-        <thead><tr><th>Stage 12 candidate</th><th class="num">Blind trades</th><th class="num">Avg gross %/trade</th><th class="num">Win rate</th><th class="num">Profit factor</th><th class="num">Excess over a random 5-day long</th><th class="num">95% interval of the average</th><th class="num">Avg after 1&cent;/share</th></tr></thead>
-        <tbody>
-          <tr><td>A. Spring-release rule <span class="tag bad">selected by validation</span></td><td class="num">21</td><td class="num"><strong>&minus;0.70%</strong></td><td class="num">38.1%</td><td class="num">0.71</td><td class="num">&minus;1.23%</td><td class="num">&minus;2.84% to +1.41%</td><td class="num">&minus;0.73%</td></tr>
-          <tr><td>B. Field-Fusion GBM</td><td class="num">25</td><td class="num"><strong>+0.99%</strong></td><td class="num">48.0%</td><td class="num">1.65</td><td class="num">+0.63%</td><td class="num">&minus;0.88% to +2.94%</td><td class="num">+0.97%</td></tr>
-          <tr><td>C. Transformer probe</td><td class="num">51</td><td class="num"><strong>+0.64%</strong></td><td class="num">51.0%</td><td class="num">1.46</td><td class="num">+0.17%</td><td class="num">&minus;0.50% to +1.74%</td><td class="num">+0.61%</td></tr>
-          <tr><td>D. Fusion gate (A vetoed by B)</td><td class="num">19</td><td class="num"><strong>+0.52%</strong></td><td class="num">52.6%</td><td class="num">1.32</td><td class="num">+0.05%</td><td class="num">&minus;1.43% to +2.47%</td><td class="num">+0.49%</td></tr>
-        </tbody>
-      </table></div>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">All four are long-only, hold five trading days, enter and exit at the close, one position at a time, no stop or target. &ldquo;Excess&rdquo; subtracts what a randomly timed 5-day long earned in the same year (+0.35% on average over 2024&ndash;2026, because CNQ rose 38.6%). None of the four averages is statistically distinguishable from zero.</p>
-    </div>
-    <div class="grid g2" style="margin-top:16px">
-      <div class="card">
-        <h3>What was built</h3>
-        <ul>
-          <li><strong>A. Spring-release</strong> &mdash; a physics rule. A Kalman filter (control engineering) tracks an equilibrium price; the distance below it is treated as a stretched spring (an Ornstein&ndash;Uhlenbeck excursion). Buy once the stretch has started to shrink.</li>
-          <li><strong>B. Field-Fusion GBM</strong> &mdash; a shallow gradient-boosted model over 33 features: Kalman displacement and velocity, OU expected reversion, realised volatility and jumps, permutation entropy, Hurst, rough-path signature terms, and the overnight/intraday split. It scores every day and trades the top of its ranking.</li>
-          <li><strong>C. Transformer probe</strong> &mdash; a PatchTST-style encoder pretrained on CNQ's own 5-minute bars by reconstructing masked patches, then frozen with a linear probe.</li>
-          <li><strong>D. Fusion gate</strong> &mdash; meta-labelling: A's signal, taken only when B's model does not disagree.</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>How it was validated</h3>
-        <ul>
-          <li>Built on 2020&ndash;2023 only (861 days), with folds validating on 2021, 2022 and 2023.</li>
-          <li>Selected on return <em>in excess of</em> a random same-length long, so 2020&ndash;2023's steep rise could not pick the winner.</li>
-          <li>Models hash-frozen, then 2024&ndash;2026 run once; the script refuses a second run.</li>
-          <li>All 116 blind trades re-checked against the raw file: 0 mismatches. A full re-run rebuilds the frozen models byte for byte.</li>
-          <li>In validation A looked strongest: 27 trades, +3.12% per trade, 78% winners, positive in each year.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="card" style="margin-top:16px">
-      <h3>Reading this honestly</h3>
-      <ul>
-        <li><span class="tag bad">Selected model failed</span> A's entry condition was chosen by trying several versions on the same three years that then &ldquo;validated&rdquo; it. Its strong statistics came after that search and overstated the evidence. On blind data its entries kept falling: down 0.86% the next day and 1.0% after three days.</li>
-        <li><span class="tag warn">Closest so far, not proven</span> B's +0.99% rests on 25 trades. Without its two best trades (+13.1%, +10.3%) the other 23 average +0.06%; the median trade is &minus;0.40%. About 100 trades are needed to tell a true 1% average from zero.</li>
-        <li><span class="tag good">What held up</span> B's ranking of days carried over to blind data: its top fifth of days was followed by +1.32% over five days on average, its bottom fifth by &minus;0.35%. And at a five-day hold, trading costs barely matter (+0.97% after 1&cent;/share), unlike every intraday version above.</li>
-        <li><span class="tag muted">Transformer</span> Pretraining worked, but the transformer did not beat the simpler tree model &mdash; in line with recent published tests of time-series foundation models on returns. More independent data, not a bigger model, is the constraint.</li>
-      </ul>
-    </div>
-    <div class="card" style="margin-top:16px">
-      <h3>Next steps</h3>
-      <ul>
-        <li>No retuning on 2024&ndash;2026: those years have now been seen by these candidates.</li>
-        <li>Forward-test B exactly as frozen on bars after 2026-11-18.</li>
-        <li>Add peer and crude-oil data (SU, CVE, IMO, XOM, CVX, WTI): about six times the training labels, a blind test on symbols the model has never seen, and roughly 50 trades a year instead of 8.</li>
-        <li>Measure CNQ's stretch against its peers rather than its own past &mdash; the setting where mean-reversion theory actually applies.</li>
-      </ul>
-      <p style="font-size:13px;color:var(--muted);margin:12px 0 0"><span class="tag good">Data sources identified</span> A review of free sources (2026-11-23) found one that covers 5-minute bars for SU, CVE, IMO, XOM and CVX back to 2020 &mdash; Alpaca's free plan, on the consolidated feed rather than the thinner IEX feed used so far &mdash; with USO as a time-stamped intraday oil proxy and the U.S. Energy Information Administration's public-domain daily WTI spot series. Collection complete (2026-11-23): 5-minute bars on the consolidated feed for CNQ, SU, CVE, IMO, XOM, CVX, USO and XLE (1,591 trading days each) and the daily WTI series. Checks: no empty or malformed rows, identical calendars, no split errors, and CNQ's daily closes on the new feed within 0.02% of the old file at the median. One defect found: on three days (2021-04-19, 2021-10-25, 2022-03-08) the vendor has no data for five of the eight symbols, so those days are treated as missing. Daily returns correlate with CNQ at 0.84 (CVE), 0.83 (SU), 0.80 (IMO), 0.74 (XOM), 0.73 (CVX) and 0.59 (WTI spot). All price data is kept in the owner's local project folder only and is not published. Details, checks and licence notes: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/11_Peer_and_Oil_Data_Sources.md">docs/11_Peer_and_Oil_Data_Sources.md</a>.</p>
-    </div>
-    <p style="font-size:13px;color:var(--muted);margin:16px 0 0">Full write-up, literature review, code and every blind trade: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/10_Stage12_Field_Fusion_Research.md">docs/10_Stage12_Field_Fusion_Research.md</a> &middot; <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/src/stage12_field_fusion.py">stage12_field_fusion.py</a> &middot; <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/results/experiments/stage12_blind_trades.csv">stage12_blind_trades.csv</a> &middot; lessons filed by topic in <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/08_ML_and_Method_Development_Lessons.md">08_ML_and_Method_Development_Lessons.md</a>.</p>
-  </section>
-
-  <section id="roadmap">
-    <h2>Status &amp; roadmap</h2>
-    <div class="card">
-      <h3>Progress by phase</h3>
-      <div id="phases"></div>
-    </div>
-    <div class="grid g2" style="margin-top:16px">
-      <div class="card">
-        <h3>Stage 7 &mdash; competitive-review upgrades, in priority order</h3>
-        <ol class="steps">
-          <li><strong>Trading costs in the backtester</strong> &mdash; commission + spread/slippage per share; re-rank all versions net of cost. <em>Highest priority: can change which version is best.</em></li>
-          <li><strong>More history</strong> &mdash; at least 1&ndash;2 years of CNQ 5-minute data, walk-forward by month.</li>
-          <li><strong>Basket test</strong> &mdash; run V7.1 unchanged on similar liquid stocks (e.g. SU, CVE, IMO, XOM, CVX).</li>
-          <li><strong>Relative-volume filter, zone-strength score, short-side mirror, Monte Carlo + Deflated Sharpe, risk-based sizing, live journal</strong> &mdash; six further upgrades queued behind the above.</li>
-        </ol>
-      </div>
-      <div class="card">
-        <h3>Main risks</h3>
-        <ul>
-          <li><span class="tag bad">Costs not modeled</span> Every result above is gross; net-of-cost ranking could change the winner.</li>
-          <li><span class="tag warn">Single stock, short window</span> 6.4 weeks of CNQ is too little to trust as a lasting edge.</li>
-          <li><span class="tag warn">Downtrend drag</span> Long-only design is structurally weaker in multi-week downtrends; no adopted fix yet.</li>
-        </ul>
-      </div>
-    </div>
+    <a class="card research-link" href="project-03-research.html">
+      <div class="eyebrow">Research record</div>
+      <h3>How each model was built and tested, stage by stage</h3>
+      <p>Rules for V1 to V7.1, the root-cause audits, the machine-learning experiments, walk-forward training, the Stage 11 and Stage 12 swing models, data sources and lessons learned.</p>
+      <span class="research-cta">Open the research record &rarr;</span>
+    </a>
   </section>
 
   <section id="disclosure">
     <h2>Disclosures</h2>
-    <div class="card"><p style="margin:0">Research and education only, not investment advice; the author isn't a licensed financial advisor. All results are hypothetical backtests on one stock (CNQ) over 6.4 weeks, in $ per share, with no trading costs included unless stated (see the cost-sensitivity table above). Real fills, spreads and commissions will reduce results further. Past backtested performance does not guarantee future results.</p></div>
+    <div class="card"><p style="margin:0">Research and education only, not investment advice; the author isn't a licensed financial advisor. All results are hypothetical backtests on one stock (CNQ). Gross figures exclude all trading costs; after-cost figures include only a 1&cent; per share allowance. Real fills, spreads and fees can reduce results further. Past backtested performance does not guarantee future results.</p></div>
   </section>
 
   <section>
     <h2>Sources</h2>
-    <div class="card"><ul style="margin:0">
-      <li><a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader">Project 3 repository</a> &mdash; full charter, test protocol, strategy rules, backtester code, raw data, screenshots and competitive analysis</li>
-      <li><a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/07_Goals_and_Targets.md">Goals &amp; Targets</a> &mdash; Target 1 (1% gross/day) definition, gap analysis, open questions</li>
-      <li><a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/08_ML_and_Method_Development_Lessons.md">ML &amp; Method Development Lessons</a> &mdash; topic-organized, reusable lessons for future models/methods</li>
-      <li><a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/09_Stage11_Per_Trade_Target_Research.md">Stage 11: Per-Trade Target Research</a> &mdash; feasibility check, Donchian swing breakout and percent-scaled V7.1 candidates, gap analysis</li>
-      <li><a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/10_Stage12_Field_Fusion_Research.md">Stage 12: Field-Fusion Swing Research</a> &mdash; physics rule, cross-field ML and transformer candidates, blind results, literature sources</li>
-      <li><a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/11_Peer_and_Oil_Data_Sources.md">Peer and Oil Data Sources</a> &mdash; free sources compared for SU, CVE, IMO, XOM, CVX and WTI, with licence notes</li>
-      <li><a href="https://www.luxalgo.com/library/indicator/VDv1AnDA-supply-and-demand-zones/">LuxAlgo Supply and Demand Zones</a></li>
-      <li><a href="https://daytradingtoolkit.com/reviews/trendspider-review">TrendSpider review (Day Trading Toolkit)</a></li>
-      <li><a href="https://www.liberatedstocktrader.com/trade-ideas-review/">Trade Ideas review (Liberated Stock Trader)</a></li>
-      <li><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4729284">Zarattini, Barbon &amp; Aziz (2024) &mdash; 5-min ORB on Stocks in Play</a></li>
-      <li><a href="https://arxiv.org/html/2101.07410v1">Chung &amp; Bellotti (2021) &mdash; Support/resistance levels in financial time series</a></li>
-      <li><a href="https://papers.ssrn.com/abstract=2460551">Bailey &amp; L&oacute;pez de Prado &mdash; The Deflated Sharpe Ratio (2014)</a></li>
+    <div class="card"><ul class="sources" style="margin:0">
+      <li><a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader">Project 3 repository</a>: charter, test protocol, strategy rules, code and result summaries</li>
+      <li><a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/07_Goals_and_Targets.md">Goals &amp; Targets</a>: the three goal ladders, definitions and the full scorecard</li>
+      <li><a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/results/experiments/goals_scorecard.json">goals_scorecard.json</a> and <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/results/experiments/goals_monthly_2024_2026.csv">goals_monthly_2024_2026.csv</a>: every number on this page, produced by <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/src/goals_scorecard.py">src/goals_scorecard.py</a></li>
+      <li><a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/10_Stage12_Field_Fusion_Research.md">Stage 12: Field-Fusion Swing Research</a> and <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/09_Stage11_Per_Trade_Target_Research.md">Stage 11: Per-Trade Target Research</a></li>
     </ul></div>
   </section>
 
@@ -506,20 +505,20 @@
   <section><h2 style="text-align:center">Browse categories</h2><nav class="catnav" aria-label="Project categories"><a class="c-ai on" href="../ai-trading/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 38 L17 26 L25 32 L41 13"/><path d="M33 13h8v8"/><path d="M6 42h36"/></svg></span>AI Trading</a><a class="c-stk" href="../stocks-investment/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M13 8v32"/><rect x="9" y="15" width="8" height="14" rx="1.5"/><path d="M24 12v28"/><rect x="20" y="20" width="8" height="12" rx="1.5"/><path d="M35 6v30"/><rect x="31" y="10" width="8" height="16" rx="1.5"/></svg></span>Stocks Investment</a><a class="c-home" href="../home-projects/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 22 L24 8 L41 22"/><path d="M12 19v21h24V19"/><path d="M21 40V29h6v11"/></svg></span>Home Projects</a><a class="c-biz" href="../business/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="15" width="34" height="24" rx="3"/><path d="M18 15v-4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"/><path d="M7 26h34"/><path d="M22 26v4h4v-4"/></svg></span>Business Projects</a><a class="c-gen" href="../general/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="3"/><rect x="27" y="8" width="13" height="13" rx="3"/><rect x="8" y="27" width="13" height="13" rx="3"/><circle cx="33.5" cy="33.5" r="6.5"/></svg></span>General Projects</a></nav></section>
 </main>
 <footer><div class="wrap">&copy; 2026 Hamid Faghidi &middot; Trading results are hypothetical backtests. Nothing on this site is investment advice.</div></footer>
-<script src="../charts.js"></script>
 <script>
 (function(){
-var V=[["V1",0.250],["V2",0.199],["V3",1.279],["V4",1.595],["V5",1.274],["V6",1.194],["V7",2.495],["V7.1",2.690]];
-function usd(v){return (v<0?'−$':'$')+Math.abs(v).toFixed(2);}
-function draw(){var narrow=window.innerWidth<600;
- barChart(document.getElementById('verchart'),V.map(function(d){return{label:d[0],value:d[1],tip:d[0]+': '+(d[1]>=0?'+':'')+usd(d[1])+'/share'}}),{height:260,rotate:narrow,fmt:usd});
- var S=[["V7.1",0.0204],["Rule OR Model",0.0178],["V7.1 %-scaled",0.0205],["Donchian long",-0.05],["Donchian L+S",-1.59],["A Spring",-0.70],["B Fusion GBM",0.99],["C Transformer",0.64],["D Fusion gate",0.52]];
- function pct(v){return (v<0?'\u2212':'')+Math.abs(v).toFixed(2)+'%';}
- var h=document.getElementById('s12chart');if(h){barChart(h,S.map(function(d){return{label:d[0],value:d[1],tip:d[0]+': '+(d[1]>=0?'+':'')+pct(d[1])+' per trade'}}),{height:280,rotate:true,fmt:pct});}}
-draw();var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,150)});
-var phases=[["1 &middot; Baseline (V1) &amp; iterate zone rules (V2&ndash;V6)",1,0],["2 &middot; Tune parameters, final version (V7 &rarr; V7.1)",1,0],["3 &middot; Root-cause audits (entry logic, downtrend P&amp;L)",1,0],["4 &middot; Competitive review &amp; cost-sensitivity analysis",1,0],["5 &middot; Stage 7: trading costs, more history, basket test",0,1,"Now"],["6 &middot; Phase 2: alerts/webhooks &rarr; broker paper trading",0,0,"Later"]];var host=document.getElementById('phases');
-phases.forEach(function(p){var r=document.createElement('div');r.className='phase';r.innerHTML='<div>'+p[0]+'</div><div class="sbar"><i class="d" style="width:'+(p[1]?100:0)+'%"></i><i class="p" style="width:'+(p[2]?100:0)+'%"></i></div><div class="n">'+(p[1]?'Done':(p[3]||'Next'))+'</div>';host.appendChild(r);});
+var tip=document.getElementById('tip'),hm=document.getElementById('hm'),def=tip.textContent;
+function show(e){var c=e.target.closest?e.target.closest('.hm-c[data-tip]'):null;if(!c)return;
+ tip.textContent=c.parentNode.querySelector('.hm-name').textContent+' · '+c.getAttribute('data-tip');}
+hm.addEventListener('mouseover',show);hm.addEventListener('click',show);
+hm.addEventListener('mouseleave',function(){tip.textContent=def;});
+var btns=document.querySelectorAll('.tabs button[data-f]'),rows=document.querySelectorAll('#score tbody tr');
+Array.prototype.forEach.call(btns,function(b){b.addEventListener('click',function(){
+ Array.prototype.forEach.call(btns,function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+ var f=b.getAttribute('data-f');
+ Array.prototype.forEach.call(rows,function(r){r.hidden=!!f&&r.getAttribute('data-kind')!==f;});});});
 })();
+
 </script>
 </body>
 </html>
