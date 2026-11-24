@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Project 9 Research, Stage BBB (single stocks) — Hamid Faghidi</title>
+<meta name="description" content="Project 9 research, Stage BBB: the option-trading models of Stage AAA tested on 17 large US stocks with daily bid/ask data for 2017–2025.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+.phase{display:grid;grid-template-columns:minmax(0,1fr) 120px 44px;gap:12px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}
+.phase:last-child{border-bottom:0}
+.phase .n{color:var(--muted);font-variant-numeric:tabular-nums;text-align:right}
+.sbar{display:flex;height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.sbar i{display:block;height:100%}.sbar .d{background:var(--accent)}.sbar .p{background:var(--warn)}
+.legend{display:flex;gap:16px;font-size:13px;color:var(--muted);margin:4px 0 10px;flex-wrap:wrap}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:var(--c)}
+.arch{background:#fff;border-radius:10px;padding:10px;text-align:center}
+.arch img{max-width:100%;height:auto;max-height:640px}
+@media (max-width:600px){.phase{grid-template-columns:minmax(0,1fr) 80px 40px}}
+.research-link{display:block;text-decoration:none;color:inherit;border-left:4px solid var(--accent);transition:box-shadow .15s,transform .15s}
+.research-link:hover,.research-link:focus-visible{box-shadow:0 6px 20px rgba(0,0,0,.08);transform:translateY(-1px)}
+.research-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:14px 0}
+.research-stats div{border-top:1px solid var(--line);padding-top:8px}
+.research-stats span{display:block;font-size:12px;color:var(--muted)}
+.research-stats strong{font-family:var(--serif);font-size:20px}
+.research-cta{font-weight:600;color:var(--accent)}
+@media (max-width:600px){.research-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.mlc{position:relative}
+.mlc svg{display:block;width:100%;height:auto;overflow:visible}
+.mlc .ax{font-size:11px;fill:var(--muted)}
+.mlc .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12px;line-height:1.45;padding:6px 9px;border-radius:6px;white-space:nowrap;opacity:0;transition:opacity .08s;z-index:2}
+.mlc .tip.on{opacity:1}
+.lead-s{color:var(--muted);margin:-6px 0 14px;max-width:820px}
+.subhead{font-size:17px;margin:18px 0 10px}
+.smg{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:900px){.smg{grid-template-columns:1fr 1fr}}@media (max-width:560px){.smg{grid-template-columns:1fr}}
+.smc{padding:14px 14px 10px}.smc h3{font-size:15px;margin:0}.smc .chart-note{margin:4px 0 6px;min-height:34px}
+.smh{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.vb{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.vb.ok{background:rgba(59,138,62,.15);color:#2e7d32}.vb.bad{background:rgba(176,51,58,.12);color:#b0333a}
+@media (prefers-color-scheme:dark){.vb.ok{color:#7fc77f}.vb.bad{color:#ec7f86}}
+.smv{margin:4px 0 0;font-size:14px}.smv span{color:var(--muted);font-size:12px}
+.dqg{display:grid;grid-template-columns:1fr 1fr;gap:22px}@media (max-width:700px){.dqg{grid-template-columns:1fr}}
+.p9s{--s1:#1f6fb2;--s2:#c8741a;--s3:#3b8a3e;--s4:#b0333a;--s5:#7a4fb0;--s6:#8a6d3b;--s7:#5f6b73;--s8:#c2185b;--s9:#00838f}
+@media (prefers-color-scheme:dark){.p9s{--s1:#6aa9e6;--s2:#e6a259;--s3:#7fc77f;--s4:#ec7f86;--s5:#b897e6;--s6:#cfae74;--s7:#a3adb5;--s8:#f06b9f;--s9:#4dd0e1}}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:6px 0 14px}
+.kpis div{border-top:1px solid var(--line);padding-top:8px}.kpis span{display:block;font-size:12px;color:var(--muted)}.kpis strong{font-family:var(--serif);font-size:20px}
+@media (max-width:600px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.sbar2{position:relative;height:10px;border-radius:99px;background:var(--line);overflow:visible}
+.sbar2 i{display:block;height:100%;border-radius:99px}.sbar2 b{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);opacity:.5}
+td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.vb.warn{background:rgba(200,116,26,.15);color:#a85f12}.vb.muted{background:var(--line);color:var(--muted)}
+@media (prefers-color-scheme:dark){.vb.warn{color:#e6a259}}
+.lessons{columns:2;column-gap:28px}@media (max-width:760px){.lessons{columns:1}}.lessons li{break-inside:avoid;margin-bottom:8px}
+.jump{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}.jump a{font-size:13px;border:1px solid var(--line);border-radius:99px;padding:3px 10px;text-decoration:none}
+.verdict{display:inline-block;font-weight:700;font-size:12px;letter-spacing:.02em;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.verdict.no{background:var(--bad-soft);color:var(--bad)}.verdict.run{background:var(--warn-soft,#f6ead8);color:var(--warn)}
+.verdict.base{background:var(--line);color:var(--muted)}.verdict.ok{background:var(--good-soft);color:var(--good)}
+td.neg,.neg{color:var(--bad)} td.pos,.pos{color:var(--good)}
+.loopcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.attempt h3{margin:6px 0 10px}.att-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.att-n{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.att-res{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px}
+.att-res dt{font-size:12px;color:var(--muted)}.att-res dd{margin:2px 0 0;font-weight:700}.att-res dd.pos{color:var(--good)}.att-res dd.neg{color:var(--bad)}
+.att-why{font-size:14px;margin-bottom:0}.muted-card{opacity:.85}
+table.ladder td:first-child{font-weight:700;white-space:nowrap}table.ladder tr.here td{background:var(--warn-soft,#f6ead8)}
+.prog{width:100%;display:block}.prog text{font-family:Inter,system-ui,sans-serif;fill:var(--ink)}
+.prog .lbl{font-size:12.5px}.prog .val{font-size:11.5px;fill:var(--muted)}.prog .stage{font-size:11px;font-weight:700;letter-spacing:.06em;fill:var(--muted);text-transform:uppercase}
+.prog .grid{stroke:var(--line)}.prog .m1{stroke:var(--accent);stroke-width:1.5;stroke-dasharray:4 3}
+.lg2{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--muted);margin:10px 0 0}.lg2 i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:6px}
+.mtable td{vertical-align:top}.mtable .idea{color:var(--muted);font-size:13.5px;max-width:340px}
+#milestones .mtable th,#milestones .mtable tr.t12m td{text-align:left}#milestones .mtable th:first-child,#milestones .mtable tr.t12m td:first-child{text-align:center}#milestones .mtable th:first-child,#milestones .mtable td:first-child{width:28px;padding-left:4px;padding-right:4px}#milestones .mtable th:nth-child(2),#milestones .mtable tr.t12m td:nth-child(2){width:74px;white-space:nowrap}#models .mtable{width:100%}#models .mtable th,#models .mtable td{text-align:left!important;padding:10px 7px}#models .mtable .stage-row td{padding:10px 7px}#models .mtable .verdict{white-space:normal;line-height:1.35}#models .mtable .idea{max-width:none}#models .mtable td.num{white-space:normal}#models .mtable td.stk{white-space:normal}#models .mtable{table-layout:fixed}#models .mtable th:nth-child(1){width:19%}#models .mtable th:nth-child(2){width:27%}#models .mtable th:nth-child(3){width:18%}#models .mtable th:nth-child(4){width:21%}#models .mtable th:nth-child(5){width:15%}#models .mtable td{overflow-wrap:break-word}#models .mtable td:nth-child(3) div{white-space:normal}#models .mtable .verdict{padding:3px 8px;overflow-wrap:anywhere}.mtable tr.t12m td{border-bottom:0;padding-bottom:6px}.mtable tr.t12d td{padding-top:0;padding-bottom:16px}.mtable tr.t12d .idea{max-width:none;margin-top:0!important}
+.mtable .stage-row td{background:var(--bg);font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+ol.lessons2{counter-reset:l;list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+ol.lessons2 li{counter-increment:l;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px 14px 48px;position:relative;font-size:14.5px}
+ol.lessons2 li::before{content:counter(l);position:absolute;left:14px;top:13px;width:24px;height:24px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:13px;display:grid;place-items:center}
+ol.lessons2 b{display:block;margin-bottom:3px}
+details.detail{margin-top:12px}details.detail summary{cursor:pointer;font-weight:700;font-size:16px}
+details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
+.howread{font-size:14px;color:var(--muted);margin:0 0 14px}
+.stk{white-space:nowrap;font-size:13.5px;line-height:1.55}.stk-m{color:var(--muted)}
+</style>
+<style id="p9stg">.stg{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.07em;line-height:1.5;padding:0 7px;border-radius:999px;vertical-align:middle;margin-left:6px;border:1px solid;white-space:nowrap}.stg-a{color:#0b4a7a;background:#d9eefc;border-color:#9fd0f2}.stg-b{color:#7a4a00;background:#fdeccc;border-color:#f0cf8a}.stg-c{color:#4a2a7a;background:#e9defa;border-color:#cdb6ee}summary .stg{margin:0 8px 0 0}.stgkey .stg{margin:0 6px 0 0}</style>
+<style id="p9nav">
+.p9stages{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:18px 0 0}
+.p9stages a,.p9stages div.st{display:block;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);text-decoration:none;color:var(--ink)}
+.p9stages a:hover{border-color:var(--accent)}
+.p9stages .on{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--accent-soft)}
+.p9stages .st{opacity:.65}
+.p9stages .t{display:flex;align-items:center;gap:6px;font-weight:700;font-size:14.5px}
+.p9stages .t .stg{margin:0}
+.p9stages .d{font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.45}
+.p9stages .here{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-left:auto}
+@media (max-width:640px){.p9stages{grid-template-columns:1fr}}
+nav.toc{position:sticky;top:0;z-index:30;background:var(--bg);padding:10px 0;margin-top:14px}
+.p9empty{border:1px dashed var(--line);border-radius:var(--radius);padding:18px 20px;color:var(--muted);background:var(--surface)}
+.p9empty strong{color:var(--ink)}
+.p9kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../">Hamid Faghidi</a>
+  <nav><a href="../#categories">Projects</a><a href="./">AI Trading</a></nav>
+</div></header>
+
+<main class="wrap">
+  <div class="crumbs" style="padding-top:20px"><a href="../">Home</a><span class="sep">/</span><a href="./">AI Trading</a><span class="sep">/</span><a href="project-09.html">Project 9</a><span class="sep">/</span><a href="project-09-research.html">Research results</a><span class="sep">/</span><span>Stage BBB</span></div>
+  <section class="hero" style="padding-top:28px">
+    <div class="eyebrow">Project 9 &middot; Research results &middot; Stage BBB</div>
+    <h1>Project 9 Research &mdash; Stage BBB: 17 Large Stocks</h1>
+    <p class="lede">The models built on SPY and QQQ, tested on options of 17 large US stocks that no rule was designed on. Same goals, same costs (buy at the ask, sell at the bid, $0.65 a contract), same risk limits, and every test written down before it runs.</p>
+    <p style="margin-top:14px"><span class="tag warn">Stage BBB: opened Nov 24, 2026 &middot; no experiment run yet</span> <span class="tag muted">Last updated Nov 24, 2026</span></p>
+    <nav class="p9stages" aria-label="Research stages"><a class="" href="project-09-research.html"><div class="t"><span class="stg stg-a" title="Stage AAA: SPY and QQQ index-fund options">AAA</span> SPY &amp; QQQ</div><div class="d">75 experiments. Goals reached on 2014&ndash;2025; not confirmed in the unseen 2026.</div></a><a class="on" href="project-09-research-bbb.html"><div class="t"><span class="stg stg-b" title="Stage BBB: options on 17 large stocks">BBB</span> 17 large stocks<span class=here>This page</span></div><div class="d">Opened Nov 24, 2026. Daily data 2017&ndash;2025. First: the Top 12, unchanged.</div></a><div class="st"><div class="t"><span class="stg stg-c" title="Stage CCC: options on a wide stock universe (about 136 stocks)">CCC</span> About 136 stocks</div><div class="d">Not started. Opens after Stage BBB.</div></div></nav>
+    <nav class="toc" aria-label="On this page"><a href="#stand">Where we stand</a><a href="#milestones">Top 12</a><a href="#progress">Progress</a><a href="#models">Every model</a><a href="#method">How we test</a><a href="#details">Details &amp; charts</a><a href="#difficulty">Year difficulty</a><a href="#disclosure">Disclosures</a></nav>
+  </section>
+
+  <section aria-label="At a glance">
+    <div class="statstrip">
+      <div class="primary"><div class="k">Major goal</div><div class="v">&gt;5%</div><div class="s">account growth a trading day</div></div>
+      <div><div class="k">Stocks</div><div class="v sm">17</div><div class="s">large US stocks, 7 sectors</div></div>
+      <div><div class="k">Data</div><div class="v sm">2017&ndash;2025</div><div class="s">daily option chains, bid and ask, every trading day</div></div>
+      <div><div class="k">Sealed year</div><div class="v sm">2026</div><div class="s">kept for the final test of frozen models</div></div>
+      <div><div class="k">Experiments</div><div class="v sm">0</div><div class="s">first: BBB-01, the Top 12 unchanged</div></div>
+    </div>
+  </section>
+
+  <section id="stand">
+    <h2>Where we stand <span class="stg stg-b" title="Stage BBB: options on 17 large stocks">BBB</span></h2>
+    <div class="grid g2">
+      <div class="card">
+        <h3>In plain words</h3>
+        <p><strong>Why single stocks:</strong> the Stage AAA models were designed and chosen on SPY and QQQ over 2014&ndash;2025, and in the unseen 2026 they did not hold up. These 17 stocks were never used to design or pick a rule, so they are a fresh test of whether the ideas behind the models are real.</p>
+        <p><strong>What is ready:</strong> daily option chains with bid and ask for every trading day of 2017&ndash;2025 for all 17 stocks, checked against independent sources. 2026 (to Nov 20) is held back.</p>
+        <p style="margin-bottom:0"><strong>First test (BBB-01):</strong> the 12 Top 12 models with their rules unchanged &mdash; no setting re-tuned on the stocks. Its exact rules will be written down before it runs.</p>
+      </div>
+      <div class="card">
+        <h3>The 17 stocks</h3>
+        <div class="tblwrap" style="overflow-x:auto"><table class="mtable" style="font-size:13px;min-width:420px"><thead><tr><th style="padding:6px 8px">Sector</th><th style="padding:6px 8px">Stocks</th></tr></thead><tbody><tr><td style="padding:6px 8px">Communication Services</td><td style="padding:6px 8px">Alphabet (class A) (GOOGL), Netflix (NFLX)</td></tr><tr><td style="padding:6px 8px">Consumer Discretionary</td><td style="padding:6px 8px">Amazon (AMZN), Home Depot (HD)</td></tr><tr><td style="padding:6px 8px">Consumer Staples</td><td style="padding:6px 8px">Walmart (WMT), Costco (COST)</td></tr><tr><td style="padding:6px 8px">Energy</td><td style="padding:6px 8px">Exxon Mobil (XOM), Chevron (CVX)</td></tr><tr><td style="padding:6px 8px">Financials</td><td style="padding:6px 8px">JPMorgan Chase (JPM), Bank of America (BAC), Goldman Sachs (GS), Visa (V)</td></tr><tr><td style="padding:6px 8px">Health Care</td><td style="padding:6px 8px">UnitedHealth Group (UNH), Eli Lilly (LLY)</td></tr><tr><td style="padding:6px 8px">Information Technology</td><td style="padding:6px 8px">Microsoft (MSFT), Broadcom (AVGO), Oracle (ORCL)</td></tr></tbody></table></div>
+        <p class="chart-note" style="margin:8px 0 0">Chosen for data coverage before any result: the names with daily quotes in every year.</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3 style="margin-top:0">The data</h3>
+      <div class="tblwrap" style="overflow-x:auto"><table class="mtable" style="font-size:13px;min-width:720px"><thead><tr><th style="padding:6px 8px">Period</th><th style="padding:6px 8px">Source</th><th style="padding:6px 8px">Quote</th><th style="padding:6px 8px">Implied volatility and Greeks</th><th style="padding:6px 8px">Open interest</th></tr></thead><tbody><tr><td style="padding:6px 8px">2017&ndash;2021</td><td style="padding:6px 8px">Vendor research release (the same vendor QuantConnect uses)</td><td style="padding:6px 8px">last minute of the trading day</td><td style="padding:6px 8px">yes</td><td style="padding:6px 8px">no</td></tr><tr><td style="padding:6px 8px">2022 &ndash; Aug 2023</td><td style="padding:6px 8px">Daily best bid and offer (public upload; usage rights unverified)</td><td style="padding:6px 8px">end of day</td><td style="padding:6px 8px">yes</td><td style="padding:6px 8px">yes</td></tr><tr><td style="padding:6px 8px">Sep 2023 &ndash; 2025</td><td style="padding:6px 8px">End-of-day report from a market-data provider (free plan)</td><td style="padding:6px 8px">end of day</td><td style="padding:6px 8px">computed from prices</td><td style="padding:6px 8px">no</td></tr><tr><td style="padding:6px 8px">2026 (to Nov 20)</td><td style="padding:6px 8px">same</td><td style="padding:6px 8px">end of day</td><td style="padding:6px 8px">computed from prices</td><td style="padding:6px 8px">no &middot; <strong>sealed</strong></td></tr></tbody></table></div>
+      <p class="chart-note" style="margin:8px 0 0">Every source was checked: every trading day present, and prices compared with independent data where periods overlap. Market data stays on the owner&rsquo;s computer; only results are published.</p>
+    </div>
+  </section>
+
+  <section id="milestones">
+    <h2>Top 12 models &mdash; on the 17 stocks</h2>
+    <div class="card">
+      <p class="howread" style="max-width:none">The twelve best Stage AAA models, as ranked on SPY and QQQ. Each will be run on the 17 stocks with its rules unchanged (BBB-01). The 2026 column is each model&rsquo;s result on SPY and QQQ in the unseen 2026 (QuantConnect, January to mid-August), for reference.</p>
+      <div class="tblwrap" style="overflow-x:auto"><table class="mtable" style="font-size:13px;min-width:640px"><thead><tr><th style="padding:6px 8px">#</th><th style="padding:6px 8px">Model</th><th style="padding:6px 8px">Experiment</th><th class="num" style="padding:6px 8px">SPY/QQQ in 2026</th><th class="num" style="padding:6px 8px">On the 17 stocks</th></tr></thead><tbody><tr><td style="padding:6px 8px">1</td><td style="padding:6px 8px">Alloy</td><td style="padding:6px 8px"><a href="project-09-research.html#d64">Exp. 64</a></td><td class="num" style="padding:6px 8px">&minus;19%</td><td class="num" style="padding:6px 8px"><span class="verdict base">Not tested yet</span></td></tr><tr><td style="padding:6px 8px">2</td><td style="padding:6px 8px">Thruster</td><td style="padding:6px 8px"><a href="project-09-research.html#d61">Exp. 61</a></td><td class="num" style="padding:6px 8px">+3%</td><td class="num" style="padding:6px 8px"><span class="verdict base">Not tested yet</span></td></tr><tr><td style="padding:6px 8px">3</td><td style="padding:6px 8px">Consilience</td><td style="padding:6px 8px"><a href="project-09-research.html#d60">Exp. 60</a></td><td class="num" style="padding:6px 8px">+9%</td><td class="num" style="padding:6px 8px"><span class="verdict base">Not tested yet</span></td></tr><tr><td style="padding:6px 8px">4</td><td style="padding:6px 8px">Weighted layers</td><td style="padding:6px 8px"><a href="project-09-research.html#d50">Exp. 50</a></td><td class="num" style="padding:6px 8px">+7%</td><td class="num" style="padding:6px 8px"><span class="verdict base">Not tested yet</span></td></tr><tr><td style="padding:6px 8px">5</td><td style="padding:6px 8px">Three-layer VVIX</td><td style="padding:6px 8px"><a href="project-09-research.html#d43">Exp. 43</a></td><td class="num" style="padding:6px 8px">+4%</td><td class="num" style="padding:6px 8px"><span class="verdict base">Not tested yet</span></td></tr><tr><td style="padding:6px 8px">6</td><td style="padding:6px 8px">VVIX alone</td><td style="padding:6px 8px"><a href="project-09-research.html#d39">Exp. 39</a></td><td class="num" style="padding:6px 8px">+4%</td><td class="num" style="padding:6px 8px"><span class="verdict base">Not tested yet</span></td></tr><tr><td style="padding:6px 8px">7</td><td style="padding:6px 8px">Fed tightening switch</td><td style="padding:6px 8px"><a href="project-09-research.html#d36">Exp. 36</a></td><td class="num" style="padding:6px 8px">+9%</td><td class="num" style="padding:6px 8px"><span class="verdict base">Not tested yet</span></td></tr><tr><td style="padding:6px 8px">8</td><td style="padding:6px 8px">VVIX + Fed/CPI filter</td><td style="padding:6px 8px"><a href="project-09-research.html#d41">Exp. 41</a></td><td class="num" style="padding:6px 8px">+7%</td><td class="num" style="padding:6px 8px"><span class="verdict base">Not tested yet</span></td></tr><tr><td style="padding:6px 8px">9</td><td style="padding:6px 8px">SpreadGuard</td><td style="padding:6px 8px"><a href="project-09-research.html#d45">Exp. 45</a></td><td class="num" style="padding:6px 8px">&minus;3%</td><td class="num" style="padding:6px 8px"><span class="verdict base">Not tested yet</span></td></tr><tr><td style="padding:6px 8px">10</td><td style="padding:6px 8px">Drogue (best in C)</td><td style="padding:6px 8px"><a href="project-09-research.html#d72">Exp. 72</a></td><td class="num" style="padding:6px 8px">+2%</td><td class="num" style="padding:6px 8px"><span class="verdict base">Not tested yet</span></td></tr><tr><td style="padding:6px 8px">11</td><td style="padding:6px 8px">Ramjet (best in L)</td><td style="padding:6px 8px"><a href="project-09-research.html#d64">Exp. 64</a></td><td class="num" style="padding:6px 8px">&minus;14%</td><td class="num" style="padding:6px 8px"><span class="verdict base">Not tested yet</span></td></tr><tr><td style="padding:6px 8px">12</td><td style="padding:6px 8px">Keel (best in S)</td><td style="padding:6px 8px"><a href="project-09-research.html#d64">Exp. 64</a></td><td class="num" style="padding:6px 8px">+2%</td><td class="num" style="padding:6px 8px"><span class="verdict base">Not tested yet</span></td></tr></tbody></table></div>
+    </div>
+  </section>
+
+  <section id="progress">
+    <h2>Progress of every model</h2>
+    <div class="p9empty"><strong>No Stage BBB result yet.</strong> Each experiment adds its accounts here: what $10,000 became on the 17 stocks, with a verdict, as on the Stage AAA page.</div>
+  </section>
+
+  <section id="models">
+    <h2>Every model at a glance</h2>
+    <div class="p9empty"><strong>Empty until BBB-01 runs.</strong> Rows will show, for every account: $10,000 &rarr;, daily growth, Sharpe, worst fall, months up, the return and yearly Calmar of each year, and the goal steps reached (L, S, C).</div>
+  </section>
+
+  <section id="method">
+    <h2>How we test</h2>
+    <div class="p9kv">
+      <div class="card"><h3 style="margin-top:0">Fixed before any result</h3><ul><li>Universe: the 17 stocks, no stock added or dropped after results.</li><li>Test years 2017&ndash;2025; 2026 sealed.</li><li>Every experiment written down (pre-registered) before it runs.</li><li>No setting re-tuned on the stocks in BBB-01.</li></ul></div>
+      <div class="card"><h3 style="margin-top:0">Costs and risk</h3><ul><li>Buy at the ask, sell at the bid, $0.65 a contract per leg.</li><li>Every exit priced; held spreads settle at the stock&rsquo;s close.</li><li>$10,000 start; at most 5% of the account per position and 50% in total.</li></ul></div>
+      <div class="card"><h3 style="margin-top:0">What every account reports</h3><ul><li>Goals L (growth), S (steadiness), C (shallow falls), year by year.</li><li>Against buying and holding the 17 stocks, and SPY.</li><li>Against the same trades on random days.</li><li>Then a second data source (QuantConnect) before anything counts.</li></ul></div>
+    </div>
+    <div class="card" style="margin-top:16px"><h3 style="margin-top:0">Still to decide, in the BBB-01 plan</h3><ul style="margin-bottom:0"><li>How a rule built for SPY and QQQ becomes a stock rule: a small position in every stock on a signal day, or only in some.</li><li>Strike, expiry and liquidity limits for single-stock options.</li><li>Trades that span an earnings date: skipped, or kept and reported apart.</li><li>Stock splits during 2017&ndash;2025, and checks where the data source changes (Jan 2022 checked; Sep 2023 to do).</li></ul></div>
+  </section>
+
+  <section id="details">
+    <h2>Details &amp; charts</h2>
+    <div class="p9empty"><strong>Each experiment will get a section here</strong> with its charts, accounts, checks and what it taught, in the same layout as the Stage AAA page.</div>
+  </section>
+
+  <section id="difficulty">
+    <h2>Year difficulty</h2>
+    <div class="p9empty"><strong>Planned:</strong> the Experiment 74 method on the stocks &mdash; for each year and model, whether a weak result came from the year or from the model, measured against the same trades on random days.</div>
+  </section>
+
+  <section id="disclosure">
+    <h2>Disclosures</h2>
+    <p class="disclosure">All results are simulated on historical data with real bid/ask quotes; none is a proven edge and nothing here is investment advice. Licensed market data stays on the owner&rsquo;s computer and is not published. Figures from other studies are their authors&rsquo; own.</p>
+    <p style="margin-top:12px"><a href="project-09-research.html">&larr; Stage AAA research</a> &middot; <a href="project-09.html">Project 9</a></p>
+  </section>
+  <a class="back" href="project-09.html">&larr; Back to Project 9</a>
+  <section><h2 style="text-align:center">Browse categories</h2><nav class="catnav" aria-label="Project categories"><a class="c-ai on" href="../ai-trading/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 38 L17 26 L25 32 L41 13"/><path d="M33 13h8v8"/><path d="M6 42h36"/></svg></span>AI Trading</a><a class="c-stk" href="../stocks-investment/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M13 8v32"/><rect x="9" y="15" width="8" height="14" rx="1.5"/><path d="M24 12v28"/><rect x="20" y="20" width="8" height="12" rx="1.5"/><path d="M35 6v30"/><rect x="31" y="10" width="8" height="16" rx="1.5"/></svg></span>Stocks Investment</a><a class="c-home" href="../home-projects/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 22 L24 8 L41 22"/><path d="M12 19v21h24V19"/><path d="M21 40V29h6v11"/></svg></span>Home Projects</a><a class="c-biz" href="../business/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="15" width="34" height="24" rx="3"/><path d="M18 15v-4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"/><path d="M7 26h34"/><path d="M22 26v4h4v-4"/></svg></span>Business Projects</a><a class="c-gen" href="../general/"><span class="mini-ring"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="3"/><rect x="27" y="8" width="13" height="13" rx="3"/><rect x="8" y="27" width="13" height="13" rx="3"/><circle cx="33.5" cy="33.5" r="6.5"/></svg></span>General Projects</a></nav></section>
+</main>
+<footer><div class="wrap">&copy; 2026 Hamid Faghidi &middot; Trading results are hypothetical backtests. Nothing on this site is investment advice.</div></footer>
+
+</body>
+</html>
+<!-- p9-updated: 2026-11-24 stage bbb page -->

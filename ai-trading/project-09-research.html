@@ -83,6 +83,22 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
 .stk{white-space:nowrap;font-size:13.5px;line-height:1.55}.stk-m{color:var(--muted)}
 </style>
 <style id="p9stg">.stg{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.07em;line-height:1.5;padding:0 7px;border-radius:999px;vertical-align:middle;margin-left:6px;border:1px solid;white-space:nowrap}.stg-a{color:#0b4a7a;background:#d9eefc;border-color:#9fd0f2}.stg-b{color:#7a4a00;background:#fdeccc;border-color:#f0cf8a}.stg-c{color:#4a2a7a;background:#e9defa;border-color:#cdb6ee}summary .stg{margin:0 8px 0 0}.stgkey .stg{margin:0 6px 0 0}</style>
+<style id="p9nav">
+.p9stages{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:18px 0 0}
+.p9stages a,.p9stages div.st{display:block;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);text-decoration:none;color:var(--ink)}
+.p9stages a:hover{border-color:var(--accent)}
+.p9stages .on{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--accent-soft)}
+.p9stages .st{opacity:.65}
+.p9stages .t{display:flex;align-items:center;gap:6px;font-weight:700;font-size:14.5px}
+.p9stages .t .stg{margin:0}
+.p9stages .d{font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.45}
+.p9stages .here{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-left:auto}
+@media (max-width:640px){.p9stages{grid-template-columns:1fr}}
+nav.toc{position:sticky;top:0;z-index:30;background:var(--bg);padding:10px 0;margin-top:14px}
+.p9empty{border:1px dashed var(--line);border-radius:var(--radius);padding:18px 20px;color:var(--muted);background:var(--surface)}
+.p9empty strong{color:var(--ink)}
+.p9kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+</style>
 </head>
 <body>
 <header class="top"><div class="wrap">
@@ -91,60 +107,60 @@ details.detail .dsec{margin-top:18px}details.detail .dsec h2{font-size:20px}
 </div></header>
 
 <main class="wrap">
-  <div class="crumbs" style="padding-top:20px"><a href="../">Home</a><span class="sep">/</span><a href="./">AI Trading</a><span class="sep">/</span><a href="project-09.html">Project 9</a><span class="sep">/</span><span>Research results</span></div>
+  <div class="crumbs" style="padding-top:20px"><a href="../">Home</a><span class="sep">/</span><a href="./">AI Trading</a><span class="sep">/</span><a href="project-09.html">Project 9</a><span class="sep">/</span><span>Research results</span><span class="sep">/</span><span>Stage AAA</span></div>
   <section class="hero" style="padding-top:28px">
-    <div class="eyebrow">Project 9 &middot; Research results &middot; New model development</div>
-    <h1>Project 9 Research: Every Model We Tested</h1>
+    <div class="eyebrow">Project 9 &middot; Research results &middot; Stage AAA</div>
+    <h1>Project 9 Research &mdash; Stage AAA: SPY &amp; QQQ</h1>
     <p class="lede">The research phase in one place: what each model tried, what $10,000 would have become, and what we learned. Every test uses real bid/ask prices and fees, keeps each position within 5% of the account, retrains the model each year and judges it only on years it never saw.</p>
     <p style="margin-top:12px;max-width:720px"><strong>Major goal:</strong> grow the account <strong>more than 5% a trading day</strong> after all costs, with +1% and +2% a day as milestones. That is far beyond anything tested so far, so progress is measured on a ladder of realistic steps: first beat the simple Elastic Net benchmark (L0), then +0.05% a day (L1), +0.10% (L2) and +0.25% (L3).</p>
-    <p style="margin-top:14px"><span class="tag warn">Status: 16 experiments &middot; positions now 5% of the account (charter v1.9) &middot; Experiment 9 reaches L2 in development, with ~50% drops</span> <span class="tag muted">Started Nov 6, 2026</span> <span class="tag muted">Last updated Nov 8, 2026 &middot; 17 experiments</span></p>
+    <p style="margin-top:14px"><span class="tag warn">Stage AAA: 75 experiments &middot; goals reached on 2014&ndash;2025, not confirmed in the unseen 2026</span> <span class="tag good">Stage BBB opened Nov 24, 2026</span> <span class="tag muted">Started Nov 6, 2026</span> <span class="tag muted">Last updated Nov 24, 2026</span></p>
+    <nav class="p9stages" aria-label="Research stages"><a class="on" href="project-09-research.html"><div class="t"><span class="stg stg-a" title="Stage AAA: SPY and QQQ index-fund options">AAA</span> SPY &amp; QQQ<span class=here>This page</span></div><div class="d">75 experiments. Goals reached on 2014&ndash;2025; not confirmed in the unseen 2026.</div></a><a class="" href="project-09-research-bbb.html"><div class="t"><span class="stg stg-b" title="Stage BBB: options on 17 large stocks">BBB</span> 17 large stocks</div><div class="d">Opened Nov 24, 2026. Daily data 2017&ndash;2025. First: the Top 12, unchanged.</div></a><div class="st"><div class="t"><span class="stg stg-c" title="Stage CCC: options on a wide stock universe (about 136 stocks)">CCC</span> About 136 stocks</div><div class="d">Not started. Opens after Stage BBB.</div></div></nav>
     <nav class="toc" aria-label="On this page"><a href="#stand">Where we stand</a><a href="#stages">Stages</a><a href="#milestones">Top 12</a><a href="#progress">Progress</a><a href="#models">Every model</a><a href="#method">How we test</a><a href="#details">Details &amp; charts</a><a href="#difficulty">Year difficulty</a><a href="#disclosure">Disclosures</a></nav>
   </section>
 
   <section aria-label="At a glance">
     <div class="statstrip">
       <div class="primary"><div class="k">Major goal</div><div class="v">&gt;5%</div><div class="s">account growth a trading day</div></div>
-      <div><div class="k">Best step reached</div><div class="v sm">L2</div><div class="s">+0.12% a day, development 2016&ndash;2025, at 5% per position</div></div>
-      <div><div class="k">Benchmark</div><div class="v sm">$51,946</div><div class="s">Elastic Net, from $10,000, 2016&ndash;2025</div></div>
-      <div><div class="k">Best model</div><div class="v sm">$203,352</div><div class="s">put spreads + Elastic Net, Sharpe 1.04</div></div>
-      <div><div class="k">Models built</div><div class="v sm">40+</div><div class="s">16 experiments, 10 own transformers</div></div>
+      <div><div class="k">Best growth, 2014&ndash;25</div><div class="v sm">+0.42% / day</div><div class="s">step L3 &middot; Apogee, saved file; +0.40% on QuantConnect</div></div>
+      <div><div class="k">Steadiest</div><div class="v sm">S1 in 12/12</div><div class="s">years &middot; Keel, Halcyon, Leeward</div></div>
+      <div><div class="k">Shallow falls</div><div class="v sm">C1 in 12/12</div><div class="s">years on the saved file &middot; Drogue, Fathom (11/12 on QuantConnect)</div></div>
+      <div><div class="k">Unseen 2026</div><div class="v sm">&minus;20% to +9%</div><div class="s">the Top 12, Jan&ndash;Aug &middot; SPY +13.8%</div></div>
     </div>
   </section>
   <section id="stand">
     <h2>Where we stand</h2>
-    <div class="card stgkey" id="stages" style="margin-bottom:16px"><h3 style="margin-top:0">Stages of the work</h3><p class="howread" style="max-width:none;margin-bottom:8px">Every experiment on this page carries a stage label, set by what was traded.</p><ul style="margin:0 0 8px 0;padding-left:18px;line-height:1.6"><li><span class="stg stg-a" title="Stage AAA: SPY and QQQ index-fund options (saved file, checked on QuantConnect)">AAA</span><strong>SPY and QQQ index-fund options.</strong> Designed on the saved end-of-day file, then checked on QuantConnect, including 2026. All standard work so far (every -F and -Q result, the whole Top 12, Experiments 23&ndash;75) is here.</li><li><span class="stg stg-b" title="Stage BBB: options on the 24 large stocks">BBB</span><strong>The 24 large stocks.</strong> Not started as a stage: the data source is still to be chosen. The label marks the early trials that already traded these stocks (Experiments 16, 18, 19, 21, 22), all pre-standard and none a pass.</li><li><span class="stg stg-c" title="Stage CCC: options on a wide stock universe (about 136 stocks)">CCC</span><strong>A wide stock universe, about 136 stocks.</strong> Not started as a stage. The label marks the early trials on about 134&ndash;140 stocks (Experiments 5, 6, 10, 12&ndash;15, 17a&ndash;c), all pre-standard and none a pass.</li></ul><p class="chart-note" style="margin:0">An experiment with two labels was first run on stocks and later redone on SPY/QQQ (its -F rows are AAA). The same goals (L, S, C) and the same two-source check apply in every stage.</p></div>
+    <div class="card stgkey" id="stages" style="margin-bottom:16px"><h3 style="margin-top:0">Stages of the work</h3><p class="howread" style="max-width:none;margin-bottom:8px">Every experiment on this page carries a stage label, set by what was traded.</p><ul style="margin:0 0 8px 0;padding-left:18px;line-height:1.6"><li><span class="stg stg-a" title="Stage AAA: SPY and QQQ index-fund options (saved file, checked on QuantConnect)">AAA</span><strong>SPY and QQQ index-fund options.</strong> Designed on the saved end-of-day file, then checked on QuantConnect, including 2026. All standard work so far (every -F and -Q result, the whole Top 12, Experiments 23&ndash;75) is here.</li><li><span class="stg stg-b" title="Stage BBB: options on 17 large stocks">BBB</span><strong>17 large stocks.</strong> Opened Nov 24, 2026, on its own page: <a href="project-09-research-bbb.html">Stage BBB research &rarr;</a> Daily option data for every session of 2017&ndash;2025; the first task is to test the Top 12 unchanged. The label also marks the early, pre-standard trials on 24 stocks (Experiments 16, 18, 19, 21, 22), none a pass.</li><li><span class="stg stg-c" title="Stage CCC: options on a wide stock universe (about 136 stocks)">CCC</span><strong>A wide stock universe, about 136 stocks.</strong> Not started as a stage. The label marks the early trials on about 134&ndash;140 stocks (Experiments 5, 6, 10, 12&ndash;15, 17a&ndash;c), all pre-standard and none a pass.</li></ul><p class="chart-note" style="margin:0">An experiment with two labels was first run on stocks and later redone on SPY/QQQ (its -F rows are AAA). The same goals (L, S, C) and the same two-source check apply in every stage.</p></div>
     <div class="grid g2">
       <div class="card">
         <h3>The goal, step by step</h3>
-        <p class="howread">Average account growth per trading day after all costs, on years the model never saw, within the risk limits (5% per position, at most 50% in total; charter v1.9).</p>
+        <p class="howread">Three goals, each a ladder: growth (L), steadiness (S) and shallow falls (C).</p>
         <div class="table-scroll"><table class="ladder">
           <thead><tr><th>Step</th><th>Target</th><th>Status</th></tr></thead>
           <tbody>
-            <tr><td>L0</td><td>Beat Elastic Net: Sharpe &gt; 0.68, more daily return, still positive at +25% costs</td><td><span class="verdict ok">Passed (2016&ndash;25)</span></td></tr>
-            <tr><td>L1</td><td>+0.05% a day (about +13% a year) &mdash; Experiments 9, 11 and 13</td><td><span class="verdict ok">Reached (dev, 5% sizing)</span></td></tr>
-            <tr><td>L2</td><td>+0.10% a day &mdash; Experiment 9: +0.12% a day, but with drops of about 50%</td><td><span class="verdict ok">Reached (dev, 5% sizing)</span></td></tr>
-            <tr class="here"><td>L3</td><td>+0.25% a day &mdash; not reached (Experiment 16&rsquo;s apparent pass was an exit-price bias, Experiment 18)</td><td><span class="verdict run">Next target</span></td></tr>
-            <tr><td>G1</td><td>+1% and +2% a day (milestones)</td><td><span class="verdict base">Later</span></td></tr>
-            <tr><td>Goal</td><td>More than +5% a day</td><td><span class="verdict base">Later</span></td></tr>
-            <tr><td colspan="3" style="font-weight:600;padding-top:14px">Steady growth (goal 4, added Nov 8)</td></tr>
-            <tr class="here"><td>S1</td><td>&ge; 8 of 12 months up in every year, no losing year &mdash; best so far: Exp. 9, 89/120 months up but 2022 (6/12, &minus;17%) and 2025 (&minus;5%) were losing years</td><td><span class="verdict run">Next target</span></td></tr>
-            <tr><td>S2</td><td>&ge; 10 of 12 months up every year, no month worse than &minus;5%</td><td><span class="verdict base">Later</span></td></tr>
-            <tr><td>S3</td><td>Every month positive</td><td><span class="verdict base">Goal</span></td></tr>
-            <tr><td colspan="3" style="font-weight:600;padding-top:14px">Shallow falls &mdash; yearly Calmar (goal 5, added Nov 14)</td></tr>
-            <tr class="here"><td>C1</td><td>Every year: the year&rsquo;s return at least as large as its worst fall, and no fall deeper than &minus;40% &mdash; best so far: Drogue (Exp. 72), 12 of 12 years on the saved file and 11 of 12 on QuantConnect; not yet in the unseen 2026 (0.14)</td><td><span class="verdict run">Next target</span></td></tr>
-            <tr><td>C2</td><td>Every year: return at least twice the worst fall, and no fall deeper than &minus;25%</td><td><span class="verdict base">Later</span></td></tr>
-            <tr><td>C3</td><td>Every year: return at least three times the worst fall, and no fall deeper than &minus;15%</td><td><span class="verdict base">Goal</span></td></tr>
-            <tr><td colspan="3" class="stk-m" style="font-size:12.5px">Yearly Calmar = the year&rsquo;s return &divide; its worst fall from the highest value so far (daily values; a fall carried over from the year before counts; falls under 5% count as 5%). A losing year fails. The unseen year (2026 on QuantConnect) is checked the same way.</td></tr>
-          </tbody>
+          <tr><td>L0</td><td>Beat the Elastic Net benchmark: Sharpe &gt; 0.68 and more daily return</td><td><span class="verdict ok">Passed</span></td></tr>
+          <tr><td>L1</td><td>+0.05% a day (about +13% a year)</td><td><span class="verdict ok">Reached</span></td></tr>
+          <tr><td>L2</td><td>+0.10% a day</td><td><span class="verdict ok">Reached</span></td></tr>
+          <tr class="here"><td>L3</td><td>+0.25% a day &mdash; Apogee +0.42% (saved file), +0.40% (QuantConnect); Ramjet. Not in the unseen 2026</td><td><span class="verdict ok">Reached 2014&ndash;25</span></td></tr>
+          <tr><td>G1</td><td>+1% and +2% a day (milestones)</td><td><span class="verdict base">Later</span></td></tr>
+          <tr><td>Goal</td><td>More than +5% a day</td><td><span class="verdict base">Later</span></td></tr>
+          <tr><td colspan="3" style="font-weight:600;padding-top:14px">Steady growth</td></tr>
+          <tr class="here"><td>S1</td><td>&ge; 8 of 12 months up in every year, no losing year &mdash; Keel, Halcyon, Leeward in 12 of 12 years on both sources. Not in 2026</td><td><span class="verdict ok">Reached 2014&ndash;25</span></td></tr>
+          <tr><td>S2</td><td>&ge; 10 of 12 months up every year, no month worse than &minus;5%</td><td><span class="verdict base">Later</span></td></tr>
+          <tr><td>S3</td><td>Every month positive</td><td><span class="verdict base">Goal</span></td></tr>
+          <tr><td colspan="3" style="font-weight:600;padding-top:14px">Shallow falls &mdash; yearly Calmar</td></tr>
+          <tr class="here"><td>C1</td><td>Every year: return at least as large as the worst fall, no fall deeper than &minus;40% &mdash; Drogue, Fathom: 12 of 12 years on the saved file, 11 of 12 on QuantConnect. Not in 2026</td><td><span class="verdict run">Next target</span></td></tr>
+          <tr><td>C2</td><td>Every year: return at least twice the worst fall, no fall deeper than &minus;25%</td><td><span class="verdict base">Later</span></td></tr>
+          <tr><td>C3</td><td>Every year: return at least three times the worst fall, no fall deeper than &minus;15%</td><td><span class="verdict base">Goal</span></td></tr>
+          <tr><td colspan="3" class="stk-m" style="font-size:12.5px">Daily growth is measured after all costs on test years, within the risk limits (5% per position, 50% in total). Yearly Calmar = the year&rsquo;s return &divide; its worst fall from the highest value so far (falls under 5% count as 5%). A goal counts as met only when it also holds on years no rule has seen.</td></tr>
+        </tbody>
         </table></div>
       </div>
       <div class="card">
         <h3>In plain words</h3>
-        <p><strong>What works so far:</strong> a simple linear model (Elastic Net) that buys short-dated SPY/QQQ calls on days it scores well: $10,000 &rarr; $51,946 over 2016&ndash;2025 at 5% per position (worst drop about &minus;35%). It mostly captures the market&rsquo;s upward drift.</p>
-        <p><strong>What we tried:</strong> six new transformer designs, intraday trading, single stocks, market timing and selling option premium. Until Experiment 9, none beat it on return <em>and</em> risk together.</p>
-        <p><strong>First milestone:</strong> monthly put spreads run together with Elastic Net beat it on return <em>and</em> risk ($203,352, Sharpe 1.04 vs 0.68), and the spreads stayed profitable on fresh 2026 data. The win came from trading less often and combining unrelated edges.</p>
-        <p><strong>Bigger positions (Nov 8):</strong> each position is now 5% of the account instead of 0.5% (up to 50% at risk). Every gain and loss is 10&times; larger, so steady strategies grow much faster &mdash; Experiment 9 reaches +0.12% a day (L2) &mdash; while volatile ones (most single-stock models) are wiped out. Results before Nov 8 were run at 0.5% and are restated here by scaling (approximate).</p>
-        <p style="margin-bottom:0"><strong>What holds us back:</strong> the bid/ask spread. Most option edges we can find in daily data are about as large as the cost of trading them, so the next rounds trade less often and look for slower, larger edges.</p>
+        <p><strong>What works on 2014&ndash;2025:</strong> buying SPY and QQQ calls at the close of a day when option prices show fear, and selling put spreads beside them. Some account reaches each goal &mdash; growth (L3), steadiness (S1) and shallow falls (C1) &mdash; on the saved file and again on QuantConnect&rsquo;s real quotes.</p>
+        <p><strong>What did not hold:</strong> the unseen 2026 (January to August). Every Top 12 account made between &minus;20% and +9% while simply holding SPY made +13.8%, and the most finely tuned accounts did worst. The rules had learned how past selloffs ended; 2026 ended differently (lessons 225&ndash;226).</p>
+        <p><strong>Newest test (Experiment 75, Compass):</strong> a simple, two-sided design with three fixed settings. It did not beat holding SPY, but one part stood out: calls bought when fear eases beat the same calls on random days in 9 of 11 years &mdash; a lead for unseen data.</p>
+        <p style="margin-bottom:0"><strong>Next:</strong> <a href="project-09-research-bbb.html">Stage BBB</a> &mdash; the same ideas on 17 large stocks no rule was designed on, starting with the Top 12 unchanged.</p>
       </div>
     </div>
   </section>
@@ -3432,4 +3448,4 @@ document.querySelectorAll('a[href^="#d"],a[href^="#exp"]').forEach(function(a){a
 
 </body>
 </html>
-<!-- p9-updated: 2026-11-24 exp75 compass -->
+<!-- p9-updated: 2026-11-24 stages -->
