@@ -136,6 +136,7 @@ nav.toc{position:sticky;top:0;z-index:30;background:var(--bg);padding:10px 0;mar
         <p><strong>Why single stocks:</strong> the Stage AAA models were designed and chosen on SPY and QQQ over 2014&ndash;2025, and in the unseen 2026 they did not hold up. These 17 stocks were never used to design or pick a rule, so they are a fresh test of whether the ideas behind the models are real.</p>
         <p><strong>What is ready:</strong> daily option chains with bid and ask for every trading day of 2017&ndash;2025 for all 17 stocks, checked against independent sources.</p>
         <p><strong>How the years are used:</strong> models are developed and trained (walk-forward) on <strong>2017&ndash;2023</strong> only. <strong>2024 and 2025</strong> are kept as unseen test years, opened once for each frozen model. 2026 (to Nov 20) is held back as well.</p>
+        <p><strong>Focus:</strong> pattern recognition with honest, high probabilities of profit, under strict guardrails against too many rules and overfitting (<a href="#bbbguard">see How we test</a>).</p>
         <p style="margin-bottom:0"><strong>First test (BBB-01):</strong> the 12 Top 12 models with their rules unchanged &mdash; no setting re-tuned on the stocks. Its exact rules will be written down before it runs.</p>
       </div>
       <div class="card">
@@ -184,6 +185,28 @@ nav.toc{position:sticky;top:0;z-index:30;background:var(--bg);padding:10px 0;mar
       <div class="card"><h3 style="margin-top:0">What every account reports</h3><ul><li>Goals L (growth), S (steadiness), C (shallow falls), year by year.</li><li>Against buying and holding the 17 stocks, and SPY.</li><li>Against the same trades on random days.</li><li>Then a second data source (QuantConnect) before anything counts.</li></ul></div>
     </div>
 
+
+    <div class="card" style="margin-top:16px" id="bbbfocus">
+      <h3 style="margin-top:0">Focus: pattern recognition with honest probabilities</h3>
+      <p>For each stock and day, a model judges whether a <strong>fixed trade</strong> (for example a call held 10 days, the matching put, or a put spread) will make money after costs. It looks at about 15&ndash;20 inputs fixed in advance: the shape of the option prices (implied volatility, skew, near against far expiries), the stock&rsquo;s recent path, the market&rsquo;s fear state, and option activity.</p>
+      <p><strong>Models, simplest first:</strong> analog matching (the most similar past days across all 17 stocks) &rarr; a regularised linear model &rarr; limited gradient-boosted trees &rarr; a small sequence model only if the simpler ones pass. A more flexible model must beat the simpler ones to be used.</p>
+      <p style="margin-bottom:0"><strong>Probability:</strong> the model gives the chance a trade makes money and trades only above a threshold fixed in advance (for example 70%). The chance must be <strong>honest</strong> &mdash; trades rated 70% must win about 70% of the time on unseen years &mdash; and each trade must also have a positive expected value: a high win rate with rare large losses is not accepted.</p>
+    </div>
+    <div class="card" style="margin-top:16px" id="bbbguard">
+      <h3 style="margin-top:0">Guardrails against too many rules and overfitting</h3>
+      <p class="howread" style="max-width:none">Set after Stage AAA, where models built from many rules tuned to 2014&ndash;2025 did poorly in the unseen 2026.</p>
+      <ol style="margin:0;padding-left:20px;line-height:1.6">
+        <li><strong>Rule budget:</strong> at most 3&ndash;4 settings per model, fixed in advance; no search for the best value.</li>
+        <li><strong>Works almost everywhere:</strong> a new rule must help in all three development periods (2017&ndash;19, 2020&ndash;21, 2022&ndash;23) and in at least 12 of the 17 stocks.</li>
+        <li><strong>No cliffs:</strong> every setting nudged up and down; a result that breaks under a small change is rejected.</li>
+        <li><strong>Beats random days:</strong> the same trades on random entry days must do clearly worse.</li>
+        <li><strong>Every attempt counted:</strong> each configuration is logged and the results discounted for the number tried; at most 20 per experiment.</li>
+        <li><strong>Simplest first:</strong> single trades before combinations; no sizing tricks.</li>
+        <li><strong>Beats buy-and-hold</strong> of the 17 stocks and SPY on return per unit of worst fall.</li>
+        <li><strong>Works on unseen stocks too:</strong> learning models are also tested on stocks they were not trained on.</li>
+        <li><strong>One shot at 2024&ndash;2025,</strong> pass/fail rules fixed before each run, and failures reported as failures.</li>
+      </ol>
+    </div>
     <div class="card" style="margin-top:16px" id="bbbsplit">
       <h3 style="margin-top:0">How the years are split</h3>
       <div class="tblwrap" style="overflow-x:auto"><table class="mtable" style="font-size:13px;min-width:560px"><thead><tr><th style="padding:6px 8px">Years</th><th style="padding:6px 8px">Use</th></tr></thead><tbody>
