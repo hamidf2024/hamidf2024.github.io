@@ -202,6 +202,9 @@ table.score{min-width:1228px}
 #afterfact th{white-space:normal;vertical-align:bottom}
 #afterfact tr.stop-best td{background:var(--accent-soft)}
 #afterfact td:first-child{font-weight:600}
+/* Stage 14 section */
+#stage14 table{min-width:720px;width:100%}
+#stage14 th{white-space:normal;vertical-align:bottom}
 
 </style>
 </head>
@@ -218,7 +221,7 @@ table.score{min-width:1228px}
     <h1>28 trading models, scored against four goals</h1>
     <p class="lede">Every model and method built in this project for trading Canadian Natural Resources (CNQ) is scored here on the same four goals. Scores use January 2024 to November 2026, years the models were not trained on. Dollar figures assume $1,000 invested in each trade.</p>
     <p style="margin-top:14px"><span class="tag good">Level 1 reached on G, WR and S within the 15% loss limit: M. One-a-month, 15% stop</span> <span class="tag warn">Not yet within the 5% limit</span> <span class="tag warn">No model reaches level 1 on all four goals yet</span> <span class="tag muted">Research only, hypothetical backtests</span> <span class="tag muted">Updated Nov 23, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#goals">The goals</a><a href="#top5">Top 5</a><a href="#all">All 28 models</a><a href="#months">Steady months</a><a href="#gm-months">Monthly profit</a><a href="#stops">Stop size</a><a href="#money">$1,000 per trade</a><a href="#measure">How it is measured</a><a href="project-03-research.html">Research record</a></nav>
+    <nav class="toc" aria-label="On this page"><a href="#goals">The goals</a><a href="#top5">Top 5</a><a href="#all">All 28 models</a><a href="#months">Steady months</a><a href="#gm-months">Monthly profit</a><a href="#stops">Stop size</a><a href="#stage14">New data</a><a href="#money">$1,000 per trade</a><a href="#measure">How it is measured</a><a href="project-03-research.html">Research record</a></nav>
   </section>
 
   <section id="goals">
@@ -644,6 +647,42 @@ table.score{min-width:1228px}
     </div>
   </section>
 
+
+  <section id="stage14">
+    <h2>New data: does it help?</h2>
+    <p class="sub">Eighteen more symbols were added on November 24, 2026: the slope of the oil futures curve, the Brent&ndash;WTI gap, natural gas, refiners, pipelines, the Canadian dollar, the stock market and its volatility, bonds and gold. Everything below uses the training years only (2021 to 2023); the test years were removed from the data first.</p>
+    <div class="statstrip" style="margin-bottom:16px">
+      <div class="primary"><div class="k">Month-ahead forecast, CNQ</div><div class="v">0.11 &rarr; 0.17</div><div class="s">match between forecast and result (0 = none, 1 = perfect)</div></div>
+      <div><div class="k">Campaign timed by it</div><div class="v">+1.31% &rarr; +1.71%</div><div class="s">profit per trade, old forecast &rarr; new</div></div>
+      <div><div class="k">Settings that pass the test</div><div class="v">0 of 8</div><div class="s">so nothing was run on 2024&ndash;2026</div></div>
+      <div><div class="k">Runs on the test years</div><div class="v">22</div><div class="s">unchanged</div></div>
+    </div>
+    <div class="card" style="padding:6px 0 0">
+      <h3 style="padding:14px 16px 0;margin:0">1. Is the forecast better with the new data?</h3>
+      <p class="swipe" style="padding:10px 16px 0">Swipe sideways to see every column.</p><div class="table-scroll"><table>
+        <thead><tr><th>Forecast</th><th class="num">Match, old data</th><th class="num">Match, old + new</th><th class="num">Best fifth minus worst fifth, old</th><th class="num">Old + new</th><th>Verdict</th></tr></thead>
+        <tbody><tr><td>One week ahead, CNQ</td><td class="num">0.059</td><td class="num ">0.067</td><td class="num">+0.67%</td><td class="num ">+1.14%</td><td>Little change</td></tr><tr><td>One week ahead, six stocks</td><td class="num">0.054</td><td class="num ">0.029</td><td class="num">+0.78%</td><td class="num ">+0.52%</td><td>Worse</td></tr><tr><td>One month ahead, CNQ</td><td class="num">0.114</td><td class="num pos">0.166</td><td class="num">+3.17%</td><td class="num pos">+5.31%</td><td>Better</td></tr><tr><td>One month ahead, six stocks</td><td class="num">0.056</td><td class="num pos">0.109</td><td class="num">+2.26%</td><td class="num pos">+4.29%</td><td>Better</td></tr></tbody>
+      </table></div>
+    </div>
+    <div class="card" style="padding:6px 0 0;margin-top:16px">
+      <h3 style="padding:14px 16px 0;margin:0">2. Model R: a monthly campaign timed by the month-ahead forecast</h3>
+      <p class="swipe" style="padding:10px 16px 0">Swipe sideways to see every column.</p><div class="table-scroll"><table>
+        <thead><tr><th>Entry bar</th><th class="num">Target</th><th>Buys</th><th class="num">Profit per trade</th><th class="num">Same, old forecast</th><th class="num">Win rate</th><th class="num">S months</th><th class="num">GM months</th><th>What it fails</th></tr></thead>
+        <tbody><tr><td>0.5</td><td class="num">4%</td><td>Close and 10:00 next day</td><td class="num pos">+1.71%</td><td class="num">+1.31%</td><td class="num">86.7%</td><td class="num">8 / 9 / 7</td><td class="num">8 / 9 / 7</td><td>spare month</td></tr><tr><td>0.5</td><td class="num">3%</td><td>Close and 10:00 next day</td><td class="num pos">+1.58%</td><td class="num">+0.78%</td><td class="num">91.7%</td><td class="num">8 / 9 / 10</td><td class="num">8 / 9 / 10</td><td>beats buying every day, entry shifted</td></tr><tr><td>0.5</td><td class="num">3%</td><td>10:00 and 1:00 pm next day</td><td class="num pos">+1.58%</td><td class="num">+0.85%</td><td class="num">91.7%</td><td class="num">8 / 10 / 9</td><td class="num">8 / 10 / 9</td><td>beats buying every day, entry shifted</td></tr><tr><td>0.5</td><td class="num">4%</td><td>10:00 and 1:00 pm next day</td><td class="num pos">+1.45%</td><td class="num">+1.02%</td><td class="num">86.7%</td><td class="num">7 / 9 / 9</td><td class="num">7 / 9 / 8</td><td>spare month, beats buying every day, peer stocks</td></tr></tbody>
+      </table></div>
+    </div>
+    <p class="fine" style="margin-top:10px">Level 1 needs 7 / 8 / 7 months in these training years (2021 starts in March, when the forecast has enough history). To be run on the test years a setting must pass five checks: one spare month in every year, more profit than buying after every day, the same result on the five peer stocks, the same result with the buys moved to other times, and more profit than the same campaign timed by the old forecast. The four closest settings are shown.</p>
+    <div class="note2">
+      <h3>What this shows</h3>
+      <ul>
+        <li><strong>The new data helps where the goals need it.</strong> It makes little or no difference to a one-week forecast and clearly improves the one-month forecast, for CNQ and for the six stocks together.</li>
+        <li><strong>The gain carries into trading.</strong> In all 8 settings the campaign makes more when timed by the new forecast than by the old one.</li>
+        <li><strong>It is not yet enough.</strong> No setting passes all five checks; the closest fails one and the next two fail two. Nothing was run on the test years.</li>
+        <li><strong>Caution.</strong> Three training years hold about 37 separate one-month periods, and they were rising years. The size of the gain is uncertain.</li>
+      </ul>
+    </div>
+  </section>
+
   <section id="money">
     <h2>What $1,000 per trade would have made</h2>
     <p class="sub">Each trade buys $1,000 of CNQ. When it is sold, the same $1,000 is used for the next trade; profits are not reinvested. Totals cover January 2024 to November 18, 2026.</p>
@@ -737,6 +776,7 @@ table.score{min-width:1228px}
         <li>Trades opened at the same time. By the owner's rule, trades opened at exactly the same time count as one trade; trades opened at different times count separately, even on the same day. No score on this page changed when the rule was applied.</li>
         <li>Model P, run once and not level 1. P passed a stricter training-years test by a wide margin (95.6% of its trades won there) and was then run once on the test years, the twenty-first such run. There 80% won, which is below the 83% it needs to break even with a +3% target and a 15% stop. Waiting for a dip added nothing on the test years.</li>
         <li>Forward test. Models M, O and L, and the combination described near the top of this page, were frozen on November 23, 2026. They will be scored on trades opened after that date when new price data is added. Nothing about them may be changed in the meantime.</li>
+        <li>Model R, not run. A campaign timed by a month-ahead forecast that uses the new data did better on the training years than the same campaign with the old forecast, but no setting passed all five checks, so it was not run on the test years.</li>
         <li>Model Q, not run. A version that sells short when the trend is down was tested on the training years. None of its 24 settings passed, and most did worse than always buying, so it was not run on the test years.</li>
         <li>2026 has 11 months of data. Its months are judged on the same fractions (8/12, 10/12, 12/12).</li>
       </ul>

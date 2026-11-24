@@ -31,7 +31,7 @@ main code{overflow-wrap:anywhere}
     <h1>How each CNQ model was built and tested</h1>
     <p class="lede">The stage-by-stage record behind the <a href="project-03.html">Project 3 scoreboard</a>: the zone rules V1 to V7.1, the root-cause audits, the machine-learning experiments, walk-forward training, the Stage 11 and Stage 12 swing models, and the Stage 13 peer-and-oil models E to Q. Dollar columns assume $1,000 invested per trade.</p>
     <p style="margin-top:14px"><a class="tag" href="project-03.html" style="text-decoration:none">&larr; Scoreboard: all models against the goals</a> <span class="tag muted">Started Aug 19, 2026</span> <span class="tag muted">Last updated Nov 23, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#method">Method</a><a href="#versions">Versions V1&ndash;V7.1</a><a href="#rootcause">Root cause</a><a href="#mlexperiment">ML experiment</a><a href="#fullhistory">Full-history validation</a><a href="#cost">Trading costs</a><a href="#stage10">Walk-forward test</a><a href="#benchmark">Benchmark</a><a href="#goals">Earlier target</a><a href="#stage11">Stage 11</a><a href="#stage12">Stage 12</a><a href="#stage13">Stage 13</a><a href="#stage13b">Models K to Q</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
+    <nav class="toc" aria-label="On this page"><a href="#method">Method</a><a href="#versions">Versions V1&ndash;V7.1</a><a href="#rootcause">Root cause</a><a href="#mlexperiment">ML experiment</a><a href="#fullhistory">Full-history validation</a><a href="#cost">Trading costs</a><a href="#stage10">Walk-forward test</a><a href="#benchmark">Benchmark</a><a href="#goals">Earlier target</a><a href="#stage11">Stage 11</a><a href="#stage12">Stage 12</a><a href="#stage13">Stage 13</a><a href="#stage13b">Models K to Q</a><a href="#stage14">Stage 14</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
   </section>
 
   <section id="findings">
@@ -522,10 +522,39 @@ main code{overflow-wrap:anywhere}
       <h3 style="margin-top:18px">What happens next</h3>
       <ul>
         <li><strong>Forward test.</strong> Models M, O and L and the combination above were frozen on November 23, 2026. Only trades opened after November 20 will be scored, and nothing about the models may be changed.</li>
-        <li><strong>New information.</strong> Price data for 18 more symbols is being added from the same source: a 12-month oil fund and a Brent fund (the slope of the oil futures curve and the Brent&ndash;WTI gap), natural gas, refiners, pipelines, the Canadian dollar, the stock market and its volatility, bonds and gold. The next models will be trained with these on 2020&ndash;2023 before any run on the test years.</li>
+        <li><strong>New information.</strong> Price data for 18 more symbols was added on November 24, 2026. The first results are in the next section.</li>
       </ul>
     </div>
     <p style="font-size:13px;color:var(--muted);margin:16px 0 0">Full write-up: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/12_Stage13_Peer_Fusion_Research.md">docs/12_Stage13_Peer_Fusion_Research.md</a>, Sections 9 to 18. Goals and scorecard: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/07_Goals_and_Targets.md">docs/07_Goals_and_Targets.md</a>. Price data is not published.</p>
+  </section>
+
+  <section id="stage14">
+    <h2>Stage 14 &mdash; new information</h2>
+    <p style="color:var(--muted);margin:-6px 0 14px">Added 2026-11-24. Eighteen more symbols from the same source: a 12-month oil fund and a Brent fund (the slope of the oil futures curve and the Brent&ndash;WTI gap), natural gas, refiners, pipelines, the Canadian dollar, the US dollar, the stock market and its volatility, bonds and gold. All work so far is on the training years (2021&ndash;2023), with the test years removed from the data.</p>
+    <div class="card" style="border-left:4px solid var(--accent)">
+      <div class="eyebrow" style="margin-bottom:8px">Result</div>
+      <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0"><strong>The new data improves the month-ahead forecast, and a campaign timed by it beats the same campaign timed by the old forecast, but no setting passes the test for a run on 2024&ndash;2026.</strong> The count of runs on the test years stays at 22.</p>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <h3>Does the information help?</h3>
+        <p>The same model was trained with and without the 51 new features and compared on years it had not seen.</p>
+        <ul>
+          <li><strong>One month ahead:</strong> the match between forecast and result rises from 0.114 to 0.166 for CNQ and from 0.056 to 0.109 across the six stocks.</li>
+          <li><strong>One week ahead:</strong> little or no difference (0.059 to 0.067 for CNQ; 0.054 to 0.029 across the six).</li>
+          <li>The features the model uses most are the gap between high-yield and long bonds, oil services against producers, the Brent&ndash;WTI gap and the US dollar.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Model R: a campaign timed by the month-ahead forecast</h3>
+        <ul>
+          <li>Best settings on the training years: +1.58% to +1.71% per trade, 87% to 92% winners, 7 to 10 qualifying months a year.</li>
+          <li>The same campaign timed by the old forecast makes +0.78% to +1.31%. The new forecast is better in all eight settings.</li>
+          <li>No setting passes all five checks (a spare month, better than buying every day, peer stocks, shifted entry times, better than the old forecast). The closest fails one.</li>
+        </ul>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin:16px 0 0">Tables: <a href="project-03.html#stage14">scoreboard page</a>. Full write-up: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/13_Stage14_New_Information.md">docs/13_Stage14_New_Information.md</a>. Price data is not published.</p>
   </section>
 
   <section id="roadmap">
