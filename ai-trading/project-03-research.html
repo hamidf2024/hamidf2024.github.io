@@ -31,7 +31,7 @@ main code{overflow-wrap:anywhere}
     <h1>How each CNQ model was built and tested</h1>
     <p class="lede">The stage-by-stage record behind the <a href="project-03.html">Project 3 scoreboard</a>: the zone rules V1 to V7.1, the root-cause audits, the machine-learning experiments, walk-forward training, the Stage 11 and Stage 12 swing models, and the Stage 13 peer-and-oil models E to Q. Dollar columns assume $1,000 invested per trade.</p>
     <p style="margin-top:14px"><a class="tag" href="project-03.html" style="text-decoration:none">&larr; Scoreboard: all models against the goals</a> <span class="tag muted">Started Aug 19, 2026</span> <span class="tag muted">Last updated Nov 23, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#method">Method</a><a href="#versions">Versions V1&ndash;V7.1</a><a href="#rootcause">Root cause</a><a href="#mlexperiment">ML experiment</a><a href="#fullhistory">Full-history validation</a><a href="#cost">Trading costs</a><a href="#stage10">Walk-forward test</a><a href="#benchmark">Benchmark</a><a href="#goals">Earlier target</a><a href="#stage11">Stage 11</a><a href="#stage12">Stage 12</a><a href="#stage13">Stage 13</a><a href="#stage13b">Models K to Q</a><a href="#stage14">Stage 14</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
+    <nav class="toc" aria-label="On this page"><a href="#method">Method</a><a href="#versions">Versions V1&ndash;V7.1</a><a href="#rootcause">Root cause</a><a href="#mlexperiment">ML experiment</a><a href="#fullhistory">Full-history validation</a><a href="#cost">Trading costs</a><a href="#stage10">Walk-forward test</a><a href="#benchmark">Benchmark</a><a href="#goals">Earlier target</a><a href="#stage11">Stage 11</a><a href="#stage12">Stage 12</a><a href="#stage13">Stage 13</a><a href="#stage13b">Models K to Q</a><a href="#stage14">Stage 14</a><a href="#goal4">Goal 4 tightened</a><a href="#roadmap">Roadmap</a><a href="#disclosure">Disclosures</a></nav>
   </section>
 
   <section id="findings">
@@ -485,6 +485,7 @@ main code{overflow-wrap:anywhere}
   <section id="stage13b">
     <h2>Stage 13, continued &mdash; loss limits, a fourth goal, and models K to Q</h2>
     <p style="color:var(--muted);margin:-6px 0 14px">Added 2026-11-23. During the day the owner added three rules: a limit on the worst trade (5% strict, 15% wide), a fourth goal GM (months per year whose trades add up to 5% or more: 8, 10 or 12 of 12), and a counting rule (trades opened at exactly the same time count as one trade; trades opened at different times count separately). The request each time was the same: train on 2020&ndash;2023, test on 2024&ndash;2026, repeat until level 1 is reached on all four goals.</p>
+    <p style="font-size:13.5px;margin:0 0 14px;padding:10px 14px;border-radius:10px;background:var(--warn-soft)"><strong>Note, November 24:</strong> goal 4 was tightened after this section was written. A year now counts for GM only if it has no losing month. Under that rule model O no longer has GM1 (it has 3, 2 and 3 losing months) and the combination described below no longer shows level 1 on all four. See &ldquo;Goal 4 tightened&rdquo; further down.</p>
     <div class="card" style="border-left:4px solid var(--warn)">
       <div class="eyebrow" style="margin-bottom:8px">Result</div>
       <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0"><strong>Level 1 on all four goals is not reached by any model.</strong> Each goal has been reached by some model: M has profit per trade, win rate and steady months; O has win rate and both month goals. The test years have now been used for 22 runs, and the next evidence has to come from new trades or new data.</p>
@@ -555,6 +556,27 @@ main code{overflow-wrap:anywhere}
       </div>
     </div>
     <p style="font-size:13px;color:var(--muted);margin:16px 0 0">Tables: <a href="project-03.html#stage14">scoreboard page</a>. Full write-up: <a href="https://github.com/hamidf2024/p03-cnq-h-strategy-day-trader/blob/main/docs/13_Stage14_New_Information.md">docs/13_Stage14_New_Information.md</a>. Price data is not published.</p>
+  </section>
+
+  <section id="goal4">
+    <h2>Goal 4 tightened &mdash; no losing month</h2>
+    <p style="color:var(--muted);margin:-6px 0 14px">Added 2026-11-24. The owner noticed that model O had 8 and 10 qualifying months in 2024 and 2025 but year totals of only +2.9% and +17.9%: eight months of about +8% and two months of &minus;30% nearly cancel. Goal 4 was changed so that this cannot count.</p>
+    <div class="grid g2">
+      <div class="card">
+        <h3>The rule</h3>
+        <p>A month still counts when its trades add up to 5% or more, and the levels are still 8, 10 and 12 of 12. In addition, <strong>a year counts only if none of its months ends below zero.</strong> A month with no trades is not a losing month.</p>
+        <p style="margin-bottom:0">Example: 8 months at +8%, 3 months at +2% and 1 month at &minus;6% do not make GM1, because of the one losing month.</p>
+      </div>
+      <div class="card">
+        <h3>What changed on the scoreboard</h3>
+        <ul>
+          <li>No model reaches GM1. Model O has 8 / 10 / 8 months of 5% or more but 3 / 2 / 3 losing months.</li>
+          <li>Only model M has a year with no losing month (2025), and in that year one month reached 5%.</li>
+          <li>The ranking is now M, O, P, N, E. For goal 4 a year with a losing month counts as zero.</li>
+          <li>No model was re-run; the saved trades were re-scored.</li>
+        </ul>
+      </div>
+    </div>
   </section>
 
   <section id="roadmap">
