@@ -231,7 +231,7 @@ table.score{min-width:1276px}
     <h1>28 trading models, scored against four goals</h1>
     <p class="lede">Every model and method built in this project for trading Canadian Natural Resources (CNQ) is scored here on the same four goals. Scores use January 2024 to November 2026, years the models were not trained on. Dollar figures assume $1,000 invested in each trade.</p>
     <p style="margin-top:14px"><span class="tag good">Level 1 reached on G, WR and S within the 15% loss limit: M. One-a-month, 15% stop</span> <span class="tag warn">GM1 not reached yet</span> <span class="tag warn">Not yet within the 5% limit</span> <span class="tag warn">No model reaches level 1 on all four goals yet</span> <span class="tag muted">Research only, hypothetical backtests</span> <span class="tag muted">Updated Nov 23, 2026</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#goals">The goals</a><a href="#top5">Top 5</a><a href="#all">All 28 models</a><a href="#months">Steady months</a><a href="#gm-months">Monthly profit</a><a href="#stops">Stop size</a><a href="#stage14">New data</a><a href="#money">$1,000 per trade</a><a href="#measure">How it is measured</a><a href="project-03-research.html">Research record</a></nav>
+    <nav class="toc" aria-label="On this page"><a href="#goals">The goals</a><a href="#top5">Top 5</a><a href="#all">All 28 models</a><a href="#months">Steady months</a><a href="#gm-months">Monthly profit</a><a href="#stage14">New data</a><a href="#money">$1,000 per trade</a><a href="#measure">How it is measured</a><a href="project-03-research.html">Research record</a></nav>
   </section>
 
   <section id="goals">
@@ -624,27 +624,6 @@ table.score{min-width:1276px}
     <p class="fine" style="margin-top:10px">No model reaches GM1, which needs 8 such months and no losing month in every year. The most months of 5% or more inside the loss limits: O. One-a-month, two buys, with 2024: 8 of 12 &middot; 2025: 10 of 12 &middot; 2026: 8 of 11. It has 3 / 2 / 3 losing months, so none of its years counts. Only M. One-a-month, 15% stop (1 of 3 years) has a year with no losing month. Models that take one trade a month and sell at +4% rarely total 5% in a month; models with many small trades have more profitable months but few as large as 5%.</p>
   </section>
 
-
-  <section id="stops">
-    <h2>Which stop size works best?</h2>
-    <p class="sub">The owner asked for every stop from 1% to 15% to be tried, to find the best one. This was done on the training years only (2021 to 2023); the test years were removed from the data first.</p>
-    <div class="card" style="padding:6px 0 0">
-      <p class="swipe" style="padding:10px 16px 0">Swipe sideways to see every column.</p><div class="table-scroll"><table>
-        <thead><tr><th>Stop size</th><th class="num">Profit per trade</th><th class="num">Win rate</th><th class="num">Trades stopped out</th><th class="num">S months 2021 / 2022 / 2023</th><th class="num">GM months 2021 / 2022 / 2023</th></tr></thead>
-        <tbody><tr><td><strong>1%</strong></td><td class="num ">+0.95%</td><td class="num ">31%</td><td class="num">22 of 32</td><td class="num ">3 / 4 / 3</td><td class="num ">3 / 4 / 3</td></tr><tr><td><strong>2%</strong></td><td class="num pos">+1.01%</td><td class="num ">41%</td><td class="num">19 of 32</td><td class="num ">5 / 4 / 4</td><td class="num ">5 / 4 / 4</td></tr><tr><td><strong>3%</strong></td><td class="num ">+0.96%</td><td class="num ">47%</td><td class="num">17 of 32</td><td class="num ">5 / 5 / 5</td><td class="num ">5 / 5 / 5</td></tr><tr><td><strong>4%</strong></td><td class="num ">+0.70%</td><td class="num pos">50%</td><td class="num">16 of 32</td><td class="num ">5 / 6 / 5</td><td class="num ">5 / 6 / 5</td></tr><tr><td><strong>5%</strong></td><td class="num ">+0.86%</td><td class="num pos">56%</td><td class="num">14 of 32</td><td class="num ">5 / 7 / 6</td><td class="num ">5 / 7 / 6</td></tr><tr><td><strong>6%</strong></td><td class="num ">+0.49%</td><td class="num pos">56%</td><td class="num">14 of 32</td><td class="num ">5 / 7 / 6</td><td class="num ">5 / 7 / 6</td></tr><tr><td><strong>8%</strong></td><td class="num ">+0.92%</td><td class="num pos">66%</td><td class="num">11 of 32</td><td class="num ">5 / 8 / 8</td><td class="num ">5 / 8 / 8</td></tr><tr><td><strong>10%</strong></td><td class="num pos">+1.68%</td><td class="num pos">75%</td><td class="num">8 of 32</td><td class="num ">7 / 9 / 8</td><td class="num ">7 / 9 / 8</td></tr><tr><td><strong>12%</strong></td><td class="num pos">+1.65%</td><td class="num pos">78%</td><td class="num">7 of 32</td><td class="num ">7 / 9 / 9</td><td class="num ">7 / 9 / 9</td></tr><tr class="stop-best"><td><strong>15%</strong> <span class="lv on">Best</span></td><td class="num pos">+2.08%</td><td class="num pos">81%</td><td class="num">5 of 32</td><td class="num pos">8 / 9 / 9</td><td class="num pos">8 / 9 / 9</td></tr></tbody>
-      </table></div>
-    </div>
-    <p class="fine" style="margin-top:10px">Same rule on every line, only the stop changes: one trade a month, sell at +5.5%, or after 60 trading days. Level 1 needs 8 / 8 / 7 months (2023 has 10 usable months). Green marks a figure that reaches the month count for level 1. This study was made before the no-losing-month rule was added to goal 4 on November 24, 2026.</p>
-    <div class="note2">
-      <h3>What the stop study shows</h3>
-      <ul>
-        <li><strong>The best stop is 15%, the widest one allowed.</strong> Profit per trade is highest there, and the win rate and both month goals fall step by step as the stop gets tighter. CNQ often dips a few percent before it rises, so a tight stop sells many trades that would have ended as winners.</li>
-        <li><strong>Stops of 5% or less cut the win rate sharply.</strong> With a 1% stop, 22 of 32 trades were stopped out and the win rate was 31%. With 15%, 5 of 32 were stopped and the win rate was 81%.</li>
-        <li><strong>No stop size passes the test for a new model.</strong> 1,620 settings were tried: ten stop sizes, six profit targets, three time limits and nine entry patterns (one trade a month, or a second trade added later, on a dip, on a rise, or after a stop). None reached level 1 on all four goals with one month to spare in every training year, so nothing new was run on the test years.</li>
-        <li><strong>These are rising years.</strong> CNQ rose in 2021, 2022 and 2023. In a falling year a wide stop loses more on each losing trade, which is what the 5% and 15% loss limits are for.</li>
-      </ul>
-    </div>
-  </section>
 
 
   <section id="stage14">
