@@ -485,7 +485,7 @@ main code{overflow-wrap:anywhere}
   <section id="stage13b">
     <h2>Stage 13, continued &mdash; loss limits, a fourth goal, and models K to Q</h2>
     <p style="color:var(--muted);margin:-6px 0 14px">Added 2026-11-23. During the day the owner added three rules: a limit on the worst trade (5% strict, 15% wide), a fourth goal GM (months per year whose trades add up to 5% or more: 8, 10 or 12 of 12), and a counting rule (trades opened at exactly the same time count as one trade; trades opened at different times count separately). The request each time was the same: train on 2020&ndash;2023, test on 2024&ndash;2026, repeat until level 1 is reached on all four goals.</p>
-    <p style="font-size:13.5px;margin:0 0 14px;padding:10px 14px;border-radius:10px;background:var(--warn-soft)"><strong>Note, November 24:</strong> goal 4 was tightened after this section was written. A year now counts for GM only if it has no losing month. Under that rule model O no longer has GM1 (it has 3, 2 and 3 losing months) and the combination described below no longer shows level 1 on all four. See &ldquo;Goal 4 tightened&rdquo; further down.</p>
+    <p style="font-size:13.5px;margin:0 0 14px;padding:10px 14px;border-radius:10px;background:var(--warn-soft)"><strong>Note, November 24:</strong> goal 4 was tightened after this section was written. A year now counts for GM only if it has at most one losing month, of no more than 2%. Under that rule model O no longer has GM1 (it has 3, 2 and 3 losing months) and the combination described below no longer shows level 1 on all four. See &ldquo;Goal 4 tightened&rdquo; further down.</p>
     <div class="card" style="border-left:4px solid var(--warn)">
       <div class="eyebrow" style="margin-bottom:8px">Result</div>
       <p style="font-family:var(--serif);font-size:20px;line-height:1.45;margin:0"><strong>Level 1 on all four goals is not reached by any model.</strong> Each goal has been reached by some model: M has profit per trade, win rate and steady months; O has win rate and both month goals. The test years have now been used for 22 runs, and the next evidence has to come from new trades or new data.</p>
@@ -559,21 +559,25 @@ main code{overflow-wrap:anywhere}
   </section>
 
   <section id="goal4">
-    <h2>Goal 4 tightened &mdash; no losing month</h2>
-    <p style="color:var(--muted);margin:-6px 0 14px">Added 2026-11-24. The owner noticed that model O had 8 and 10 qualifying months in 2024 and 2025 but year totals of only +2.9% and +17.9%: eight months of about +8% and two months of &minus;30% nearly cancel. Goal 4 was changed so that this cannot count.</p>
+    <h2>Goal 4 tightened &mdash; losing months</h2>
+    <p style="color:var(--muted);margin:-6px 0 14px">Added 2026-11-24. The owner noticed that model O had 8 and 10 qualifying months in 2024 and 2025 but year totals of only +2.9% and +17.9%: eight months of about +8% and two months of &minus;30% nearly cancel. Goal 4 was changed so that this cannot count. The first form of the rule allowed no losing month at all; a few hours later it was eased to allow one small one.</p>
     <div class="grid g2">
       <div class="card">
         <h3>The rule</h3>
-        <p>A month still counts when its trades add up to 5% or more, and the levels are still 8, 10 and 12 of 12. In addition, <strong>a year counts only if none of its months ends below zero.</strong> A month with no trades is not a losing month.</p>
-        <p style="margin-bottom:0">Example: 8 months at +8%, 3 months at +2% and 1 month at &minus;6% do not make GM1, because of the one losing month.</p>
+        <p>A month still counts when its trades add up to 5% or more, and the levels are still 8, 10 and 12 of 12. In addition, <strong>a year counts only if it has at most one losing month, and that month loses no more than 2%.</strong> A month with no trades is not a losing month.</p>
+        <ul style="margin-bottom:0">
+          <li>8 months at +8%, 3 months at +2%, 1 month at &minus;1.5%: counts (GM1).</li>
+          <li>The same year with the losing month at &minus;6%: does not count.</li>
+          <li>Two losing months of &minus;1% each: does not count.</li>
+        </ul>
       </div>
       <div class="card">
         <h3>What changed on the scoreboard</h3>
         <ul>
-          <li>No model reaches GM1. Model O has 8 / 10 / 8 months of 5% or more but 3 / 2 / 3 losing months.</li>
-          <li>Only model M has a year with no losing month (2025), and in that year one month reached 5%.</li>
-          <li>The ranking is now M, O, P, N, E. For goal 4 a year with a losing month counts as zero.</li>
-          <li>No model was re-run; the saved trades were re-scored.</li>
+          <li>No model reaches GM1. Model O has 8 / 10 / 8 months of 5% or more but 3 / 2 / 3 losing months, the worst about &minus;30%.</li>
+          <li>Only model M has a year that keeps the rule (2025, with no losing month), and in that year one month reached 5%.</li>
+          <li>Allowing one small losing month changed no score: the models&rsquo; losing months run from about &minus;4% to &minus;30%.</li>
+          <li>The ranking is M, O, P, N, E. For goal 4 a year that breaks the rule counts as zero. No model was re-run; the saved trades were re-scored.</li>
         </ul>
       </div>
     </div>
