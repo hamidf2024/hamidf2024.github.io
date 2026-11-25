@@ -41,7 +41,7 @@ function drawTiles(){var host=document.getElementById('p15tiles');if(!host)retur
    var NOUN={fedfunds:'Fed rate',realyield:'Real yield',dollar:'Dollar',oil:'Oil',sp500:'Stocks',nasdaq:'Stocks'}[t.k];
    if(t.rule==='gold')chip='<span class="dchip warn">37% below record</span>';else chip=(good?'<span class="dchip good">Pushing gold UP ▲</span>':'<span class="dchip bad">Pushing gold DOWN ▼</span>')+'<div class="dwhy">'+NOUN+(up?' rising':' falling')+' → gold tends to '+(good?'rise':'fall')+'</div>';}
   else chip='<span class="dchip bad">Pushing gold DOWN ▼</span><div class="dwhy">Yield high (above 4.5%) → gold tends to fall</div>';
-  var RULE={'up-bad':'Usually: this rises → gold falls','up-good':'Usually: this rises → gold rises','stocks':'Usually: stocks fall → gold gains as a safe haven','gold':'Gold\'s own price'};
+  var RULE={'up-bad':'When this goes UP, gold tends to go DOWN, and vice versa.','up-good':'When this goes UP, gold tends to go UP too, and vice versa.','stocks':'When stocks crash, gold tends to hold up or rise as a safe haven. When stocks rally, money tends to flow away from gold.','gold':'Gold\'s own price'};
   h('div','ds',t.sub,card);if(chg)h('div','dc',chg,card);h('div','drule',RULE[t.rule],card);card.title=RULE[t.rule]+'. The badge shows whether the last 12 months\' move is pushing gold up or down.';
   if(t.s){var sp=h('div','dspark',null,card);var c=setup(sp,40),p=t.s.values.slice(-60),lo=Math.min.apply(null,p),hi=Math.max.apply(null,p);
    var x=function(i){return i*(c.W)/(p.length-1)},y=function(v){return 36-32*(v-lo)/(hi-lo||1)};var d='';p.forEach(function(v,i){d+=(i?'L':'M')+x(i).toFixed(1)+','+y(v).toFixed(1)});
