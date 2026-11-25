@@ -38,11 +38,11 @@ function drawTiles(){var host=document.getElementById('p15tiles');if(!host)retur
   if(t.s){var n=t.s.values.length,a=t.s.values[n-1],b=t.s.values[n-13];if(t.k==='gold'){a=3471.52;b=at(S.gold,'2025-11')||b;}var diff=t.d==='pts'?(a-b):(a/b-1)*100;var up=diff>=0;
    chg='<span class="'+(up?'up':'dn')+'">'+(up?'▲':'▼')+' '+fmtN(Math.abs(diff),t.d==='pts'?2:1)+(t.d==='pts'?' pts':'%')+'</span> vs 12 months earlier';
    var good=t.rule==='up-bad'?!up:t.rule==='up-good'?up:t.rule==='stocks'?!up:null;
-   var NOUN={fedfunds:'Rate',realyield:'Real yield',dollar:'Dollar',oil:'Oil',sp500:'Stocks',nasdaq:'Stocks'}[t.k];
-   if(t.rule==='gold')chip='<span class="dchip warn">37% below record</span>';else chip=(good?'<span class="dchip good">▲ Good for gold price</span>':'<span class="dchip bad">▼ Bad for gold price</span>')+'<div class="dwhy">'+NOUN+(up?' rising':' falling')+' over 12 months</div>';}
-  else chip='<span class="dchip bad">▼ Bad for gold price</span><div class="dwhy">Yield high, above 4.5%</div>';
+   var NOUN={fedfunds:'Fed rate',realyield:'Real yield',dollar:'Dollar',oil:'Oil',sp500:'Stocks',nasdaq:'Stocks'}[t.k];
+   if(t.rule==='gold')chip='<span class="dchip warn">37% below record</span>';else chip=(good?'<span class="dchip good">Pushing gold UP ▲</span>':'<span class="dchip bad">Pushing gold DOWN ▼</span>')+'<div class="dwhy">'+NOUN+(up?' rising':' falling')+' → gold tends to '+(good?'rise':'fall')+'</div>';}
+  else chip='<span class="dchip bad">Pushing gold DOWN ▼</span><div class="dwhy">Yield high (above 4.5%) → gold tends to fall</div>';
   var RULE={'up-bad':'Usually: this rises → gold falls','up-good':'Usually: this rises → gold rises','stocks':'Usually: stocks fall → gold gains as a safe haven','gold':'Gold\'s own price'};
-  h('div','ds',t.sub,card);if(chg)h('div','dc',chg,card);h('div','drule',RULE[t.rule],card);card.title=RULE[t.rule]+'. The badge shows whether the last 12 months\' move is good or bad for the gold price.';
+  h('div','ds',t.sub,card);if(chg)h('div','dc',chg,card);h('div','drule',RULE[t.rule],card);card.title=RULE[t.rule]+'. The badge shows whether the last 12 months\' move is pushing gold up or down.';
   if(t.s){var sp=h('div','dspark',null,card);var c=setup(sp,40),p=t.s.values.slice(-60),lo=Math.min.apply(null,p),hi=Math.max.apply(null,p);
    var x=function(i){return i*(c.W)/(p.length-1)},y=function(v){return 36-32*(v-lo)/(hi-lo||1)};var d='';p.forEach(function(v,i){d+=(i?'L':'M')+x(i).toFixed(1)+','+y(v).toFixed(1)});
    var col=t.k==='gold'?GOLD():css('--accent');el('path',{d:d+'L'+c.W+',40L0,40Z',fill:grad(c.svg,'sp'+(uid++),col,.25,0)},c.svg);el('path',{d:d,fill:'none',stroke:col,'stroke-width':1.8},c.svg);el('circle',{cx:x(p.length-1),cy:y(p[p.length-1]),r:3,fill:col},c.svg);}
