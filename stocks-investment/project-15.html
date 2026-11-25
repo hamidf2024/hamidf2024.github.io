@@ -64,6 +64,22 @@ table.prob td.tch{text-align:right;font-size:12.5px;color:var(--muted);white-spa
 .kpi .k{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}.kpi .v{font-family:var(--serif);font-size:24px;font-weight:600;margin-top:2px}.kpi .s{font-size:12px;color:var(--muted)}
 .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:8px}.legend span{display:inline-flex;align-items:center;gap:6px}
 .sw{width:16px;height:10px;border-radius:3px;display:inline-block}
+
+.rankbox{margin-top:22px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+table.rank{font-size:13.5px}table.rank td{vertical-align:top}table.rank .rk{font-family:var(--serif);font-size:20px;font-weight:600;color:var(--gold);width:28px}
+table.rank .rs{font-size:12.5px;color:var(--muted);margin-top:2px}
+.imp{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.imp.l5{background:var(--gold);color:#1c1d1f}.imp.l4{background:color-mix(in srgb,var(--gold) 70%,transparent);color:#1c1d1f}.imp.l3{background:color-mix(in srgb,var(--gold) 45%,transparent)}
+.imp.l2{background:color-mix(in srgb,var(--gold) 28%,transparent)}.imp.l1{background:color-mix(in srgb,var(--gold) 15%,transparent)}.imp.l0{background:var(--line);color:var(--muted)}
+.why4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.why4 .card h3{font-size:15px;margin-bottom:6px}.why4 .card p{margin:0;font-size:13.5px;color:var(--muted)}
+.why4 .big{font-family:var(--serif);font-size:26px;color:var(--gold);font-weight:600;display:block;margin-bottom:4px}
+figure.fig{margin:0}figure.fig img{width:100%;height:auto;border-radius:10px;border:1px solid var(--line);background:#fff}
+figure.fig figcaption{font-size:12.5px;color:var(--muted);margin-top:6px}
+table.proj td,table.proj th{text-align:right;font-variant-numeric:tabular-nums}table.proj td:first-child,table.proj th:first-child{text-align:left}
+table.proj tr.tot td{font-weight:700;border-top:2px solid var(--line)}
+@media (max-width:900px){.why4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.why4{grid-template-columns:1fr}}
 @media (max-width:900px){.tiles,.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.evlist{grid-template-columns:1fr}}
 @media (max-width:520px){.tiles{grid-template-columns:1fr 1fr;gap:8px}.dv{font-size:21px}.dtile{padding:11px 10px 8px}.hrow{grid-template-columns:96px minmax(0,1fr) 70px}.band{padding:20px 14px}}
 
@@ -82,7 +98,7 @@ table.prob td.tch{text-align:right;font-size:12.5px;color:var(--muted);white-spa
     <h1>Project 15: Gold Investment</h1>
     <p class="lede">A plan to add gold to the portfolio as a <strong>long-term diversifier</strong>, bought in six planned steps from December 2026 to September 2027 instead of all at once. Gold has fallen about 37% from its January 2026 record and is still volatile, so each purchase is sized and timed by written rules backed by 1970–2026 price research.</p>
     <p style="margin-top:14px"><span class="tag warn">Status: Phase 0, setting up</span> <span class="tag muted">Started Nov 25, 2026</span> <span class="tag muted">Last updated Nov 25, 2026</span> <span class="tag good">New: market dashboard and price model</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#market">Market dashboard</a><a href="#prediction">Price prediction</a><a href="#history">History &amp; events</a><a href="#drivers">Drivers</a><a href="#centralbanks">Central banks</a><a href="#crashes">Crashes</a><a href="#thesis">Thesis</a><a href="#roadmap">Roadmap</a><a href="#entry">Staged entry</a><a href="#risks">Risks</a><a href="#signals">Signals</a><a href="#forecast">Forecast checkpoints</a><a href="#decisions">Decisions</a><a href="#downloads">Documents</a><a href="#disclosure">Disclosures</a></nav>
+    <nav class="toc" aria-label="On this page"><a href="#market">Market dashboard</a><a href="#prediction">Price prediction</a><a href="#countries">Why countries buy</a><a href="#history">History &amp; events</a><a href="#drivers">Drivers</a><a href="#centralbanks">Central banks</a><a href="#crashes">Crashes</a><a href="#thesis">Thesis</a><a href="#roadmap">Roadmap</a><a href="#entry">Staged entry</a><a href="#risks">Risks</a><a href="#signals">Signals</a><a href="#forecast">Forecast checkpoints</a><a href="#decisions">Decisions</a><a href="#downloads">Documents</a><a href="#disclosure">Disclosures</a></nav>
   </section>
 
   <section aria-label="At a glance">
@@ -103,6 +119,16 @@ table.prob td.tch{text-align:right;font-size:12.5px;color:var(--muted);white-spa
       <p class="chart-note" style="margin-top:8px">Latest readings for gold's main drivers, with their 5-year trend. Each badge says whether the driver's move over the last 12 months is pushing the gold price up or down.</p>
       <div class="dlegend"><span class="dchip good">Pushing gold UP ▲</span><span class="dchip bad">Pushing gold DOWN ▼</span><span>Example: Fed rate falling → gold tends to rise, because higher rates usually push gold down.</span></div>
       <div class="tiles" id="p15tiles"></div>
+
+      <div class="rankbox">
+        <div class="chart-title"><h3 style="margin:0">Which factors move gold the most</h3><a href="p15-central-banks.html#drivers" class="chart-note" style="margin:0">Full research &rarr;</a></div>
+        <p class="chart-note" style="margin-top:6px">Ranked by how strongly each factor is driving the gold price now, from deep research (Nov 25, 2026). The last two columns show whether its importance is likely to rise or fall over 2027–29.</p>
+        <div class="table-scroll"><table class="rank">
+          <thead><tr><th>#</th><th>Factor</th><th>Impact now</th><th>Why</th><th>Importance 2027–29</th><th>Impact 2027–29</th></tr></thead>
+          <tbody><tr><td class="rk">1</td><td><b>US real yields / Fed policy path</b></td><td><span class="imp l5">Very high</span></td><td class="rs">Fed hikes and 10y yields above 5% caused most of the 2026 fall</td><td><span class="dn">▼ Falling</span><div class="rs">still large, likely turns supportive once hikes peak (~Q1 2027)</div></td><td><span class="imp l4">High</span></td></tr><tr><td class="rk">2</td><td><b>Central bank / official buying</b></td><td><span class="imp l4">High</span></td><td class="rs">Structural floor: 321t bought in Q3 2026 even as price fell; record 45% of central banks plan to add</td><td><span class="muted">► Stable</span><div class="rs">~650–750t/yr plateau, upside risk</div></td><td><span class="imp l4">High</span></td></tr><tr><td class="rk">3</td><td><b>Momentum / CTA and futures positioning</b></td><td><span class="imp l4">High</span></td><td class="rs">Trend-follower selling drove the March 2026 drop (−11.8%)</td><td><span class="dn">▼ Falling</span><div class="rs">speculative longs already cut</div></td><td><span class="imp l2">Medium</span></td></tr><tr><td class="rk">4</td><td><b>US dollar</b></td><td><span class="imp l3">Medium-high</span></td><td class="rs">Dollar at 19–20-month high weighs on gold</td><td><span class="muted">► Stable</span><div class="rs">eases only if the Fed pivots</div></td><td><span class="imp l3">Medium-high</span></td></tr><tr><td class="rk">5</td><td><b>Western ETF and investment flows</b></td><td><span class="imp l3">Medium-high</span></td><td class="rs">Record ~4,256t ETF holdings now flowing out</td><td><span class="up">▲ Rising</span><div class="rs">bigger holdings mean bigger swings; Fed cuts bring inflows</div></td><td><span class="imp l4">High</span></td></tr><tr><td class="rk">6</td><td><b>Geopolitics (wars, sanctions, Hormuz)</b></td><td><span class="imp l2">Medium</span></td><td class="rs">2026 Iran war hurt gold via oil, inflation and rate hikes</td><td><span class="up">▲ Rising</span><div class="rs">works through central bank reserve decisions</div></td><td><span class="imp l3">Medium-high</span></td></tr><tr><td class="rk">7</td><td><b>US fiscal debt / Fed independence</b></td><td><span class="imp l2">Medium</span></td><td class="rs">US debt ~101% of GDP, interest &gt;$1T, White House–Fed friction; dormant for now</td><td><span class="up">▲ Rising</span><div class="rs">most likely to gain importance</div></td><td><span class="imp l4">High</span></td></tr><tr><td class="rk">8</td><td><b>Asian retail / jewellery demand</b></td><td><span class="imp l1">Medium-low</span></td><td class="rs">Chinese buyers add on dips; Indian demand fell at high prices</td><td><span class="up">▲ Rising</span><div class="rs">lower prices revive demand</div></td><td><span class="imp l2">Medium</span></td></tr><tr><td class="rk">9</td><td><b>Equity crashes / risk-off liquidity events</b></td><td><span class="imp l1">Medium-low</span></td><td class="rs">Gold sold for cash in March and November 2026 sell-offs</td><td><span class="up">▲ Rising</span><div class="rs">AI-valuation and credit risks; Fed cuts after a crash help gold</div></td><td><span class="imp l2">Medium</span></td></tr><tr><td class="rk">10</td><td><b>Inflation</b></td><td><span class="imp l1">Low-medium</span></td><td class="rs">CPI 3.7% matters through Fed hikes, not directly</td><td><span class="dn">▼ Falling</span><div class="rs">inflation seen near 2% by 2028</div></td><td><span class="imp l1">Low-medium</span></td></tr><tr><td class="rk">11</td><td><b>Oil</b></td><td><span class="imp l1">Low-medium</span></td><td class="rs">Oil above $100 in Oct fed inflation; now ~$87</td><td><span class="dn">▼ Falling</span><div class="rs"></div></td><td><span class="imp l0">Low</span></td></tr><tr><td class="rk">12</td><td><b>Mine supply</b></td><td><span class="imp l0">Low</span></td><td class="rs">Mine output grows only ~2% a year</td><td><span class="muted">► Stable</span><div class="rs"></div></td><td><span class="imp l0">Low</span></td></tr></tbody>
+        </table></div>
+        <p class="chart-note" style="margin:10px 0 0">Biggest expected shifts: rates and trend-following funds matter less once Fed hikes peak; US fiscal risk, ETF flows and geopolitics matter more. Judgement-based research, not investment advice.</p>
+      </div>
     </div>
   </section>
 
@@ -140,10 +166,49 @@ table.prob td.tch{text-align:right;font-size:12.5px;color:var(--muted);white-spa
       <ol class="steps">
         <li><strong>Machine learning.</strong> Seven drivers each month (real policy rate and its 12-month change, inflation, and the 12-month moves in oil, the S&amp;P 500 and gold, plus gold against its 5-year average) feed a ridge regression and a nearest-neighbour model that looks for similar past months. The two are averaged into a 12-month return forecast.</li>
         <li><strong>Stochastic simulation.</strong> Price paths are built by resampling 6-month blocks of gold's real monthly moves since 1971, which keeps its fat tails and calm and wild spells. The first year drifts at the ML forecast, later years at gold's long-run average. A geometric Brownian motion baseline is averaged in.</li>
+        <li><strong>Central bank buying.</strong> Each path also follows one of three research scenarios for official gold buying in 2027–29; buying above the 2010–2025 average lifts the expected return by 1.7% per 100 tonnes (see "Why countries buy gold" below).</li>
         <li><strong>Probability theory.</strong> Each probability is the share of paths above a level at that date, or touching it along the way.</li>
         <li><strong>Walk-forward backtest</strong> over <span id="p15bt"></span>: each forecast used only data known at the time. R² against a simple average was <span id="p15r2"></span>, so the ML signal is weak and most of the information is in the spread, not the direction. The ranges were slightly wide historically, which makes them conservative.</li>
       </ol>
       <p style="font-size:12.5px;color:var(--muted);margin:10px 0 0">Code: <code>scripts/gold_model.py</code> in the project repository. The model is rerun when the data is refreshed.</p>
+    </div>
+  </section>
+
+
+  <section id="countries">
+    <h2>Why countries buy gold, and who will keep buying</h2>
+    <p>Central banks have bought gold at about twice the pre-2022 pace, and kept buying even as the price fell in 2026 (321 tonnes in Q3 2026, up 42%). Deep research into their reasons points to a high plateau of about <b>650–750 tonnes a year through 2029</b>, not a return to the 2010s average of 473t.</p>
+    <div class="why4">
+      <div class="card"><span class="big">Sanctions</span><h3>Gold can't be frozen</h3><p>The 2022 freeze of about $300bn of Russian reserves showed that foreign assets can be switched off. Gold held at home has no issuer. 68% of central banks now keep gold at home.</p></div>
+      <div class="card"><span class="big">90%</span><h3>Crisis insurance</h3><p>A record 90% of central banks hold gold for how it performs in crises; 84% as a store of value; 82% for diversification (WGC 2026 survey).</p></div>
+      <div class="card"><span class="big">74%</span><h3>Less reliance on the dollar</h3><p>74% expect the dollar's share of reserves to be lower in five years, and 83% expect gold's share to rise. Worries about US debt add to this.</p></div>
+      <div class="card"><span class="big">Mines</span><h3>Buying local output</h3><p>Gold producers such as Uzbekistan, Kazakhstan and Ghana buy domestic mine output with local currency, building reserves without spending dollars.</p></div>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card"><figure class="fig"><img src="p15-img/03-annual-net-purchases.png" alt="Annual net central bank gold purchases 2010 to 2026" loading="lazy"><figcaption>Net central bank purchases doubled after 2022 (WGC; 2026 is Q1–Q3).</figcaption></figure></div>
+      <div class="card"><figure class="fig"><img src="p15-img/01-wgc-survey-motives.png" alt="Reasons central banks give for holding gold, WGC survey" loading="lazy"><figcaption>Why central banks say they hold gold (WGC central bank survey 2026).</figcaption></figure></div>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card">
+        <h3>Projected net buying by country (tonnes)</h3>
+        <div class="table-scroll"><table class="proj">
+          <thead><tr><th>Country</th><th>2027</th><th>2028</th><th>2029</th></tr></thead>
+          <tbody><tr><td>China (reported)</td><td><b>130</b><div class="rs">60–170</div></td><td><b>125</b><div class="rs">60–180</div></td><td><b>120</b><div class="rs">50–180</div></td></tr><tr><td>Poland</td><td><b>60</b><div class="rs">30–90</div></td><td><b>40</b><div class="rs">25–70</div></td><td><b>35</b><div class="rs">20–60</div></td></tr><tr><td>Uzbekistan</td><td><b>30</b><div class="rs">25–40</div></td><td><b>30</b><div class="rs">20–40</div></td><td><b>25</b><div class="rs">20–35</div></td></tr><tr><td>India</td><td><b>15</b><div class="rs">5–35</div></td><td><b>20</b><div class="rs">5–35</div></td><td><b>20</b><div class="rs">5–35</div></td></tr><tr><td>Turkey</td><td><b>10</b><div class="rs">0–15</div></td><td><b>15</b><div class="rs">0–20</div></td><td><b>15</b><div class="rs">5–20</div></td></tr><tr><td>Czech Republic</td><td><b>12</b><div class="rs">8–15</div></td><td><b>5</b><div class="rs">0–12</div></td><td><b>5</b><div class="rs">0–12</div></td></tr><tr><td>Russia</td><td><b>−40</b><div class="rs">−25 to −50</div></td><td><b>−30</b><div class="rs">−20 to −40</div></td><td><b>−20</b><div class="rs">−15 to −30</div></td></tr><tr><td>United States</td><td><b>0</b><div class="rs">none</div></td><td><b>0</b><div class="rs">none</div></td><td><b>0</b><div class="rs">none</div></td></tr><tr><td>Unreported buying</td><td><b>475</b><div class="rs">287–646</div></td><td><b>422</b><div class="rs">275–644</div></td><td><b>382</b><div class="rs">250–654</div></td></tr><tr class="tot"><td>World total</td><td><b>750</b><div class="rs">420–1100</div></td><td><b>700</b><div class="rs">380–1100</div></td><td><b>650</b><div class="rs">350–1100</div></td></tr></tbody>
+        </table></div>
+        <p style="font-size:12.5px;color:var(--muted);margin:10px 0 0">Bold = base case; small = low–high scenario range. Negative = net selling. About 60% of buying is never reported to anyone, so the "unreported" line is large. Scenarios are consistent worlds: in the high case (sanctions or a Taiwan crisis) Russia also sells more.</p>
+      </div>
+      <div class="card"><figure class="fig"><img src="p15-img/09-country-projections.png" alt="Country gold purchase projections 2027 to 2029" loading="lazy"><figcaption>Total projected buying 2027–29 by country: dot = base case, whiskers = low–high.</figcaption></figure>
+        <ul style="margin:14px 0 0;font-size:13.5px">
+          <li><b>Buyers:</b> China (~10t a month reported, likely more unreported), Poland (holding gold near 30% of reserves), Uzbekistan, the Czech Republic (100t target), India resuming slowly.</li>
+          <li><b>Sellers:</b> Russia (funding its budget), Turkey in currency crises, Kazakhstan trimming its gold share.</li>
+          <li><b>Not buying:</b> the US, Japan and the euro area.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>How this feeds the price model</h3>
+      <p style="margin:0">Each simulated path draws one of the three buying scenarios (low 25%, base 50%, high 25%). Buying above the 2010–2025 average of about 589t a year adds to gold's expected return, at <b>+1.7% per 100 tonnes</b> (a Goldman Sachs rule of thumb). By the end of 2029 this adds about <span id="p15cbbase">+6%</span> in the base case, <span id="p15cbhigh">+30%</span> in the high case and <span id="p15cblow">−10%</span> in the low case. Caveat: buying is price-sensitive (banks buy more when gold is cheap), so this channel is approximate.</p>
+      <p style="font-size:12.5px;color:var(--muted);margin:10px 0 0"><a href="p15-central-banks.html">Read the full research report</a> with 10 interactive charts, country profiles, scenario details and all sources. Projections are the author's illustrative scenarios, not forecasts or investment advice.</p>
     </div>
   </section>
 
@@ -377,6 +442,7 @@ table.prob td.tch{text-align:right;font-size:12.5px;color:var(--muted);white-spa
       <li><a href="https://github.com/datasets/gold-prices">Monthly gold prices</a> and <a href="https://github.com/datasets/s-and-p-500">S&amp;P 500 (Shiller data)</a>, datasets on GitHub</li>
       <li><a href="https://www.gold.org/goldhub/research/gold-demand-trends/gold-demand-trends-full-year-2025/central-banks">World Gold Council: Gold Demand Trends full year 2025, central banks</a> and <a href="https://www.gold.org/goldhub/gold-focus/2026/09/central-bank-gold-statistics-central-banks-make-positive-headlines-gold">central bank statistics, Sep 2026</a></li>
       <li><a href="https://www.gold.org/goldhub/data/gold-reserves-by-country">World Gold Council: gold reserves by country</a></li>
+      <li><a href="p15-central-banks.html">Why central banks buy gold</a>: Project 15 research report (Nov 25, 2026) with its full source list (WGC, IMF, ECB, Brookings, RBC, Goldman Sachs and others)</li>
     </ul></div>
   </section>
 

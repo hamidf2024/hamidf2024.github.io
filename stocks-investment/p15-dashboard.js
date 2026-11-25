@@ -179,6 +179,7 @@ function drawModelInfo(){if(!FX)return;var b=FX.backtest,ml=FX.ml,iv=FX.interval
  set('p15ml',(ml.pred_12m_pct>=0?'+':'')+fmtN(ml.pred_12m_pct,1)+'%');set('p15mlr',(ml.ridge_pct>=0?'+':'')+fmtN(ml.ridge_pct,1)+'%');set('p15mlk',(ml.knn_pct>=0?'+':'')+fmtN(ml.knn_pct,1)+'%');
  set('p15hit',fmtN(b.direction_hit*100,0)+'%');set('p15hitn',fmtN(b.direction_hit_naive*100,0)+'%');set('p15r2',(b.r2_oos>=0?'+':'')+b.r2_oos.toFixed(2));
  set('p15c50',fmtN(iv.cover50*100,0)+'%');set('p15c80',fmtN(iv.cover80*100,0)+'%');set('p15bt',md(b.from)+' – '+md(b.to)+' ('+b.months+' monthly forecasts)');
+ var cbe=FX.central_banks&&FX.central_banks.effect_end2029_pct;if(cbe){var sg=function(v){return (v>=0?'+':'−')+fmtN(Math.abs(v),0)+'%'};set('p15cbbase',sg(cbe.base));set('p15cbhigh',sg(cbe.high));set('p15cblow',sg(cbe.low));}
  set('p15vol',fmtN(FX.vol.sd_used*Math.sqrt(12)*100,0)+'%');set('p15paths',fmtN(FX.paths));}
 
 /* ---------- controls ---------- */
