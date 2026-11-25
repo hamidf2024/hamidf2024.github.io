@@ -9,6 +9,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../style.css">
 <style>
+.calt td{vertical-align:top;font-size:13.5px}.calt td.cd{white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:600}
+.calt tr.past td{opacity:.45}.calt tr.next td{background:var(--good-soft)}
+.ctag{display:inline-block;font-size:11.5px;font-weight:700;padding:1px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.ctag.key{border-color:var(--gold);color:var(--gold)}.ctag.est{border-style:dashed}
 .tiers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .tiers .card h3{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
 .tiers .card h3 span{font-family:var(--serif);font-size:22px;color:var(--accent)}
@@ -98,7 +102,7 @@ table.proj tr.tot td{font-weight:700;border-top:2px solid var(--line)}
     <h1>Project 15: Gold Investment</h1>
     <p class="lede">A plan to add gold to the portfolio as a <strong>long-term diversifier</strong>, bought in six planned steps from December 2026 to September 2027 instead of all at once. Gold has fallen about 37% from its January 2026 record and is still volatile, so each purchase is sized and timed by written rules backed by 1970–2026 price research.</p>
     <p style="margin-top:14px"><span class="tag warn">Status: Phase 0, setting up</span> <span class="tag muted">Started Nov 25, 2026</span> <span class="tag muted">Last updated Nov 25, 2026</span> <span class="tag good">New: market dashboard and price model</span></p>
-    <nav class="toc" aria-label="On this page"><a href="#market">Market dashboard</a><a href="#prediction">Price prediction</a><a href="#countries">Why countries buy</a><a href="#history">History &amp; events</a><a href="#drivers">Drivers</a><a href="#centralbanks">Central banks</a><a href="#crashes">Crashes</a><a href="#thesis">Thesis</a><a href="#roadmap">Roadmap</a><a href="#entry">Staged entry</a><a href="#risks">Risks</a><a href="#signals">Signals</a><a href="#forecast">Forecast checkpoints</a><a href="#decisions">Decisions</a><a href="#downloads">Documents</a><a href="#disclosure">Disclosures</a></nav>
+    <nav class="toc" aria-label="On this page"><a href="#market">Market dashboard</a><a href="#prediction">Price prediction</a><a href="#countries">Why countries buy</a><a href="#history">History &amp; events</a><a href="#drivers">Drivers</a><a href="#centralbanks">Central banks</a><a href="#crashes">Crashes</a><a href="#thesis">Thesis</a><a href="#roadmap">Roadmap</a><a href="#entry">Staged entry</a><a href="#risks">Risks</a><a href="#signals">Signals</a><a href="#calendar">Release calendar</a><a href="#forecast">Forecast checkpoints</a><a href="#decisions">Decisions</a><a href="#downloads">Documents</a><a href="#disclosure">Disclosures</a></nav>
   </section>
 
   <section aria-label="At a glance">
@@ -368,6 +372,24 @@ table.proj tr.tot td{font-weight:700;border-top:2px solid var(--line)}
     </div>
   </section>
 
+  <section id="calendar">
+    <h2>Release calendar: when gold's drivers get new data</h2>
+    <div class="card">
+      <p style="margin-top:0">Official release dates for the next 12 months, matched to the factors on the dashboard above. The project updates itself the morning after each <span class="ctag key">Key</span> release, plus a full refresh every Saturday. Dates are US Eastern; <span class="ctag est">Estimated</span> dates follow last year's timing and are re-checked at each update.</p>
+      <div class="ctl" style="margin-bottom:10px"><div class="seg" id="p15calf"><button data-v="next" aria-selected="true">Next 3 months</button><button data-v="all">All 12 months</button><button data-v="key">Key only</button></div><a href="p15-calendar.ics" download style="font-size:13px;font-weight:600">Add to my calendar (.ics)</a></div>
+      <div class="table-scroll"><table class="calt">
+        <thead><tr><th>Date</th><th>Release</th><th>Factors it moves</th><th>Status</th></tr></thead>
+        <tbody id="p15cal"></tbody>
+      </table></div>
+      <h3 style="margin:18px 0 6px;font-size:15px">Recurring items and estimate windows</h3>
+      <div class="table-scroll"><table class="calt">
+        <thead><tr><th>When</th><th>Item</th><th>Detail</th></tr></thead>
+        <tbody id="p15calw"></tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:12px 0 0">Sources: <a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20261112a.htm">Federal Reserve (2027 FOMC schedule)</a>, <a href="https://www.bls.gov/schedule/2027/home.htm">BLS</a>, <a href="https://www.bea.gov/news/schedule/next-year">BEA</a>, <a href="https://home.treasury.gov/news/press-releases/sb0678">US Treasury</a>, <a href="https://www.opec.org/pr-detail/2033620-1-november-2026.html">OPEC</a>, <a href="https://www.gold.org/goldhub/research/gold-demand-trends">World Gold Council</a>; debt-limit timing is a private estimate (<a href="https://www.ntu.org/publications/detail/debt-limit-likely-to-be-hit-in-february-with-the-x-date-reached-by-december-2027">NTU</a>, <a href="https://fortune.com/2026/11/09/us-debt-limit-outlook-xdate-deadline-default-congress-summer-recess/">Bank of America via Fortune</a>), not an official figure. A release date says when data arrives, not which way gold will move. Not investment advice.</p>
+    </div>
+  </section>
+
   <section id="forecast">
     <h2>Forecast checkpoints</h2>
     <div class="card">
@@ -429,7 +451,8 @@ table.proj tr.tot td{font-weight:700;border-top:2px solid var(--line)}
   <section>
     <h2>Sources</h2>
     <div class="card"><ul style="margin:0">
-      <li><a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm">Federal Reserve FOMC calendar</a></li>
+      <li><a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm">Federal Reserve FOMC calendar</a> and <a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20261112a.htm">revised 2027 schedule (Nov 12, 2026)</a></li>
+      <li><a href="https://www.bls.gov/schedule/2027/home.htm">BLS 2027 release calendar</a>, <a href="https://www.bls.gov/schedule/news_release/cpi.htm">BLS CPI schedule</a>, <a href="https://www.bea.gov/news/schedule/next-year">BEA 2027 release schedule</a>, <a href="https://home.treasury.gov/news/press-releases/sb0678">US Treasury refunding statement (Nov 4, 2026)</a>, <a href="https://www.opec.org/pr-detail/2033620-1-november-2026.html">OPEC press release (Nov 1, 2026)</a></li>
       <li><a href="https://www.gold.org/goldhub/research/gold-demand-trends/gold-demand-trends-q3-2026/central-banks">World Gold Council: Gold Demand Trends Q3 2026, central banks</a></li>
       <li><a href="https://www.gold.org/news-and-events/press-releases/central-banks-set-step-gold-buying-over-next-year">World Gold Council: central banks set to step up gold buying (June 2026)</a></li>
       <li><a href="https://www.aol.com/articles/gold-price-today-november-25-110850000.html">AOL: gold price today, Nov 25, 2026</a></li>
@@ -452,6 +475,21 @@ table.proj tr.tot td{font-weight:700;border-top:2px solid var(--line)}
 </main>
 <script src="p15-data.js"></script>
 <script src="p15-dashboard.js"></script>
+<script src="p15-calendar.js"></script>
+<script>
+(function(){var C=window.P15CAL;if(!C)return;var tb=document.getElementById('p15cal'),tw=document.getElementById('p15calw');
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+var today=new Date();today.setHours(0,0,0,0);var M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],W=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function dd(s){var p=s.split('-');return new Date(+p[0],p[1]-1,+p[2])}
+function draw(mode){var lim=new Date(today);lim.setMonth(lim.getMonth()+3);var nextSet=false,h='';
+C.events.forEach(function(e){var d=dd(e.date),past=d<today;if(mode==='next'&&(past||d>lim))return;if(mode==='key'&&e.key!=='yes')return;
+var cls=past?'past':'';if(!past&&!nextSet&&e.key==='yes'){cls='next';nextSet=true}
+var est=e.status!=='confirmed';
+h+='<tr class="'+cls+'"><td class="cd">'+W[d.getDay()]+' '+M[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear()+(e.time_et?'<div class="muted" style="font-weight:400">'+esc(e.time_et)+' ET</div>':'')+'</td><td>'+esc(e.event)+'<div class="muted" style="font-size:12.5px">'+esc(e.reference)+'</div></td><td>'+esc(e.factors.split('; ').join(', '))+'</td><td>'+(e.key==='yes'?'<span class="ctag key">Key</span> ':'')+'<span class="ctag'+(est?' est':'')+'">'+(est?'Estimated':'Confirmed')+'</span> <a href="'+esc(e.source_url)+'" style="font-size:12px">source</a></td></tr>'});
+tb.innerHTML=h||'<tr><td colspan="4" class="muted">No releases in this view.</td></tr>'}
+var seg=document.getElementById('p15calf');seg.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;seg.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-selected',x===b)});draw(b.dataset.v)});draw('next');
+tw.innerHTML=C.windows.map(function(w){return '<tr><td class="cd">'+esc(w.window)+'</td><td>'+esc(w.item)+'<div class="muted" style="font-size:12.5px">'+esc(w.status)+'</div></td><td>'+esc(w.detail)+(w.source_url?' <a href="'+esc(w.source_url)+'" style="font-size:12px">source</a>':'')+'</td></tr>'}).join('')})();
+</script>
 <footer><div class="wrap">&copy; 2026 Hamid Faghidi &middot; Trading results are hypothetical backtests. Nothing on this site is investment advice.</div></footer>
 </body>
 </html>

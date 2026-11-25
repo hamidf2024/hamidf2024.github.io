@@ -1,0 +1,578 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Project 15 Gold//Release calendar//EN
+CALSCALE:GREGORIAN
+X-WR-CALNAME:Project 15 gold release calendar
+BEGIN:VEVENT
+UID:p15-20261129-0@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20261129
+DTEND;VALUE=DATE:20261130
+SUMMARY:OPEC+ JMMC (69th) and meeting of the seven voluntary-cut countries
+DESCRIPTION:December/January output. Time: n/a ET. Factors: Oil. Status: c
+ onfirmed. Source: OPEC press releases (4 Oct and 1 Nov 2026) https://www.
+ opec.org/pr-detail/2033620-1-november-2026.html
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20261204-1@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20261204
+DTEND;VALUE=DATE:20261205
+SUMMARY:Employment Situation (jobs report)
+DESCRIPTION:November 2026. Time: 08:30 ET. Factors: Fed funds rate\; 10-yr
+  Treasury\; US dollar. Status: confirmed. Source: BLS December 2026 relea
+ se schedule https://www.bls.gov/schedule/2026/12_sched_list.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20261209-2@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20261209
+DTEND;VALUE=DATE:20261210
+SUMMARY:FOMC decision (Dec 8-9 meeting) with Summary of Economic Projectio
+ ns
+DESCRIPTION:Policy rate. Time: 14:00 ET. Factors: Fed funds rate\; US real
+  yields\; 10-yr Treasury\; US dollar. Status: confirmed. Source: Federal 
+ Reserve FOMC calendar https://www.federalreserve.gov/monetarypolicy/fomcc
+ alendars.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20261210-3@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20261210
+DTEND;VALUE=DATE:20261211
+SUMMARY:Consumer Price Index (CPI)
+DESCRIPTION:November 2026. Time: 08:30 ET. Factors: US real yields\; Fed f
+ unds rate. Status: confirmed. Source: BLS CPI release schedule https://ww
+ w.bls.gov/schedule/news_release/cpi.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20261215-4@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20261215
+DTEND;VALUE=DATE:20261216
+SUMMARY:Producer Price Index (PPI)
+DESCRIPTION:November 2026. Time: 08:30 ET. Factors: US real yields. Status
+ : confirmed. Source: BLS December 2026 release schedule https://www.bls.g
+ ov/schedule/2026/12_sched_list.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270108-5@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270108
+DTEND;VALUE=DATE:20270109
+SUMMARY:Employment Situation (jobs report)
+DESCRIPTION:December 2026. Time: 08:30 ET. Factors: Fed funds rate\; 10-yr
+  Treasury\; US dollar. Status: confirmed. Source: BLS 2027 release calend
+ ar https://www.bls.gov/schedule/2027/home.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270113-6@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270113
+DTEND;VALUE=DATE:20270114
+SUMMARY:Consumer Price Index (CPI)
+DESCRIPTION:December 2026. Time: 08:30 ET. Factors: US real yields\; Fed f
+ unds rate. Status: confirmed. Source: BLS CPI release schedule https://ww
+ w.bls.gov/schedule/news_release/cpi.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270127-7@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270127
+DTEND;VALUE=DATE:20270128
+SUMMARY:FOMC decision (Jan 26-27 meeting)
+DESCRIPTION:Policy rate. Time: 14:00 ET. Factors: Fed funds rate\; US real
+  yields\; 10-yr Treasury\; US dollar. Status: confirmed. Source: Federal 
+ Reserve press release 12 Nov 2026 https://www.federalreserve.gov/newseven
+ ts/pressreleases/monetary20261112a.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270128-8@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270128
+DTEND;VALUE=DATE:20270129
+SUMMARY:GDP Q4 2026 (advance) and Personal Income and Outlays incl. PCE in
+ flation
+DESCRIPTION:Q4 2026 / December 2026. Time: 08:30 ET. Factors: US real yiel
+ ds\; Fed funds rate\; US fiscal risk. Status: confirmed. Source: BEA 2027
+  release schedule https://www.bea.gov/news/schedule/next-year
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270129-9@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270129
+DTEND;VALUE=DATE:20270130
+SUMMARY:World Gold Council Gold Demand Trends Q4 and full year 2026 (estim
+ ated date)
+DESCRIPTION:Q4 2026. Time: n/a ET. Factors: Central bank buying\; ETF flow
+ s\; Gold price. Status: estimated (FY2025 edition came out 29 Jan 2026\; 
+ WGC posts no calendar). Source: World Gold Council Gold Demand Trends htt
+ ps://www.gold.org/goldhub/research/gold-demand-trends
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270203-10@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270203
+DTEND;VALUE=DATE:20270204
+SUMMARY:Treasury quarterly refunding announcement
+DESCRIPTION:Feb-Apr 2027 borrowing. Time: n/a ET. Factors: 10-yr Treasury\
+ ; US fiscal risk. Status: confirmed. Source: US Treasury refunding statem
+ ent 4 Nov 2026 https://home.treasury.gov/news/press-releases/sb0678
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270205-11@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270205
+DTEND;VALUE=DATE:20270206
+SUMMARY:Employment Situation (jobs report)
+DESCRIPTION:January 2027. Time: 08:30 ET. Factors: Fed funds rate\; 10-yr 
+ Treasury\; US dollar. Status: confirmed. Source: BLS 2027 release calenda
+ r https://www.bls.gov/schedule/2027/home.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270211-12@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270211
+DTEND;VALUE=DATE:20270212
+SUMMARY:Consumer Price Index (CPI)
+DESCRIPTION:January 2027. Time: 08:30 ET. Factors: US real yields\; Fed fu
+ nds rate. Status: confirmed. Source: BLS CPI release schedule https://www
+ .bls.gov/schedule/news_release/cpi.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270225-13@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270225
+DTEND;VALUE=DATE:20270226
+SUMMARY:GDP Q4 2026 (second) and Personal Income and Outlays incl. PCE inf
+ lation
+DESCRIPTION:Q4 2026 / January 2027. Time: 08:30 ET. Factors: US real yield
+ s\; Fed funds rate. Status: confirmed. Source: BEA 2027 release schedule 
+ https://www.bea.gov/news/schedule/next-year
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270305-14@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270305
+DTEND;VALUE=DATE:20270306
+SUMMARY:Employment Situation (jobs report)
+DESCRIPTION:February 2027. Time: 08:30 ET. Factors: Fed funds rate\; 10-yr
+  Treasury\; US dollar. Status: confirmed. Source: BLS 2027 release calend
+ ar https://www.bls.gov/schedule/2027/home.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270310-15@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270310
+DTEND;VALUE=DATE:20270311
+SUMMARY:Consumer Price Index (CPI)
+DESCRIPTION:February 2027. Time: 08:30 ET. Factors: US real yields\; Fed f
+ unds rate. Status: confirmed. Source: BLS CPI release schedule https://ww
+ w.bls.gov/schedule/news_release/cpi.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270317-16@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270317
+DTEND;VALUE=DATE:20270318
+SUMMARY:FOMC decision (Mar 16-17 meeting)
+DESCRIPTION:Policy rate. Time: 14:00 ET. Factors: Fed funds rate\; US real
+  yields\; 10-yr Treasury\; US dollar. Status: confirmed. Source: Federal 
+ Reserve press release 12 Nov 2026 https://www.federalreserve.gov/newseven
+ ts/pressreleases/monetary20261112a.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270331-17@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270331
+DTEND;VALUE=DATE:20270401
+SUMMARY:GDP Q4 2026 (third) and Personal Income and Outlays incl. PCE infl
+ ation
+DESCRIPTION:Q4 2026 / February 2027. Time: 08:30 ET. Factors: US real yiel
+ ds\; Fed funds rate. Status: confirmed. Source: BEA 2027 release schedule
+  https://www.bea.gov/news/schedule/next-year
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270402-18@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270402
+DTEND;VALUE=DATE:20270403
+SUMMARY:Employment Situation (jobs report)
+DESCRIPTION:March 2027. Time: 08:30 ET. Factors: Fed funds rate\; 10-yr Tr
+ easury\; US dollar. Status: confirmed. Source: BLS 2027 release calendar 
+ https://www.bls.gov/schedule/2027/home.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270413-19@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270413
+DTEND;VALUE=DATE:20270414
+SUMMARY:Consumer Price Index (CPI)
+DESCRIPTION:March 2027. Time: 08:30 ET. Factors: US real yields\; Fed fund
+ s rate. Status: confirmed. Source: BLS CPI release schedule https://www.b
+ ls.gov/schedule/news_release/cpi.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270428-20@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270428
+DTEND;VALUE=DATE:20270429
+SUMMARY:FOMC decision (Apr 27-28 meeting)
+DESCRIPTION:Policy rate. Time: 14:00 ET. Factors: Fed funds rate\; US real
+  yields\; 10-yr Treasury\; US dollar. Status: confirmed. Source: Federal 
+ Reserve press release 12 Nov 2026 https://www.federalreserve.gov/newseven
+ ts/pressreleases/monetary20261112a.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270429-21@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270429
+DTEND;VALUE=DATE:20270430
+SUMMARY:World Gold Council Gold Demand Trends Q1 2027 (estimated date)
+DESCRIPTION:Q1 2027. Time: n/a ET. Factors: Central bank buying\; ETF flow
+ s\; Gold price. Status: estimated (Q1 2026 edition came out 29 Apr 2026).
+  Source: World Gold Council Gold Demand Trends https://www.gold.org/goldh
+ ub/research/gold-demand-trends
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270429-22@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270429
+DTEND;VALUE=DATE:20270430
+SUMMARY:GDP Q1 2027 (advance) and Personal Income and Outlays incl. PCE in
+ flation
+DESCRIPTION:Q1 2027 / March 2027. Time: 08:30 ET. Factors: US real yields\
+ ; Fed funds rate\; US fiscal risk. Status: confirmed. Source: BEA 2027 re
+ lease schedule https://www.bea.gov/news/schedule/next-year
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270505-23@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270505
+DTEND;VALUE=DATE:20270506
+SUMMARY:Treasury quarterly refunding announcement (estimated date)
+DESCRIPTION:May-Jul 2027 borrowing. Time: n/a ET. Factors: 10-yr Treasury\
+ ; US fiscal risk. Status: estimated (refunding is usually the first Wedne
+ sday of Feb/May/Aug/Nov). Source: US Treasury quarterly refunding https:/
+ /home.treasury.gov/policy-issues/financing-the-government/quarterly-refun
+ ding
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270507-24@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270507
+DTEND;VALUE=DATE:20270508
+SUMMARY:Employment Situation (jobs report)
+DESCRIPTION:April 2027. Time: 08:30 ET. Factors: Fed funds rate\; 10-yr Tr
+ easury\; US dollar. Status: confirmed. Source: BLS 2027 release calendar 
+ https://www.bls.gov/schedule/2027/home.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270512-25@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270512
+DTEND;VALUE=DATE:20270513
+SUMMARY:Consumer Price Index (CPI)
+DESCRIPTION:April 2027. Time: 08:30 ET. Factors: US real yields\; Fed fund
+ s rate. Status: confirmed. Source: BLS CPI release schedule https://www.b
+ ls.gov/schedule/news_release/cpi.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270527-26@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270527
+DTEND;VALUE=DATE:20270528
+SUMMARY:GDP Q1 2027 (second) and Personal Income and Outlays incl. PCE inf
+ lation
+DESCRIPTION:Q1 2027 / April 2027. Time: 08:30 ET. Factors: US real yields\
+ ; Fed funds rate. Status: confirmed. Source: BEA 2027 release schedule ht
+ tps://www.bea.gov/news/schedule/next-year
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270604-27@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270604
+DTEND;VALUE=DATE:20270605
+SUMMARY:Employment Situation (jobs report)
+DESCRIPTION:May 2027. Time: 08:30 ET. Factors: Fed funds rate\; 10-yr Trea
+ sury\; US dollar. Status: confirmed. Source: BLS 2027 release calendar ht
+ tps://www.bls.gov/schedule/2027/home.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270609-28@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270609
+DTEND;VALUE=DATE:20270610
+SUMMARY:FOMC decision (Jun 8-9 meeting)
+DESCRIPTION:Policy rate. Time: 14:00 ET. Factors: Fed funds rate\; US real
+  yields\; 10-yr Treasury\; US dollar. Status: confirmed. Source: Federal 
+ Reserve press release 12 Nov 2026 https://www.federalreserve.gov/newseven
+ ts/pressreleases/monetary20261112a.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270610-29@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270610
+DTEND;VALUE=DATE:20270611
+SUMMARY:Consumer Price Index (CPI)
+DESCRIPTION:May 2027. Time: 08:30 ET. Factors: US real yields\; Fed funds 
+ rate. Status: confirmed. Source: BLS CPI release schedule https://www.bls
+ .gov/schedule/news_release/cpi.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270625-30@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270625
+DTEND;VALUE=DATE:20270626
+SUMMARY:GDP Q1 2027 (third) and Personal Income and Outlays incl. PCE infl
+ ation
+DESCRIPTION:Q1 2027 / May 2027. Time: 08:30 ET. Factors: US real yields\; 
+ Fed funds rate. Status: confirmed. Source: BEA 2027 release schedule http
+ s://www.bea.gov/news/schedule/next-year
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270702-31@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270702
+DTEND;VALUE=DATE:20270703
+SUMMARY:Employment Situation (jobs report)
+DESCRIPTION:June 2027. Time: 08:30 ET. Factors: Fed funds rate\; 10-yr Tre
+ asury\; US dollar. Status: confirmed. Source: BLS 2027 release calendar h
+ ttps://www.bls.gov/schedule/2027/home.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270714-32@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270714
+DTEND;VALUE=DATE:20270715
+SUMMARY:Consumer Price Index (CPI)
+DESCRIPTION:June 2027. Time: 08:30 ET. Factors: US real yields\; Fed funds
+  rate. Status: confirmed. Source: BLS CPI release schedule https://www.bl
+ s.gov/schedule/news_release/cpi.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270728-33@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270728
+DTEND;VALUE=DATE:20270729
+SUMMARY:FOMC decision (Jul 27-28 meeting)
+DESCRIPTION:Policy rate. Time: 14:00 ET. Factors: Fed funds rate\; US real
+  yields\; 10-yr Treasury\; US dollar. Status: confirmed. Source: Federal 
+ Reserve press release 12 Nov 2026 https://www.federalreserve.gov/newseven
+ ts/pressreleases/monetary20261112a.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270729-34@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270729
+DTEND;VALUE=DATE:20270730
+SUMMARY:World Gold Council Gold Demand Trends Q2 2027 (estimated date)
+DESCRIPTION:Q2 2027. Time: n/a ET. Factors: Central bank buying\; ETF flow
+ s\; Gold price. Status: estimated (Q2 2026 edition came out 30 Jul 2026).
+  Source: World Gold Council Gold Demand Trends https://www.gold.org/goldh
+ ub/research/gold-demand-trends
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270729-35@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270729
+DTEND;VALUE=DATE:20270730
+SUMMARY:GDP Q2 2027 (advance) and Personal Income and Outlays incl. PCE in
+ flation
+DESCRIPTION:Q2 2027 / June 2027. Time: 08:30 ET. Factors: US real yields\;
+  Fed funds rate\; US fiscal risk. Status: confirmed. Source: BEA 2027 rel
+ ease schedule https://www.bea.gov/news/schedule/next-year
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270804-36@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270804
+DTEND;VALUE=DATE:20270805
+SUMMARY:Treasury quarterly refunding announcement (estimated date)
+DESCRIPTION:Aug-Oct 2027 borrowing. Time: n/a ET. Factors: 10-yr Treasury\
+ ; US fiscal risk. Status: estimated (refunding is usually the first Wedne
+ sday of Feb/May/Aug/Nov). Source: US Treasury quarterly refunding https:/
+ /home.treasury.gov/policy-issues/financing-the-government/quarterly-refun
+ ding
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270806-37@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270806
+DTEND;VALUE=DATE:20270807
+SUMMARY:Employment Situation (jobs report)
+DESCRIPTION:July 2027. Time: 08:30 ET. Factors: Fed funds rate\; 10-yr Tre
+ asury\; US dollar. Status: confirmed. Source: BLS 2027 release calendar h
+ ttps://www.bls.gov/schedule/2027/home.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270811-38@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270811
+DTEND;VALUE=DATE:20270812
+SUMMARY:Consumer Price Index (CPI)
+DESCRIPTION:July 2027. Time: 08:30 ET. Factors: US real yields\; Fed funds
+  rate. Status: confirmed. Source: BLS CPI release schedule https://www.bl
+ s.gov/schedule/news_release/cpi.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270825-39@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270825
+DTEND;VALUE=DATE:20270826
+SUMMARY:GDP Q2 2027 (second) and Personal Income and Outlays incl. PCE inf
+ lation
+DESCRIPTION:Q2 2027 / July 2027. Time: 08:30 ET. Factors: US real yields\;
+  Fed funds rate. Status: confirmed. Source: BEA 2027 release schedule htt
+ ps://www.bea.gov/news/schedule/next-year
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270903-40@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270903
+DTEND;VALUE=DATE:20270904
+SUMMARY:Employment Situation (jobs report)
+DESCRIPTION:August 2027. Time: 08:30 ET. Factors: Fed funds rate\; 10-yr T
+ reasury\; US dollar. Status: confirmed. Source: BLS 2027 release calendar
+  https://www.bls.gov/schedule/2027/home.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270914-41@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270914
+DTEND;VALUE=DATE:20270915
+SUMMARY:Consumer Price Index (CPI)
+DESCRIPTION:August 2027. Time: 08:30 ET. Factors: US real yields\; Fed fun
+ ds rate. Status: confirmed. Source: BLS CPI release schedule https://www.
+ bls.gov/schedule/news_release/cpi.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270915-42@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270915
+DTEND;VALUE=DATE:20270916
+SUMMARY:FOMC decision (Sep 14-15 meeting)
+DESCRIPTION:Policy rate. Time: 14:00 ET. Factors: Fed funds rate\; US real
+  yields\; 10-yr Treasury\; US dollar. Status: confirmed. Source: Federal 
+ Reserve press release 12 Nov 2026 https://www.federalreserve.gov/newseven
+ ts/pressreleases/monetary20261112a.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20270930-43@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20270930
+DTEND;VALUE=DATE:20271001
+SUMMARY:GDP Q2 2027 (third) and Personal Income and Outlays incl. PCE infl
+ ation
+DESCRIPTION:Q2 2027 / August 2027. Time: 08:30 ET. Factors: US real yields
+ \; Fed funds rate. Status: confirmed. Source: BEA 2027 release schedule h
+ ttps://www.bea.gov/news/schedule/next-year
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20271008-44@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20271008
+DTEND;VALUE=DATE:20271009
+SUMMARY:Employment Situation (jobs report)
+DESCRIPTION:September 2027. Time: 08:30 ET. Factors: Fed funds rate\; 10-y
+ r Treasury\; US dollar. Status: confirmed. Source: BLS 2027 release calen
+ dar https://www.bls.gov/schedule/2027/home.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20271014-45@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20271014
+DTEND;VALUE=DATE:20271015
+SUMMARY:Consumer Price Index (CPI)
+DESCRIPTION:September 2027. Time: 08:30 ET. Factors: US real yields\; Fed 
+ funds rate. Status: confirmed. Source: BLS CPI release schedule https://w
+ ww.bls.gov/schedule/news_release/cpi.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20271027-46@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20271027
+DTEND;VALUE=DATE:20271028
+SUMMARY:FOMC strategy-only meeting (Oct 26-27\; no policy decision planned)
+DESCRIPTION:Policy framework. Time: n/a ET. Factors: Fed funds rate\; US r
+ eal yields. Status: confirmed. Source: Federal Reserve press release 12 N
+ ov 2026 https://www.federalreserve.gov/newsevents/pressreleases/monetary2
+ 0261112a.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20271028-47@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20271028
+DTEND;VALUE=DATE:20271029
+SUMMARY:GDP Q3 2027 (advance) and Personal Income and Outlays incl. PCE in
+ flation
+DESCRIPTION:Q3 2027 / September 2027. Time: 08:30 ET. Factors: US real yie
+ lds\; Fed funds rate\; US fiscal risk. Status: confirmed. Source: BEA 202
+ 7 release schedule https://www.bea.gov/news/schedule/next-year
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20271102-48@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20271102
+DTEND;VALUE=DATE:20271103
+SUMMARY:World Gold Council Gold Demand Trends Q3 2027 (estimated date)
+DESCRIPTION:Q3 2027. Time: n/a ET. Factors: Central bank buying\; ETF flow
+ s\; Gold price. Status: estimated (Q3 2026 edition came out 3 Nov 2026). 
+ Source: World Gold Council Gold Demand Trends https://www.gold.org/goldhu
+ b/research/gold-demand-trends
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20271103-49@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20271103
+DTEND;VALUE=DATE:20271104
+SUMMARY:Treasury quarterly refunding announcement (estimated date)
+DESCRIPTION:Nov 2027-Jan 2028 borrowing. Time: n/a ET. Factors: 10-yr Trea
+ sury\; US fiscal risk. Status: estimated (refunding is usually the first 
+ Wednesday of Feb/May/Aug/Nov). Source: US Treasury quarterly refunding ht
+ tps://home.treasury.gov/policy-issues/financing-the-government/quarterly-
+ refunding
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20271105-50@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20271105
+DTEND;VALUE=DATE:20271106
+SUMMARY:Employment Situation (jobs report)
+DESCRIPTION:October 2027. Time: 08:30 ET. Factors: Fed funds rate\; 10-yr 
+ Treasury\; US dollar. Status: confirmed. Source: BLS 2027 release calenda
+ r https://www.bls.gov/schedule/2027/home.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20271110-51@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20271110
+DTEND;VALUE=DATE:20271111
+SUMMARY:Consumer Price Index (CPI)
+DESCRIPTION:October 2027. Time: 08:30 ET. Factors: US real yields\; Fed fu
+ nds rate. Status: confirmed. Source: BLS CPI release schedule https://www
+ .bls.gov/schedule/news_release/cpi.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20271117-52@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20271117
+DTEND;VALUE=DATE:20271118
+SUMMARY:FOMC decision (Nov 16-17 meeting)
+DESCRIPTION:Policy rate. Time: 14:00 ET. Factors: Fed funds rate\; US real
+  yields\; 10-yr Treasury\; US dollar. Status: confirmed. Source: Federal 
+ Reserve press release 12 Nov 2026 https://www.federalreserve.gov/newseven
+ ts/pressreleases/monetary20261112a.htm
+END:VEVENT
+BEGIN:VEVENT
+UID:p15-20271124-53@hamidf2024.github.io
+DTSTAMP:20261125T181014Z
+DTSTART;VALUE=DATE:20271124
+DTEND;VALUE=DATE:20271125
+SUMMARY:GDP Q3 2027 (second) and Personal Income and Outlays incl. PCE inf
+ lation
+DESCRIPTION:Q3 2027 / October 2027. Time: 08:30 ET. Factors: US real yield
+ s\; Fed funds rate. Status: confirmed. Source: BEA 2027 release schedule 
+ https://www.bea.gov/news/schedule/next-year
+END:VEVENT
+END:VCALENDAR
