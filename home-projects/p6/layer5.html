@@ -328,6 +328,122 @@
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
 </style>
 
+
+<style id="p6-polish-common">
+  /* ---- Shared presentation polish (Nov 26, 2026) ---- */
+  .kp-box { margin-top: 12px; background: #F8F6FB; border: 1px solid var(--line-soft); border-radius: var(--radius-m); padding: 12px 16px; max-width: 110ch; }
+  .kp-label { font-size: 10.5px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--river-strong); margin-bottom: 6px; }
+  .kp-box ul { margin: 0; padding-left: 18px; }
+  .kp-box li { font-size: 13.5px; color: var(--ink); line-height: 1.5; margin: 3px 0; }
+  details.full-note { margin-top: 8px; }
+  details.full-note > summary, details.cell-note > summary { cursor: pointer; list-style: none; color: var(--river); font-weight: 600; }
+  details.full-note > summary { font-size: 12.5px; display: inline-flex; align-items: center; gap: 6px; }
+  details.full-note > summary::-webkit-details-marker, details.cell-note > summary::-webkit-details-marker { display: none; }
+  details.full-note > summary::before, details.cell-note > summary::before { content: "\25B8"; font-size: 10px; transition: transform 0.15s; display: inline-block; }
+  details[open].full-note > summary::before, details[open].cell-note > summary::before { transform: rotate(90deg); }
+  .full-note-body { margin-top: 8px; font-size: 13px; line-height: 1.6; color: var(--ink-soft); background: var(--paper-raised);
+    border: 1px solid var(--line-soft); border-radius: var(--radius-s); padding: 12px 14px; max-width: 110ch; white-space: pre-line; }
+  details.cell-note { margin-top: 5px; text-align: left; }
+  details.cell-note > summary { font-size: 11px; display: inline-flex; gap: 4px; align-items: center; white-space: nowrap; }
+  .cell-note-body { margin-top: 4px; font-size: 11.5px; line-height: 1.45; color: var(--ink-soft); white-space: normal; }
+  .lead-text { color: var(--ink); }
+  .p6-card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-l); padding: 22px 24px 18px;
+    margin-bottom: 26px; box-shadow: var(--shadow); scroll-margin-top: 16px; }
+  .head-meta { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; margin-top: 6px; font-size: 12.5px; color: var(--ink-faint); }
+  .to-top { font-size: 12px; color: var(--ink-faint); text-decoration: none; white-space: nowrap; }
+  .to-top:hover { color: var(--river); }
+  .tier-tag { display: inline-block; font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; white-space: nowrap; margin-bottom: 4px; }
+  .tier-tag.t-fixer { background: var(--amber-tint); color: var(--amber); }
+  .tier-tag.t-original { background: var(--clay-tint); color: var(--clay); }
+  .tier-tag.t-partial { background: var(--brass-tint); color: var(--brass-strong); }
+  .tier-tag.t-full { background: var(--sage-tint); color: var(--sage); }
+  .tier-tag.t-none { background: var(--paper-raised); color: var(--ink-faint); border: 1px solid var(--line-soft); }
+  .mkt-overview { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-l); padding: 18px 20px; margin-bottom: 26px; }
+  .mkt-overview-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; margin-bottom: 12px; }
+  .mkt-overview-head h2 { font-size: 18px; }
+  .mkt-overview-head p { margin: 0; font-size: 12.5px; color: var(--ink-faint); }
+  .ov-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
+  @media (max-width: 760px) { .ov-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .ov-stat { background: var(--paper-raised); border: 1px solid var(--line-soft); border-radius: var(--radius-m); padding: 10px 12px; }
+  .ov-stat .k { font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-faint); }
+  .ov-stat .v { font-family: "Fraunces", Georgia, serif; font-size: 19px; font-weight: 600; margin-top: 2px; }
+  .ov-stat .n { font-size: 11.5px; color: var(--ink-faint); margin-top: 1px; }
+  .ov-table-wrap { overflow-x: auto; border: 1px solid var(--line-soft); border-radius: var(--radius-m); }
+  table.ov-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 720px; }
+  table.ov-table th { text-align: left; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-faint);
+    background: var(--paper-raised); padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  table.ov-table td { padding: 8px 10px; border-bottom: 1px solid var(--line-soft); white-space: nowrap; }
+  table.ov-table tr:last-child td { border-bottom: none; }
+  table.ov-table td.num, table.ov-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  table.ov-table a { color: var(--ink); font-weight: 600; text-decoration: none; }
+  table.ov-table a:hover { color: var(--river); text-decoration: underline; }
+  .ov-rank { font-family: "IBM Plex Mono", monospace; color: var(--river-strong); font-weight: 700; }
+  .ov-tools { display: flex; gap: 8px; justify-content: flex-end; margin-top: 10px; flex-wrap: wrap; }
+  .ov-btn { font: inherit; font-size: 12.5px; font-weight: 600; color: var(--river-strong); background: var(--paper); border: 1px solid var(--line);
+    border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+  .ov-btn:hover { border-color: var(--river); }
+  .ov-btn:focus-visible { outline: none; box-shadow: var(--focus); }
+  table.comps th { background: var(--river-tint); color: var(--river-strong); }
+  table.comps tbody tr:nth-child(even) td { background: #FCFCFD; }
+</style>
+
+<script id="p6-ui">
+/* Shared helpers for key points and folded text (Nov 26, 2026). Nothing is removed: every long
+   text stays on the page, either in full under a toggle or split into a lead + folded rest. */
+window.P6UI = (function () {
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function words(t) { return String(t || "").replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length; }
+  // Key points box with the full text folded underneath. No key points -> the text, unfolded.
+  function keyPoints(kp, fullHtml, opts) {
+    opts = opts || {};
+    kp = Array.isArray(kp) ? kp : [];
+    if (!kp.length) return fullHtml ? '<div class="' + (opts.plainClass || "full-note-body") + '">' + fullHtml + "</div>" : "";
+    return '<div class="kp-box"><div class="kp-label">' + esc(opts.label || "Key points") + "</div> <ul>" +
+      kp.map(function (k) { return "<li>" + esc(k) + "</li>"; }).join("") + "</ul>" +
+      (fullHtml ? '<details class="full-note"><summary>' + esc(opts.more || "Read the full note") + " (" + words(fullHtml) + ' words)</summary> <div class="full-note-body">' + fullHtml + "</div></details>" : "") +
+      "</div>";
+  }
+  // Long cell text: show the part before the first " — " and fold the rest (kept verbatim).
+  function lead(text, label, minLen) {
+    var t = String(text == null ? "" : text);
+    var i = t.indexOf(" — ");
+    if (t.length < (minLen || 110) || i < 0 || i > 140) {
+      if (t.length < (minLen || 110) * 2) return t;
+      return ' <details class="cell-note"><summary>' + esc(label || "Details") + '</summary> <div class="cell-note-body">' + t + "</div></details>";
+    }
+    return '<span class="lead-text">' + t.slice(0, i) + '</span> <details class="cell-note"><summary>' + esc(label || "Details") +
+      '</summary> <div class="cell-note-body">' + t.slice(i + 1) + "</div></details>";
+  }
+  // Long prose: show the first sentence, fold the rest (kept verbatim).
+  function sentence(text, label, minLen) {
+    var t = String(text == null ? "" : text);
+    if (t.length < (minLen || 260)) return t;
+    var m = /^[\s\S]{40,260}?[.!?](?=\s+[A-Z(“"])/.exec(t);
+    if (!m) return lead(t, label, minLen);
+    return '<span class="lead-text">' + m[0] + '</span> <details class="cell-note"><summary>' + esc(label || "More") +
+      '</summary> <div class="cell-note-body">' + t.slice(m[0].length).replace(/^\s+/, "") + "</div></details>";
+  }
+  function fold(html, label) {
+    if (!html) return "";
+    return ' <details class="cell-note"><summary>' + esc(label || "Details") + '</summary> <div class="cell-note-body">' + html + "</div></details>";
+  }
+  document.addEventListener("click", function (e) {
+    var b = e.target && e.target.closest ? e.target.closest(".ov-btn[data-notes]") : null;
+    if (!b) return;
+    var open = b.getAttribute("data-notes") === "open";
+    var scope = document.querySelector(b.getAttribute("data-scope") || "body") || document.body;
+    Array.prototype.forEach.call(scope.querySelectorAll("details.full-note, details.cell-note"), function (d) { d.open = open; });
+  });
+  function toolButtons(scope) {
+    return '<div class="ov-tools"><button type="button" class="ov-btn" data-notes="open" data-scope="' + scope + '">Expand all notes</button>' +
+      '<button type="button" class="ov-btn" data-notes="close" data-scope="' + scope + '">Collapse all notes</button></div>';
+  }
+  return { esc: esc, keyPoints: keyPoints, lead: lead, sentence: sentence, fold: fold, toolButtons: toolButtons, words: words };
+})();
+</script>
+<style id="p6-polish-l5">
+  .agent-evidence .lead-text, .zip-sub .lead-text { color: inherit; }
+</style>
 <div class="shell">
   <div class="topbar">
     <div>
@@ -550,7 +666,7 @@
           "<span>" + escapeHtml(agent.priceRange) + " range</span>" +
         "</div>" +
         '<div class="confidence-pill ' + conf.cls + '">' + conf.text + "</div>" +
-        '<div class="agent-evidence">' + escapeHtml(agent.evidence) + "</div>" +
+        '<div class="agent-evidence">' + P6UI.sentence(escapeHtml(agent.evidence), "Full evidence", 240) + "</div>" +
         '<div class="agent-sources">' + sources + "</div>" +
       "</div>" +
       '<div class="score-col">' +
@@ -813,7 +929,7 @@
         return '<div class="zip-section">' +
           '<div class="zip-header">' +
             '<div><div class="zip-title">' + escapeHtml(z.zip) + " — " + escapeHtml(z.areaName) + "</div>" +
-              '<div class="zip-sub">' + escapeHtml(z.note) + "</div></div>" +
+              '<div class="zip-sub">' + P6UI.sentence(escapeHtml(z.note), "Full ZIP note", 300) + "</div></div>" +
             '<div class="zip-stats"><span class="zip-stat">' + z.agentsChecked + ' agents screened</span><span class="zip-stat">' + z.agents.length + ' scored candidates</span></div>' +
           "</div>" +
           '<div class="agent-list">' + cards + "</div>" +
