@@ -341,6 +341,48 @@
   @media (max-width: 600px) { .hero .wordmark { font-size: 30px; } .topbar.hero { padding: 22px 18px 20px; border-radius: 16px; } .hero-stat .v { font-size: 24px; } }
   @media (prefers-reduced-motion: reduce) { .layer-card, .hero-stat { transition: none; } .layer-card:hover, .hero-stat:hover { transform: none; } }
 </style>
+
+<style id="p6-hub-redesign-2">
+  .overview-intro { font-size: 15px; color: var(--ink-soft); background: var(--paper-raised); border: 1px solid var(--line-soft);
+    border-left: 4px solid var(--hub); border-radius: var(--radius-m); padding: 14px 18px; max-width: none; margin-bottom: 12px; }
+  .jump-links { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; }
+  .jump-links a { font-size: 12.5px; font-weight: 600; color: var(--river-strong); text-decoration: none; background: var(--paper);
+    border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; }
+  .jump-links a:hover { border-color: var(--river); }
+  #overview-grid.overview-grid { display: block; }
+  .stage-section { margin: 0 0 26px; scroll-margin-top: 16px; }
+  .stage-head { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+  .stage-step { flex: none; width: 40px; height: 40px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center;
+    font-family: "Fraunces", Georgia, serif; font-size: 20px; font-weight: 700; color: #fff; background: var(--river); }
+  .stage-section.find .stage-step { background: var(--hub); }
+  .stage-section.manage .stage-step { background: var(--sage); }
+  .stage-head h2 { font-size: 20px; }
+  .stage-head p { margin: 2px 0 0; font-size: 13px; color: var(--ink-faint); }
+  .stage-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 14px; }
+  .layer-card { display: flex; flex-direction: column; gap: 8px; }
+  .layer-card .card-eyebrow { display: flex; align-items: center; gap: 8px; font-size: 11.5px; font-weight: 700; color: var(--ink-faint); letter-spacing: 0.02em; }
+  .layer-card .card-eyebrow .layer-card-num { width: 24px; height: 24px; font-size: 12px; }
+  .layer-card .card-question { font-family: "Fraunces", Georgia, serif; font-size: 18px; line-height: 1.3; color: var(--ink); margin: 2px 0 0; }
+  .layer-card .card-name { font-size: 13px; font-weight: 600; color: var(--ink-soft); }
+  .layer-card .card-meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .layer-card .card-meta .layer-card-status { margin: 0; }
+  .layer-card .card-meta .layer-live { margin: 0; }
+  .layer-card .objective { flex: 1; }
+  details.more-outputs.all > summary::before { content: "▸ "; }
+  details[open].more-outputs.all > summary::before { content: "▾ "; }
+  details.more-outputs.all ul.outputs { margin-top: 6px; }
+  .layer-card .open-btn { align-self: flex-start; margin-top: 4px; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600;
+    color: #fff; background: var(--river); border-radius: 999px; padding: 7px 14px; text-decoration: none; }
+  .layer-card.stage-find .open-btn { background: var(--hub-strong); }
+  .layer-card.stage-manage .open-btn { background: var(--sage); }
+  .layer-card .open-btn:hover { filter: brightness(1.08); }
+  .layer-card .open-btn:focus-visible { outline: none; box-shadow: var(--focus); }
+  .cov-bar { display: inline-block; width: 64px; height: 6px; border-radius: 3px; background: var(--line-soft); vertical-align: middle; margin-left: 6px; overflow: hidden; }
+  .cov-bar > i { display: block; height: 100%; background: var(--river); border-radius: 3px; }
+  .cov-legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: var(--ink-faint); margin: -4px 0 10px; }
+  .cov-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .cov-legend .cov-dot { width: 16px; height: 16px; font-size: 9px; }
+</style>
 <div class="shell">
   <header class="topbar hero">
     <div class="hero-top">
@@ -407,6 +449,7 @@
 
       <div class="tab-panel" id="tab-panel-overview" role="tabpanel" aria-labelledby="tab-btn-overview">
         <p class="overview-intro">Ten layers, each a standalone research page, each answering one question about a prospective investment property. Together they cover screening, rental income (short- and long-term), market value, deal sourcing, regulation, renovation cost, risk, and property management. Click any card to open that layer.</p>
+        <nav class="jump-links" aria-label="On this page"><a href="#coverage">Recently added properties</a><a href="#stage-find">Step 1 · Find</a><a href="#stage-eval">Step 2 · Evaluate</a><a href="#stage-manage">Step 3 · Manage</a></nav>
         <section class="coverage" id="coverage"></section>
         <div class="overview-grid" id="overview-grid"></div>
       </div>
@@ -584,30 +627,52 @@
   // ---------- Platform Overview ----------
   function renderOverview() {
     var grid = $("#overview-grid");
-    var STAGE = { 1: "find", 5: "find", 6: "find", 10: "manage" };
-    var STAGE_LABEL = { find: "Find", eval: "Evaluate", manage: "Manage" };
     var HS = {};
     try { HS = JSON.parse(document.getElementById("ld-layer0-stats").textContent); } catch (e) { HS = {}; }
-    grid.innerHTML = LAYERS.map(function (l) {
-      var st = STAGE[l.num] || "eval";
+    var QUESTION = {
+      1: "Does this property clear my buy bar, and which markets are hot?",
+      2: "What would it earn as a short-term rental?",
+      3: "What is it actually worth, by condition?",
+      4: "What would it rent for long-term, and what's the net?",
+      5: "Which agents can find deals in this ZIP?",
+      6: "Where do off-market deals come from here?",
+      7: "What does the law allow at this address?",
+      8: "What will the rehab cost, and does it pencil?",
+      9: "What could go wrong: hazards, crime, other risks?",
+      10: "Who should manage it, and at what fee?"
+    };
+    var STAGES = [
+      { key: "find", step: 1, title: "Find a property", sub: "Screen listings against the buy bar, find the right agent and off-market leads.", nums: [1, 5, 6] },
+      { key: "eval", step: 2, title: "Evaluate it", sub: "Income (short- and long-term), real value, the rules, rehab cost and risk, for one address.", nums: [2, 3, 4, 7, 8, 9] },
+      { key: "manage", step: 3, title: "Manage after purchase", sub: "Pick a property manager and know the real fee at your rent.", nums: [10] }
+    ];
+    var STAGE_LABEL = { find: "Find", eval: "Evaluate", manage: "Manage" };
+    var byNum = {}; LAYERS.forEach(function (l) { byNum[l.num] = l; });
+    function card(l, st) {
       var live = (HS.perLayer || {})[String(l.num)];
       var outs = l.outputs.map(function (o) { return '<li>' + o + '</li>'; });
-      return (
-        '<div class="layer-card stage-' + st + '">' +
-          '<div class="layer-card-head">' +
-            '<span class="layer-card-num">' + l.num + '</span>' +
-            '<h3>' + l.name + '</h3>' +
-          '</div>' +
-          '<div class="layer-card-status"><span class="stage-chip ' + st + '">' + STAGE_LABEL[st] + "</span>" + escapeHtml(l.status) + '</div>' +
-          (live ? '<div class="layer-live">Now: ' + escapeHtml(live) + "</div>" : "") +
+      return '<div class="layer-card stage-' + st + '">' +
+          '<div class="card-eyebrow"><span class="layer-card-num">' + l.num + "</span>Layer " + l.num + "</div>" +
+          '<p class="card-question">' + escapeHtml(QUESTION[l.num] || "") + "</p>" +
+          '<div class="layer-card-head"><h3 class="card-name">' + l.name + "</h3></div>" +
+          '<div class="card-meta"><div class="layer-card-status"><span class="stage-chip ' + st + '">' + STAGE_LABEL[st] + "</span>" + escapeHtml(l.status) + "</div>" +
+            (live ? '<div class="layer-live">Now: ' + escapeHtml(live) + "</div>" : "") + "</div>" +
           '<p class="objective">' + l.objective + '</p>' +
           '<div class="outputs-label">Major outputs</div>' +
           '<ul class="outputs">' + outs.slice(0, 2).join("") + '</ul>' +
           (outs.length > 2 ? '<details class="more-outputs"><summary>' + (outs.length - 2) + ' more output' + (outs.length - 2 === 1 ? "" : "s") + '</summary><ul class="outputs">' + outs.slice(2).join("") + "</ul></details>" : "") +
-          '<a class="layer-card-link" href="' + l.url + '" target="_blank" rel="noopener">Open Layer ' + l.num + ' ↗</a>' +
-        '</div>'
-      );
+          '<a class="open-btn" href="' + l.url + '" target="_blank" rel="noopener">Open Layer ' + l.num + ' ↗</a>' +
+        "</div>";
+    }
+    var used = {};
+    var html = STAGES.map(function (s) {
+      var cards = s.nums.filter(function (n) { return byNum[n]; }).map(function (n) { used[n] = true; return card(byNum[n], s.key); }).join("");
+      return '<section class="stage-section ' + s.key + '" id="stage-' + s.key + '"><div class="stage-head"><span class="stage-step">' + s.step + "</span><div><h2>Step " + s.step + " · " + s.title + "</h2><p>" + s.sub + "</p></div></div>" +
+        '<div class="stage-grid">' + cards + "</div></section>";
     }).join("");
+    var rest = LAYERS.filter(function (l) { return !used[l.num]; });
+    if (rest.length) html += '<div class="stage-grid">' + rest.map(function (l) { return card(l, "eval"); }).join("") + "</div>";
+    grid.innerHTML = html;
   }
 
   // ---------- Property Dossier ----------
@@ -798,19 +863,21 @@
       return "<tr><td><b>" + escapeHtml(c.addr) + "</b>, " + escapeHtml(c.city) + '<span class="cov-state">' + escapeHtml(c.state) + "</span></td>" +
         "<td>" + escapeHtml(c.added || "—") + '</td><td class="cov-status">' + escapeHtml(c.status === "offmarket" ? "off-market" : c.status) + "</td>" +
         '<td style="text-align:right;font-variant-numeric:tabular-nums">$' + Number(c.price).toLocaleString("en-US") + "</td>" +
+        '<td style="white-space:nowrap">' + COLS.filter(function (n) { return c.layers.indexOf(n) !== -1; }).length + " of " + COLS.length + '<span class="cov-bar"><i style="width:' + Math.round(COLS.filter(function (n) { return c.layers.indexOf(n) !== -1; }).length / COLS.length * 100) + '%"></i></span></td>' +
         COLS.map(function (n) {
           var on = c.layers.indexOf(n) !== -1;
           return '<td class="l">' + (on ? '<a class="cov-dot on" href="' + url[n] + '" target="_blank" rel="noopener" title="On Layer ' + n + '">' + n + "</a>" : '<span class="cov-dot off" title="Not on Layer ' + n + '">' + n + "</span>") + "</td>";
         }).join("") + "</tr>";
     }
     function table(list) {
-      return '<div class="cov-wrap"><table class="cov"><thead><tr><th>Property</th><th>Added</th><th>Status</th><th style="text-align:right">Price</th>' +
+      return '<div class="cov-wrap"><table class="cov"><thead><tr><th>Property</th><th>Added</th><th>Status</th><th style="text-align:right">Price</th><th>Coverage</th>' +
         COLS.map(function (n) { return '<th class="l" title="' + escapeHtml((LAYERS.filter(function (l) { return l.num === n; })[0] || {}).name || "") + '">L' + n + "</th>"; }).join("") +
         "</tr></thead><tbody>" + list.map(row).join("") + "</tbody></table></div>";
     }
     var cov = S.coverage || [], recent = cov.slice(0, 10), rest = cov.slice(10);
     var host = $("#coverage");
     if (host) host.innerHTML = '<div class="coverage-head"><h2>Recently added properties</h2><p>Filled circles show which layers already have the property; click one to open that layer.</p></div>' +
+      '<div class="cov-legend"><span><span class="cov-dot on">3</span> on that layer</span><span><span class="cov-dot off">3</span> not added yet</span><span>Layers 5 and 6 work by ZIP or city, so they are not per property</span></div>' +
       table(recent) + (rest.length ? '<details class="cov-more"><summary>Show all ' + cov.length + " properties on the ledger</summary>" + table(rest) + "</details>" : "");
   })();
   renderDossier();
